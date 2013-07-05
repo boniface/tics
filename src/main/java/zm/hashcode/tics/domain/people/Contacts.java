@@ -2,18 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.people;
 
 import java.io.Serializable;
-
 
 /**
  *
  * @author boniface
  */
+public final class Contacts implements Serializable {
 
-public class Contacts implements Serializable {
     private String mailingAddress;
     private String telephoneNumber;
     private String cellnumber;
@@ -21,90 +19,61 @@ public class Contacts implements Serializable {
     private String email;
     private String addressType;
 
-    /**
-     * @return the mailingAddress
-     */
-    public String getMailingAddress() {
-        return mailingAddress;
+    private Contacts() {
     }
 
-    /**
-     * @param mailingAddress the mailingAddress to set
-     */
-    public void setMailingAddress(String mailingAddress) {
-        this.mailingAddress = mailingAddress;
+    private Contacts(Builder builder) {
+
+        email = builder.email;
+        mailingAddress = builder.mailingAddress;
+        telephoneNumber = builder.telephoneNumber;
+        cellnumber = builder.cellnumber;
+        faxnumber = builder.faxnumber;
+        addressType = builder.addressType;
+
+
     }
 
-    /**
-     * @return the telephoneNumber
-     */
-    public String getTelephoneNumber() {
-        return telephoneNumber;
+    public static class Builder {
+
+        private String mailingAddress;
+        private String telephoneNumber;
+        private String cellnumber;
+        private String faxnumber;
+        private final String email;
+        private String addressType;
+
+        public Builder(String email) {
+            this.email = email;
+        }
+
+        public Builder mailingAddress(String value) {
+            mailingAddress = value;
+            return this;
+        }
+
+        public Builder telephoneNumber(String value) {
+            telephoneNumber = value;
+            return this;
+        }
+
+        public Builder cellnumber(String value) {
+            cellnumber = value;
+            return this;
+        }
+
+        public Builder faxnumber(String value) {
+            faxnumber = value;
+            return this;
+        }
+
+        public Builder addressType(String value) {
+            addressType = value;
+            return this;
+        }
+
+        public Contacts build() {
+            return new Contacts(this);
+        }
     }
-
-    /**
-     * @param telephoneNumber the telephoneNumber to set
-     */
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
-
-    /**
-     * @return the cellnumber
-     */
-    public String getCellnumber() {
-        return cellnumber;
-    }
-
-    /**
-     * @param cellnumber the cellnumber to set
-     */
-    public void setCellnumber(String cellnumber) {
-        this.cellnumber = cellnumber;
-    }
-
-    /**
-     * @return the faxnumber
-     */
-    public String getFaxnumber() {
-        return faxnumber;
-    }
-
-    /**
-     * @param faxnumber the faxnumber to set
-     */
-    public void setFaxnumber(String faxnumber) {
-        this.faxnumber = faxnumber;
-    }
-
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     * @return the addressType
-     */
-    public String getAddressType() {
-        return addressType;
-    }
-
-    /**
-     * @param addressType the addressType to set
-     */
-    public void setAddressType(String addressType) {
-        this.addressType = addressType;
-    }
-
- 
-
 }

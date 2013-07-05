@@ -5,6 +5,7 @@
 package zm.hashcode.tics.domain.offices;
 
 import java.io.Serializable;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,16 +13,46 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class Clusters implements Serializable {
-    private Long id;
+public final class Clusters implements Serializable {
+
+    private String id;
     private String clusterName;
 
-    public Long getId() {
+    private Clusters() {
+    }
+
+    private Clusters(Builder builder) {
+        id = builder.id;
+        clusterName = builder.clusterName;
+    }
+
+    public static class Builder {
+
+        @Indexed(unique = true)
+        private final String clusterName;
+        //optional 
+        private String id;
+
+        public Builder(String clusterName) {
+            this.clusterName = clusterName;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Clusters build() {
+            return new Clusters(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getClusterName() {
+        return clusterName;
     }
 
     @Override
@@ -46,21 +77,6 @@ public class Clusters implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.offices.Clusters[ id=" + id + " ]";
+        return "Clusters{" + "clusterName=" + clusterName + '}';
     }
-
-    /**
-     * @return the clusterName
-     */
-    public String getClusterName() {
-        return clusterName;
-    }
-
-    /**
-     * @param clusterName the clusterName to set
-     */
-    public void setClusterName(String clusterName) {
-        this.clusterName = clusterName;
-    }
-    
 }

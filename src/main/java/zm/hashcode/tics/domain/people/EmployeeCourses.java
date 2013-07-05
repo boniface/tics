@@ -4,12 +4,12 @@
  */
 package zm.hashcode.tics.domain.people;
 
-import com.hashthrims.domain.employeelist.CompetencyEvaluation;
-import com.hashthrims.domain.traininglist.TrainingCourseRequestors;
-import com.hashthrims.domain.traininglist.TrainingCourses;
+
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.training.TrainingCourseRequestors;
+import zm.hashcode.tics.domain.training.TrainingCourses;
 
 /**
  *
@@ -24,7 +24,6 @@ public class EmployeeCourses implements Serializable {
     private String retraining;
     private String trainingStatus;
     private TrainingCourseRequestors requestor;
-    private CompetencyEvaluation evaluation;
     private Date lastEvaluated;
     private String competencyName;
     private String competencyNotes;
@@ -164,19 +163,7 @@ public class EmployeeCourses implements Serializable {
         this.requestor = requestor;
     }
 
-    /**
-     * @return the evaluation
-     */
-    public CompetencyEvaluation getEvaluation() {
-        return evaluation;
-    }
 
-    /**
-     * @param evaluation the evaluation to set
-     */
-    public void setEvaluation(CompetencyEvaluation evaluation) {
-        this.evaluation = evaluation;
-    }
 
     /**
      * @return the courseStartDate

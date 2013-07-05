@@ -4,16 +4,11 @@
  */
 package zm.hashcode.tics.domain.users;
 
+import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,9 +17,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class Users implements Serializable {
-
-    private Long id;
+public final class Users implements Serializable {
+    @Id
+    private String id;
     @Indexed(unique = true)
     private String email;
     private String passwd;
@@ -32,14 +27,78 @@ public class Users implements Serializable {
     private String lastname;
     private String middlename;
     private boolean enabled;
-    private List<Roles> roles = new ArrayList<Roles>();
+    private List<Roles> roles;
 
-    public Long getId() {
-        return id;
+    private Users() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private Users(Builder builder) {
+        id = builder.id;
+        email = builder.email;
+        passwd = builder.passwd;
+        firstname = builder.firstname;
+        lastname = builder.lastname;
+        middlename = builder.middlename;
+        enabled = builder.enabled;
+        roles = builder.roles;
+
+    }
+
+    public static class Builder {
+        @Indexed(unique = true)
+        private final String email;
+        //optional 
+        private String id;
+        private String passwd ;
+        private String firstname;
+        private String lastname ;
+        private String middlename ;
+        private boolean enabled;
+        private List<Roles> roles =new ArrayList<>();
+//        //        return ImmutableList.copyOf(roles);
+
+        public Builder(String email) {
+            this.email = email;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder passwd(String value) {
+            passwd = value;
+            return this;
+        }
+
+        public Builder firstname(String value) {
+            firstname = value;
+            return this;
+        }
+
+        public Builder lastname(String value) {
+            lastname = value;
+            return this;
+        }
+
+        public Builder middlename(String value) {
+            middlename = value;
+            return this;
+        }
+
+        public Builder roles(List<Roles> value) {
+            roles = value;
+            return this;
+        }
+
+        public Builder enable(boolean value) {
+            enabled = value;
+            return this;
+        }
+
+        public Users build() {
+            return new Users(this);
+        }
     }
 
     @Override
@@ -64,106 +123,42 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.model.users.Users[id=" + id + "]";
+        return "com.hashthrims.model.users.Users[id=" + email + "]";
     }
 
-    
-    /**
-     * @return the passwd
-     */
-    public String getPasswd() {
-        return passwd;
+    public String getId() {
+        return id;
     }
 
-    /**
-     * @param passwd the passwd to set
-     */
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
-    /**
-     * @return the firstname
-     */
-    public String getFirstname() {
-        return firstname;
-    }
-
-    /**
-     * @param firstname the firstname to set
-     */
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    /**
-     * @return the lastname
-     */
-    public String getLastname() {
-        return lastname;
-    }
-
-    /**
-     * @param lastname the lastname to set
-     */
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    /**
-     * @return the middlename
-     */
-    public String getMiddlename() {
-        return middlename;
-    }
-
-    /**
-     * @param middlename the middlename to set
-     */
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
-
-    /**
-     * @return the enabled
-     */
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
-     * @param enabled the enabled to set
-     */
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-    /**
-     * @return the email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
+    public String getPasswd() {
+        return passwd;
     }
 
-    /**
-     * @return the roles
-     */
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getMiddlename() {
+        return middlename;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
     public List<Roles> getRoles() {
-        return roles;
+        return ImmutableList.copyOf(roles);
     }
-
-    /**
-     * @param roles the roles to set
-     */
-    public void setRoles(List<Roles> roles) {
-        this.roles = roles;
-    }
-
-    
 }
+
+
+// Collection<ScheduledCourse> scheduledCourses = Collections2.filter(sc, new InstitutionScheduledCourse());
+//        return ImmutableList.copyOf(scheduledCourses);

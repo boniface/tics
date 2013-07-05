@@ -4,12 +4,12 @@
  */
 package zm.hashcode.tics.domain.people;
 
-import com.hashthrims.domain.offices.Facility;
-import com.hashthrims.domain.traininglist.MentoringSession;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.offices.Facility;
+import zm.hashcode.tics.domain.training.MentoringSession;
 
 /**
  *

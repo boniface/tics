@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.offices;
+
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -13,20 +14,47 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class Department implements Serializable {
+public final class Department implements Serializable {
 
-   @Id
-    private Long id;
-    private String deptName;
+    @Id
+    private String id;
+    private String name;
 
+    private Department() {
+    }
 
+    private Department(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+    }
 
-    public Long getId() {
+    public static class Builder {
+
+        @Indexed(unique = true)
+        private final String name;
+        //optional 
+        private String id;
+
+        public Builder(String name) {
+            this.name = name;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Department build() {
+            return new Department(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -51,16 +79,6 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.offices.Department[id=" + id + "]";
+        return "Clusters{" + "clusterName=" + name + '}';
     }
-
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String dept_name) {
-        this.deptName = dept_name;
-    }
-
 }

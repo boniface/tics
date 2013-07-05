@@ -5,95 +5,61 @@
 package zm.hashcode.tics.domain.offices;
 
 import java.io.Serializable;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-@Document
-public class FacilityMentors implements Serializable {
+public final class FacilityMentors implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @Id
-    private Long id;
     private String firstName;
     private String lastName;
-    private Long mentorId;
+    private String mentorId;
 
-    public Long getId() {
-        return id;
+    private FacilityMentors() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private FacilityMentors(Builder builder) {
+        firstName = builder.firstName;
+        lastName = builder.lastName;
+        mentorId = builder.mentorId;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+    public static class Builder {
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FacilityMentors)) {
-            return false;
+        private String firstName;
+        private String lastName;
+        private final String mentorId;
+
+        public Builder(String val) {
+            this.mentorId = val;
         }
-        FacilityMentors other = (FacilityMentors) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+
+        public Builder firstName(String value) {
+            firstName = value;
+            return this;
         }
-        return true;
+
+        public Builder lastName(String value) {
+            lastName = value;
+            return this;
+        }
+
+        public FacilityMentors build() {
+            return new FacilityMentors(this);
+        }
     }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.offices.FacilityMentors[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the firstName
-     */
     public String getFirstName() {
         return firstName;
     }
 
-    /**
-     * @param firstName the firstName to set
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return the lastName
-     */
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * @return the mentorId
-     */
-    public Long getMentorId() {
+    public String getMentorId() {
         return mentorId;
     }
-
-    /**
-     * @param mentorId the mentorId to set
-     */
-    public void setMentorId(Long mentorId) {
-        this.mentorId = mentorId;
-    }
-    
 }

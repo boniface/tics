@@ -5,14 +5,13 @@
 package zm.hashcode.tics.repository.users;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Service;
 import zm.hashcode.tics.domain.users.Users;
 
 /**
  *
  * @author boniface
  */
-@Service("usersRepository")
-public interface UsersRepository extends PagingAndSortingRepository<Users, Long> {
+
+public interface UsersRepository extends PagingAndSortingRepository<Users, String> {
    
 }

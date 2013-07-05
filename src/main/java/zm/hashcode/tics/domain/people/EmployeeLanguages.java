@@ -5,9 +5,9 @@
 
 package zm.hashcode.tics.domain.people;
 
-import com.hashthrims.domain.employeelist.Language;
 import java.io.Serializable;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import zm.hashcode.tics.domain.ui.demographics.Language;
 
 /**
  *

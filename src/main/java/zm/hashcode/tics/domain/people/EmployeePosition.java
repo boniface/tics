@@ -5,10 +5,11 @@
 
 package zm.hashcode.tics.domain.people;
 
-import com.hashthrims.domain.positions.Positions;
+
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import zm.hashcode.tics.domain.ui.position.Position;
 
 /**
  *
@@ -18,26 +19,12 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 public class EmployeePosition implements Serializable {
     private static long serialVersionUID = 1L;
     @DBRef
-    private Positions position;
+    private Position position;
     private Date startDate;
     private Date enddate;
     private String status;
    
-   
 
-    /**
-     * @return the position
-     */
-    public Positions getPosition() {
-        return position;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(Positions position) {
-        this.position = position;
-    }
 
     /**
      * @return the startDate

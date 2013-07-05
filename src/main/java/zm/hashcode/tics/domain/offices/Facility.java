@@ -4,8 +4,7 @@
  */
 package zm.hashcode.tics.domain.offices;
 
-import com.hashthrims.domain.positions.Positions;
-import com.hashthrims.domain.regionlist.City;
+import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.people.Contacts;
+import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.ui.position.Position;
 
 /**
  *
@@ -22,32 +23,122 @@ import zm.hashcode.tics.domain.people.Contacts;
 @Document
 public class Facility implements Serializable, Comparable<Facility> {
 
-    private static final long serialVersionUID = 1L;
     @Id
-
-    private Long id;
+    private String id;
     private String facilityName;
     @DBRef
     private FacilityType facilityType;
     @DBRef
-    private City city;
-    
+    private Location city;
     private Contacts contact;
     @DBRef
-    private List<Positions> positions = new ArrayList<Positions>();
-    @DBRef
-    private List<FacilityMentors> facilityMentors = new ArrayList<FacilityMentors>();
+    private List<Position> positions = new ArrayList<>();
+    private List<FacilityMentors> facilityMentors = new ArrayList<>();
     @DBRef
     private FacilityGrouping facilityGrouping;
 
-    public Long getId() {
+    private Facility() {
+    }
+
+    private Facility(Builder builder) {
+        id = builder.id;
+        facilityName = builder.facilityName;
+        facilityType = builder.facilityType;
+        city = builder.city;
+        contact = builder.contact;
+        positions = builder.positions;
+        facilityMentors = builder.facilityMentors;
+        facilityGrouping = builder.facilityGrouping;
+
+    }
+
+    public static class Builder {
+        private final String facilityName;
+        private String id;
+        private FacilityType facilityType;
+        private Location city;
+        private Contacts contact;
+        private List<Position> positions = new ArrayList<>();
+        private List<FacilityMentors> facilityMentors = new ArrayList<>();
+        private FacilityGrouping facilityGrouping;
+
+        public Builder(String facilityName) {
+            this.facilityName = facilityName;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder facilityType(FacilityType value) {
+            facilityType = value;
+            return this;
+        }
+
+        public Builder city(Location value) {
+            city = value;
+            return this;
+        }
+
+        public Builder contact(Contacts value) {
+            contact = value;
+            return this;
+        }
+
+        public Builder positions(List<Position> value) {
+            positions = value;
+            return this;
+        }
+
+        public Builder facilityMentors(List<FacilityMentors> value) {
+            facilityMentors = value;
+            return this;
+        }
+
+        public Builder facilityGrouping(FacilityGrouping value) {
+            facilityGrouping = value;
+            return this;
+        }
+
+        public Facility build() {
+            return new Facility(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getFacilityName() {
+        return facilityName;
     }
 
+    public FacilityType getFacilityType() {
+        return facilityType;
+    }
+
+    public Location getCity() {
+        return city;
+    }
+
+    public Contacts getContact() {
+        return contact;
+    }
+
+    public List<Position> getPositions() {
+        return ImmutableList.copyOf(positions);
+    }
+
+    public List<FacilityMentors> getFacilityMentors() {
+        return ImmutableList.copyOf(facilityMentors);
+    }
+
+    public FacilityGrouping getFacilityGrouping() {
+        return facilityGrouping;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -73,106 +164,8 @@ public class Facility implements Serializable, Comparable<Facility> {
         return "com.hashthrims.domain.offices.Facility[id=" + id + "]";
     }
 
-    /**
-     * @return the facilityType
-     */
-    public FacilityType getFacilityType() {
-        return facilityType;
-    }
-
-    /**
-     * @param facilityType the facilityType to set
-     */
-    public void setFacilityType(FacilityType facilityType) {
-        this.facilityType = facilityType;
-    }
-
-    /**
-     * @return the contact
-     */
-    public Contacts getContact() {
-        return contact;
-    }
-
-    /**
-     * @param contact the contact to set
-     */
-    public void setContact(Contacts contact) {
-        this.contact = contact;
-    }
-
-    /**
-     * @return the facilityName
-     */
-    public String getFacilityName() {
-        return facilityName;
-    }
-
-    /**
-     * @param facilityName the facilityName to set
-     */
-    public void setFacilityName(String facilityName) {
-        this.facilityName = facilityName;
-    }
-
-    /**
-     * @return the city
-     */
-    public City getCity() {
-        return city;
-    }
-
-    /**
-     * @param city the city to set
-     */
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    /**
-     * @return the positions
-     */
-    public List<Positions> getPositions() {
-        return positions;
-    }
-
-    /**
-     * @param positions the positions to set
-     */
-    public void setPositions(List<Positions> positions) {
-        this.positions = positions;
-    }
-
     @Override
     public int compareTo(Facility o) {
         return facilityName.compareTo(o.facilityName);
-    }
-
-    /**
-     * @return the facilityMentors
-     */
-    public List<FacilityMentors> getFacilityMentors() {
-        return facilityMentors;
-    }
-
-    /**
-     * @param facilityMentors the facilityMentors to set
-     */
-    public void setFacilityMentors(List<FacilityMentors> facilityMentors) {
-        this.facilityMentors = facilityMentors;
-    }
-
-    /**
-     * @return the facilityGrouping
-     */
-    public FacilityGrouping getFacilityGrouping() {
-        return facilityGrouping;
-    }
-
-    /**
-     * @param facilityGrouping the facilityGrouping to set
-     */
-    public void setFacilityGrouping(FacilityGrouping facilityGrouping) {
-        this.facilityGrouping = facilityGrouping;
     }
 }

@@ -5,44 +5,35 @@
 package zm.hashcode.tics.domain.users;
 
 import java.io.Serializable;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import zm.hashcode.tics.domain.ui.demographics.RolesList;
 
 /**
  *
  * @author boniface
  */
 
-public class Roles implements Serializable {
+public final class Roles implements Serializable {
+   @DBRef
+   private RolesList rolesList;
 
-    private static final long serialVersionUID = 1L;
-    private String roleName;
-    private String email;
-    
-    /**
-     * @return the roleName
-     */
-    public String getRoleName() {
-        return roleName;
+    private Roles() {
     }
 
-    /**
-     * @param roleName the roleName to set
-     */
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    private Roles(Builder builder) {
+        rolesList= builder.rolesList;
     }
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
+   
+   
+   public static class Builder{
+        private final RolesList rolesList;
 
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    
+        public Builder(RolesList rolesList) {
+            this.rolesList = rolesList;
+        }
+        public Roles build(){
+            return new Roles(this);
+        }
+   }
+   
 }

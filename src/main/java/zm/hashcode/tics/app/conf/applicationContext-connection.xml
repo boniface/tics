@@ -28,7 +28,6 @@
     <!-- Activate annotation configured components -->
     <context:annotation-config/>
 
- fdgdhhhd
     <!-- Scan components for annotations within the configured package -->
     <context:component-scan base-package="zm.hashcode.tics">
         <context:exclude-filter type="annotation" expression="org.springframework.context.annotation.Configuration"/>

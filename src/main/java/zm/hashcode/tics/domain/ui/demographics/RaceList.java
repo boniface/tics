@@ -2,12 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package zm.hashcode.tics.domain.offices;
+package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -15,15 +13,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class RegistrationBody implements Serializable {
+public class RaceList implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
-    private Long id;
-    private String name;
-    public Long getId() {
+    private String id;
+    private String raceName;
+
+    public String  getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String  id) {
         this.id = id;
     }
 
@@ -37,10 +37,10 @@ public class RegistrationBody implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RegistrationBody)) {
+        if (!(object instanceof RaceList)) {
             return false;
         }
-        RegistrationBody other = (RegistrationBody) object;
+        RaceList other = (RaceList) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -49,21 +49,21 @@ public class RegistrationBody implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.offices.RegistrationBody[id=" + id + "]";
+        return "com.hashthrims.domain.employeelist.RaceList[ id=" + id + " ]";
     }
 
     /**
-     * @return the name
+     * @return the raceName
      */
-    public String getName() {
-        return name;
+    public String getRaceName() {
+        return raceName;
     }
 
     /**
-     * @param name the name to set
+     * @param raceName the raceName to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setRaceName(String raceName) {
+        this.raceName = raceName;
     }
-
+    
 }

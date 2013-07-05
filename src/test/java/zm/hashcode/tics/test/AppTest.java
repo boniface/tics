@@ -5,11 +5,12 @@
 package zm.hashcode.tics.test;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import zm.hashcode.tics.app.conf.RepositoryConfig;
 
 /**
  *
@@ -23,7 +24,9 @@ public class AppTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        ctx = new ClassPathXmlApplicationContext("classpath:zm/hashcode/tics/app/conf/applicationContext-*.xml");
+        //ctx = new ClassPathXmlApplicationContext("classpath:zm/hashcode/tics/app/conf/applicationContext-*.xml");
+        ctx = new AnnotationConfigApplicationContext(RepositoryConfig.class);
+       
     }
 
     @AfterClass

@@ -4,11 +4,10 @@
  */
 package zm.hashcode.tics.domain.people;
 
-import com.hashthrims.domain.employeelist.Degree;
-import com.hashthrims.domain.regionlist.Country;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
  *
@@ -19,10 +18,10 @@ public class EducationHistory implements Serializable {
 
     private String instituteNamwe;
     @DBRef
-    private Country Location;
+    private Location Location;
     private Date graduation;
     @DBRef
-    private Degree degreeType;
+   
     private String major;
     /**
      * @return the instituteNamwe
@@ -38,19 +37,7 @@ public class EducationHistory implements Serializable {
         this.instituteNamwe = instituteNamwe;
     }
 
-    /**
-     * @return the Location
-     */
-    public Country getLocation() {
-        return Location;
-    }
-
-    /**
-     * @param Location the Location to set
-     */
-    public void setLocation(Country Location) {
-        this.Location = Location;
-    }
+ 
 
     /**
      * @return the graduation
@@ -66,19 +53,6 @@ public class EducationHistory implements Serializable {
         this.graduation = graduation;
     }
 
-    /**
-     * @return the degreeType
-     */
-    public Degree getDegreeType() {
-        return degreeType;
-    }
-
-    /**
-     * @param degreeType the degreeType to set
-     */
-    public void setDegreeType(Degree degreeType) {
-        this.degreeType = degreeType;
-    }
 
     /**
      * @return the major

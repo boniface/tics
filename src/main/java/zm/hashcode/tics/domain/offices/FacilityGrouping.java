@@ -17,26 +17,59 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FacilityGrouping implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private Long id;
+    private String id;
     private String node;
     private String cluster;
     
 
-    public Long getId() {
-        return id;
+    private FacilityGrouping() {
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    
+    private FacilityGrouping(Builder builder) {
+        id = builder.id;
+        node = builder.node;
+        cluster = builder.cluster;
+       
     }
-
+    
+    public static class Builder {
+         //optional 
+        private String id = null;
+        private String node = null;
+        private String cluster = null;
+       
+        public Builder(String cluster) {
+            this.cluster = cluster;
+        }
+        
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+        
+        public Builder node(String value) {
+            node = value;
+            return this;
+        }
+        
+        public Builder cluster(String value) {
+            cluster = value;
+            return this;
+        }
+ 
+        
+        public FacilityGrouping build() {
+            return new FacilityGrouping(this);
+        }
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -50,37 +83,23 @@ public class FacilityGrouping implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.offices.FacilityGrouping[ id=" + id + " ]";
+    public String getId() {
+        return id;
     }
 
-    /**
-     * @return the node
-     */
     public String getNode() {
         return node;
     }
 
-    /**
-     * @param node the node to set
-     */
-    public void setNode(String node) {
-        this.node = node;
-    }
-
-    /**
-     * @return the cluster
-     */
     public String getCluster() {
         return cluster;
     }
 
-    /**
-     * @param cluster the cluster to set
-     */
-    public void setCluster(String cluster) {
-        this.cluster = cluster;
+    @Override
+    public String toString() {
+        return "FacilityGrouping{" + "node=" + node + ", cluster=" + cluster + '}';
     }
+
+    
     
 }

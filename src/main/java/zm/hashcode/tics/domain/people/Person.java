@@ -4,13 +4,14 @@
  */
 package zm.hashcode.tics.domain.people;
 
-import com.hashthrims.domain.regionlist.City;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.ui.location.Location;
 
 
 /**
@@ -25,7 +26,7 @@ public class Person implements Serializable, Comparable<Person> {
     private String personName;
     private String personSurname;
     private String personOtherName;
-    private City residence;
+    private Location residence;
 
     private List<Contacts> contacts = new ArrayList<Contacts>();
 
@@ -128,20 +129,6 @@ public class Person implements Serializable, Comparable<Person> {
      */
     public void setPersonOtherName(String personOtherName) {
         this.personOtherName = personOtherName;
-    }
-
-    /**
-     * @return the residence
-     */
-    public City getResidence() {
-        return residence;
-    }
-
-    /**
-     * @param residence the residence to set
-     */
-    public void setResidence(City residence) {
-        this.residence = residence;
     }
 
     /**

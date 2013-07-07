@@ -9,11 +9,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
  * @author boniface
  */
 
-public class Demography implements Serializable {
+public final class Demography implements Serializable {
     private static final long serialVersionUID = 1L;
     private Date dob;
     private String gender;
@@ -21,74 +20,54 @@ public class Demography implements Serializable {
     private int dependants;
     private String race;
 
-    /**
-     * @return the dob
-     */
-    public Date getDob() {
-        return dob;
+    private  Demography() {
+
     }
 
-    /**
-     * @param dob the dob to set
-     */
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public Demography(Builder builder) {
+        dob = builder.dob;
+        gender= builder.gender;
+        maritalStatus= builder.maritalStatus;
+        dependants = builder.dependants;
+        race= builder.race;
     }
 
-    /**
-     * @return the gender
-     */
-    public String getGender() {
-        return gender;
-    }
+    public static class Builder {
+        private Date dob;
+        private final String gender;
+        private String maritalStatus;
+        private int dependants;
+        private String race;
 
-    /**
-     * @param gender the gender to set
-     */
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+        public Builder(String gender) {
+            this.gender = gender;
+        }
 
-    /**
-     * @return the maritalStatus
-     */
-    public String getMaritalStatus() {
-        return maritalStatus;
-    }
+        public Builder dob(Date val) {
+            dob = val;
+            return this;
+        }
 
-    /**
-     * @param maritalStatus the maritalStatus to set
-     */
-    public void setMaritalStatus(String maritalStatus) {
-        this.maritalStatus = maritalStatus;
-    }
+        public Builder maritalStatus(String val) {
+            maritalStatus = val;
+            return this;
+        }
 
-    /**
-     * @return the dependants
-     */
-    public int getDependants() {
-        return dependants;
-    }
+        public Builder dependants(int val) {
+            dependants = val;
+            return this;
+        }
 
-    /**
-     * @param dependants the dependants to set
-     */
-    public void setDependants(int dependants) {
-        this.dependants = dependants;
-    }
+        public Builder race(String val) {
+            race = val;
+            return this;
+        }
 
-    /**
-     * @return the race
-     */
-    public String getRace() {
-        return race;
-    }
+        public Demography build(){
+            return new Demography(this);
+        }
 
-    /**
-     * @param race the race to set
-     */
-    public void setRace(String race) {
-        this.race = race;
+
     }
 
 }

@@ -28,33 +28,33 @@ public class Person implements Serializable, Comparable<Person> {
     private String personOtherName;
     private Location residence;
 
-    private List<Contacts> contacts = new ArrayList<Contacts>();
+    private List<Contacts> contacts = new ArrayList<>();
 
-    private Demography demography = new Demography();
+    private Demography demography;
 
-    private List<EmployeePosition> position = new ArrayList<EmployeePosition>();
+    private List<EmployeePosition> position = new ArrayList<>();
  
-    private List<EmploymentHistory> employmentHistory = new ArrayList<EmploymentHistory>();
+    private List<EmploymentHistory> employmentHistory = new ArrayList<>();
 
-    private List<EducationHistory> educationHistory = new ArrayList<EducationHistory>();
+    private List<EducationHistory> educationHistory = new ArrayList<>();
  
-    private List<Identities> identities = new ArrayList<Identities>();
+    private List<Identities> identities = new ArrayList<>();
 
-    private List<ProfessionalRegistration> professionalRegistration = new ArrayList<ProfessionalRegistration>();
+    private List<ProfessionalRegistration> professionalRegistration = new ArrayList<>();
 
-    private List<EmployeeCourses> courses = new ArrayList<EmployeeCourses>();
+    private List<EmployeeCourses> courses = new ArrayList<>();
 
-    private List<EmployeeLanguages> languages = new ArrayList<EmployeeLanguages>();
+    private List<EmployeeLanguages> languages = new ArrayList<>();
 
-    private List<EmployeeMentoring> mentoring = new ArrayList<EmployeeMentoring>();
+    private List<EmployeeMentoring> mentoring = new ArrayList<>();
     @DBRef
-    private List<Mentees> mentees = new ArrayList<Mentees>();
+    private List<Mentees> mentees = new ArrayList<>();
 
-    private List<MentorExpertiseArea> expertiseArea = new ArrayList<MentorExpertiseArea>();
+    private List<MentorExpertiseArea> expertiseArea = new ArrayList<>();
 
-    private List<PersonRoles> personRoles = new ArrayList<PersonRoles>();
+    private List<PersonRoles> personRoles = new ArrayList<>();
 
-    private List<EmployeeActionPlan> actionPlans = new ArrayList<EmployeeActionPlan>();
+    private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
 
     public Long getId() {
         return id;

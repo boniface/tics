@@ -9,14 +9,11 @@ import org.testng.annotations.Test;
 import zm.hashcode.tics.domain.ui.demographics.RolesList;
 import zm.hashcode.tics.repository.ui.demographics.RolesListRepository;
 import zm.hashcode.tics.test.AppTest;
-import static zm.hashcode.tics.test.AppTest.ctx;
-
 /**
  *
  * @author boniface
  */
 public class RolesListTest extends AppTest {
-
     private RolesListRepository repository;
     private String id;
 

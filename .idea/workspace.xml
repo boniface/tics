@@ -2,23 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7b617014-ac4b-4371-84a7-1d915d6dc90c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_6_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_asm_3_1_1_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_3_1_1_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_3_0_7_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_3_1_1_RELEASE.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_mobile_spring_mobile_device_1_0_1_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_mobile_spring_mobile_device_1_1_0_M3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Demography.java" afterPath="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Demography.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Person.java" afterPath="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Person.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_jstl_1_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_7_2.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_4_1_0_Final.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_3_2_3_RELEASE.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_3_2_3_RELEASE.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_3_2_2_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_3_2_3_RELEASE.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/client/Home.java" afterPath="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/client/Home.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tics.iml" afterPath="$PROJECT_DIR$/tics.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/tics_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/tics_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tics.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="7b617014-ac4b-4371-84a7-1d915d6dc90c" time="1373100393682" ignored="false" />
+    <file path="/Dummy.txt" changelist="7b617014-ac4b-4371-84a7-1d915d6dc90c" time="1373206016289" ignored="false" />
     <file path="/UsersRepository.java" changelist="7b617014-ac4b-4371-84a7-1d915d6dc90c" time="1372853451577" ignored="false" />
     <file path="/fragment.java" changelist="7b617014-ac4b-4371-84a7-1d915d6dc90c" time="1373100393682" ignored="false" />
     <file path="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/repository/users/UsersRepositoryImpl.java" changelist="7b617014-ac4b-4371-84a7-1d915d6dc90c" time="1372853494668" ignored="false" />
@@ -44,6 +41,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -80,7 +78,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -99,46 +96,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Demography.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Demography.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Demography.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="39" selection-start="498" selection-end="498" vertical-scroll-proportion="0.33047944">
+            <state line="65" column="62" selection-start="1475" selection-end="1475" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-          <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-            <state />
-          </provider>
+      <file leaf-file-name="AppConfig.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/app/conf/AppConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="51" selection-start="601" selection-end="601" vertical-scroll-proportion="-10.88">
+            <state line="22" column="43" selection-start="526" selection-end="526" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
-            <state />
-          </provider>
-          <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="HomeTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/zm/hashcode/tics/test/client/HomeTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="13" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="29" selection-start="2906" selection-end="2906" vertical-scroll-proportion="0.0">
+            <state line="81" column="29" selection-start="2865" selection-end="2865" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Home.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Home.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/client/Home.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="85" selection-start="496" selection-end="496" vertical-scroll-proportion="0.0">
+            <state line="29" column="126" selection-start="943" selection-end="943" vertical-scroll-proportion="0.29109588">
               <folding />
             </state>
           </provider>
@@ -147,7 +144,7 @@
       <file leaf-file-name="WebConfig.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/app/conf/WebConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="81" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0">
+            <state line="28" column="81" selection-start="1323" selection-end="1323" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -188,6 +185,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/app/conf/WebConfig.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/zm/hashcode/tics/client/Home.java" />
       </list>
     </option>
   </component>
@@ -216,8 +214,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1375" />
-    <option name="y" value="9" />
+    <option name="x" value="1366" />
     <option name="width" value="1920" />
     <option name="height" value="1055" />
   </component>
@@ -247,7 +244,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -256,89 +253,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="users" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -355,16 +272,16 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="zm.hashcode.tics.repository.users" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.RolesListTest">
+  <component name="RunManager" selected="Tomcat Server.Tomcat">
     <configuration default="false" name="UsersTest" type="TestNG" factoryName="TestNG" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -465,6 +382,41 @@
       <ConfigurationWrapper RunnerId="Cover" />
       <method />
     </configuration>
+    <configuration default="false" name="HomeTest" type="TestNG" factoryName="TestNG" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="zm.hashcode.tics.test.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="tics" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" value="zm.hashcode.tics.test.client" />
+      <option name="MAIN_CLASS_NAME" value="zm.hashcode.tics.test.client.HomeTest" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -477,6 +429,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -505,19 +470,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -568,6 +520,7 @@
       <method />
     </configuration>
     <configuration default="false" name="Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/tics/app/" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="tics:war">
@@ -643,17 +596,19 @@
         </option>
       </method>
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="TestNG.UsersTest" />
-      <item index="1" class="java.lang.String" itemvalue="TestNG.RolesListTest" />
-      <item index="2" class="java.lang.String" itemvalue="Tomcat Server.Tomcat" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Tomcat" />
+      <item index="1" class="java.lang.String" itemvalue="TestNG.UsersTest" />
+      <item index="2" class="java.lang.String" itemvalue="TestNG.RolesListTest" />
       <item index="3" class="java.lang.String" itemvalue="TestNG.&lt;default&gt;" />
+      <item index="4" class="java.lang.String" itemvalue="TestNG.HomeTest" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="TestNG.RolesListTest" />
-        <item index="1" class="java.lang.String" itemvalue="TestNG.UsersTest" />
-        <item index="2" class="java.lang.String" itemvalue="TestNG.&lt;default&gt;" />
+        <item index="1" class="java.lang.String" itemvalue="TestNG.HomeTest" />
+        <item index="2" class="java.lang.String" itemvalue="TestNG.UsersTest" />
+        <item index="3" class="java.lang.String" itemvalue="TestNG.&lt;default&gt;" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -688,7 +643,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1375" y="9" width="1920" height="1055" extended-state="0" />
+    <frame x="1366" y="0" width="1920" height="1055" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -705,7 +660,6 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.6710671" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -714,6 +668,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13276231" sideWeight="0.6710671" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.6710671" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -786,11 +741,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/zm/hashcode/tics/test/repository/users/UsersTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="370" selection-end="370" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/EmployeeCourses.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="41" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
@@ -860,15 +810,15 @@
           <ID>MAVEN</ID>
           <OriginalElement>zm.hashcode:tics:1.0-SNAPSHOT</OriginalElement>
           <nodes>
-            <node x="" y="">org.springframework.security:spring-security-core:jar:3.1.4.RELEASE/aopalliance:aopalliance:jar:1.0</node>
             <node x="" y="">org.springframework.security:spring-security-core:jar:3.1.4.RELEASE/org.springframework:spring-aop:jar:3.0.7.RELEASE</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:3.1.4.RELEASE/aopalliance:aopalliance:jar:1.0</node>
             <node x="" y="">org.springframework:spring-web:jar:3.2.3.RELEASE/org.springframework:spring-context:jar:3.2.3.RELEASE</node>
-            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-web:jar:3.0.7.RELEASE</node>
             <node x="" y="">org.springframework.data:spring-data-mongodb:jar:1.2.1.RELEASE/org.springframework:spring-expression:jar:3.1.4.RELEASE</node>
+            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-web:jar:3.0.7.RELEASE</node>
             <node x="" y="">org.springframework.security:spring-security-config:jar:3.1.4.RELEASE</node>
             <node x="" y="">org.springframework:spring-test:jar:3.2.3.RELEASE</node>
-            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-aop:jar:3.0.7.RELEASE</node>
             <node x="" y="">org.springframework.security:spring-security-core:jar:3.1.4.RELEASE</node>
+            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-aop:jar:3.0.7.RELEASE</node>
             <node x="" y="">org.springframework:spring-web:jar:3.2.3.RELEASE/org.springframework:spring-beans:jar:3.2.3.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0/com.vaadin.external.atmosphere:atmosphere-runtime:jar:1.0.14.vaadin3/com.vaadin.external.atmosphere:atmosphere-compat-tomcat:jar:1.0.14.vaadin3</node>
             <node x="" y="">org.springframework.data:spring-data-mongodb:jar:1.2.1.RELEASE/org.springframework:spring-core:jar:3.1.4.RELEASE</node>
@@ -883,21 +833,21 @@
             <node x="" y="">com.vaadin:vaadin-client:jar:7.1.0/org.w3c.css:sac:jar:1.3</node>
             <node x="" y="">com.vaadin:vaadin-themes:jar:7.1.0</node>
             <node x="" y="">com.vaadin:vaadin-server:jar:7.1.0/com.vaadin:vaadin-theme-compiler:jar:7.1.0/org.apache.commons:commons-jexl:jar:2.1.1</node>
-            <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0/com.vaadin.external.atmosphere:atmosphere-runtime:jar:1.0.14.vaadin3/com.vaadin.external.atmosphere:atmosphere-compat-jbossweb:jar:1.0.14.vaadin3</node>
             <node x="" y="">org.springframework.mobile:spring-mobile-device:jar:1.0.1.RELEASE/org.springframework:spring-webmvc:jar:3.1.1.RELEASE/org.springframework:spring-context:jar:3.1.1.RELEASE</node>
-            <node x="" y="">com.vaadin:vaadin-server:jar:7.1.0/com.vaadin:vaadin-theme-compiler:jar:7.1.0</node>
+            <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0/com.vaadin.external.atmosphere:atmosphere-runtime:jar:1.0.14.vaadin3/com.vaadin.external.atmosphere:atmosphere-compat-jbossweb:jar:1.0.14.vaadin3</node>
             <node x="" y="">org.springframework.mobile:spring-mobile-device:jar:1.0.1.RELEASE</node>
-            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-jdbc:jar:3.0.7.RELEASE/org.springframework:spring-beans:jar:3.0.7.RELEASE</node>
+            <node x="" y="">com.vaadin:vaadin-server:jar:7.1.0/com.vaadin:vaadin-theme-compiler:jar:7.1.0</node>
             <node x="" y="">com.vaadin:vaadin-client:jar:7.1.0</node>
+            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-jdbc:jar:3.0.7.RELEASE/org.springframework:spring-beans:jar:3.0.7.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0</node>
             <node x="" y="">org.springframework.mobile:spring-mobile-device:jar:1.0.1.RELEASE/org.springframework:spring-webmvc:jar:3.1.1.RELEASE/org.springframework:spring-context-support:jar:3.1.1.RELEASE/org.springframework:spring-beans:jar:3.1.1.RELEASE</node>
             <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-beans:jar:3.0.7.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-client:jar:7.1.0/javax.validation:validation-api:jar:sources:1.0.0.GA</node>
-            <node x="" y="">com.vaadin:vaadin-client:jar:7.1.0/com.vaadin:vaadin-shared:jar:7.1.0</node>
             <node x="" y="">org.springframework:spring-test:jar:3.2.3.RELEASE/org.springframework:spring-core:jar:3.2.3.RELEASE</node>
+            <node x="" y="">com.vaadin:vaadin-client:jar:7.1.0/com.vaadin:vaadin-shared:jar:7.1.0</node>
             <node x="" y="">org.springframework.data:spring-data-mongodb:jar:1.2.1.RELEASE/org.mongodb:mongo-java-driver:jar:2.10.1</node>
-            <node x="" y="">org.slf4j:slf4j-simple:jar:1.6.6</node>
             <node x="" y="">org.springframework.data:spring-data-commons:jar:1.5.1.RELEASE/org.slf4j:jcl-over-slf4j:jar:1.7.1/org.slf4j:slf4j-api:jar:1.7.1</node>
+            <node x="" y="">org.slf4j:slf4j-simple:jar:1.6.6</node>
             <node x="" y="">com.vaadin:vaadin-server:jar:7.1.0/com.vaadin:vaadin-theme-compiler:jar:7.1.0/org.apache.commons:commons-jexl:jar:2.1.1/commons-logging:commons-logging:jar:1.1.1</node>
             <node x="" y="">org.springframework.security:spring-security-config:jar:3.1.4.RELEASE/aopalliance:aopalliance:jar:1.0</node>
             <node x="" y="">org.springframework.mobile:spring-mobile-device:jar:1.0.1.RELEASE/org.springframework:spring-webmvc:jar:3.1.1.RELEASE/org.springframework:spring-context-support:jar:3.1.1.RELEASE/org.springframework:spring-core:jar:3.1.1.RELEASE</node>
@@ -956,9 +906,9 @@
             <node x="" y="">org.springframework.mobile:spring-mobile-device:jar:1.0.1.RELEASE/org.springframework:spring-webmvc:jar:3.1.1.RELEASE/org.springframework:spring-asm:jar:3.1.1.RELEASE</node>
             <node x="" y="">org.springframework:spring-web:jar:3.2.3.RELEASE/org.springframework:spring-core:jar:3.2.3.RELEASE</node>
             <node x="" y="">org.springframework:spring-context:jar:3.2.3.RELEASE</node>
-            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-core:jar:3.0.7.RELEASE</node>
-            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-context:jar:3.0.7.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0/com.vaadin.external.atmosphere:atmosphere-runtime:jar:1.0.14.vaadin3</node>
+            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-context:jar:3.0.7.RELEASE</node>
+            <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-core:jar:3.0.7.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-server:jar:7.1.0/com.vaadin:vaadin-theme-compiler:jar:7.1.0/net.sourceforge.cssparser:cssparser:jar:0.9.5/org.w3c.css:sac:jar:1.3</node>
             <node x="" y="">org.springframework.mobile:spring-mobile-device:jar:1.0.1.RELEASE/org.springframework:spring-webmvc:jar:3.1.1.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0/com.vaadin.external.atmosphere:atmosphere-runtime:jar:1.0.14.vaadin3/com.vaadin.external.slf4j:vaadin-slf4j-jdk14:jar:1.6.1</node>
@@ -966,8 +916,8 @@
             <node x="" y="">org.springframework.security:spring-security-web:jar:3.1.4.RELEASE/org.springframework:spring-jdbc:jar:3.0.7.RELEASE/org.springframework:spring-tx:jar:3.0.7.RELEASE</node>
             <node x="" y="">com.vaadin:vaadin-push:jar:7.1.0/com.vaadin.external.atmosphere:atmosphere-runtime:jar:1.0.14.vaadin3/com.vaadin.external.atmosphere:atmosphere-compat-tomcat7:jar:1.0.14.vaadin3</node>
             <node x="" y="">org.springframework.data:spring-data-mongodb:jar:1.2.1.RELEASE/org.springframework.data:spring-data-commons:jar:1.5.1.RELEASE</node>
-            <node x="" y="">org.springframework.data:spring-data-mongodb:jar:1.2.1.RELEASE/org.springframework:spring-beans:jar:3.1.4.RELEASE</node>
             <node x="" y="">org.springframework.data:spring-data-commons:jar:1.5.1.RELEASE/org.springframework:spring-beans:jar:3.1.4.RELEASE</node>
+            <node x="" y="">org.springframework.data:spring-data-mongodb:jar:1.2.1.RELEASE/org.springframework:spring-beans:jar:3.1.4.RELEASE</node>
             <node x="" y="">org.springframework.security:spring-security-config:jar:3.1.4.RELEASE/org.springframework:spring-context:jar:3.0.7.RELEASE</node>
             <node x="" y="">org.springframework.security:spring-security-config:jar:3.1.4.RELEASE/org.springframework.security:spring-security-core:jar:3.1.4.RELEASE</node>
             <node x="" y="">org.slf4j:slf4j-api:jar:1.6.6</node>
@@ -985,53 +935,52 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="0.2529481132075472" x="414.2377622377621" y="1686.0" />
+          <settings layout="Hierarchic Group" zoom="0.2529481132075472" x="414.0" y="1686.0" />
           <SelectedNodes />
           <Categories />
+          <SCOPE>All</SCOPE>
           <VISIBILITY>All</VISIBILITY>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="29" selection-start="2906" selection-end="2906" vertical-scroll-proportion="0.0">
+        <state line="81" column="29" selection-start="2865" selection-end="2865" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/app/conf/WebConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="81" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0">
+        <state line="28" column="81" selection-start="1323" selection-end="1323" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Demography.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="62" selection-start="1475" selection-end="1475" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/app/conf/AppConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="43" selection-start="526" selection-end="526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/zm/hashcode/tics/test/client/HomeTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/client/Home.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="85" selection-start="496" selection-end="496" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="51" selection-start="601" selection-end="601" vertical-scroll-proportion="-10.88">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
-        <state />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/zm/hashcode/tics/domain/people/Demography.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="39" selection-start="498" selection-end="498" vertical-scroll-proportion="0.33047944">
+        <state line="29" column="126" selection-start="943" selection-end="943" vertical-scroll-proportion="0.29109588">
           <folding />
         </state>
       </provider>

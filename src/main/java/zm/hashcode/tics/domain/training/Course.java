@@ -7,14 +7,15 @@ package zm.hashcode.tics.domain.training;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.ui.util.Status;
 
 /**
  *
  * @author boniface
  */
-
-public class TrainingCourses implements Serializable,Comparable<TrainingCourses> {
+@Document
+public class Course implements Serializable,Comparable<Course> {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,14 +32,13 @@ public class TrainingCourses implements Serializable,Comparable<TrainingCourses>
    
     private CourseTypeName courseType;
 
-    private List<CourseFunders> courseFunders = new ArrayList<CourseFunders>();
+    private List<CourseFunders> courseFunders = new ArrayList<>();
 
-    private List<CourseCompetencies> courseCompetencies = new ArrayList<CourseCompetencies>();
+    private List<CourseCompetencies> courseCompetencies = new ArrayList<>();
     
 
-    private List<CourseTargetGroup> courseTargetGroup= new ArrayList<CourseTargetGroup>();
+    private List<CourseTargetGroup> courseTargetGroup= new ArrayList<>();
     
-
     private CourseCriteria courseCriteria;
     public Long getId() {
         return id;
@@ -58,10 +58,10 @@ public class TrainingCourses implements Serializable,Comparable<TrainingCourses>
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TrainingCourses)) {
+        if (!(object instanceof Course)) {
             return false;
         }
-        TrainingCourses other = (TrainingCourses) object;
+        Course other = (Course) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -200,7 +200,7 @@ public class TrainingCourses implements Serializable,Comparable<TrainingCourses>
     }
 
     @Override
-    public int compareTo(TrainingCourses o) {
+    public int compareTo(Course o) {
        return courseName.compareTo(o.courseName);
     }
 

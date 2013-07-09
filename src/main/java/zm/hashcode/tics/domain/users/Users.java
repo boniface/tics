@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
  *
@@ -18,6 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public final class Users implements Serializable {
+
     @Id
     private String id;
     @Indexed(unique = true)
@@ -28,6 +31,8 @@ public final class Users implements Serializable {
     private String middlename;
     private boolean enabled;
     private List<Roles> roles;
+    @DBRef
+    private Location jusridication;
 
     private Users() {
     }
@@ -41,24 +46,29 @@ public final class Users implements Serializable {
         middlename = builder.middlename;
         enabled = builder.enabled;
         roles = builder.roles;
+        jusridication = builder.jusridication;
 
     }
 
     public static class Builder {
+
         @Indexed(unique = true)
         private final String email;
+        private final Location jusridication;
         //optional 
         private String id;
-        private String passwd ;
+        private String passwd;
         private String firstname;
-        private String lastname ;
-        private String middlename ;
+        private String lastname;
+        private String middlename;
         private boolean enabled;
-        private List<Roles> roles =new ArrayList<>();
+        
+        private List<Roles> roles;
 //        //        return ImmutableList.copyOf(roles);
 
-        public Builder(String email) {
+        public Builder(String email,Location val) {
             this.email = email;
+            this.jusridication=val;
         }
 
         public Builder id(String value) {
@@ -157,8 +167,11 @@ public final class Users implements Serializable {
     public List<Roles> getRoles() {
         return ImmutableList.copyOf(roles);
     }
+
+    public Location getJusridication() {
+        return jusridication;
+    }
+    
 }
-
-
 // Collection<ScheduledCourse> scheduledCourses = Collections2.filter(sc, new InstitutionScheduledCourse());
 //        return ImmutableList.copyOf(scheduledCourses);

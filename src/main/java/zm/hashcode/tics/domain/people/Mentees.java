@@ -5,6 +5,8 @@
 package zm.hashcode.tics.domain.people;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,85 +14,68 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class Mentees implements Serializable {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private Long menteeId;
+public final class Mentees implements Serializable {
 
-    public Long getId() {
-        return id;
+    private String id;
+    @DBRef
+    private Person mentee;
+
+    private Mentees() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private Mentees(Builder builder) {
+        id = builder.id;
+        mentee = builder.mentee;
+       
+    }
+
+    public static class Builder {
+
+        private String id = null;
+        private final Person mentee;
+
+        public Builder(Person val) {
+            this.mentee = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Mentees build() {
+            return new Mentees(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Mentees)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Mentees other = (Mentees) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Mentees other = (Mentees) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.Mentees[ id=" + id + " ]";
+    public String getId() {
+        return id;
     }
 
-    /**
-     * @return the firstName
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * @param firstName the firstName to set
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return the lastName
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * @return the menteeId
-     */
-    public Long getMenteeId() {
-        return menteeId;
-    }
-
-    /**
-     * @param menteeId the menteeId to set
-     */
-    public void setMenteeId(Long menteeId) {
-        this.menteeId = menteeId;
+    public Person getMentee() {
+        return mentee;
     }
     
 }

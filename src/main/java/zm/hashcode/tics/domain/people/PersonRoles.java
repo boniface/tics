@@ -10,24 +10,32 @@ import java.io.Serializable;
  *
  * @author boniface
  */
+public final class PersonRoles implements Serializable {
 
-public class PersonRoles implements Serializable {
     private static final long serialVersionUID = 1L;
     private String roleName;
 
+    private PersonRoles() {
+    }
 
-    /**
-     * @return the roleName
-     */
+    private PersonRoles(Builder builder) {
+        roleName = builder.roleName;
+    }
+
+    public static class Builder {
+
+        private final String roleName;
+
+        public Builder(String val) {
+            this.roleName = val;
+        }
+
+        public PersonRoles build() {
+            return new PersonRoles(this);
+        }
+    }
+
     public String getRoleName() {
         return roleName;
     }
-
-    /**
-     * @param roleName the roleName to set
-     */
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-    
 }

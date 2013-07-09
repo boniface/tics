@@ -4,15 +4,14 @@
  */
 package zm.hashcode.tics.domain.people;
 
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.domain.ui.location.Location;
-
 
 /**
  *
@@ -20,65 +19,192 @@ import zm.hashcode.tics.domain.ui.location.Location;
  */
 @Document
 public class Person implements Serializable, Comparable<Person> {
+
     private static long serialVersionUID = 1L;
     @Id
-    private Long id;
-    private String personName;
-    private String personSurname;
-    private String personOtherName;
+    private String id;
+    private String firstname;
+    private String surname;
+    private String othername;
     private Location residence;
-
-    private List<Contacts> contacts = new ArrayList<>();
-
+    private List<Contacts> contacts;
     private Demography demography;
-
-    private List<EmployeePosition> position = new ArrayList<>();
- 
-    private List<EmploymentHistory> employmentHistory = new ArrayList<>();
-
-    private List<EducationHistory> educationHistory = new ArrayList<>();
- 
-    private List<Identities> identities = new ArrayList<>();
-
-    private List<ProfessionalRegistration> professionalRegistration = new ArrayList<>();
-
-    private List<EmployeeCourses> courses = new ArrayList<>();
-
-    private List<EmployeeLanguages> languages = new ArrayList<>();
-
-    private List<EmployeeMentoring> mentoring = new ArrayList<>();
     @DBRef
-    private List<Mentees> mentees = new ArrayList<>();
+    private Facility facility;
+    private List<EmployeePosition> positions;
+    private List<EducationHistory> educationHistory;
+    private List<Identities> identities;
+    private List<ProfessionalRegistration> professionalRegistration;
+    private List<EmployeeCourses> courses;
+    private List<EmployeeLanguages> languages;
+    @DBRef
+    private List<EmployeeMentoring> mentoring;
+    @DBRef
+    private List<Mentees> mentees;
+    private List<MentorExpertiseArea> mentorExpertiseAreas;
+    private List<PersonRoles> personRoles;
+    private List<EmployeeActionPlan> actionPlans;
 
-    private List<MentorExpertiseArea> expertiseArea = new ArrayList<>();
-
-    private List<PersonRoles> personRoles = new ArrayList<>();
-
-    private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
-
-    public Long getId() {
-        return id;
+    private Person() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private Person(Builder builder) {
+        id = builder.id;
+        firstname = builder.firstname;
+        surname = builder.surname;
+        othername = builder.othername;
+        residence = builder.residence;
+        contacts = builder.contacts;
+        demography = builder.demography;
+        facility = builder.facility;
+        positions = builder.positions;
+        educationHistory = builder.educationHistory;
+        identities = builder.identities;
+        professionalRegistration = builder.professionalRegistration;
+        courses = builder.courses;
+        languages = builder.languages;
+        mentoring = builder.mentoring;
+        mentees = builder.mentees;
+        mentorExpertiseAreas = builder.mentorExpertiseAreas;
+        personRoles = builder.personRoles;
+        actionPlans = builder.actionPlans;
+
+    }
+
+    public static class Builder {
+
+        private String id;
+        private final String firstname;
+        private final String surname;
+        private String othername;
+        private Location residence;
+        private Demography demography;
+        private Facility facility;
+        private List<Contacts> contacts;
+        private List<EmployeePosition> positions;
+        private List<EducationHistory> educationHistory;
+        private List<Identities> identities;
+        private List<ProfessionalRegistration> professionalRegistration;
+        private List<EmployeeCourses> courses;
+        private List<EmployeeLanguages> languages;
+        private List<EmployeeMentoring> mentoring;
+        private List<Mentees> mentees;
+        private List<MentorExpertiseArea> mentorExpertiseAreas;
+        private List<PersonRoles> personRoles;
+        private List<EmployeeActionPlan> actionPlans;
+
+        public Builder(String firstname, String surname) {
+            this.firstname = firstname;
+            this.surname = surname;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder othername(String value) {
+            othername = value;
+            return this;
+        }
+
+        public Builder residence(Location value) {
+            residence = value;
+            return this;
+        }
+
+        public Builder demography(Demography value) {
+            demography = value;
+            return this;
+        }
+
+        public Builder facility(Facility value) {
+            facility = value;
+            return this;
+        }
+
+        public Builder identities(List<Identities> value) {
+            identities = value;
+            return this;
+        }
+
+        public Builder positions(List<EmployeePosition> value) {
+            positions = value;
+            return this;
+        }
+
+        public Builder educationHistory(List<EducationHistory> value) {
+            educationHistory = value;
+            return this;
+        }
+
+        public Builder professionalRegistration(List<ProfessionalRegistration> value) {
+            professionalRegistration = value;
+            return this;
+        }
+
+        public Builder courses(List<EmployeeCourses> value) {
+            courses = value;
+            return this;
+        }
+
+        public Builder languages(List<EmployeeLanguages> value) {
+            languages = value;
+            return this;
+        }
+
+        public Builder mentoring(List<EmployeeMentoring> value) {
+            mentoring = value;
+            return this;
+        }
+
+        public Builder mentees(List<Mentees> value) {
+            mentees = value;
+            return this;
+        }
+
+        public Builder mentorExpertiseAreas(List<MentorExpertiseArea> value) {
+            mentorExpertiseAreas = value;
+            return this;
+        }
+
+        public Builder personRoles(List<PersonRoles> value) {
+            personRoles = value;
+            return this;
+        }
+
+        public Builder actionPlans(List<EmployeeActionPlan> value) {
+            actionPlans = value;
+            return this;
+        }
+
+        public Builder contacts(List<Contacts> value) {
+            contacts = value;
+            return this;
+        }
+
+        public Person build() {
+            return new Person(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (getId() != null ? getId().hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Person)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Person other = (Person) object;
-        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person other = (Person) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -86,249 +212,89 @@ public class Person implements Serializable, Comparable<Person> {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.Person[id=" + getId() + "]";
-    }
-
-    /**
-     * @return the personName
-     */
-    public String getPersonName() {
-        return personName;
-    }
-
-    /**
-     * @param personName the personName to set
-     */
-    public void setPersonName(String personName) {
-        this.personName = personName;
-    }
-
-    /**
-     * @return the personSurname
-     */
-    public String getPersonSurname() {
-        return personSurname;
-    }
-
-    /**
-     * @param personSurname the personSurname to set
-     */
-    public void setPersonSurname(String personSurname) {
-        this.personSurname = personSurname;
-    }
-
-    /**
-     * @return the personOtherName
-     */
-    public String getPersonOtherName() {
-        return personOtherName;
-    }
-
-    /**
-     * @param personOtherName the personOtherName to set
-     */
-    public void setPersonOtherName(String personOtherName) {
-        this.personOtherName = personOtherName;
-    }
-
-    /**
-     * @return the contacts
-     */
-    public List<Contacts> getContacts() {
-        return contacts;
-    }
-
-    /**
-     * @param contacts the contacts to set
-     */
-    public void setContacts(List<Contacts> contacts) {
-        this.contacts = contacts;
-    }
-
-    /**
-     * @return the demography
-     */
-    public Demography getDemography() {
-        return demography;
-    }
-
-    /**
-     * @param demography the demography to set
-     */
-    public void setDemography(Demography demography) {
-        this.demography = demography;
-    }
-
-    /**
-     * @return the position
-     */
-    public List<EmployeePosition> getPosition() {
-        return position;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(List<EmployeePosition> position) {
-        this.position = position;
-    }
-
-    /**
-     * @return the employmentHistory
-     */
-    public List<EmploymentHistory> getEmploymentHistory() {
-        return employmentHistory;
-    }
-
-    /**
-     * @param employmentHistory the employmentHistory to set
-     */
-    public void setEmploymentHistory(List<EmploymentHistory> employmentHistory) {
-        this.employmentHistory = employmentHistory;
-    }
-
-    /**
-     * @return the educationHistory
-     */
-    public List<EducationHistory> getEducationHistory() {
-        return educationHistory;
-    }
-
-    /**
-     * @param educationHistory the educationHistory to set
-     */
-    public void setEducationHistory(List<EducationHistory> educationHistory) {
-        this.educationHistory = educationHistory;
-    }
-
-    /**
-     * @return the identities
-     */
-    public List<Identities> getIdentities() {
-        return identities;
-    }
-
-    /**
-     * @param identities the identities to set
-     */
-    public void setIdentities(List<Identities> identities) {
-        this.identities = identities;
-    }
-
-    /**
-     * @return the professionalRegistration
-     */
-    public List<ProfessionalRegistration> getProfessionalRegistration() {
-        return professionalRegistration;
-    }
-
-    /**
-     * @param professionalRegistration the professionalRegistration to set
-     */
-    public void setProfessionalRegistration(List<ProfessionalRegistration> professionalRegistration) {
-        this.professionalRegistration = professionalRegistration;
-    }
-
-    /**
-     * @return the languages
-     */
-    public List<EmployeeLanguages> getLanguages() {
-        return languages;
-    }
-
-    /**
-     * @param languages the languages to set
-     */
-    public void setLanguages(List<EmployeeLanguages> languages) {
-        this.languages = languages;
-    }
-
-    /**
-     * @return the courses
-     */
-    public List<EmployeeCourses> getCourses() {
-        return courses;
-    }
-
-    /**
-     * @param courses the courses to set
-     */
-    public void setCourses(List<EmployeeCourses> courses) {
-        this.courses = courses;
-    }
-
-    /**
-     * @return the mentoring
-     */
-    public List<EmployeeMentoring> getMentoring() {
-        return mentoring;
-    }
-
-    /**
-     * @param mentoring the mentoring to set
-     */
-    public void setMentoring(List<EmployeeMentoring> mentoring) {
-        this.mentoring = mentoring;
+        return "Person{" + "firstname=" + firstname + ", surname=" + surname + '}';
     }
 
     @Override
     public int compareTo(Person o) {
-        return personSurname.compareTo(o.personSurname);
+        return surname.compareTo(o.surname);
     }
 
-    /**
-     * @return the mentees
-     */
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getOthername() {
+        return othername;
+    }
+
+    public Location getResidence() {
+        return residence;
+    }
+
+    public List<Contacts> getContacts() {
+        return contacts;
+    }
+
+    public Demography getDemography() {
+        return demography;
+    }
+
+    public Facility getFacility() {
+        return facility;
+    }
+
+    public List<EmployeePosition> getPositions() {
+        return positions;
+    }
+
+    public List<EducationHistory> getEducationHistory() {
+        return educationHistory;
+    }
+
+    public List<Identities> getIdentities() {
+        return identities;
+    }
+
+    public List<ProfessionalRegistration> getProfessionalRegistration() {
+        return professionalRegistration;
+    }
+
+    public List<EmployeeCourses> getCourses() {
+        return courses;
+    }
+
+    public List<EmployeeLanguages> getLanguages() {
+        return languages;
+    }
+
+    public List<EmployeeMentoring> getMentoring() {
+        return mentoring;
+    }
+
     public List<Mentees> getMentees() {
         return mentees;
     }
 
-    /**
-     * @param mentees the mentees to set
-     */
-    public void setMentees(List<Mentees> mentees) {
-        this.mentees = mentees;
+    public List<MentorExpertiseArea> getMentorExpertiseAreas() {
+        return mentorExpertiseAreas;
     }
 
-    /**
-     * @return the expertiseArea
-     */
-    public List<MentorExpertiseArea> getExpertiseArea() {
-        return expertiseArea;
-    }
-
-    /**
-     * @param expertiseArea the expertiseArea to set
-     */
-    public void setExpertiseArea(List<MentorExpertiseArea> expertiseArea) {
-        this.expertiseArea = expertiseArea;
-    }
-
-    /**
-     * @return the personRoles
-     */
     public List<PersonRoles> getPersonRoles() {
         return personRoles;
     }
 
-    /**
-     * @param personRoles the personRoles to set
-     */
-    public void setPersonRoles(List<PersonRoles> personRoles) {
-        this.personRoles = personRoles;
-    }
-
-    /**
-     * @return the actionPlans
-     */
     public List<EmployeeActionPlan> getActionPlans() {
         return actionPlans;
     }
-
-    /**
-     * @param actionPlans the actionPlans to set
-     */
-    public void setActionPlans(List<EmployeeActionPlan> actionPlans) {
-        this.actionPlans = actionPlans;
-    }
+    
+    
 }

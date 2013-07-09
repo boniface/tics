@@ -6,6 +6,7 @@ package zm.hashcode.tics.domain.people;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.offices.Facility;
@@ -16,119 +17,119 @@ import zm.hashcode.tics.domain.training.MentoringSession;
  * @author boniface
  */
 @Document
-public class EmployeeMentoring implements Serializable {
+public final class EmployeeMentoring implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Long id;
+    private String id;
     private Date mentoringDate;
-    private Long patientsInitiated;
-    private Long hoursSpent;
+    private int patientsInitiated;
+    private int hoursSpent;
     @DBRef
     private MentoringSession mentoringSession;
     @DBRef
     private Facility venue;
 
-    public Long getId() {
+    private EmployeeMentoring() {
+    }
+
+    private EmployeeMentoring(Builder builder) {
+        id = builder.id;
+        mentoringDate = builder.mentoringDate;
+        patientsInitiated = builder.patientsInitiated;
+        hoursSpent= builder.hoursSpent;
+        mentoringSession=builder.mentoringSession;
+        venue=builder.venue;
+
+    }
+
+    public static class Builder {
+
+        private String id;
+        private Date mentoringDate;
+        private int patientsInitiated;
+        private int hoursSpent;
+        private final MentoringSession mentoringSession;
+        private Facility venue;
+
+        public Builder(MentoringSession val) {
+            this.mentoringSession = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder mentoringDate(Date value) {
+            mentoringDate = value;
+            return this;
+        }
+
+        public Builder patientsInitiated(int value) {
+            patientsInitiated = value;
+            return this;
+        }
+
+        public Builder hoursSpent(int value) {
+            hoursSpent = value;
+            return this;
+        }
+
+        public Builder mentoringSession(Facility value) {
+            venue = value;
+            return this;
+        }
+
+        public EmployeeMentoring build() {
+            return new EmployeeMentoring(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmployeeMentoring)) {
-            return false;
-        }
-        EmployeeMentoring other = (EmployeeMentoring) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.Training[id=" + id + "]";
-    }
-
-    
-    /**
-     * @return the mentoringSession
-     */
-    public MentoringSession getMentoringSession() {
-        return mentoringSession;
-    }
-
-    /**
-     * @param mentoringSession the mentoringSession to set
-     */
-    public void setMentoringSession(MentoringSession mentoringSession) {
-        this.mentoringSession = mentoringSession;
-    }
-
-    /**
-     * @return the mentoringDate
-     */
     public Date getMentoringDate() {
         return mentoringDate;
     }
 
-    /**
-     * @param mentoringDate the mentoringDate to set
-     */
-    public void setMentoringDate(Date mentoringDate) {
-        this.mentoringDate = mentoringDate;
-    }
-
-    /**
-     * @return the patientsInitiated
-     */
-    public Long getPatientsInitiated() {
+    public int getPatientsInitiated() {
         return patientsInitiated;
     }
 
-    /**
-     * @param patientsInitiated the patientsInitiated to set
-     */
-    public void setPatientsInitiated(Long patientsInitiated) {
-        this.patientsInitiated = patientsInitiated;
-    }
-
-    /**
-     * @return the hoursSpent
-     */
-    public Long getHoursSpent() {
+    public int getHoursSpent() {
         return hoursSpent;
     }
 
-    /**
-     * @param hoursSpent the hoursSpent to set
-     */
-    public void setHoursSpent(Long hoursSpent) {
-        this.hoursSpent = hoursSpent;
+    public MentoringSession getMentoringSession() {
+        return mentoringSession;
     }
 
-    /**
-     * @return the venue
-     */
     public Facility getVenue() {
         return venue;
     }
 
-    /**
-     * @param venue the venue to set
-     */
-    public void setVenue(Facility venue) {
-        this.venue = venue;
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EmployeeMentoring other = (EmployeeMentoring) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

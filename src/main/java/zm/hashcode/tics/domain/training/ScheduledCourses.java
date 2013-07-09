@@ -21,6 +21,7 @@ public class ScheduledCourses implements Serializable {
     private Long id;
     private int courseCapacity;
     private int numOfStuds;
+    private int creditHours;
  
     private Date startDate;
 

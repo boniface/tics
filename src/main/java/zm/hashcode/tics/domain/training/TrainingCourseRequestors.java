@@ -2,68 +2,42 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.training;
 
 import java.io.Serializable;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import zm.hashcode.tics.domain.people.Person;
 
 /**
  *
  * @author boniface
  */
+public final class TrainingCourseRequestors implements Serializable {
 
-public class TrainingCourseRequestors implements Serializable {
-    private static final long serialVersionUID = 1L;
+    @DBRef
+    private Person personRequestor;
 
-    private Long id;
-
-    private String requestorName;
-
-    public Long getId() {
-        return id;
+    private TrainingCourseRequestors() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private TrainingCourseRequestors(Builder builder) {
+        personRequestor = builder.personRequestor;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+    public static class Builder {
+        private Person personRequestor;
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TrainingCourseRequestors)) {
-            return false;
+        public Builder(Person val) {
+            this.personRequestor = val;
         }
-        TrainingCourseRequestors other = (TrainingCourseRequestors) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+
+        public TrainingCourseRequestors build() {
+            return new TrainingCourseRequestors(this);
         }
-        return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.traininglist.TrainingCourseRequestors[id=" + id + "]";
+    public Person getPersonRequestor() {
+        return personRequestor;
     }
-
-    /**
-     * @return the requestorName
-     */
-    public String getRequestorName() {
-        return requestorName;
-    }
-
-    /**
-     * @param requestorName the requestorName to set
-     */
-    public void setRequestorName(String requestorName) {
-        this.requestorName = requestorName;
-    }
-
+    
 }

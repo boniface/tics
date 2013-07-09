@@ -23,7 +23,7 @@ import zm.hashcode.tics.client.web.FormDTO;
 public class Home {
 @RequestMapping(value = "/", method = RequestMethod.GET)
     public String displayHome(Model model) {
-    System.out.println(" This need replacing THIS Controller is HITTTTT");
+    System.out.println(" This need replacing THIS Controller is TTT");
 		return "/index";
 	}
 

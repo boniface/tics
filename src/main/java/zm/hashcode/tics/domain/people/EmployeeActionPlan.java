@@ -6,6 +6,7 @@ package zm.hashcode.tics.domain.people;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -14,192 +15,183 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class EmployeeActionPlan implements Serializable {
+
     private static final long serialVersionUID = 1L;
-  
-    private Long id;
-    private Long courseId;
-    private Long schduledCourse;
+    private String id;
+    private String courseId;
+    private String schduledCourseId;
     private String actionPlan;
     private Date actionPlanDate;
     private Date reviewPlanDate;
     private String actionPlanreview;
     private String status;
     private boolean review;
-    private Long mentoringSessionId;
-    private Long nimmartSessionId;
+    private String mentoringSessionId;
+    private String nimmartSessionId;
+
+    private EmployeeActionPlan() {
+    }
+
+    private EmployeeActionPlan(Builder builder) {
+        id = builder.id;
+        courseId = builder.courseId;
+        schduledCourseId = builder.schduledCourseId;
+        actionPlan = builder.actionPlan;
+        actionPlanDate= builder.actionPlanDate;
+        reviewPlanDate=builder.reviewPlanDate;
+        actionPlanreview=builder.actionPlanreview;
+        status=builder.status;
+        review=builder.review;
+        mentoringSessionId=builder.mentoringSessionId;
+        nimmartSessionId=builder.nimmartSessionId;
+
+    }
+
+    public static class Builder {
+
+        private final String actionPlan;
+        private String id;
+        private String courseId;
+        private String schduledCourseId;
+        private Date actionPlanDate;
+        private Date reviewPlanDate;
+        private String actionPlanreview;
+        private String status;
+        private boolean review;
+        private String mentoringSessionId;
+        private String nimmartSessionId;
+
+        public Builder(String val) {
+            this.actionPlan = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder courseId(String value) {
+            courseId = value;
+            return this;
+        }
+        
+        public Builder schduledCourseId(String value) {
+            schduledCourseId = value;
+            return this;
+        }
+        
+        public Builder actionPlanDate(Date value) {
+            actionPlanDate = value;
+            return this;
+        }
+        
+        public Builder reviewPlanDate(Date value) {
+            reviewPlanDate = value;
+            return this;
+        }
+        
+        public Builder actionPlanreview(String value) {
+            actionPlanreview = value;
+            return this;
+        }
+        
+        public Builder status(String value) {
+            status = value;
+            return this;
+        }
+        
+        public Builder review(Boolean value) {
+            review = value;
+            return this;
+        }
+        
+        public Builder mentoringSessionId(String value) {
+            mentoringSessionId = value;
+            return this;
+        }
+        
+        public Builder nimmartSessionId(String value) {
+            nimmartSessionId = value;
+            return this;
+        }
+
     
 
-    public Long getId() {
+        public EmployeeActionPlan build() {
+            return new EmployeeActionPlan(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmployeeActionPlan)) {
-            return false;
-        }
-        EmployeeActionPlan other = (EmployeeActionPlan) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.EmployeeActionPlan[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the courseId
-     */
-    public Long getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    /**
-     * @param courseId the courseId to set
-     */
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    public String getSchduledCourseId() {
+        return schduledCourseId;
     }
 
-    /**
-     * @return the schduledCourse
-     */
-    public Long getSchduledCourse() {
-        return schduledCourse;
-    }
-
-    /**
-     * @param schduledCourse the schduledCourse to set
-     */
-    public void setSchduledCourse(Long schduledCourse) {
-        this.schduledCourse = schduledCourse;
-    }
-
-    /**
-     * @return the actionPlan
-     */
     public String getActionPlan() {
         return actionPlan;
     }
 
-    /**
-     * @param actionPlan the actionPlan to set
-     */
-    public void setActionPlan(String actionPlan) {
-        this.actionPlan = actionPlan;
-    }
-
-    /**
-     * @return the actionPlanDate
-     */
     public Date getActionPlanDate() {
         return actionPlanDate;
     }
 
-    /**
-     * @param actionPlanDate the actionPlanDate to set
-     */
-    public void setActionPlanDate(Date actionPlanDate) {
-        this.actionPlanDate = actionPlanDate;
-    }
-
-    /**
-     * @return the actionPlanreview
-     */
-    public String getActionPlanreview() {
-        return actionPlanreview;
-    }
-
-    /**
-     * @param actionPlanreview the actionPlanreview to set
-     */
-    public void setActionPlanreview(String actionPlanreview) {
-        this.actionPlanreview = actionPlanreview;
-    }
-
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    /**
-     * @return the review
-     */
-    public boolean isReview() {
-        return review;
-    }
-
-    /**
-     * @param review the review to set
-     */
-    public void setReview(boolean review) {
-        this.review = review;
-    }
-
-    /**
-     * @return the mentoringSessionId
-     */
-    public Long getMentoringSessionId() {
-        return mentoringSessionId;
-    }
-
-    /**
-     * @param mentoringSessionId the mentoringSessionId to set
-     */
-    public void setMentoringSessionId(Long mentoringSessionId) {
-        this.mentoringSessionId = mentoringSessionId;
-    }
-
-    /**
-     * @return the nimmartSessionId
-     */
-    public Long getNimmartSessionId() {
-        return nimmartSessionId;
-    }
-
-    /**
-     * @param nimmartSessionId the nimmartSessionId to set
-     */
-    public void setNimmartSessionId(Long nimmartSessionId) {
-        this.nimmartSessionId = nimmartSessionId;
-    }
-
-    /**
-     * @return the reviewPlanDate
-     */
     public Date getReviewPlanDate() {
         return reviewPlanDate;
     }
 
-    /**
-     * @param reviewPlanDate the reviewPlanDate to set
-     */
-    public void setReviewPlanDate(Date reviewPlanDate) {
-        this.reviewPlanDate = reviewPlanDate;
+    public String getActionPlanreview() {
+        return actionPlanreview;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public boolean isReview() {
+        return review;
+    }
+
+    public String getMentoringSessionId() {
+        return mentoringSessionId;
+    }
+
+    public String getNimmartSessionId() {
+        return nimmartSessionId;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeActionPlan{" + "id=" + id + ", actionPlan=" + actionPlan + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 19 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EmployeeActionPlan other = (EmployeeActionPlan) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }

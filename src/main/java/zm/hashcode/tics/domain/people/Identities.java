@@ -11,37 +11,45 @@ import org.springframework.data.mongodb.core.index.Indexed;
  *
  * @author boniface
  */
+public final class Identities implements Serializable {
 
-public class Identities implements Serializable {
     private String idType;
     @Indexed(unique = true)
     private String idValue;
 
-    /**
-     * @return the idType
-     */
+    private Identities() {
+    }
+
+    private Identities(Builder builder) {
+        idValue = builder.idValue;
+        idType = builder.idType;
+    }
+
+    public static class Builder {
+
+        private final String idType;
+        private String idValue;
+
+        public Builder(String val) {
+            this.idType = val;
+        }
+
+        public Builder idValue(String value) {
+            idValue = value;
+            return this;
+        }
+
+        public Identities build() {
+            return new Identities(this);
+        }
+    }
+
     public String getIdType() {
         return idType;
     }
 
-    /**
-     * @param idType the idType to set
-     */
-    public void setIdType(String idType) {
-        this.idType = idType;
-    }
-
-    /**
-     * @return the idValue
-     */
     public String getIdValue() {
         return idValue;
     }
-
-    /**
-     * @param idValue the idValue to set
-     */
-    public void setIdValue(String idValue) {
-        this.idValue = idValue;
-    }
+    
 }

@@ -10,59 +10,32 @@ import java.io.Serializable;
  *
  * @author boniface
  */
+public final class MentorExpertiseArea implements Serializable {
 
-public class MentorExpertiseArea implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    private Long id;
     private String expertiseAreaName;
-    
 
-    public Long getId() {
-        return id;
+    private MentorExpertiseArea() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private MentorExpertiseArea(Builder builder) {
+        expertiseAreaName = builder.expertiseAreaName;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+    public static class Builder {
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MentorExpertiseArea)) {
-            return false;
+        private final String expertiseAreaName;
+
+        public Builder(String val) {
+            this.expertiseAreaName = val;
         }
-        MentorExpertiseArea other = (MentorExpertiseArea) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+
+        public MentorExpertiseArea build() {
+            return new MentorExpertiseArea(this);
         }
-        return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.MentorExpertiseArea[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the expertiseAreaName
-     */
     public String getExpertiseAreaName() {
         return expertiseAreaName;
     }
-
-    /**
-     * @param expertiseAreaName the expertiseAreaName to set
-     */
-    public void setExpertiseAreaName(String expertiseAreaName) {
-        this.expertiseAreaName = expertiseAreaName;
-    }
-    
 }

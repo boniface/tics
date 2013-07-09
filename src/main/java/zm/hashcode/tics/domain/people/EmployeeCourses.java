@@ -4,22 +4,23 @@
  */
 package zm.hashcode.tics.domain.people;
 
-
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.training.TrainingCourseRequestors;
-import zm.hashcode.tics.domain.training.TrainingCourses;
+import zm.hashcode.tics.domain.training.Course;
 
 /**
  *
  * @author boniface
  */
 @Document
-public class EmployeeCourses implements Serializable {
+public final class EmployeeCourses implements Serializable {
 
     private static long serialVersionUID = 1L;
-    private Long id;
+    private String id;
     private Date dateRequested;
     private String retraining;
     private String trainingStatus;
@@ -29,195 +30,181 @@ public class EmployeeCourses implements Serializable {
     private String competencyNotes;
     private Date courseStartDate;
     private Date courseEndDate;
-    private TrainingCourses course;
-    private Long scheduledCourseSessionId;
+    @DBRef
+    private Course course;
+    private String scheduledCourseSessionId;
 
-    public Long getId() {
-        return id;
+    private EmployeeCourses() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private EmployeeCourses(Builder builder) {
+        id = builder.id;
+        dateRequested = builder.dateRequested;
+        retraining = builder.retraining;
+        trainingStatus = builder.trainingStatus;
+        requestor = builder.requestor;
+        lastEvaluated = builder.lastEvaluated;
+        competencyName = builder.competencyName;
+        competencyNotes = builder.competencyNotes;
+        courseStartDate = builder.courseStartDate;
+        courseEndDate = builder.courseEndDate;
+        course = builder.course;
+        scheduledCourseSessionId = builder.scheduledCourseSessionId;
+
+    }
+
+    public static class Builder {
+
+        private String id;
+        private Date dateRequested;
+        private String retraining;
+        private String trainingStatus;
+        private TrainingCourseRequestors requestor;
+        private Date lastEvaluated;
+        private String competencyName;
+        private String competencyNotes;
+        private Date courseStartDate;
+        private Date courseEndDate;
+        private final Course course;
+        private String scheduledCourseSessionId;
+
+        public Builder(Course val) {
+            this.course = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder trainingStatus(String value) {
+            trainingStatus = value;
+            return this;
+        }
+
+        public Builder competencyName(String value) {
+            competencyName = value;
+            return this;
+        }
+
+        public Builder competencyNotes(String value) {
+            competencyNotes = value;
+            return this;
+        }
+
+        public Builder scheduledCourseSessionId(String value) {
+            scheduledCourseSessionId = value;
+            return this;
+        }
+
+        public Builder requestor(TrainingCourseRequestors value) {
+            requestor = value;
+            return this;
+        }
+
+        public Builder retraining(String value) {
+            retraining = value;
+            return this;
+        }
+
+        public Builder dateRequested(Date value) {
+            dateRequested = value;
+            return this;
+        }
+
+        public Builder lastEvaluated(Date value) {
+            lastEvaluated = value;
+            return this;
+        }
+
+        public Builder courseStartDate(Date value) {
+            courseStartDate = value;
+            return this;
+        }
+
+        public Builder courseEndDate(Date value) {
+            courseEndDate = value;
+            return this;
+        }
+
+        public EmployeeCourses build() {
+            return new EmployeeCourses(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeCourses{" + "id=" + id + ", courseEndDate=" + courseEndDate + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (getId() != null ? getId().hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmployeeCourses)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        EmployeeCourses other = (EmployeeCourses) object;
-        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EmployeeCourses other = (EmployeeCourses) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.Competency[id=" + getId() + "]";
+    public String getId() {
+        return id;
     }
 
-    /**
-     * @return the competencyName
-     */
-    public String getCompetencyName() {
-        return competencyName;
-    }
-
-    /**
-     * @param competencyName the competencyName to set
-     */
-    public void setCompetencyName(String competencyName) {
-        this.competencyName = competencyName;
-    }
-
-    /**
-     * @return the competencyNotes
-     */
-    public String getCompetencyNotes() {
-        return competencyNotes;
-    }
-
-    /**
-     * @param competencyNotes the competencyNotes to set
-     */
-    public void setCompetencyNotes(String competencyNotes) {
-        this.competencyNotes = competencyNotes;
-    }
-
-    /**
-     * @return the lastEvaluated
-     */
-    public Date getLastEvaluated() {
-        return lastEvaluated;
-    }
-
-    /**
-     * @param lastEvaluated the lastEvaluated to set
-     */
-    public void setLastEvaluated(Date lastEvaluated) {
-        this.lastEvaluated = lastEvaluated;
-    }
-
-    /**
-     * @return the dateRequested
-     */
     public Date getDateRequested() {
         return dateRequested;
     }
 
-    /**
-     * @param dateRequested the dateRequested to set
-     */
-    public void setDateRequested(Date dateRequested) {
-        this.dateRequested = dateRequested;
-    }
-
-    /**
-     * @return the retraining
-     */
     public String getRetraining() {
         return retraining;
     }
 
-    /**
-     * @param retraining the retraining to set
-     */
-    public void setRetraining(String retraining) {
-        this.retraining = retraining;
-    }
-
-    /**
-     * @return the trainingStatus
-     */
     public String getTrainingStatus() {
         return trainingStatus;
     }
 
-    /**
-     * @param trainingStatus the trainingStatus to set
-     */
-    public void setTrainingStatus(String trainingStatus) {
-        this.trainingStatus = trainingStatus;
-    }
-
-    /**
-     * @return the requestor
-     */
     public TrainingCourseRequestors getRequestor() {
         return requestor;
     }
 
-    /**
-     * @param requestor the requestor to set
-     */
-    public void setRequestor(TrainingCourseRequestors requestor) {
-        this.requestor = requestor;
+    public Date getLastEvaluated() {
+        return lastEvaluated;
     }
 
+    public String getCompetencyName() {
+        return competencyName;
+    }
 
+    public String getCompetencyNotes() {
+        return competencyNotes;
+    }
 
-    /**
-     * @return the courseStartDate
-     */
     public Date getCourseStartDate() {
         return courseStartDate;
     }
 
-    /**
-     * @param courseStartDate the courseStartDate to set
-     */
-    public void setCourseStartDate(Date courseStartDate) {
-        this.courseStartDate = courseStartDate;
-    }
-
-    /**
-     * @return the courseEndDate
-     */
     public Date getCourseEndDate() {
         return courseEndDate;
     }
 
-    /**
-     * @param courseEndDate the courseEndDate to set
-     */
-    public void setCourseEndDate(Date courseEndDate) {
-        this.courseEndDate = courseEndDate;
-    }
-
-    /**
-     * @return the course
-     */
-    public TrainingCourses getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    /**
-     * @param course the course to set
-     */
-    public void setCourse(TrainingCourses course) {
-        this.course = course;
-    }
-
-    /**
-     * @return the scheduledCourseSessionId
-     */
-    public Long getScheduledCourseSessionId() {
+    public String getScheduledCourseSessionId() {
         return scheduledCourseSessionId;
     }
-
-    /**
-     * @param scheduledCourseSessionId the scheduledCourseSessionId to set
-     */
-    public void setScheduledCourseSessionId(Long scheduledCourseSessionId) {
-        this.scheduledCourseSessionId = scheduledCourseSessionId;
-    }
+    
 }

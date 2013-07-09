@@ -13,58 +13,70 @@ import zm.hashcode.tics.domain.ui.location.Location;
  *
  * @author boniface
  */
-
-public class EducationHistory implements Serializable {
+public final class EducationHistory implements Serializable {
 
     private String instituteNamwe;
     @DBRef
-    private Location Location;
-    private Date graduation;
-    @DBRef
-   
+    private Location location;
+    private Date graduationDate;
     private String major;
-    /**
-     * @return the instituteNamwe
-     */
+
+    private EducationHistory() {
+    }
+
+    private EducationHistory(Builder builder) {
+        instituteNamwe = builder.instituteNamwe;
+        location = builder.Location;
+        graduationDate = builder.graduationDate;
+        major= builder.major;
+
+    }
+
+    public static class Builder {
+
+        private final String instituteNamwe;
+        private Location Location;
+        private Date graduationDate;
+        private String major;
+
+        public Builder(String val) {
+            this.instituteNamwe = val;
+        }
+
+        public Builder graduationDate(Date value) {
+            graduationDate = value;
+            return this;
+        }
+
+        public Builder mahor(String value) {
+            major = value;
+            return this;
+        }
+
+        public Builder location(Location value) {
+            Location = value;
+            return this;
+        }
+
+        public EducationHistory build() {
+            return new EducationHistory(this);
+        }
+    }
+
     public String getInstituteNamwe() {
         return instituteNamwe;
     }
 
-    /**
-     * @param instituteNamwe the instituteNamwe to set
-     */
-    public void setInstituteNamwe(String instituteNamwe) {
-        this.instituteNamwe = instituteNamwe;
+    public Location getLocation() {
+        return location;
     }
 
- 
-
-    /**
-     * @return the graduation
-     */
-    public Date getGraduation() {
-        return graduation;
+    public Date getGraduationDate() {
+        return graduationDate;
     }
 
-    /**
-     * @param graduation the graduation to set
-     */
-    public void setGraduation(Date graduation) {
-        this.graduation = graduation;
-    }
-
-
-    /**
-     * @return the major
-     */
     public String getMajor() {
         return major;
     }
-
-    /**
-     * @param major the major to set
-     */
-    public void setMajor(String major) {
-        this.major = major;
-    }
+    
 }

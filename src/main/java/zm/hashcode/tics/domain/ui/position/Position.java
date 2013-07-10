@@ -5,9 +5,9 @@
 package zm.hashcode.tics.domain.ui.position;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -18,14 +18,13 @@ import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.ui.job.Job;
 import zm.hashcode.tics.domain.ui.util.Status;
 
-
-
 /**
  *
  * @author boniface
  */
 @Document
 public class Position implements Serializable, Comparable<Position> {
+
     private static long serialVersionUID = 1L;
     @Id
     private String id;
@@ -44,7 +43,7 @@ public class Position implements Serializable, Comparable<Position> {
     private String positionComments;
     @DBRef
     private Facility facility;
-    private List<String> subodinateIds = new ArrayList<String>();
+    private List<String> subodinateIds;
     @DBRef
     private Position supervisor;
     @DBRef
@@ -52,153 +51,123 @@ public class Position implements Serializable, Comparable<Position> {
     @DBRef
     private Job job;
 
-    public String getId() {
-        return id;
+    private Position() {
     }
 
-    public Person getCurrentOccupant() {
-        return currentOccupant;
+    private Position(Builder builder) {
+        id = builder.id;
+        positionCode = builder.positionCode;
+        positionComments = builder.positionComments;
+        positionEndDate = builder.positionEndDate;
+        positionStatus = builder.positionStatus;
+        positionTitle = builder.positionTitle;
+        positionType = builder.positionType;
+        currentOccupant = builder.currentOccupant;
+        department = builder.department;
+        description = builder.description;
+        facility = builder.facility;
+        job = builder.job;
+        subodinateIds = builder.subodinateIds;
+        supervisor = builder.supervisor;
+        postionEntryDate = builder.postionEntryDate;
     }
 
-    public void setCurrentOccupant(Person currentOccupant) {
-        this.currentOccupant = currentOccupant;
-    }
+    public static class Builder {
 
-    
-    public void setId(String id) {
-        this.id = id;
-    }
+        private String id;
+        private String positionCode;
+        //Make it from Job and Position Title Nurse-Code
+        private final String positionTitle;
+        private String description;
+        private Date postionEntryDate;
+        private Date positionEndDate;
+        private Person currentOccupant;
+        private PositionType positionType;
+        private Status positionStatus;
+        private String positionComments;
+        private Facility facility;
+        private List<String> subodinateIds;
+        private Position supervisor;
+        private Department department;
+        private Job job;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public static void setSerialVersionUID(long serialVersionUID) {
-        Position.serialVersionUID = serialVersionUID;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (getId() != null ? getId().hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Position)) {
-            return false;
+        public Builder(String val) {
+            this.positionTitle = val;
         }
-        Position other = (Position) object;
-        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
-            return false;
+
+        public Builder id(String value) {
+            id = value;
+            return this;
         }
-        return true;
-    }
 
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.positions.Positions[id=" + getId() + "]";
-    }
+        public Builder positionCode(String value) {
+            positionCode = value;
+            return this;
+        }
 
-    /**
-     * @return the job
-     */
-    public Job getJob() {
-        return job;
-    }
+        public Builder roles(List<String> value) {
+            subodinateIds = value;
+            return this;
+        }
 
-    /**
-     * @param job the job to set
-     */
-    public void setJob(Job job) {
-        this.job = job;
-    }
+        public Builder job(Job value) {
+            job = value;
+            return this;
+        }
 
-    /**
-     * @return the positionCode
-     */
-    public String getPositionCode() {
-        return positionCode;
-    }
+        public Builder department(Department value) {
+            department = value;
+            return this;
+        }
 
-    /**
-     * @param positionCode the positionCode to set
-     */
-    public void setPositionCode(String positionCode) {
-        this.positionCode = positionCode;
-    }
+        public Builder supervisor(Position value) {
+            supervisor = value;
+            return this;
+        }
 
-    /**
-     * @return the positionComments
-     */
-    public String getPositionComments() {
-        return positionComments;
-    }
+        public Builder positionComments(String value) {
+            positionComments = value;
+            return this;
+        }
 
-    /**
-     * @param positionComments the positionComments to set
-     */
-    public void setPositionComments(String positionComments) {
-        this.positionComments = positionComments;
-    }
+        public Builder facility(Facility value) {
+            facility = value;
+            return this;
+        }
 
+        public Builder positionStatus(Status value) {
+            positionStatus = value;
+            return this;
+        }
 
-    /**
-     * @return the department
-     */
-    public Department getDepartment() {
-        return department;
-    }
+        public Builder positionType(PositionType value) {
+            positionType = value;
+            return this;
+        }
 
-    /**
-     * @param department the department to set
-     */
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+        public Builder currentOccupant(Person value) {
+            currentOccupant = value;
+            return this;
+        }
 
-    /**
-     * @return the positionStatus
-     */
-    public Status getPositionStatus() {
-        return positionStatus;
-    }
+        public Builder postionEntryDate(Date value) {
+            postionEntryDate = value;
+            return this;
+        }
 
-    /**
-     * @param positionStatus the positionStatus to set
-     */
-    public void setPositionStatus(Status positionStatus) {
-        this.positionStatus = positionStatus;
-    }
+        public Builder positionEndDate(Date value) {
+            positionEndDate = value;
+            return this;
+        }
 
-    /**
-     * @return the positionType
-     */
-    public PositionType getPositionType() {
-        return positionType;
-    }
+        public Builder description(String value) {
+            description = value;
+            return this;
+        }
 
-    /**
-     * @param positionType the positionType to set
-     */
-    public void setPositionType(PositionType positionType) {
-        this.positionType = positionType;
-    }
-
-    /**
-     * @return the supervisor
-     */
-    public Position getSupervisor() {
-        return supervisor;
-    }
-
-    /**
-     * @param supervisor the supervisor to set
-     */
-    public void setSupervisor(Position supervisor) {
-        this.supervisor = supervisor;
+        public Position build() {
+            return new Position(this);
+        }
     }
 
     @Override
@@ -206,69 +175,90 @@ public class Position implements Serializable, Comparable<Position> {
         return positionCode.compareTo(o.positionCode);
     }
 
-    /**
-     * @return the positionTitle
-     */
+    public String getId() {
+        return id;
+    }
+
+    public String getPositionCode() {
+        return positionCode;
+    }
+
     public String getPositionTitle() {
         return positionTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getPostionEntryDate() {
+        return postionEntryDate;
+    }
+
+    public Date getPositionEndDate() {
+        return positionEndDate;
+    }
+
+    public Person getCurrentOccupant() {
+        return currentOccupant;
+    }
+
+    public PositionType getPositionType() {
+        return positionType;
+    }
+
+    public Status getPositionStatus() {
+        return positionStatus;
+    }
+
+    public String getPositionComments() {
+        return positionComments;
+    }
+
+    public Facility getFacility() {
+        return facility;
     }
 
     public List<String> getSubodinateIds() {
         return subodinateIds;
     }
 
-    public void setSubodinateIds(List<String> subodinateIds) {
-        this.subodinateIds = subodinateIds;
+    public Position getSupervisor() {
+        return supervisor;
     }
 
-    /**
-     * @param positionTitle the positionTitle to set
-     */
-    public void setPositionTitle(String positionTitle) {
-        this.positionTitle = positionTitle;
+    public Department getDepartment() {
+        return department;
     }
 
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
+    public Job getJob() {
+        return job;
     }
 
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
-    /**
-     * @return the postionEntryDate
-     */
-    public Date getPostionEntryDate() {
-        return postionEntryDate;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Position other = (Position) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
-    /**
-     * @param postionEntryDate the postionEntryDate to set
-     */
-    public void setPostionEntryDate(Date postionEntryDate) {
-        this.postionEntryDate = postionEntryDate;
+    @Override
+    public String toString() {
+        return "Position{" + "positionCode=" + positionCode + ", positionTitle=" + positionTitle + '}';
     }
-
-    /**
-     * @return the positionEndDate
-     */
-    public Date getPositionEndDate() {
-        return positionEndDate;
-    }
-
-    /**
-     * @param positionEndDate the positionEndDate to set
-     */
-    public void setPositionEndDate(Date positionEndDate) {
-        this.positionEndDate = positionEndDate;
-    }
-
-    
 }

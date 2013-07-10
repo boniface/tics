@@ -87,5 +87,4 @@ public final class AddressType implements Serializable {
         return "AddressType{" + "addressTypeName=" + addressTypeName + '}';
     }
 
-   
 }

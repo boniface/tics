@@ -2,20 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.ui.job;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 /**
  *
  * @author boniface
  */
 @Document
-public class JobClassification implements Serializable {
+public final class JobClassification implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -26,30 +26,66 @@ public class JobClassification implements Serializable {
     private String codeConversion;
     private String comment;
 
-     private TitleList() {
+    private JobClassification() {
     }
 
-    private TitleList(Builder builder) {
+    private JobClassification(Builder builder) {
         id = builder.id;
-        title = builder.title;
+        currentCode = builder.currentCode;
+        currentTitle = builder.currentTitle;
+        oldTitle = builder.oldTitle;
+        oldCode = builder.oldCode;
+        codeConversion = builder.codeConversion;
+        comment = builder.comment;
+
     }
 
     public static class Builder {
 
         private String id;
-        private String title;
+        private final String currentTitle;
+        private String oldTitle;
+        private String oldCode;
+        private String currentCode;
+        private String codeConversion;
+        private String comment;
 
         public Builder(String val) {
-            this.title = val;
+            this.currentTitle = val;
         }
 
-        public TitleList.Builder id(String value) {
+        public Builder id(String value) {
             id = value;
             return this;
         }
 
-        public TitleList build() {
-            return new TitleList(this);
+        public Builder oldTitle(String value) {
+            oldTitle = value;
+            return this;
+        }
+
+        public Builder oldCode(String value) {
+            oldCode = value;
+            return this;
+        }
+
+        public Builder currentCode(String value) {
+            currentCode = value;
+            return this;
+        }
+
+        public Builder codeConversion(String value) {
+            codeConversion = value;
+            return this;
+        }
+
+        public Builder comment(String value) {
+            comment = value;
+            return this;
+        }
+
+        public JobClassification build() {
+            return new JobClassification(this);
         }
     }
 
@@ -57,19 +93,34 @@ public class JobClassification implements Serializable {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCurrentTitle() {
+        return currentTitle;
     }
 
-    @Override
-    public String toString() {
-        return "TitleList{" + "title=" + title + '}';
+    public String getOldTitle() {
+        return oldTitle;
+    }
+
+    public String getOldCode() {
+        return oldCode;
+    }
+
+    public String getCurrentCode() {
+        return currentCode;
+    }
+
+    public String getCodeConversion() {
+        return codeConversion;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -81,9 +132,10 @@ public class JobClassification implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TitleList other = (TitleList) obj;
+        final JobClassification other = (JobClassification) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+}

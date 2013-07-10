@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.ui.location;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -18,7 +18,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class RegistrationBody implements Serializable {
+public final class RegistrationBody implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -28,32 +29,103 @@ public class RegistrationBody implements Serializable {
     private String coreActivity;
     private String active;
     @NotNull
-    private Date asOfDate;
-    
+    private Date startDate;
+
+    private RegistrationBody() {
+    }
+
+    private RegistrationBody(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+        description = builder.description;
+        coreActivity= builder.coreActivity;
+        active=builder.active;
+        startDate= builder.startDate;
+    }
+    public static class Builder {
+
+        private String id;
+        private final String name;
+        private String description;
+        private String coreActivity;
+        private String active;
+        private Date startDate;
+
+        public Builder(String val) {
+            this.name = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder description(String value) {
+            description = value;
+            return this;
+        }
+
+        public Builder coreActivity(String value) {
+            coreActivity = value;
+            return this;
+        }
+
+        public Builder active(String value) {
+            active = value;
+            return this;
+        }
+
+        public Builder startDate(Date value) {
+            startDate = value;
+            return this;
+        }
+
+        public RegistrationBody build() {
+            return new RegistrationBody(this);
+        }
+    }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCoreActivity() {
+        return coreActivity;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public Date getStartDate() {
+        return startDate;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RegistrationBody)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        RegistrationBody other = (RegistrationBody) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RegistrationBody other = (RegistrationBody) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -61,77 +133,7 @@ public class RegistrationBody implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.offices.RegistrationBody[id=" + id + "]";
+        return "RegistrationBody{" + "name=" + name + '}';
     }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the coreActivity
-     */
-    public String getCoreActivity() {
-        return coreActivity;
-    }
-
-    /**
-     * @param coreActivity the coreActivity to set
-     */
-    public void setCoreActivity(String coreActivity) {
-        this.coreActivity = coreActivity;
-    }
-
-    /**
-     * @return the active
-     */
-    public String getActive() {
-        return active;
-    }
-
-    /**
-     * @param active the active to set
-     */
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    /**
-     * @return the asOfDate
-     */
-    public Date getAsOfDate() {
-        return asOfDate;
-    }
-
-    /**
-     * @param asOfDate the asOfDate to set
-     */
-    public void setAsOfDate(Date asOfDate) {
-        this.asOfDate = asOfDate;
-    }
-
+    
 }

@@ -5,6 +5,7 @@
 package zm.hashcode.tics.domain.ui.location;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -23,30 +24,30 @@ public final class ContactList implements Serializable {
     @NotNull
     private String name;
 
-     private TitleList() {
+     private ContactList() {
     }
 
-    private TitleList(Builder builder) {
+    private ContactList(Builder builder) {
         id = builder.id;
-        title = builder.title;
+        name = builder.name;
     }
 
     public static class Builder {
 
         private String id;
-        private String title;
+        private final String name;
 
         public Builder(String val) {
-            this.title = val;
+            this.name = val;
         }
 
-        public TitleList.Builder id(String value) {
+        public ContactList.Builder id(String value) {
             id = value;
             return this;
         }
 
-        public TitleList build() {
-            return new TitleList(this);
+        public ContactList build() {
+            return new ContactList(this);
         }
     }
 
@@ -54,19 +55,19 @@ public final class ContactList implements Serializable {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
-        return "TitleList{" + "title=" + title + '}';
+        return "ContactList{" + "name=" + name + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -78,9 +79,11 @@ public final class ContactList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TitleList other = (TitleList) obj;
+        final ContactList other = (ContactList) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+    
+}

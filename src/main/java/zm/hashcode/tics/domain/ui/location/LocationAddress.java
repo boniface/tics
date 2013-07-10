@@ -10,72 +10,87 @@ import java.io.Serializable;
  *
  * @author boniface
  */
+public final class LocationAddress implements Serializable {
 
-public class LocationAddress implements Serializable {
     private String postalAddress;
     private String physicalAddress;
     private String contactNumber;
     private String postalCode;
     private String emailAddress;
 
-     private TitleList() {
+    private LocationAddress() {
     }
 
-    private TitleList(Builder builder) {
-        id = builder.id;
-        title = builder.title;
+    private LocationAddress(Builder builder) {
+        postalAddress = builder.postalAddress;
+        physicalAddress = builder.physicalAddress;
+        contactNumber = builder.contactNumber;
+        postalCode = builder.postalCode;
+        emailAddress = builder.emailAddress;
     }
 
     public static class Builder {
 
-        private String id;
-        private String title;
+        private String postalAddress;
+        private String physicalAddress;
+        private final String contactNumber;
+        private String postalCode;
+        private String emailAddress;
 
         public Builder(String val) {
-            this.title = val;
+            this.contactNumber = val;
         }
 
-        public TitleList.Builder id(String value) {
-            id = value;
+        public Builder postalAddress(String value) {
+            postalAddress = value;
             return this;
         }
 
-        public TitleList build() {
-            return new TitleList(this);
+        public Builder physicalAddress(String value) {
+            physicalAddress = value;
+            return this;
+        }
+
+        public Builder postalCode(String value) {
+            postalCode = value;
+            return this;
+        }
+        
+        
+        public Builder emailAddress(String value) {
+            emailAddress = value;
+            return this;
+        }
+
+        public LocationAddress build() {
+            return new LocationAddress(this);
         }
     }
 
-    public String getId() {
-        return id;
+    public String getPostalAddress() {
+        return postalAddress;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPhysicalAddress() {
+        return physicalAddress;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     @Override
     public String toString() {
-        return "TitleList{" + "title=" + title + '}';
+        return "LocationAddress{" + "postalCode=" + postalCode + ", emailAddress=" + emailAddress + '}';
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TitleList other = (TitleList) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
-    }
+    
+    
+}

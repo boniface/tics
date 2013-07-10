@@ -5,6 +5,7 @@
 package zm.hashcode.tics.domain.ui.util;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +18,7 @@ import zm.hashcode.tics.domain.ui.location.LocationAddress;
  */
 @Document
 public class Funder implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -26,53 +28,91 @@ public class Funder implements Serializable {
     private Location city;
     private LocationAddress contact;
 
+    private Funder() {
+    }
+
+    private Funder(Builder builder) {
+        id = builder.id;
+        trainingFunderName = builder.trainingFunderName;
+        costCenter = builder.costCenter;
+        city= builder.city;
+        contact=builder.contact;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private final String trainingFunderName;
+        private String costCenter;
+        private Location city;
+        private LocationAddress contact;
+
+        public Builder(String val) {
+            this.trainingFunderName = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder costCenter(String value) {
+            costCenter = value;
+            return this;
+        }
+
+        public Builder city(Location value) {
+            city = value;
+            return this;
+        }
+
+        public Builder contact(LocationAddress value) {
+            contact = value;
+            return this;
+        }
+
+        public Funder build() {
+            return new Funder(this);
+        }
+    }
+
     public String getId() {
         return id;
+    }
+
+    public String getTrainingFunderName() {
+        return trainingFunderName;
     }
 
     public String getCostCenter() {
         return costCenter;
     }
 
-    public void setCostCenter(String costCenter) {
-        this.costCenter = costCenter;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Location getCity() {
         return city;
-    }
-
-    public void setCity(Location city) {
-        this.city = city;
     }
 
     public LocationAddress getContact() {
         return contact;
     }
 
-    public void setContact(LocationAddress contact) {
-        this.contact = contact;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Funder)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Funder other = (Funder) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Funder other = (Funder) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -80,20 +120,7 @@ public class Funder implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.TrainingFunder[id=" + id + "]";
+        return "Funder{" + "trainingFunderName=" + trainingFunderName + '}';
     }
-
-    /**
-     * @return the trainingFunderName
-     */
-    public String getTrainingFunderName() {
-        return trainingFunderName;
-    }
-
-    /**
-     * @param trainingFunderName the trainingFunderName to set
-     */
-    public void setTrainingFunderName(String trainingFunderName) {
-        this.trainingFunderName = trainingFunderName;
-    }
+    
 }

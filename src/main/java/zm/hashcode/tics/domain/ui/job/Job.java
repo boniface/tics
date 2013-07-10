@@ -2,11 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.ui.job;
 
+import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,101 +18,128 @@ import zm.hashcode.tics.domain.ui.position.Position;
  * @author boniface
  */
 @Document
-public class Job implements Serializable, Comparable<Job>{
+public final class Job implements Serializable, Comparable<Job> {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String title;
-    private String code ;
+    private String code;
     private String description;
     @DBRef
     private JobClassification jobClassification;
     @DBRef
     private List<Position> positions;
 
-    public List<Position> getPositions() {
-        return positions;
+    private Job() {
     }
 
-    public void setPositions(List<Position> positions) {
-        this.positions = positions;
+    private Job(Builder builder) {
+        id = builder.id;
+        title = builder.title;
+        code = builder.code;
+        description=builder.description;
+        jobClassification=builder.jobClassification;
+        positions=builder.positions;
+
     }
-    
-    
+
+    public static class Builder {
+
+        private String id;
+        private final String title;
+        private String code;
+        private String description;
+        private JobClassification jobClassification;
+        private List<Position> positions;
+
+        public Builder(String val) {
+            this.title = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder code(String value) {
+            code = value;
+            return this;
+        }
+
+        public Builder jobClassification(JobClassification value) {
+            jobClassification = value;
+            return this;
+        }
+
+        public Builder description(String value) {
+            description = value;
+            return this;
+        }
+
+        public Builder positions(List<Position> value) {
+            positions = value;
+            return this;
+        }
+
+        public Job build() {
+            return new Job(this);
+        }
+    }
+
+    @Override
+    public int compareTo(Job o) {
+        return title.compareTo(o.title);
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" + "title=" + title + ", code=" + code + '}';
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getDescription() {
         return description;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     public JobClassification getJobClassification() {
         return jobClassification;
     }
 
-    public void setJobClassification(JobClassification jobClassification) {
-        this.jobClassification = jobClassification;
-    }
-
-    
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String  id) {
-        this.id = id;
+    public List<Position> getPositions() {
+        return ImmutableList.copyOf(positions);
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Job)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Job other = (Job) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Job other = (Job) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.hashthrims.domain.jobs.Jobs[id=" + id + "]";
-    }
-    @Override
-    public int compareTo(Job o) {
-        return title.compareTo(o.title);
-    }
-
-    
-
-
-    
+    }    
 }

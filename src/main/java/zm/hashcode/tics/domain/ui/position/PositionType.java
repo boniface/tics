@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.ui.position;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,38 +15,38 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class PositionType implements Serializable {
+public final class PositionType implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-  
     private String id;
     //Full Time, PartTime, Causal , Hourly
     private String name;
 
-   private TitleList() {
+    private PositionType() {
     }
 
-    private TitleList(Builder builder) {
+    private PositionType(Builder builder) {
         id = builder.id;
-        title = builder.title;
+        name = builder.name;
     }
 
     public static class Builder {
 
         private String id;
-        private String title;
+        private final String name;
 
         public Builder(String val) {
-            this.title = val;
+            this.name = val;
         }
 
-        public TitleList.Builder id(String value) {
+        public PositionType.Builder id(String value) {
             id = value;
             return this;
         }
 
-        public TitleList build() {
-            return new TitleList(this);
+        public PositionType build() {
+            return new PositionType(this);
         }
     }
 
@@ -54,19 +54,14 @@ public class PositionType implements Serializable {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String toString() {
-        return "TitleList{" + "title=" + title + '}';
+    public String getName() {
+        return name;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -78,9 +73,15 @@ public class PositionType implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TitleList other = (TitleList) obj;
+        final PositionType other = (PositionType) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "PositionType{" + "id=" + id + ", name=" + name + '}';
+    }
+}

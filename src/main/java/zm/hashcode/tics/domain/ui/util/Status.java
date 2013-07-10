@@ -5,6 +5,7 @@
 package zm.hashcode.tics.domain.ui.util;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,37 +14,40 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class Status implements Serializable {
+public final class Status implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String statusType;
-    private String statusValues;
+    private String statusValue;
 
-     private TitleList() {
+    private Status() {
     }
 
-    private TitleList(Builder builder) {
+    private Status(Builder builder) {
         id = builder.id;
-        title = builder.title;
+        statusType = builder.statusType;
+        statusValue = builder.statusValue;
     }
 
     public static class Builder {
 
         private String id;
-        private String title;
+        private String statusValue;
+        private final String statusType;
 
         public Builder(String val) {
-            this.title = val;
+            this.statusType = val;
         }
 
-        public TitleList.Builder id(String value) {
+        public Builder id(String value) {
             id = value;
             return this;
         }
 
-        public TitleList build() {
-            return new TitleList(this);
+        public Status build() {
+            return new Status(this);
         }
     }
 
@@ -51,19 +55,18 @@ public class Status implements Serializable {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getStatusType() {
+        return statusType;
     }
 
-    @Override
-    public String toString() {
-        return "TitleList{" + "title=" + title + '}';
+    public String getStatusValue() {
+        return statusValue;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -75,9 +78,15 @@ public class Status implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TitleList other = (TitleList) obj;
+        final Status other = (Status) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Status{" + "id=" + id + ", statusValue=" + statusValue + '}';
+    }
+}

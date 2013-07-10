@@ -135,5 +135,10 @@ public final class Location implements Serializable {
     public Location getParent() {
         return parent;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" + "name=" + name + '}';
+    }
     
 }

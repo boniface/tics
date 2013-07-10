@@ -5,6 +5,7 @@
 package zm.hashcode.tics.app.conf;
 
 import com.mongodb.Mongo;
+import com.mongodb.WriteConcern;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,9 @@ public class RepositoryConfig extends AbstractMongoConfiguration {
 
     @Override
     public Mongo mongo() throws Exception {
-        return new Mongo();
+        Mongo mongo = new Mongo();
+        mongo.setWriteConcern(WriteConcern.SAFE);
+        return mongo;
     }
 
     @Override

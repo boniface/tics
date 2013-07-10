@@ -20,52 +20,64 @@ public class Status implements Serializable {
     private String statusType;
     private String statusValues;
 
+     private TitleList() {
+    }
+
+    private TitleList(Builder builder) {
+        id = builder.id;
+        title = builder.title;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String title;
+
+        public Builder(String val) {
+            this.title = val;
+        }
+
+        public TitleList.Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public TitleList build() {
+            return new TitleList(this);
+        }
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getStatusType() {
-        return statusType;
-    }
-
-    public void setStatusType(String statusType) {
-        this.statusType = statusType;
-    }
-
-    public String getStatusValues() {
-        return statusValues;
-    }
-
-    public void setStatusValues(String statusValues) {
-        this.statusValues = statusValues;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Status)) {
-            return false;
-        }
-        Status other = (Status) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public String getTitle() {
+        return title;
     }
 
     @Override
     public String toString() {
-        return "zm.hashcode.hashwork.domain.ui.util.Status[ id=" + id + " ]";
+        return "TitleList{" + "title=" + title + '}';
     }
-}
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TitleList other = (TitleList) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }

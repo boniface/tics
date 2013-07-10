@@ -6,6 +6,7 @@
 package zm.hashcode.tics.domain.ui.location;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -16,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class AddressType implements Serializable {
+public final class AddressType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -24,29 +25,58 @@ public class AddressType implements Serializable {
     @NotNull
     private String addressTypeName;
 
-    public String  getId() {
+   private AddressType() {
+    }
+
+    private AddressType(Builder builder) {
+        id = builder.id;
+        addressTypeName = builder.addressTypeName;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String addressTypeName;
+
+        public Builder(String val) {
+            this.addressTypeName = val;
+        }
+
+        public AddressType.Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public AddressType build() {
+            return new AddressType(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(String  id) {
-        this.id = id;
+    public String getAddressTypeName() {
+        return addressTypeName;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AddressType)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        AddressType other = (AddressType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AddressType other = (AddressType) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -54,21 +84,8 @@ public class AddressType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.regionlist.AddressType[id=" + id + "]";
+        return "AddressType{" + "addressTypeName=" + addressTypeName + '}';
     }
 
-    /**
-     * @return the addressTypeName
-     */
-    public String getAddressTypeName() {
-        return addressTypeName;
-    }
-
-    /**
-     * @param addressTypeName the addressTypeName to set
-     */
-    public void setAddressTypeName(String addressTypeName) {
-        this.addressTypeName = addressTypeName;
-    }
-
+   
 }

@@ -6,6 +6,7 @@
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,38 +22,58 @@ public class Language implements Serializable {
     private String name;
 
 
-    public String  getId() {
-        return id;
+    private Language() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    private Language(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+    }
+
+    public static class Builder {
+
+        private String id;
+       private final String name;
+
+        public Builder(String val) {
+            this.name = val;
+        }
+
+        public Language.Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Language build() {
+            return new Language(this);
+        }
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Language)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Language other = (Language) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Language other = (Language) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -60,9 +81,7 @@ public class Language implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.employeelist.Language[id=" + id + "]";
+        return "Language{" + "id=" + id + ", name=" + name + '}';
     }
-
-   
-
+    
 }

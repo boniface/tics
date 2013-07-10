@@ -6,6 +6,7 @@
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,35 +15,64 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author stud
  */
 @Document
-public class LanguageProficiency implements Serializable {
+public final class LanguageProficiency implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String proficiency;
 
-    public String  getId() {
+   private LanguageProficiency() {
+    }
+
+    private LanguageProficiency(Builder builder) {
+        id = builder.id;
+        proficiency = builder.proficiency;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private final String proficiency;
+
+        public Builder(String val) {
+            this.proficiency = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public LanguageProficiency build() {
+            return new LanguageProficiency(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(String  id) {
-        this.id = id;
+    public String getProficiency() {
+        return proficiency;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LanguageProficiency)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        LanguageProficiency other = (LanguageProficiency) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LanguageProficiency other = (LanguageProficiency) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -50,21 +80,8 @@ public class LanguageProficiency implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.employeelist.LanguageProficiency[id=" + id + "]";
+        return "LanguageProficiency{" + "proficiency=" + proficiency + '}';
     }
-
-    /**
-     * @return the proficiency
-     */
-    public String getProficiency() {
-        return proficiency;
-    }
-
-    /**
-     * @param proficiency the proficiency to set
-     */
-    public void setProficiency(String proficiency) {
-        this.proficiency = proficiency;
-    }
-
+    
+    
 }

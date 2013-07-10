@@ -6,6 +6,7 @@
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,36 +16,65 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class MaritalStatusList implements Serializable {
+public final class MaritalStatusList implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String statusName;
 
 
-    public String  getId() {
+  private MaritalStatusList() {
+    }
+
+    private MaritalStatusList(Builder builder) {
+        id = builder.id;
+        statusName = builder.statusName;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private final String statusName;
+
+        public Builder(String val) {
+            this.statusName = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public MaritalStatusList build() {
+            return new MaritalStatusList(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getStatusName() {
+        return statusName;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MaritalStatusList)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        MaritalStatusList other = (MaritalStatusList) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MaritalStatusList other = (MaritalStatusList) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -52,18 +82,8 @@ public class MaritalStatusList implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.employeelist.MaritalStatusList[id=" + id + "]";
+        return "MaritalStatusList{" + "statusName=" + statusName + '}';
     }
-
-    public String getStatusName() {
-        return statusName;
-    }
-
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
-
     
     
-
 }

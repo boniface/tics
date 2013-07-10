@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,35 +14,65 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class GenderList implements Serializable {
+public final class GenderList implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String gender;
 
-    public String  getId() {
+    private GenderList() {
+    }
+
+    private GenderList(Builder builder) {
+        id = builder.id;
+        gender = builder.gender;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private final String gender;
+
+        public Builder(String val) {
+            this.gender = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public GenderList build() {
+            return new GenderList(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getGender() {
+        return gender;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof GenderList)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        GenderList other = (GenderList) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GenderList other = (GenderList) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -50,21 +80,6 @@ public class GenderList implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.employeelist.GenderList[id=" + id + "]";
+        return "GenderList{" + "gender=" + gender + '}';
     }
-
-    /**
-     * @return the gender
-     */
-    public String getGender() {
-        return gender;
-    }
-
-    /**
-     * @param gender the gender to set
-     */
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
 }

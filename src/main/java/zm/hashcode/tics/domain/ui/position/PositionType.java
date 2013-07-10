@@ -23,48 +23,64 @@ public class PositionType implements Serializable {
     //Full Time, PartTime, Causal , Hourly
     private String name;
 
+   private TitleList() {
+    }
+
+    private TitleList(Builder builder) {
+        id = builder.id;
+        title = builder.title;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String title;
+
+        public Builder(String val) {
+            this.title = val;
+        }
+
+        public TitleList.Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public TitleList build() {
+            return new TitleList(this);
+        }
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PositionType)) {
-            return false;
-        }
-        PositionType other = (PositionType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public String getTitle() {
+        return title;
     }
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.positions.PositionTypes[id=" + id + "]";
+        return "TitleList{" + "title=" + title + '}';
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TitleList other = (TitleList) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
-
-    
-   
-
-}

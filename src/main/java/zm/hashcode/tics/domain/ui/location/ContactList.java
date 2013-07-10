@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class ContactList implements Serializable {
+public final class ContactList implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -23,44 +23,64 @@ public class ContactList implements Serializable {
     @NotNull
     private String name;
 
+     private TitleList() {
+    }
+
+    private TitleList(Builder builder) {
+        id = builder.id;
+        title = builder.title;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String title;
+
+        public Builder(String val) {
+            this.title = val;
+        }
+
+        public TitleList.Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public TitleList build() {
+            return new TitleList(this);
+        }
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContactList)) {
-            return false;
-        }
-        ContactList other = (ContactList) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public String getTitle() {
+        return title;
     }
 
     @Override
     public String toString() {
-        return "zm.hashcode.hashwork.domain.ui.locations.ContactList[ id=" + id + " ]";
+        return "TitleList{" + "title=" + title + '}';
     }
-}
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TitleList other = (TitleList) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }

@@ -5,65 +5,81 @@
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
- * @author SongezoM
+ * @author Boniface
  */
 @Document
-public class TitleList implements Serializable {
+public final class TitleList implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String title;
 
-    public String  getId() {
+    private TitleList() {
+    }
+
+    private TitleList(Builder builder) {
+        id = builder.id;
+        title = builder.title;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String title;
+
+        public Builder(String val) {
+            this.title = val;
+        }
+
+        public TitleList.Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public TitleList build() {
+            return new TitleList(this);
+        }
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TitleList)) {
-            return false;
-        }
-        TitleList other = (TitleList) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "zm.hashcode.hashwork.model.ui.demographics.TitleList[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the title
-     */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public String toString() {
+        return "TitleList{" + "title=" + title + '}';
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TitleList other = (TitleList) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
 }

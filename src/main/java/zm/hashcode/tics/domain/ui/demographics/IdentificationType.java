@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,53 +14,64 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class IdentificationType implements Serializable {
+public final class IdentificationType implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String idvalue;
     private String description;
-    public String getId() {
-        return id;
+
+    private IdentificationType() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    private IdentificationType(Builder builder) {
+        id = builder.id;
+        idvalue = builder.idvalue;
+        description = builder.description;
     }
 
-    public String getIdvalue() {
-        return idvalue;
-    }
+    public static class Builder {
 
-    public void setIdvalue(String idvalue) {
-        this.idvalue = idvalue;
-    }
+        private String id;
+        private final String idvalue;
+        private String description;
 
-    public String getDescription() {
-        return description;
-    }
+        public Builder(String val) {
+            this.idvalue = val;
+        }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
 
+        public Builder description(String value) {
+            description = value;
+            return this;
+        }
+
+        public IdentificationType build() {
+            return new IdentificationType(this);
+        } 
+    }
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof IdentificationType)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        IdentificationType other = (IdentificationType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final IdentificationType other = (IdentificationType) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -68,11 +79,20 @@ public class IdentificationType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.employeelist.IdentificationType[id=" + id + "]";
+        return "IdentificationType{" + "idvalue=" + idvalue + '}';
     }
 
+    public String getId() {
+        return id;
+    }
 
-   
+    public String getIdvalue() {
+        return idvalue;
+    }
+
+    public String getDescription() {
+        return description;
+    }
     
-
+    
 }

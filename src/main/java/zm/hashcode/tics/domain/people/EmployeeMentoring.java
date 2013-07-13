@@ -10,7 +10,7 @@ import java.util.Objects;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.training.MentoringSession;
+import zm.hashcode.tics.domain.training.mentoring.MentoringSession;
 
 /**
  *

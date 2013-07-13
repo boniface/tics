@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.Objects;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import zm.hashcode.tics.domain.training.TrainingCourseRequestors;
-import zm.hashcode.tics.domain.training.Course;
+import zm.hashcode.tics.domain.training.competencies.Evaluation;
+import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
 
 /**
  *
@@ -21,55 +21,48 @@ public final class EmployeeCourses implements Serializable {
 
     private static long serialVersionUID = 1L;
     private String id;
-    private Date dateRequested;
     private String retraining;
     private String trainingStatus;
-    private TrainingCourseRequestors requestor;
     private Date lastEvaluated;
     private String competencyName;
     private String competencyNotes;
     private Date courseStartDate;
     private Date courseEndDate;
     @DBRef
-    private Course course;
-    private String scheduledCourseSessionId;
+    private ScheduledCourse scheduledCourse;
+    @DBRef
+    private Evaluation evaluation;
 
     private EmployeeCourses() {
     }
 
     private EmployeeCourses(Builder builder) {
         id = builder.id;
-        dateRequested = builder.dateRequested;
         retraining = builder.retraining;
         trainingStatus = builder.trainingStatus;
-        requestor = builder.requestor;
         lastEvaluated = builder.lastEvaluated;
         competencyName = builder.competencyName;
         competencyNotes = builder.competencyNotes;
         courseStartDate = builder.courseStartDate;
         courseEndDate = builder.courseEndDate;
-        course = builder.course;
-        scheduledCourseSessionId = builder.scheduledCourseSessionId;
-
+        evaluation = builder.evaluation;
+        scheduledCourse= builder.scheduledCourse;
     }
 
     public static class Builder {
-
         private String id;
-        private Date dateRequested;
         private String retraining;
         private String trainingStatus;
-        private TrainingCourseRequestors requestor;
         private Date lastEvaluated;
         private String competencyName;
         private String competencyNotes;
         private Date courseStartDate;
         private Date courseEndDate;
-        private final Course course;
-        private String scheduledCourseSessionId;
+        private final ScheduledCourse scheduledCourse;
+        private Evaluation evaluation;
 
-        public Builder(Course val) {
-            this.course = val;
+        public Builder(ScheduledCourse val) {
+            this.scheduledCourse = val;
         }
 
         public Builder id(String value) {
@@ -92,23 +85,13 @@ public final class EmployeeCourses implements Serializable {
             return this;
         }
 
-        public Builder scheduledCourseSessionId(String value) {
-            scheduledCourseSessionId = value;
-            return this;
-        }
-
-        public Builder requestor(TrainingCourseRequestors value) {
-            requestor = value;
+        public Builder evaluation(Evaluation value) {
+            evaluation = value;
             return this;
         }
 
         public Builder retraining(String value) {
             retraining = value;
-            return this;
-        }
-
-        public Builder dateRequested(Date value) {
-            dateRequested = value;
             return this;
         }
 
@@ -163,20 +146,12 @@ public final class EmployeeCourses implements Serializable {
         return id;
     }
 
-    public Date getDateRequested() {
-        return dateRequested;
-    }
-
     public String getRetraining() {
         return retraining;
     }
 
     public String getTrainingStatus() {
         return trainingStatus;
-    }
-
-    public TrainingCourseRequestors getRequestor() {
-        return requestor;
     }
 
     public Date getLastEvaluated() {
@@ -199,12 +174,11 @@ public final class EmployeeCourses implements Serializable {
         return courseEndDate;
     }
 
-    public Course getCourse() {
-        return course;
+    public ScheduledCourse getScheduledCourse() {
+        return scheduledCourse;
     }
 
-    public String getScheduledCourseSessionId() {
-        return scheduledCourseSessionId;
+    public Evaluation getEvaluation() {
+        return evaluation;
     }
-    
 }

@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.offices.Facility;
 
 /**
  *
@@ -31,7 +31,7 @@ public final class Users implements Serializable {
     private boolean enabled;
     private List<Roles> roles;
     @DBRef
-    private Location jusridication;
+    private List<Facility> jusridication;
 
     private Users() {
     }
@@ -53,7 +53,7 @@ public final class Users implements Serializable {
 
         @Indexed(unique = true)
         private final String email;
-        private final Location jusridication;
+        private List<Facility> jusridication;
         //optional 
         private String id;
         private String passwd;
@@ -61,13 +61,17 @@ public final class Users implements Serializable {
         private String lastname;
         private String middlename;
         private boolean enabled;
-        
         private List<Roles> roles;
 //        //        return ImmutableList.copyOf(roles);
 
-        public Builder(String email,Location val) {
+        public Builder(String email) {
             this.email = email;
-            this.jusridication=val;
+
+        }
+
+        public Builder jusridication(List<Facility> value) {
+            jusridication = value;
+            return this;
         }
 
         public Builder id(String value) {
@@ -167,10 +171,9 @@ public final class Users implements Serializable {
         return ImmutableList.copyOf(roles);
     }
 
-    public Location getJusridication() {
-        return jusridication;
+    public List<Facility> getJusridication() {
+        return ImmutableList.copyOf(jusridication);
     }
-    
 }
 // Collection<ScheduledCourse> scheduledCourses = Collections2.filter(sc, new InstitutionScheduledCourse());
 //        return ImmutableList.copyOf(scheduledCourses);

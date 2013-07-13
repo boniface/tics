@@ -6,11 +6,8 @@ package zm.hashcode.tics.test.repository.users;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import zm.hashcode.tics.app.conf.WebConfig;
 import zm.hashcode.tics.domain.ui.demographics.RolesList;
 import zm.hashcode.tics.domain.users.Roles;
 import zm.hashcode.tics.domain.users.Users;
@@ -46,7 +43,7 @@ public class UsersTest extends AppTest {
         roles.add(role2);
         roles.add(role1);
         
-        Users user = new Users.Builder("admin1@test.com",null).enable(true)
+        Users user = new Users.Builder("admin1@test.com").enable(true)
                                                         .firstname("Boniface")
                                                         .lastname("chanda")
                                                         .middlename("lulu")
@@ -70,7 +67,7 @@ public class UsersTest extends AppTest {
     public void testUpdate() {
         repository = ctx.getBean(UsersRepository.class);
         Users role = repository.findOne(id);
-        Users newrole = new Users.Builder("admin@test.com",null).enable(true)
+        Users newrole = new Users.Builder("admin@test.com").enable(true)
                                                         .firstname("Boniface").id(role.getId())
                                                         .lastname("chanda")
                                                         .middlename("lulu")

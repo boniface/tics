@@ -5,13 +5,13 @@
 package zm.hashcode.tics.repository.ui.demographics;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import zm.hashcode.tics.domain.ui.demographics.RolesList;
+import zm.hashcode.tics.domain.ui.demographics.Role;
 
 /**
  *
  * @author boniface
  */
 
-public interface RolesListRepository extends PagingAndSortingRepository<RolesList, String> {
+public interface RolesListRepository extends PagingAndSortingRepository<Role, String> {
    
 }

@@ -13,16 +13,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class Nodes implements Serializable {
+public class Node implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String facilityName;
 
-    private Nodes() {
+    private Node() {
     }
 
-    private Nodes(Builder builder) {
+    private Node(Builder builder) {
         id = builder.id;
         facilityName = builder.facilityName;
     }
@@ -42,8 +42,8 @@ public class Nodes implements Serializable {
             return this;
         }
 
-        public Nodes build() {
-            return new Nodes(this);
+        public Node build() {
+            return new Node(this);
         }
     }
 

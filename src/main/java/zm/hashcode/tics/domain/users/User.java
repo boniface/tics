@@ -12,13 +12,14 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.offices.Facility;
+import zm.hashcode.tics.domain.ui.demographics.Role;
 
 /**
  *
  * @author boniface
  */
 @Document
-public final class Users implements Serializable {
+public final class User implements Serializable {
 
     @Id
     private String id;
@@ -29,14 +30,15 @@ public final class Users implements Serializable {
     private String lastname;
     private String middlename;
     private boolean enabled;
-    private List<Roles> roles;
+    @DBRef
+    private List<Role> roles;
     @DBRef
     private List<Facility> jusridication;
 
-    private Users() {
+    private User() {
     }
 
-    private Users(Builder builder) {
+    private User(Builder builder) {
         id = builder.id;
         email = builder.email;
         passwd = builder.passwd;
@@ -61,7 +63,7 @@ public final class Users implements Serializable {
         private String lastname;
         private String middlename;
         private boolean enabled;
-        private List<Roles> roles;
+        private List<Role> roles;
 //        //        return ImmutableList.copyOf(roles);
 
         public Builder(String email) {
@@ -99,7 +101,7 @@ public final class Users implements Serializable {
             return this;
         }
 
-        public Builder roles(List<Roles> value) {
+        public Builder roles(List<Role> value) {
             roles = value;
             return this;
         }
@@ -109,8 +111,8 @@ public final class Users implements Serializable {
             return this;
         }
 
-        public Users build() {
-            return new Users(this);
+        public User build() {
+            return new User(this);
         }
     }
 
@@ -124,10 +126,10 @@ public final class Users implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
+        if (!(object instanceof User)) {
             return false;
         }
-        Users other = (Users) object;
+        User other = (User) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -167,7 +169,7 @@ public final class Users implements Serializable {
         return enabled;
     }
 
-    public List<Roles> getRoles() {
+    public List<Role>getRoles() {
         return ImmutableList.copyOf(roles);
     }
 

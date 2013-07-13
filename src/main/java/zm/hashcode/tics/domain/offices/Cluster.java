@@ -13,15 +13,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public final class Clusters implements Serializable {
+public final class Cluster implements Serializable {
 
     private String id;
     private String clusterName;
 
-    private Clusters() {
+    private Cluster() {
     }
 
-    private Clusters(Builder builder) {
+    private Cluster(Builder builder) {
         id = builder.id;
         clusterName = builder.clusterName;
     }
@@ -42,8 +42,8 @@ public final class Clusters implements Serializable {
             return this;
         }
 
-        public Clusters build() {
-            return new Clusters(this);
+        public Cluster build() {
+            return new Cluster(this);
         }
     }
 
@@ -65,10 +65,10 @@ public final class Clusters implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Clusters)) {
+        if (!(object instanceof Cluster)) {
             return false;
         }
-        Clusters other = (Clusters) object;
+        Cluster other = (Cluster) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

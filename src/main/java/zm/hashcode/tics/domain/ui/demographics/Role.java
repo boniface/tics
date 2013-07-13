@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document
-public class RolesList implements Serializable {
+public class Role implements Serializable {
 
     @Id
     private String id;
@@ -25,10 +25,10 @@ public class RolesList implements Serializable {
     private String description;
 
     
-    private  RolesList() {
+    private  Role() {
     }
 
-    private RolesList(Builder builder) {
+    private Role(Builder builder) {
         id=builder.id;
         rolename=builder.rolename;
         description= builder.description;
@@ -61,7 +61,7 @@ public class RolesList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RolesList other = (RolesList) obj;
+        final Role other = (Role) obj;
         if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
@@ -95,8 +95,8 @@ public class RolesList implements Serializable {
             return this;
         }
         
-        public RolesList build(){
-            return new RolesList(this);
+        public Role build(){
+            return new Role(this);
         }
         
         

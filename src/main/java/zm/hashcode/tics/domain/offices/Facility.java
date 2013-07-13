@@ -12,7 +12,7 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import zm.hashcode.tics.domain.people.Contacts;
+import zm.hashcode.tics.domain.people.Contact;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.position.Position;
 
@@ -30,10 +30,10 @@ public class Facility implements Serializable, Comparable<Facility> {
     private FacilityType facilityType;
     @DBRef
     private Location city;
-    private Contacts contact;
+    private Contact contact;
     @DBRef
-    private List<Position> positions = new ArrayList<>();
-    private List<FacilityMentors> facilityMentors = new ArrayList<>();
+    private List<Position> positions ;
+    private List<FacilityMentors> facilityMentors;
     @DBRef
     private FacilityGrouping facilityGrouping;
 
@@ -57,7 +57,7 @@ public class Facility implements Serializable, Comparable<Facility> {
         private String id;
         private FacilityType facilityType;
         private Location city;
-        private Contacts contact;
+        private Contact contact;
         private List<Position> positions = new ArrayList<>();
         private List<FacilityMentors> facilityMentors = new ArrayList<>();
         private FacilityGrouping facilityGrouping;
@@ -81,7 +81,7 @@ public class Facility implements Serializable, Comparable<Facility> {
             return this;
         }
 
-        public Builder contact(Contacts value) {
+        public Builder contact(Contact value) {
             contact = value;
             return this;
         }
@@ -122,7 +122,7 @@ public class Facility implements Serializable, Comparable<Facility> {
         return city;
     }
 
-    public Contacts getContact() {
+    public Contact getContact() {
         return contact;
     }
 

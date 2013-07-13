@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author boniface
  */
-public final class Contacts implements Serializable {
+public final class Contact implements Serializable {
 
     private String mailingAddress;
     private String telephoneNumber;
@@ -19,10 +19,10 @@ public final class Contacts implements Serializable {
     private String email;
     private String addressType;
 
-    private Contacts() {
+    private Contact() {
     }
 
-    private Contacts(Builder builder) {
+    private Contact(Builder builder) {
 
         email = builder.email;
         mailingAddress = builder.mailingAddress;
@@ -72,8 +72,8 @@ public final class Contacts implements Serializable {
             return this;
         }
 
-        public Contacts build() {
-            return new Contacts(this);
+        public Contact build() {
+            return new Contact(this);
         }
     }
 }

@@ -27,7 +27,7 @@ public class Person implements Serializable, Comparable<Person> {
     private String surname;
     private String othername;
     private Location residence;
-    private List<Contacts> contacts;
+    private List<Contact> contacts;
     private Demography demography;
     @DBRef
     private Facility facility;
@@ -80,7 +80,7 @@ public class Person implements Serializable, Comparable<Person> {
         private Location residence;
         private Demography demography;
         private Facility facility;
-        private List<Contacts> contacts;
+        private List<Contact> contacts;
         private List<EmployeePosition> positions;
         private List<EducationHistory> educationHistory;
         private List<Identities> identities;
@@ -178,7 +178,7 @@ public class Person implements Serializable, Comparable<Person> {
             return this;
         }
 
-        public Builder contacts(List<Contacts> value) {
+        public Builder contacts(List<Contact> value) {
             contacts = value;
             return this;
         }
@@ -240,7 +240,7 @@ public class Person implements Serializable, Comparable<Person> {
         return residence;
     }
 
-    public List<Contacts> getContacts() {
+    public List<Contact> getContacts() {
         return contacts;
     }
 

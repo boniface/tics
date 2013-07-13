@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package zm.hashcode.tics.domain.training.course;
 
 import java.io.Serializable;
@@ -9,21 +10,21 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 /**
  *
  * @author boniface
  */
 @Document
-public final class Criteria implements Serializable {
-
-    @Id
+public final class Category implements Serializable {
+   @Id
     private String id;
     private String name;
 
-    private Criteria() {
+    private Category() {
     }
 
-    private Criteria(Builder builder) {
+    private Category(Builder builder) {
         id = builder.id;
         name = builder.name;
 
@@ -43,8 +44,8 @@ public final class Criteria implements Serializable {
             return this;
         }
 
-        public Criteria build() {
-            return new Criteria(this);
+        public Category build() {
+            return new Category(this);
         }
     }
 
@@ -59,7 +60,7 @@ public final class Criteria implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 19 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -71,7 +72,7 @@ public final class Criteria implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Criteria other = (Criteria) obj;
+        final Category other = (Category) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -80,6 +81,9 @@ public final class Criteria implements Serializable {
 
     @Override
     public String toString() {
-        return "Criteria{" + "name=" + name + '}';
+        return "TrainingCourseCategory{" + "id=" + id + ", name=" + name + '}';
     }
+
+
+   
 }

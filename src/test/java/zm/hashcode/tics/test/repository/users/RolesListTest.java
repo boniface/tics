@@ -45,7 +45,7 @@ public class RolesListTest extends AppTest {
         Assert.assertEquals(upDaterole.getDescription(), "Adminiatrator");
     }
 
-    @Test(dependsOnMethods = {"testUpdate"})
+   // @Test(dependsOnMethods = {"testUpdate"})
     public void testDelete() {
         repository = ctx.getBean(RoleRepository.class);
         Role role = repository.findOne(id);

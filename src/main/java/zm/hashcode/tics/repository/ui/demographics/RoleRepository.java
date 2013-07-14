@@ -4,6 +4,7 @@
  */
 package zm.hashcode.tics.repository.ui.demographics;
 
+import java.util.List;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import zm.hashcode.tics.domain.ui.demographics.Role;
 
@@ -13,5 +14,7 @@ import zm.hashcode.tics.domain.ui.demographics.Role;
  */
 
 public interface RoleRepository extends PagingAndSortingRepository<Role, String> {
+    @Override
+    List<Role> findAll();
    
 }

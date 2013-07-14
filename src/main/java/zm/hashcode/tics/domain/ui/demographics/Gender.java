@@ -14,17 +14,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public final class GenderList implements Serializable {
+public final class Gender implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String gender;
 
-    private GenderList() {
+    private Gender() {
     }
 
-    private GenderList(Builder builder) {
+    private Gender(Builder builder) {
         id = builder.id;
         gender = builder.gender;
     }
@@ -43,8 +43,8 @@ public final class GenderList implements Serializable {
             return this;
         }
 
-        public GenderList build() {
-            return new GenderList(this);
+        public Gender build() {
+            return new Gender(this);
         }
     }
 
@@ -71,7 +71,7 @@ public final class GenderList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final GenderList other = (GenderList) obj;
+        final Gender other = (Gender) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

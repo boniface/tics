@@ -7,7 +7,6 @@ package zm.hashcode.tics.domain.people;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import zm.hashcode.tics.domain.ui.location.RegistrationBody;
 
 /**
  *

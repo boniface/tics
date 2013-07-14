@@ -7,19 +7,19 @@ package zm.hashcode.tics.test.repository.users;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import zm.hashcode.tics.domain.ui.demographics.Role;
-import zm.hashcode.tics.repository.ui.demographics.RolesListRepository;
+import zm.hashcode.tics.repository.ui.demographics.RoleRepository;
 import zm.hashcode.tics.test.AppTest;
 /**
  *
  * @author boniface
  */
 public class RolesListTest extends AppTest {
-    private RolesListRepository repository;
+    private RoleRepository repository;
     private String id;
 
     @Test
     public void testCreate() {
-        repository = ctx.getBean(RolesListRepository.class);
+        repository = ctx.getBean(RoleRepository.class);
         Role role = new Role.Builder("ROLE_ADMIN")
                 .description("System Adminiatrator").build();
         repository.save(role);
@@ -28,7 +28,7 @@ public class RolesListTest extends AppTest {
 
     @Test(dependsOnMethods = "testCreate")
     public void testRead() {
-        repository = ctx.getBean(RolesListRepository.class);
+        repository = ctx.getBean(RoleRepository.class);
         Role role = repository.findOne(id);
         Assert.assertEquals(role.getDescription(), "System Adminiatrator");
 
@@ -36,7 +36,7 @@ public class RolesListTest extends AppTest {
 
     @Test(dependsOnMethods = {"testRead"})
     public void testUpdate() {
-        repository = ctx.getBean(RolesListRepository.class);
+        repository = ctx.getBean(RoleRepository.class);
         Role role = repository.findOne(id);
         Role newrole = new Role.Builder("ROLE_ADMIN").id(role.getId())
                 .description("Adminiatrator").build();
@@ -47,7 +47,7 @@ public class RolesListTest extends AppTest {
 
     @Test(dependsOnMethods = {"testUpdate"})
     public void testDelete() {
-        repository = ctx.getBean(RolesListRepository.class);
+        repository = ctx.getBean(RoleRepository.class);
         Role role = repository.findOne(id);
         repository.delete(role);
         Role deletedRole = repository.findOne(id);

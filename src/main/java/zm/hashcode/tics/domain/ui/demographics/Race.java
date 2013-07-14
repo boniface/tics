@@ -14,17 +14,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public final class RaceList implements Serializable {
+public final class Race implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
     private String raceName;
 
-    private RaceList() {
+    private Race() {
     }
 
-    private RaceList(Builder builder) {
+    private Race(Builder builder) {
         id = builder.id;
         raceName = builder.raceName;
     }
@@ -38,13 +38,13 @@ public final class RaceList implements Serializable {
             this.raceName = val;
         }
 
-        public RaceList.Builder id(String value) {
+        public Race.Builder id(String value) {
             id = value;
             return this;
         }
 
-        public RaceList build() {
-            return new RaceList(this);
+        public Race build() {
+            return new Race(this);
         }
     }
 
@@ -76,7 +76,7 @@ public final class RaceList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RaceList other = (RaceList) obj;
+        final Race other = (Race) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

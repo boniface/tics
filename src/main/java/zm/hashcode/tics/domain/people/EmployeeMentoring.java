@@ -7,6 +7,7 @@ package zm.hashcode.tics.domain.people;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.offices.Facility;
@@ -20,6 +21,7 @@ import zm.hashcode.tics.domain.training.mentoring.MentoringSession;
 public final class EmployeeMentoring implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
     private String id;
     private Date mentoringDate;
     private int patientsInitiated;

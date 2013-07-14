@@ -7,6 +7,7 @@ package zm.hashcode.tics.domain.people;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -15,8 +16,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class EmployeeActionPlan implements Serializable {
-
     private static final long serialVersionUID = 1L;
+    @Id
     private String id;
     private String courseId;
     private String schduledCourseId;

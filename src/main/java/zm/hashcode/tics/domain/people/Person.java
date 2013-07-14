@@ -4,6 +4,7 @@
  */
 package zm.hashcode.tics.domain.people;
 
+import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.offices.Facility;
+import zm.hashcode.tics.domain.ui.demographics.Title;
 import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
@@ -28,6 +30,8 @@ public class Person implements Serializable, Comparable<Person> {
     private String othername;
     private Location residence;
     private List<Contact> contacts;
+    @DBRef
+    private Title title;
     private Demography demography;
     @DBRef
     private Facility facility;
@@ -40,9 +44,10 @@ public class Person implements Serializable, Comparable<Person> {
     @DBRef
     private List<EmployeeMentoring> mentoring;
     @DBRef
-    private List<Mentees> mentees;
+    private List<Person> mentees;
     private List<MentorExpertiseArea> mentorExpertiseAreas;
     private List<PersonRoles> personRoles;
+    @DBRef
     private List<EmployeeActionPlan> actionPlans;
 
     private Person() {
@@ -68,12 +73,14 @@ public class Person implements Serializable, Comparable<Person> {
         mentorExpertiseAreas = builder.mentorExpertiseAreas;
         personRoles = builder.personRoles;
         actionPlans = builder.actionPlans;
+        title = builder.title;
 
     }
 
     public static class Builder {
 
         private String id;
+        private Title title;
         private final String firstname;
         private final String surname;
         private String othername;
@@ -88,7 +95,7 @@ public class Person implements Serializable, Comparable<Person> {
         private List<EmployeeCourses> courses;
         private List<EmployeeLanguages> languages;
         private List<EmployeeMentoring> mentoring;
-        private List<Mentees> mentees;
+        private List<Person> mentees;
         private List<MentorExpertiseArea> mentorExpertiseAreas;
         private List<PersonRoles> personRoles;
         private List<EmployeeActionPlan> actionPlans;
@@ -105,6 +112,11 @@ public class Person implements Serializable, Comparable<Person> {
 
         public Builder othername(String value) {
             othername = value;
+            return this;
+        }
+
+        public Builder title(Title value) {
+            title = value;
             return this;
         }
 
@@ -158,7 +170,7 @@ public class Person implements Serializable, Comparable<Person> {
             return this;
         }
 
-        public Builder mentees(List<Mentees> value) {
+        public Builder mentees(List<Person> value) {
             mentees = value;
             return this;
         }
@@ -236,12 +248,16 @@ public class Person implements Serializable, Comparable<Person> {
         return othername;
     }
 
+    public Title getTitle() {
+        return title;
+    }
+
     public Location getResidence() {
         return residence;
     }
 
     public List<Contact> getContacts() {
-        return contacts;
+        return ImmutableList.copyOf(contacts);
     }
 
     public Demography getDemography() {
@@ -253,7 +269,7 @@ public class Person implements Serializable, Comparable<Person> {
     }
 
     public List<EmployeePosition> getPositions() {
-        return positions;
+        return ImmutableList.copyOf(positions);
     }
 
     public List<EducationHistory> getEducationHistory() {
@@ -261,40 +277,38 @@ public class Person implements Serializable, Comparable<Person> {
     }
 
     public List<Identities> getIdentities() {
-        return identities;
+        return ImmutableList.copyOf(identities);
     }
 
     public List<ProfessionalRegistration> getProfessionalRegistration() {
-        return professionalRegistration;
+        return ImmutableList.copyOf(professionalRegistration);
     }
 
     public List<EmployeeCourses> getCourses() {
-        return courses;
+        return ImmutableList.copyOf(courses);
     }
 
     public List<EmployeeLanguages> getLanguages() {
-        return languages;
+        return ImmutableList.copyOf(languages);
     }
 
     public List<EmployeeMentoring> getMentoring() {
-        return mentoring;
+        return ImmutableList.copyOf(mentoring);
     }
 
-    public List<Mentees> getMentees() {
-        return mentees;
+    public List<Person> getMentees() {
+        return ImmutableList.copyOf(mentees);
     }
 
     public List<MentorExpertiseArea> getMentorExpertiseAreas() {
-        return mentorExpertiseAreas;
+        return ImmutableList.copyOf(mentorExpertiseAreas);
     }
 
     public List<PersonRoles> getPersonRoles() {
-        return personRoles;
+        return ImmutableList.copyOf(personRoles);
     }
 
     public List<EmployeeActionPlan> getActionPlans() {
-        return actionPlans;
+        return ImmutableList.copyOf(actionPlans);
     }
-    
-    
 }

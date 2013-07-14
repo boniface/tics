@@ -76,4 +76,29 @@ public final class Contact implements Serializable {
             return new Contact(this);
         }
     }
+
+    public String getMailingAddress() {
+        return mailingAddress;
+    }
+
+    public String getTelephoneNumber() {
+        return telephoneNumber;
+    }
+
+    public String getCellnumber() {
+        return cellnumber;
+    }
+
+    public String getFaxnumber() {
+        return faxnumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddressType() {
+        return addressType;
+    }
+    
 }

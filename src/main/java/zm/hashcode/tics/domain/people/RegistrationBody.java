@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.domain.ui.location;
+package zm.hashcode.tics.domain.people;
 
 import java.io.Serializable;
 import java.util.Date;

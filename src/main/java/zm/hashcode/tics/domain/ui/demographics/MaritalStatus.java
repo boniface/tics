@@ -2,49 +2,51 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
- * @author Boniface
+ * @author boniface
  */
 @Document
-public final class TitleList implements Serializable {
-
+public final class MaritalStatus implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private String title;
+    private String statusName;
 
-    private TitleList() {
+
+  private MaritalStatus() {
     }
 
-    private TitleList(Builder builder) {
+    private MaritalStatus(Builder builder) {
         id = builder.id;
-        title = builder.title;
+        statusName = builder.statusName;
     }
 
     public static class Builder {
 
         private String id;
-        private String title;
+        private final String statusName;
 
         public Builder(String val) {
-            this.title = val;
+            this.statusName = val;
         }
 
-        public TitleList.Builder id(String value) {
+        public Builder id(String value) {
             id = value;
             return this;
         }
 
-        public TitleList build() {
-            return new TitleList(this);
+        public MaritalStatus build() {
+            return new MaritalStatus(this);
         }
     }
 
@@ -52,19 +54,14 @@ public final class TitleList implements Serializable {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String toString() {
-        return "TitleList{" + "title=" + title + '}';
+    public String getStatusName() {
+        return statusName;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -76,10 +73,17 @@ public final class TitleList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TitleList other = (TitleList) obj;
+        final MaritalStatus other = (MaritalStatus) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "MaritalStatusList{" + "statusName=" + statusName + '}';
+    }
+    
+    
 }

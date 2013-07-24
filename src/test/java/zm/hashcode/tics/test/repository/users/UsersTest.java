@@ -4,6 +4,16 @@
  */
 package zm.hashcode.tics.test.repository.users;
 
+import com.google.gwt.aria.client.Roles;
+import java.util.ArrayList;
+import java.util.List;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import zm.hashcode.tics.app.security.PasswordEncrypt;
+import zm.hashcode.tics.domain.ui.demographics.Role;
+import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.repository.ui.demographics.RoleRepository;
+import zm.hashcode.tics.repository.users.UsersRepository;
 import zm.hashcode.tics.test.AppTest;
 //import static zm.hashcode.tics.test.AppTest.ctx;
 
@@ -14,68 +24,64 @@ import zm.hashcode.tics.test.AppTest;
 
 public class UsersTest extends AppTest {
 
-//    private UsersRepository repository;
-//    private RolesListRepository rolesListRepository;
-//    private String id;
-//    
+    private UsersRepository usersRepository;
+    private RoleRepository roleRepository;
+    private String userId;
+    private String roleId;
+    
 //    @Test
-//    public void testCreate() {
-//        repository = ctx.getBean(UsersRepository.class);
-//        rolesListRepository = ctx.getBean(RolesListRepository.class);
-//        RolesList rolesList1 = new RolesList.Builder("ROLE_ADMIN").description("System Administration").build();
-//        RolesList rolesList2 = new RolesList.Builder("ROLE_ADMIN").description("System Administration").build();
-//        rolesListRepository.save(rolesList1);
-//        rolesListRepository.save(rolesList2);
-//        
-//        Role role1 = new Role.Builder(rolesList1).build();
-//        Role role2 = new Role.Builder(rolesList2).build();
-//        
-//        List<Role> roles = new ArrayList<>();
-//        roles.add(role2);
-//        roles.add(role1);
-//        
-//        User user = new User.Builder("admin1@test.com").enable(true)
-//                                                        .firstname("Boniface")
-//                                                        .lastname("chanda")
-//                                                        .middlename("lulu")
-//                                                        .passwd("test123")
-//                                                        .roles(roles).build();
-//        repository.save(user);
-//        id = user.getId();
-//        
-//        Assert.assertNotNull(user);
-//    }
-//    
-////    @Test(dependsOnMethods = "testCreate")
-//    public void testRead() {
-//        repository = ctx.getBean(UsersRepository.class);
-//        User role = repository.findOne(id);
-//        Assert.assertEquals(role.getEmail(), "System Adminiatrator");
-//        
-//    }
-//    
-////    @Test(dependsOnMethods = {"testRead"})
-//    public void testUpdate() {
-//        repository = ctx.getBean(UsersRepository.class);
-//        User role = repository.findOne(id);
-//        User newrole = new User.Builder("admin@test.com").enable(true)
-//                                                        .firstname("Boniface").id(role.getId())
-//                                                        .lastname("chanda")
-//                                                        .middlename("lulu")
-//                                                        .passwd("test123")
-//                                                        .roles(role.getRoles()).build();
-//        repository.save(newrole);
-//        User upDaterole = repository.findOne(id);
-//        Assert.assertEquals(upDaterole.getEmail(), "Adminiatrator");
-//    }
-//    
-////    @Test(dependsOnMethods = {"testUpdate"})
-//    public void testDelete() {
-//        repository = ctx.getBean(UsersRepository.class);
-//        User role = repository.findOne(id);
-//        repository.delete(role);
-//        User deletedRole = repository.findOne(id);
-//        Assert.assertNull(deletedRole);
-//    }
-//    
+    public void testCreate() {
+        usersRepository = ctx.getBean(UsersRepository.class);
+        roleRepository = ctx.getBean(RoleRepository.class);
+        Role role = new Role.Builder("ROLE_ADMIN").description("System Administration").build();
+        roleRepository.save(role);
+    
+        
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);   
+        String password = PasswordEncrypt.encrypt("pass");
+        User user = new User.Builder("pass").enable(true)
+                                                        .firstname("Admin")
+                                                        .lastname("chanda")
+                                                        .middlename("lulu")
+                                                        .passwd(password)
+                                                        .roles(roles).build();
+        usersRepository.save(user);
+        userId = user.getId();
+        
+        Assert.assertNotNull(user);
+    }
+    
+//    @Test(dependsOnMethods = "testCreate")
+    public void testRead() {
+        usersRepository = ctx.getBean(UsersRepository.class);
+        User role = usersRepository.findOne(userId);
+        Assert.assertEquals(role.getEmail(), "System Adminiatrator");
+        
+    }
+    
+//    @Test(dependsOnMethods = {"testRead"})
+    public void testUpdate() {
+        usersRepository = ctx.getBean(UsersRepository.class);
+        User role = usersRepository.findOne(userId);
+        User newrole = new User.Builder("admin@test.com").enable(true)
+                                                        .firstname("Boniface").id(role.getId())
+                                                        .lastname("chanda")
+                                                        .middlename("lulu")
+                                                        .passwd("test123")
+                                                        .roles(role.getRoles()).build();
+        usersRepository.save(newrole);
+        User upDaterole = usersRepository.findOne(userId);
+        Assert.assertEquals(upDaterole.getEmail(), "Adminiatrator");
+    }
+    
+//    @Test(dependsOnMethods = {"testUpdate"})
+    public void testDelete() {
+        usersRepository = ctx.getBean(UsersRepository.class);
+        User role = usersRepository.findOne(userId);
+        usersRepository.delete(role);
+        User deletedRole = usersRepository.findOne(userId);
+        Assert.assertNull(deletedRole);
+    }
+    
 }

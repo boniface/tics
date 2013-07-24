@@ -52,8 +52,6 @@ public final class User implements Serializable {
     }
 
     public static class Builder {
-
-        @Indexed(unique = true)
         private final String email;
         private List<Facility> jusridication;
         //optional 

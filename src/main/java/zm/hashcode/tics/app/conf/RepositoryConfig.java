@@ -22,7 +22,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "zm.hashcode.tics.repository")
 public class RepositoryConfig extends AbstractMongoConfiguration {
     
-
     @Override
     protected String getDatabaseName() {
         return "tics";

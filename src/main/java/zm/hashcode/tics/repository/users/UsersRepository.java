@@ -13,5 +13,6 @@ import zm.hashcode.tics.domain.users.User;
  */
 
 public interface UsersRepository extends PagingAndSortingRepository<User, String> {
+    public User  findByEmail(String email);
    
 }

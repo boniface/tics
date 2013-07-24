@@ -5,6 +5,7 @@
 package zm.hashcode.tics.domain.ui.demographics;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +21,7 @@ public class Role implements Serializable {
 
     @Id
     private String id;
+    @NotNull
     @Indexed
     private String rolename;
     private String description;

@@ -30,7 +30,8 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {"zm.hashcode"})
 @EnableWebMvc
 @Profile("container")
-@Import(RepositoryConfig.class)
+@Import({RepositoryConfig.class, SecurityConfig.class})
+
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
@@ -40,7 +41,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
@@ -48,7 +48,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public LocaleResolver localeResolver() {
-
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setDefaultLocale(StringUtils.parseLocaleString("en"));
         return cookieLocaleResolver;
@@ -56,7 +55,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public ViewResolver viewResolver() {
-
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/pages");
@@ -66,7 +64,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public MessageSource messageSource() {
-
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames("classpath:messages/messages", "classpath:messages/validation");
         // if true, the key of the message will be displayed if the key is not

@@ -278,7 +278,7 @@ public final class PasswordGenerator {
     }
 
     public String getStaticPassword() {
-        return "hashwork";
+        return "20Tics13@#";
     }
 
     /*--------------------------------------------------------

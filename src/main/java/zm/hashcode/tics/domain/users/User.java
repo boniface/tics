@@ -4,9 +4,10 @@
  */
 package zm.hashcode.tics.domain.users;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -31,9 +32,9 @@ public final class User implements Serializable {
     private String middlename;
     private boolean enabled;
     @DBRef
-    private List<Role> roles;
+    private Set<Role> roles = new HashSet<>();
     @DBRef
-    private List<Facility> jusridication;
+    private Set<Facility> jusridication=new HashSet<>();
 
     private User() {
     }
@@ -53,7 +54,7 @@ public final class User implements Serializable {
 
     public static class Builder {
         private final String email;
-        private List<Facility> jusridication;
+        private Set<Facility> jusridication = new HashSet<>();
         //optional 
         private String id;
         private String passwd;
@@ -61,15 +62,14 @@ public final class User implements Serializable {
         private String lastname;
         private String middlename;
         private boolean enabled;
-        private List<Role> roles;
-//        //        return ImmutableList.copyOf(roles);
+        private Set<Role> roles;
 
         public Builder(String email) {
             this.email = email;
 
         }
 
-        public Builder jusridication(List<Facility> value) {
+        public Builder jusridication(Set<Facility> value) {
             jusridication = value;
             return this;
         }
@@ -99,7 +99,7 @@ public final class User implements Serializable {
             return this;
         }
 
-        public Builder roles(List<Role> value) {
+        public Builder roles(Set<Role> value) {
             roles = value;
             return this;
         }
@@ -167,13 +167,11 @@ public final class User implements Serializable {
         return enabled;
     }
 
-    public List<Role>getRoles() {
-        return ImmutableList.copyOf(roles);
+    public Set<Role>getRoles() {
+        return ImmutableSet.copyOf(roles);
     }
 
-    public List<Facility> getJusridication() {
-        return ImmutableList.copyOf(jusridication);
+    public Set<Facility> getJusridication() {
+        return ImmutableSet.copyOf(jusridication);
     }
 }
-// Collection<ScheduledCourse> scheduledCourses = Collections2.filter(sc, new InstitutionScheduledCourse());
-//        return ImmutableList.copyOf(scheduledCourses);

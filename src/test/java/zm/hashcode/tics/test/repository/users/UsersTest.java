@@ -4,11 +4,10 @@
  */
 package zm.hashcode.tics.test.repository.users;
 
-import com.google.gwt.aria.client.Roles;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 import zm.hashcode.tics.app.security.PasswordEncrypt;
 import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.domain.users.User;
@@ -35,9 +34,7 @@ public class UsersTest extends AppTest {
         roleRepository = ctx.getBean(RoleRepository.class);
         Role role = new Role.Builder("ROLE_ADMIN").description("System Administration").build();
         roleRepository.save(role);
-    
-        
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
         roles.add(role);   
         String password = PasswordEncrypt.encrypt("pass");
         User user = new User.Builder("pass").enable(true)

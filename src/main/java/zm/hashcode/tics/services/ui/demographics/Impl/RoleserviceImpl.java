@@ -7,6 +7,7 @@ package zm.hashcode.tics.services.ui.demographics.Impl;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.repository.ui.demographics.RoleRepository;
@@ -44,6 +45,13 @@ public class RoleserviceImpl implements RoleService {
 
     @Override
     public List<Role> findAll() {
-        return ImmutableList.copyOf(roleRepository.findAll());
+        return ImmutableList.copyOf(roleRepository.findAll(sortByRoleNameAndDescriptionAsc()));
+    }
+
+    private Sort sortByRoleNameAndDescriptionAsc() {
+        return new Sort(
+                new Sort.Order(Sort.Direction.ASC, "rolename"),
+                new Sort.Order(Sort.Direction.ASC, "description")
+                );
     }
 }

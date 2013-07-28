@@ -17,7 +17,7 @@ public class RolesListTest extends AppTest {
     private RoleRepository repository;
     private String id;
 
-    @Test
+//    @Test
     public void testCreate() {
         repository = ctx.getBean(RoleRepository.class);
         Role role = new Role.Builder("ROLE_ADMIN")
@@ -26,7 +26,7 @@ public class RolesListTest extends AppTest {
         id = role.getId();
     }
 
-    @Test(dependsOnMethods = "testCreate")
+//    @Test(dependsOnMethods = "testCreate")
     public void testRead() {
         repository = ctx.getBean(RoleRepository.class);
         Role role = repository.findOne(id);
@@ -34,7 +34,7 @@ public class RolesListTest extends AppTest {
 
     }
 
-    @Test(dependsOnMethods = {"testRead"})
+//    @Test(dependsOnMethods = {"testRead"})
     public void testUpdate() {
         repository = ctx.getBean(RoleRepository.class);
         Role role = repository.findOne(id);

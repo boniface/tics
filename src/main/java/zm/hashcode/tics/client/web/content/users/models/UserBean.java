@@ -5,12 +5,14 @@
 package zm.hashcode.tics.client.web.content.users.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author boniface
  */
-public  class UserBean implements Serializable{
+public final class UserBean implements Serializable,Comparable<UserBean> {
     private String id;
     private String email;
     private String passwd;
@@ -18,7 +20,26 @@ public  class UserBean implements Serializable{
     private String lastname;
     private String middlename;
     private boolean enabled;
+    private Set<String> roleIds = new HashSet<>();
+    private Set<String> jusridicationIds = new HashSet<>();
 
+    public Set<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(Set<String> roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public Set<String> getJusridicationIds() {
+        return jusridicationIds;
+    }
+
+    public void setJusridicationIds(Set<String> jusridicationIds) {
+        this.jusridicationIds = jusridicationIds;
+    }
+
+ 
     public String getId() {
         return id;
     }
@@ -73,6 +94,11 @@ public  class UserBean implements Serializable{
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public int compareTo(UserBean o) {
+       return this.lastname.compareTo(o.lastname);
     }
     
    

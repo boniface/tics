@@ -6,7 +6,9 @@ package zm.hashcode.tics.app.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -44,20 +46,20 @@ public class SecurityService implements UserDetailsService {
                 getAuthorities(user.getRoles()));
     }
 
-    public Collection<? extends GrantedAuthority> getAuthorities(List<Role> roles) {
+    public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {
         List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(roles));
         return authList;
     }
 
-    public List<String> getRoles(List<Role> roles) {
-        List<String> roleValues = new ArrayList<>();
+    public Set<String> getRoles(Set<Role> roles) {
+        Set<String> roleValues = new HashSet<>();
         for (Role personRole : roles) {
             roleValues.add(personRole.getRolename());
         }
         return roleValues;
     }
 
-    public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
+    public static List<GrantedAuthority> getGrantedAuthorities(Set<String> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));

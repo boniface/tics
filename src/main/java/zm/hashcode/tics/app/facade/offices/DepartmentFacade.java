@@ -5,17 +5,17 @@
 package zm.hashcode.tics.app.facade.offices;
 
 import zm.hashcode.tics.app.conf.SpringContext;
-import zm.hashcode.tics.services.offices.FacilityService;
+import zm.hashcode.tics.services.offices.DepartmentService;
 
 /**
  *
- * @author boniface
+ * @author ColinWa
  */
-public class FacilityFacade {
+public class DepartmentFacade {
 
     private final static SpringContext ctx = new SpringContext();
 
-    public static FacilityService getFacilityService() {
-        return ctx.getBean(FacilityService.class);
+    public static DepartmentService getDepartmentService() {
+        return ctx.getBean(DepartmentService.class);
     }
 }

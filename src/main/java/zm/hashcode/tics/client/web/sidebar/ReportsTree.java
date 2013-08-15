@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web.sidebar;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Tree;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.home.ReportsMenu;
 import zm.hashcode.tics.client.web.content.users.UserMenu;
 
 /**
@@ -35,7 +36,7 @@ public class ReportsTree extends Tree implements ItemClickEvent.ItemClickListene
         }
     }
     private void manageUsersView() {
-        main.content.setSecondComponent(new UserMenu(main, LANDING_TAB));
+        main.content.setSecondComponent(new ReportsMenu(main, LANDING_TAB));
 
     }
 

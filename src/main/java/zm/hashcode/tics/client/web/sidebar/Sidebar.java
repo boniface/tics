@@ -54,7 +54,7 @@ public class Sidebar extends Accordion {
         reportsMenu.addComponent(reportsTree);
 
         VerticalLayout setupMenu = new VerticalLayout();
-        SetupTree setupTree = new SetupTree(main);
+        SystemTree setupTree = new SystemTree(main);
         setupMenu.addComponent(setupTree);
 
 

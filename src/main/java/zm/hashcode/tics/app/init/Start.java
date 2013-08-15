@@ -5,8 +5,6 @@
 package zm.hashcode.tics.app.init;
 
 import com.vaadin.server.VaadinServlet;
-import java.util.EnumSet;
-import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import zm.hashcode.tics.app.conf.AppConfig;
@@ -45,9 +42,6 @@ public class Start implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
         dispatcherContext.register(WebConfig.class);
         dispatcherContext.scan("zm.hashcode.tics");
-
-
-
 
         // Context loader listener
         ServletRegistration.Dynamic dispatcher = sc.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));

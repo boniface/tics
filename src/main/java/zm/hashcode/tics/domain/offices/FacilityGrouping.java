@@ -6,6 +6,7 @@ package zm.hashcode.tics.domain.offices;
 
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,8 +19,10 @@ public class FacilityGrouping implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private String node;
-    private String cluster;
+    @DBRef
+    private Node node;
+    @DBRef
+    private Cluster cluster;
     
 
     private FacilityGrouping() {
@@ -35,10 +38,10 @@ public class FacilityGrouping implements Serializable {
     public static class Builder {
          //optional 
         private String id = null;
-        private String node = null;
-        private String cluster = null;
+        private Node node = null;
+        private Cluster cluster = null;
        
-        public Builder(String cluster) {
+        public Builder(Cluster cluster) {
             this.cluster = cluster;
         }
         
@@ -47,12 +50,12 @@ public class FacilityGrouping implements Serializable {
             return this;
         }
         
-        public Builder node(String value) {
+        public Builder node(Node value) {
             node = value;
             return this;
         }
         
-        public Builder cluster(String value) {
+        public Builder cluster(Cluster value) {
             cluster = value;
             return this;
         }
@@ -87,11 +90,11 @@ public class FacilityGrouping implements Serializable {
         return id;
     }
 
-    public String getNode() {
+    public Node getNode() {
         return node;
     }
 
-    public String getCluster() {
+    public Cluster getCluster() {
         return cluster;
     }
 

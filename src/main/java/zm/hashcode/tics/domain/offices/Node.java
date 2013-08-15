@@ -17,24 +17,24 @@ public class Node implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private String facilityName;
+    private String nodeName;
 
     private Node() {
     }
 
     private Node(Builder builder) {
         id = builder.id;
-        facilityName = builder.facilityName;
+        nodeName = builder.nodeName;
     }
 
     public static class Builder {
 
-        private final String facilityName;
+        private final String nodeName;
         //optional 
         private String id = null;
 
         public Builder(String facilityName) {
-            this.facilityName = facilityName;
+            this.nodeName = facilityName;
         }
 
         public Builder id(String value) {
@@ -51,12 +51,14 @@ public class Node implements Serializable {
         return id;
     }
 
-    public String getFacilityName() {
-        return facilityName;
+    public String getNodeName() {
+        return nodeName;
     }
+
+  
 
     @Override
     public String toString() {
-        return "Nodes{" + "id=" + id + ", facilityName=" + facilityName + '}';
+        return "Nodes{" + "id=" + id + ", facilityName=" + nodeName + '}';
     }
 }

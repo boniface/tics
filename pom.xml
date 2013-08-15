@@ -54,7 +54,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.1.0</vaadin.version>
+        <vaadin.version>7.1.2</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
 
@@ -214,6 +214,11 @@
             <artifactId>spring-web</artifactId>
             <version>3.2.3.RELEASE</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin.tapio</groupId>
+            <artifactId>googlemaps</artifactId>
+            <version>0.4</version>
         </dependency>
         
         <dependency>

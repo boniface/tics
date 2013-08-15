@@ -4,7 +4,6 @@
  */
 package zm.hashcode.tics.client.web.content.system.facility;
 
-import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
@@ -14,9 +13,6 @@ import zm.hashcode.tics.client.web.content.system.facility.tabs.FacilityTab;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.FacilityTypeTab;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.NodeAndClusterTab;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.RegistrationBodyTab;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
 
 /**
  *
@@ -47,18 +43,19 @@ public class FacilityMenu extends Menu {
         nodeAndClusterTab.setMargin(true);
         nodeAndClusterTab.addComponent(new NodeAndClusterTab(getMain()));
 
+        final VerticalLayout facilityGroupingTab = new VerticalLayout();
+        facilityGroupingTab.setMargin(true);
+        facilityGroupingTab.addComponent(new FacilityMentorTab(getMain()));
+
         final VerticalLayout facilityMentorTab = new VerticalLayout();
         facilityMentorTab.setMargin(true);
         facilityMentorTab.addComponent(new FacilityMentorTab(getMain()));
-
-
-
-
         getTab().addTab(departmenttab, "Manage DEPARTMENT", null);
-        getTab().addTab(facilityTab, "Manage FACILITY", null);
         getTab().addTab(facilitypeTab, "Manage FACILITY TYPE", null);
+        getTab().addTab(facilityTab, "Manage FACILITY", null);
         getTab().addTab(registrationBodyTab, "Registration BODY", null);
         getTab().addTab(nodeAndClusterTab, "Manage NODE and CLUSTER", null);
+        getTab().addTab(facilityGroupingTab, "Facility GROUPING", null);
         getTab().addTab(facilityMentorTab, "Attach FACILITY MENTOR", null);
 
         switch (selectedTab) {
@@ -73,6 +70,10 @@ public class FacilityMenu extends Menu {
                 break;
 
             case "REGBODY":
+                getTab().setSelectedTab(registrationBodyTab);
+                break;
+
+            case "GROUPING":
                 getTab().setSelectedTab(registrationBodyTab);
                 break;
 

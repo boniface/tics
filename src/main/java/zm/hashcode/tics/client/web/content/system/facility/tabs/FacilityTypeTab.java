@@ -15,23 +15,17 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.app.facade.offices.FacilityTypeFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
 import zm.hashcode.tics.client.web.content.system.facility.forms.FacilityTypeForm;
 import zm.hashcode.tics.client.web.content.system.facility.model.FacilityTypeBean;
 import zm.hashcode.tics.client.web.content.system.facility.tables.FacilityTypeTable;
 import zm.hashcode.tics.client.web.content.system.facility.util.FacilityUtil;
-//import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
-//import zm.hashcode.tics.client.web.content.users.util.UserUtil;
 import zm.hashcode.tics.domain.offices.FacilityType;
-//import zm.hashcode.tics.domain.ui.demographics.Role;
-//import zm.hashcode.tics.domain.users.User;
 
 /**
  *
- * @author Ferox
+ * @author ColinWa
  */
 public final class FacilityTypeTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
@@ -39,8 +33,6 @@ public final class FacilityTypeTab extends VerticalLayout implements
     private final TicsMain main;
     private final FacilityTypeForm form;
     private final FacilityTypeTable table;
-//    private Collection<String> rolesIds = new HashSet<>();
-//    private Collection<String> jusrisdicationIds = new HashSet<>();
 
     public FacilityTypeTab(TicsMain app) {
         main = app;
@@ -78,11 +70,6 @@ public final class FacilityTypeTab extends VerticalLayout implements
             setReadFormProperties();
         }
 
-//        else if (property == form.jurisdictionList) {
-//            jusrisdicationIds = (Collection<String>) property.getValue();
-//        } else if (property == form.rolesList) {
-//            rolesIds = (Collection<String>) property.getValue();
-//        }
     }
 
     private void saveForm(FieldGroup binder) {
@@ -115,26 +102,10 @@ public final class FacilityTypeTab extends VerticalLayout implements
     }
 
     private FacilityType getNewEntity(FieldGroup binder) {
-//        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
+
         final FacilityTypeBean bean = ((BeanItem<FacilityTypeBean>) binder.getItemDataSource()).getBean();
-//        Set<Role> roles = new HashSet<>();
-//        for (String id : rolesIds) {
-//            Role role = UserFacade.getRoleService().find(id);
-//            roles.add(role);
-//        }
-//        Set<Facility> facilities = new HashSet<>();
-//        for (String id : jusrisdicationIds) {
-//            Facility facility = FacilityFacade.getFacilityService().find(id);
-//            facilities.add(facility);
-//        }
+
         final FacilityType facilityType = new FacilityType.Builder(bean.getFacilityName())
-                //                .enable(bean.isEnabled())
-                //                .firstname(bean.getFirstname())
-                //                .lastname(bean.getLastname())
-                //                .middlename(bean.getMiddlename())
-                //                .passwd(password)
-                //                .jusridication(facilities)
-                //                .roles(roles)
                 .build();
         return facilityType;
     }
@@ -179,7 +150,5 @@ public final class FacilityTypeTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-//        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-//        form.rolesList.addValueChangeListener((ValueChangeListener) this);
     }
 }

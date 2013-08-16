@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import zm.hashcode.tics.app.security.PasswordEncrypt;
 import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.domain.users.User;

@@ -8,6 +8,7 @@ import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.DepartmentTab;
+import zm.hashcode.tics.client.web.content.system.facility.tabs.FacilityGroupingTab;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.FacilityMentorTab;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.FacilityTab;
 import zm.hashcode.tics.client.web.content.system.facility.tabs.FacilityTypeTab;
@@ -45,7 +46,7 @@ public class FacilityMenu extends Menu {
 
         final VerticalLayout facilityGroupingTab = new VerticalLayout();
         facilityGroupingTab.setMargin(true);
-        facilityGroupingTab.addComponent(new FacilityMentorTab(getMain()));
+        facilityGroupingTab.addComponent(new FacilityGroupingTab(getMain()));
 
         final VerticalLayout facilityMentorTab = new VerticalLayout();
         facilityMentorTab.setMargin(true);
@@ -74,7 +75,7 @@ public class FacilityMenu extends Menu {
                 break;
 
             case "GROUPING":
-                getTab().setSelectedTab(registrationBodyTab);
+                getTab().setSelectedTab(facilityGroupingTab);
                 break;
 
             case "NODE":

@@ -4,7 +4,6 @@
  */
 package zm.hashcode.tics.client.web.content.system.facility.tabs;
 
-import zm.hashcode.tics.client.web.content.users.tabs.*;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -15,22 +14,19 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import zm.hashcode.tics.app.facade.offices.FacilityFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
+import zm.hashcode.tics.app.facade.offices.ClusterFacade;
+import zm.hashcode.tics.app.facade.offices.FacilityGroupingFacade;
+import zm.hashcode.tics.app.facade.offices.NodeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.forms.UserForm;
-import zm.hashcode.tics.client.web.content.users.models.UserBean;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
-import zm.hashcode.tics.client.web.content.users.util.UserUtil;
-import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.ui.demographics.Role;
-import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
+import zm.hashcode.tics.client.web.content.system.facility.forms.FacilityGroupingForm;
+import zm.hashcode.tics.client.web.content.system.facility.model.FacilityGroupingBean;
+import zm.hashcode.tics.client.web.content.system.facility.tables.FacilityGroupingTable;
+import zm.hashcode.tics.client.web.content.system.facility.util.FacilityGroupingUtil;
+import zm.hashcode.tics.domain.offices.Cluster;
+
+import zm.hashcode.tics.domain.offices.FacilityGrouping;
+import zm.hashcode.tics.domain.offices.Node;
 
 /**
  *
@@ -40,15 +36,17 @@ public final class FacilityGroupingTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final UserForm form;
-    private final UserTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private final FacilityGroupingForm form;
+    private final FacilityGroupingTable table;
+//    private Collection<String> rolesIds = new HashSet<>();
+//    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private String clusterId;
+    private String nodeId;
 
     public FacilityGroupingTab(TicsMain app) {
         main = app;
-        form = new UserForm();
-        table = new UserTable(main);
+        form = new FacilityGroupingForm();
+        table = new FacilityGroupingTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -75,24 +73,27 @@ public final class FacilityGroupingTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final User user = UserFacade.getUserService().find(table.getValue().toString());
-            final UserBean bean = new UserUtil().getBean(user);
+            final FacilityGrouping facilityGrouping = FacilityGroupingFacade.getFacilityGroupingService().find(table.getValue().toString());
+            final FacilityGroupingBean bean = new FacilityGroupingUtil().getBean(facilityGrouping);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.jurisdictionList) {
-            jusrisdicationIds = (Collection<String>) property.getValue();
-        } else if (property == form.rolesList) {
-            rolesIds = (Collection<String>) property.getValue();
+        } else if (property == form.clusterList) {
+            clusterId = property.getValue().toString();
+            System.out.println("Na ya Cluster selected value this: " + clusterId);
+        } else if (property == form.nodeList) {
+            nodeId = property.getValue().toString();
+            System.out.println("Na ya Node selected value this: " + nodeId);
         }
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+            FacilityGroupingFacade.getFacilityGroupingService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
+            System.out.println(e);
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
         }
@@ -101,7 +102,7 @@ public final class FacilityGroupingTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().merge(getUpdateEntity(binder));
+            FacilityGroupingFacade.getFacilityGroupingService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -111,63 +112,40 @@ public final class FacilityGroupingTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        UserFacade.getUserService().remove(getUpdateEntity(binder));
+        FacilityGroupingFacade.getFacilityGroupingService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
-        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
+    private FacilityGrouping getNewEntity(FieldGroup binder) {
+        final FacilityGroupingBean bean = ((BeanItem<FacilityGroupingBean>) binder.getItemDataSource()).getBean();
+        Cluster cluster = ClusterFacade.getClusterService().find(clusterId);
+        Node node = NodeFacade.getNodeService().find(nodeId);
+        System.out.println(cluster.getClusterName() + node.getNodeName() + " is What have you selected?");
+        System.out.println(bean.getClusterId() + bean.getNodeId() + " is What have bean got?");
+//        final FacilityGrouping facilityGrouping = new FacilityGrouping.Builder(bean.getCluster())
+        final FacilityGrouping facilityGrouping = new FacilityGrouping.Builder(cluster)
+                //                .node(bean.getNode())
+                .node(node)
                 .build();
-        return user;
+        return facilityGrouping;
     }
 
-    private User getUpdateEntity(FieldGroup binder) {
-
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(bean.getPasswd())
-                .jusridication(facilities)
-                .roles(roles)
+    private FacilityGrouping getUpdateEntity(FieldGroup binder) {
+        final FacilityGroupingBean bean = ((BeanItem<FacilityGroupingBean>) binder.getItemDataSource()).getBean();
+        Cluster cluster = ClusterFacade.getClusterService().find(clusterId);
+        Node node = NodeFacade.getNodeService().find(nodeId);
+//        final FacilityGrouping user = new FacilityGrouping.Builder(bean.getCluster())
+        final FacilityGrouping facilityGrouping = new FacilityGrouping.Builder(cluster)
+                .node(node)
                 .id(bean.getId())
                 .build();
-        return user;
+        return facilityGrouping;
+
+
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "LANDING"));
+        main.content.setSecondComponent(new FacilityMenu(main, "GROUPING"));
     }
 
     private void setEditFormProperties() {
@@ -198,8 +176,7 @@ public final class FacilityGroupingTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-        form.rolesList.addValueChangeListener((ValueChangeListener) this);
+        form.clusterList.addValueChangeListener((ValueChangeListener) this);
+        form.nodeList.addValueChangeListener((ValueChangeListener) this);
     }
-
 }

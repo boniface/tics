@@ -4,202 +4,259 @@
  */
 package zm.hashcode.tics.client.web.content.system.facility.tabs;
 
-import zm.hashcode.tics.client.web.content.users.tabs.*;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
+import static com.vaadin.server.Sizeable.UNITS_PIXELS;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
-import zm.hashcode.tics.app.facade.offices.FacilityFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
+import zm.hashcode.tics.app.facade.offices.ClusterFacade;
+import zm.hashcode.tics.app.facade.offices.NodeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.forms.UserForm;
-import zm.hashcode.tics.client.web.content.users.models.UserBean;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
-import zm.hashcode.tics.client.web.content.users.util.UserUtil;
-import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.ui.demographics.Role;
-import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
+import zm.hashcode.tics.client.web.content.system.facility.forms.ClusterForm;
+import zm.hashcode.tics.client.web.content.system.facility.forms.NodeForm;
+import zm.hashcode.tics.client.web.content.system.facility.model.ClusterBean;
+import zm.hashcode.tics.client.web.content.system.facility.model.NodeBean;
+import zm.hashcode.tics.client.web.content.system.facility.tables.ClusterTable;
+import zm.hashcode.tics.client.web.content.system.facility.tables.NodeTable;
+import zm.hashcode.tics.client.web.content.system.facility.util.ClusterUtil;
+import zm.hashcode.tics.client.web.content.system.facility.util.NodeUtil;
+import zm.hashcode.tics.domain.offices.Cluster;
+import zm.hashcode.tics.domain.offices.Node;
 
 /**
  *
  * @author Ferox
  */
-public final class NodeAndClusterTab extends VerticalLayout implements
+public final class NodeAndClusterTab extends GridLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final UserForm form;
-    private final UserTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private final ClusterForm clusterForm;
+    private final NodeForm nodeForm;
+    private final ClusterTable clusterTable;
+    private final NodeTable nodeTable;
 
     public NodeAndClusterTab(TicsMain app) {
         main = app;
-        form = new UserForm();
-        table = new UserTable(main);
+        clusterForm = new ClusterForm();
+        nodeForm = new NodeForm();
+        clusterTable = new ClusterTable(main);
+        nodeTable = new NodeTable(main);
+        clusterTable.setWidth(300, UNITS_PIXELS);
+        nodeTable.setWidth(300, UNITS_PIXELS);
         setSizeFull();
-        addComponent(form);
-        addComponent(table);
-        addListeners();
+        setColumns(2);
+        setRows(2);
+        addComponent(clusterForm);
+        addComponent(nodeForm);
+        addComponent(clusterTable);
+        addComponent(nodeTable);
+        addClusterListeners();
+        addNodeListeners();
     }
 
     @Override
     public void buttonClick(ClickEvent event) {
         final Button source = event.getButton();
-        if (source == form.save) {
-            saveForm(form.binder);
-        } else if (source == form.edit) {
-            setEditFormProperties();
-        } else if (source == form.cancel) {
+        if (source == clusterForm.save) {
+            saveClusterForm(clusterForm.binder);
+        } else if (source == nodeForm.save) {
+            saveNodeForm(nodeForm.binder);
+        } else if (source == clusterForm.edit) {
+            setEditClusterFormProperties();
+        } else if (source == nodeForm.edit) {
+            setEditNodeFormProperties();
+        } else if (source == clusterForm.cancel || source == nodeForm.cancel) {
             getHome();
-        } else if (source == form.update) {
-            saveEditedForm(form.binder);
-        } else if (source == form.delete) {
-            deleteForm(form.binder);
+        } else if (source == clusterForm.update) {
+            saveEditedClusterForm(clusterForm.binder);
+        } else if (source == nodeForm.update) {
+            saveEditedNodeForm(nodeForm.binder);
+        } else if (source == clusterForm.delete) {
+            deleteClusterForm(clusterForm.binder);
+        } else if (source == nodeForm.delete) {
+            deleteNodeForm(nodeForm.binder);
         }
     }
 
     @Override
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
-        if (property == table) {
-            final User user = UserFacade.getUserService().find(table.getValue().toString());
-            final UserBean bean = new UserUtil().getBean(user);
-            form.binder.setItemDataSource(new BeanItem<>(bean));
-            setReadFormProperties();
-        } else if (property == form.jurisdictionList) {
-            jusrisdicationIds = (Collection<String>) property.getValue();
-        } else if (property == form.rolesList) {
-            rolesIds = (Collection<String>) property.getValue();
+        if (property == clusterTable) {
+            final Cluster cluster = ClusterFacade.getClusterService().find(clusterTable.getValue().toString());
+            final ClusterBean bean = new ClusterUtil().getBean(cluster);
+            clusterForm.binder.setItemDataSource(new BeanItem<>(bean));
+            setReadClusterFormProperties();
+        }
+
+        if (property == nodeTable) {
+            final Node node = NodeFacade.getNodeService().find(nodeTable.getValue().toString());
+            final NodeBean bean = new NodeUtil().getBean(node);
+            nodeForm.binder.setItemDataSource(new BeanItem<>(bean));
+            setReadNodeFormProperties();
         }
     }
 
-    private void saveForm(FieldGroup binder) {
+    private void saveClusterForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+            ClusterFacade.getClusterService().persist(getNewClusterEntity(binder));
             getHome();
-            Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
+            Notification.show("Cluster Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
-            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            Notification.show("Cluster Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
         }
     }
 
-    private void saveEditedForm(FieldGroup binder) {
+    private void saveNodeForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().merge(getUpdateEntity(binder));
+            NodeFacade.getNodeService().persist(getNewNodeEntity(binder));
             getHome();
-            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            Notification.show("Node Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
-            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            Notification.show("NOde Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
         }
     }
 
-    private void deleteForm(FieldGroup binder) {
-        UserFacade.getUserService().remove(getUpdateEntity(binder));
+    private void saveEditedClusterForm(FieldGroup binder) {
+        try {
+            binder.commit();
+            ClusterFacade.getClusterService().merge(getUpdateClusterEntity(binder));
+            getHome();
+            Notification.show("Cluster Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Cluster Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
+    }
+
+    private void saveEditedNodeForm(FieldGroup binder) {
+        try {
+            binder.commit();
+            NodeFacade.getNodeService().merge(getUpdateNodeEntity(binder));
+            getHome();
+            Notification.show("Node Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Node Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
+    }
+
+    private void deleteClusterForm(FieldGroup binder) {
+        ClusterFacade.getClusterService().remove(getUpdateClusterEntity(binder));
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
-        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
-                .build();
-        return user;
+    private void deleteNodeForm(FieldGroup binder) {
+        NodeFacade.getNodeService().remove(getUpdateNodeEntity(binder));
+        getHome();
     }
 
-    private User getUpdateEntity(FieldGroup binder) {
+    private Cluster getNewClusterEntity(FieldGroup binder) {
+        final ClusterBean bean = ((BeanItem<ClusterBean>) binder.getItemDataSource()).getBean();
+        final Cluster cluster = new Cluster.Builder(bean.getClusterName())
+                .build();
+        return cluster;
+    }
 
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(bean.getPasswd())
-                .jusridication(facilities)
-                .roles(roles)
+    private Node getNewNodeEntity(FieldGroup binder) {
+        final NodeBean bean = ((BeanItem<NodeBean>) binder.getItemDataSource()).getBean();
+        final Node node = new Node.Builder(bean.getNodeName())
+                .build();
+        return node;
+    }
+
+    private Cluster getUpdateClusterEntity(FieldGroup binder) {
+
+        final ClusterBean bean = ((BeanItem<ClusterBean>) binder.getItemDataSource()).getBean();
+        final Cluster cluster = new Cluster.Builder(bean.getClusterName())
                 .id(bean.getId())
                 .build();
-        return user;
+        return cluster;
+    }
+
+    private Node getUpdateNodeEntity(FieldGroup binder) {
+
+        final NodeBean bean = ((BeanItem<NodeBean>) binder.getItemDataSource()).getBean();
+        final Node node = new Node.Builder(bean.getNodeName())
+                .id(bean.getId())
+                .build();
+        return node;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "LANDING"));
+        main.content.setSecondComponent(new FacilityMenu(main, "NODE"));
     }
 
-    private void setEditFormProperties() {
-        form.binder.setReadOnly(false);
-        form.save.setVisible(false);
-        form.edit.setVisible(false);
-        form.cancel.setVisible(true);
-        form.delete.setVisible(false);
-        form.update.setVisible(true);
+    private void setEditClusterFormProperties() {
+        clusterForm.binder.setReadOnly(false);
+        clusterForm.save.setVisible(false);
+        clusterForm.edit.setVisible(false);
+        clusterForm.cancel.setVisible(true);
+        clusterForm.delete.setVisible(false);
+        clusterForm.update.setVisible(true);
     }
 
-    private void setReadFormProperties() {
-        form.binder.setReadOnly(true);
+    private void setEditNodeFormProperties() {
+        nodeForm.binder.setReadOnly(false);
+        nodeForm.save.setVisible(false);
+        nodeForm.edit.setVisible(false);
+        nodeForm.cancel.setVisible(true);
+        nodeForm.delete.setVisible(false);
+        nodeForm.update.setVisible(true);
+    }
+
+    private void setReadClusterFormProperties() {
+        clusterForm.binder.setReadOnly(true);
         //Buttons Behaviou
-        form.save.setVisible(false);
-        form.edit.setVisible(true);
-        form.cancel.setVisible(true);
-        form.delete.setVisible(true);
-        form.update.setVisible(false);
+        clusterForm.save.setVisible(false);
+        clusterForm.edit.setVisible(true);
+        clusterForm.cancel.setVisible(true);
+        clusterForm.delete.setVisible(true);
+        clusterForm.update.setVisible(false);
     }
 
-    private void addListeners() {
+    private void setReadNodeFormProperties() {
+        nodeForm.binder.setReadOnly(true);
+        //Buttons Behaviou
+        nodeForm.save.setVisible(false);
+        nodeForm.edit.setVisible(true);
+        nodeForm.cancel.setVisible(true);
+        nodeForm.delete.setVisible(true);
+        nodeForm.update.setVisible(false);
+    }
+
+    private void addClusterListeners() {
         //Register Button Listeners
-        form.save.addClickListener((ClickListener) this);
-        form.edit.addClickListener((ClickListener) this);
-        form.cancel.addClickListener((ClickListener) this);
-        form.update.addClickListener((ClickListener) this);
-        form.delete.addClickListener((ClickListener) this);
+        clusterForm.save.addClickListener((ClickListener) this);
+        clusterForm.edit.addClickListener((ClickListener) this);
+        clusterForm.cancel.addClickListener((ClickListener) this);
+        clusterForm.update.addClickListener((ClickListener) this);
+        clusterForm.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
-        table.addValueChangeListener((ValueChangeListener) this);
-        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-        form.rolesList.addValueChangeListener((ValueChangeListener) this);
+        clusterTable.addValueChangeListener((ValueChangeListener) this);
     }
 
+    private void addNodeListeners() {
+        //Register Button Listeners
+        nodeForm.save.addClickListener((ClickListener) this);
+        nodeForm.edit.addClickListener((ClickListener) this);
+        nodeForm.cancel.addClickListener((ClickListener) this);
+        nodeForm.update.addClickListener((ClickListener) this);
+        nodeForm.delete.addClickListener((ClickListener) this);
+        //Register Table Listerners
+        nodeTable.addValueChangeListener((ValueChangeListener) this);
+    }
 }

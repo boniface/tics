@@ -19,18 +19,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
+import zm.hashcode.tics.app.facade.offices.RegistrationBodyFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.forms.UserForm;
-import zm.hashcode.tics.client.web.content.users.models.UserBean;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
-import zm.hashcode.tics.client.web.content.users.util.UserUtil;
-import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.ui.demographics.Role;
-import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
+import zm.hashcode.tics.client.web.content.system.facility.forms.RegistrationBodyForm;
+import zm.hashcode.tics.client.web.content.system.facility.model.RegistrationBodyBean;
+import zm.hashcode.tics.client.web.content.system.facility.tables.RegistrationBodyTable;
+import zm.hashcode.tics.client.web.content.system.facility.util.RegistrationBodyUtil;
+import zm.hashcode.tics.domain.people.RegistrationBody;
 
 /**
  *
@@ -40,15 +36,13 @@ public final class RegistrationBodyTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final UserForm form;
-    private final UserTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private final RegistrationBodyForm form;
+    private final RegistrationBodyTable table;
 
     public RegistrationBodyTab(TicsMain app) {
         main = app;
-        form = new UserForm();
-        table = new UserTable(main);
+        form = new RegistrationBodyForm();
+        table = new RegistrationBodyTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -75,21 +69,17 @@ public final class RegistrationBodyTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final User user = UserFacade.getUserService().find(table.getValue().toString());
-            final UserBean bean = new UserUtil().getBean(user);
+            final RegistrationBody user = RegistrationBodyFacade.getRegistrationBodyService().find(table.getValue().toString());
+            final RegistrationBodyBean bean = new RegistrationBodyUtil().getBean(user);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.jurisdictionList) {
-            jusrisdicationIds = (Collection<String>) property.getValue();
-        } else if (property == form.rolesList) {
-            rolesIds = (Collection<String>) property.getValue();
         }
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+            RegistrationBodyFacade.getRegistrationBodyService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -101,7 +91,7 @@ public final class RegistrationBodyTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().merge(getUpdateEntity(binder));
+            RegistrationBodyFacade.getRegistrationBodyService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -111,63 +101,36 @@ public final class RegistrationBodyTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        UserFacade.getUserService().remove(getUpdateEntity(binder));
+        RegistrationBodyFacade.getRegistrationBodyService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
-        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
+    private RegistrationBody getNewEntity(FieldGroup binder) {
+        final RegistrationBodyBean bean = ((BeanItem<RegistrationBodyBean>) binder.getItemDataSource()).getBean();
+        final RegistrationBody registrationBody = new RegistrationBody.Builder(bean.getName())
+                .active(bean.getActive())
+                .coreActivity(bean.getCoreActivity())
+                .description(bean.getDescription())
+                .startDate(bean.getStartDate())
                 .build();
-        return user;
+        return registrationBody;
     }
 
-    private User getUpdateEntity(FieldGroup binder) {
+    private RegistrationBody getUpdateEntity(FieldGroup binder) {
 
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(bean.getPasswd())
-                .jusridication(facilities)
-                .roles(roles)
+        final RegistrationBodyBean bean = ((BeanItem<RegistrationBodyBean>) binder.getItemDataSource()).getBean();
+        final RegistrationBody registrationBody = new RegistrationBody.Builder(bean.getName())
+                .active(bean.getActive())
+                .coreActivity(bean.getCoreActivity())
+                .description(bean.getDescription())
+                .startDate(bean.getStartDate())
                 .id(bean.getId())
                 .build();
-        return user;
+        return registrationBody;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "LANDING"));
+        main.content.setSecondComponent(new FacilityMenu(main, "REGBODY"));
     }
 
     private void setEditFormProperties() {
@@ -198,8 +161,6 @@ public final class RegistrationBodyTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-        form.rolesList.addValueChangeListener((ValueChangeListener) this);
-    }
 
+    }
 }

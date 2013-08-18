@@ -8,7 +8,7 @@ import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.GenderTab;
-import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.IdentificationTypeTabTab;
+import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.IdentificationTypeTab;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.LanguageProficiencyTab;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.LanguageTab;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.MaritalStatusTab;
@@ -31,7 +31,7 @@ public class PeopleMetaDataMenu extends Menu {
 
         final VerticalLayout identificationTypeTab = new VerticalLayout();
         identificationTypeTab.setMargin(true);
-        identificationTypeTab.addComponent(new IdentificationTypeTabTab(getMain()));
+        identificationTypeTab.addComponent(new IdentificationTypeTab(getMain()));
 
         final VerticalLayout languageProciencyTab = new VerticalLayout();
         languageProciencyTab.setMargin(true);

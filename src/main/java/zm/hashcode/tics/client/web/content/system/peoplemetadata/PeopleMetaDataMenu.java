@@ -13,6 +13,7 @@ import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.LanguagePr
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.LanguageTab;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.MaritalStatusTab;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.RaceTab;
+import zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs.TitleTab;
 import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
 
 /**
@@ -52,7 +53,7 @@ public class PeopleMetaDataMenu extends Menu {
 
         final VerticalLayout titleTab = new VerticalLayout();
         titleTab.setMargin(true);
-        titleTab.addComponent(new ResetTab(getMain()));
+        titleTab.addComponent(new TitleTab(getMain()));
 
         getTab().addTab(genderTab, "GENDER", null);
         getTab().addTab(identificationTypeTab, "Identification TYPE", null);

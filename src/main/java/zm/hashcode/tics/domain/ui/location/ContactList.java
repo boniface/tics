@@ -24,7 +24,7 @@ public final class ContactList implements Serializable {
     @NotNull
     private String name;
 
-     private ContactList() {
+    private ContactList() {
     }
 
     private ContactList(Builder builder) {
@@ -85,5 +85,4 @@ public final class ContactList implements Serializable {
         }
         return true;
     }
-    
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.system.peoplemetadata.tabs;
+package zm.hashcode.tics.client.web.content.system.locations.tabs;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -14,30 +14,30 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import zm.hashcode.tics.app.facade.ui.demographics.TitleFacade;
+import zm.hashcode.tics.app.facade.ui.location.AddressTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.system.peoplemetadata.PeopleMetaDataMenu;
-import zm.hashcode.tics.client.web.content.system.peoplemetadata.forms.TitleForm;
-import zm.hashcode.tics.client.web.content.system.peoplemetadata.model.TitleBean;
-import zm.hashcode.tics.client.web.content.system.peoplemetadata.tables.TitleTable;
-import zm.hashcode.tics.client.web.content.system.peoplemetadata.util.TitleUtil;
-import zm.hashcode.tics.domain.ui.demographics.Title;
+import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
+import zm.hashcode.tics.client.web.content.system.locations.forms.AddressTypeForm;
+import zm.hashcode.tics.client.web.content.system.locations.model.AddressTypeBean;
+import zm.hashcode.tics.client.web.content.system.locations.tables.AddressTypeTable;
+import zm.hashcode.tics.client.web.content.system.locations.util.AddressTypeUtil;
+import zm.hashcode.tics.domain.ui.location.AddressType;
 
 /**
  *
- * @author Ferox
+ * @author geek
  */
-public final class TitleTab extends VerticalLayout implements
+public class AddressTypeTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final TitleForm form;
-    private final TitleTable table;
+    private final AddressTypeForm form;
+    private final AddressTypeTable table;
 
-    public TitleTab(TicsMain app) {
+    public AddressTypeTab(TicsMain app) {
         main = app;
-        form = new TitleForm();
-        table = new TitleTable(main);
+        form = new AddressTypeForm();
+        table = new AddressTypeTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -64,8 +64,8 @@ public final class TitleTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final Title title = TitleFacade.getTitleService().find(table.getValue().toString());
-            final TitleBean bean = new TitleUtil().getBean(title);
+            final AddressType addressType = AddressTypeFacade.getAddressTypeService().find(table.getValue().toString());
+            final AddressTypeBean bean = new AddressTypeUtil().getBean(addressType);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
         }
@@ -74,7 +74,7 @@ public final class TitleTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            TitleFacade.getTitleService().persist(getNewEntity(binder));
+            AddressTypeFacade.getAddressTypeService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -86,7 +86,7 @@ public final class TitleTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            TitleFacade.getTitleService().merge(getUpdateEntity(binder));
+            AddressTypeFacade.getAddressTypeService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -96,27 +96,27 @@ public final class TitleTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        TitleFacade.getTitleService().remove(getUpdateEntity(binder));
+        AddressTypeFacade.getAddressTypeService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private Title getNewEntity(FieldGroup binder) {
-        final TitleBean bean = ((BeanItem<TitleBean>) binder.getItemDataSource()).getBean();
-        final Title title = new Title.Builder(bean.getTitle())
+    private AddressType getNewEntity(FieldGroup binder) {
+        final AddressTypeBean bean = ((BeanItem<AddressTypeBean>) binder.getItemDataSource()).getBean();
+        final AddressType addressType = new AddressType.Builder(bean.getAddressTypeName())
                 .build();
-        return title;
+        return addressType;
     }
 
-    private Title getUpdateEntity(FieldGroup binder) {
-        final TitleBean bean = ((BeanItem<TitleBean>) binder.getItemDataSource()).getBean();
-        final Title title = new Title.Builder(bean.getTitle())
+    private AddressType getUpdateEntity(FieldGroup binder) {
+        final AddressTypeBean bean = ((BeanItem<AddressTypeBean>) binder.getItemDataSource()).getBean();
+        final AddressType addressType = new AddressType.Builder(bean.getAddressTypeName())
                 .id(bean.getId())
                 .build();
-        return title;
+        return addressType;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new PeopleMetaDataMenu(main, "TITLE"));
+        main.content.setSecondComponent(new LocationsMenu(main, "LANDING"));
     }
 
     private void setEditFormProperties() {

@@ -4,13 +4,14 @@
  */
 package zm.hashcode.tics.client.web.content.system.positions;
 
-import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
+import zm.hashcode.tics.client.web.content.system.positions.tabs.JobClassificationTab;
+import zm.hashcode.tics.client.web.content.system.positions.tabs.JobTab;
+import zm.hashcode.tics.client.web.content.system.positions.tabs.PositionTab;
+import zm.hashcode.tics.client.web.content.system.positions.tabs.PositionTypeTab;
+import zm.hashcode.tics.client.web.content.system.positions.tabs.ReasonsForDeparttureab;
 
 /**
  *
@@ -21,32 +22,47 @@ public class PositionsMenu extends Menu {
     public PositionsMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout reasonsTab = new VerticalLayout();
+        reasonsTab.setMargin(true);
+        reasonsTab.addComponent(new ReasonsForDeparttureab(getMain()));
 
+        final VerticalLayout jobClassificatrionTab = new VerticalLayout();
+        jobClassificatrionTab.setMargin(true);
+        jobClassificatrionTab.addComponent(new JobClassificationTab(getMain()));
 
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
+        final VerticalLayout jobTab = new VerticalLayout();
+        jobTab.setMargin(true);
+        jobTab.addComponent(new JobTab(getMain()));
 
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
+        final VerticalLayout positionTab = new VerticalLayout();
+        positionTab.setMargin(true);
+        positionTab.addComponent(new PositionTab(getMain()));
 
-        getTab().addTab(userTab, "Add System USERS", null);
-        getTab().addTab(roleTab, "Add System ROLES", null);
-        getTab().addTab(resetTab, "Reset CREDENTIALS", null);
+        final VerticalLayout positionType = new VerticalLayout();
+        positionType.setMargin(true);
+        positionType.addComponent(new PositionTypeTab(getMain()));
+
+        getTab().addTab(jobClassificatrionTab, "Job CLASSIFICATION", null);
+        getTab().addTab(jobTab, "JOB", null);
+        getTab().addTab(positionType, "Position TYPE", null);
+        getTab().addTab(positionTab, "POSITIONS", null);
+        getTab().addTab(reasonsTab, "Reasons for DEPATURE", null);
 
         switch (selectedTab) {
             case "LANDING":
-                getTab().setSelectedTab(userTab);
+                getTab().setSelectedTab(jobClassificatrionTab);
                 break;
-            case "ROLES":
-                getTab().setSelectedTab(roleTab);
+            case "JOB":
+                getTab().setSelectedTab(jobTab);
                 break;
-            case "RESETS":
-                getTab().setSelectedTab(roleTab);
+            case "POSITIONTYPE":
+                getTab().setSelectedTab(positionType);
+                break;
+            case "POSITION":
+                getTab().setSelectedTab(positionTab);
+                break;
+            case "DEPARTURE":
+                getTab().setSelectedTab(reasonsTab);
                 break;
         }
         addComponent(getTab());

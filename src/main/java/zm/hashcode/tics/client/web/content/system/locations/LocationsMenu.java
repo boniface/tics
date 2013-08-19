@@ -4,7 +4,6 @@
  */
 package zm.hashcode.tics.client.web.content.system.locations;
 
-import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
@@ -13,9 +12,6 @@ import zm.hashcode.tics.client.web.content.system.locations.tabs.ContactListTab;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.LocationAddressTab;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.LocationTab;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.LocationTypeTab;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
 
 /**
  *

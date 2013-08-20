@@ -15,22 +15,23 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import zm.hashcode.tics.app.facade.offices.FacilityFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
+import zm.hashcode.tics.app.facade.ui.job.JobClassificationFacade;
+import zm.hashcode.tics.app.facade.ui.job.JobFacade;
+import zm.hashcode.tics.app.facade.ui.position.PositionFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.forms.UserForm;
-import zm.hashcode.tics.client.web.content.users.models.UserBean;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
-import zm.hashcode.tics.client.web.content.users.util.UserUtil;
-import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.ui.demographics.Role;
-import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.client.web.content.system.positions.PositionsMenu;
+import zm.hashcode.tics.client.web.content.system.positions.forms.JobForm;
+import zm.hashcode.tics.client.web.content.system.positions.model.JobBean;
+import zm.hashcode.tics.client.web.content.system.positions.tables.JobTable;
+import zm.hashcode.tics.client.web.content.system.positions.util.JobUtil;
+import zm.hashcode.tics.domain.ui.job.Job;
+import zm.hashcode.tics.domain.ui.job.JobClassification;
+import zm.hashcode.tics.domain.ui.position.Position;
 
 /**
  *
@@ -40,15 +41,15 @@ public final class JobTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final UserForm form;
-    private final UserTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private final JobForm form;
+    private final JobTable table;
+    private Collection<String> positionIds = new HashSet<>();
+    private String jobClassificationComboId;
 
     public JobTab(TicsMain app) {
         main = app;
-        form = new UserForm();
-        table = new UserTable(main);
+        form = new JobForm();
+        table = new JobTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -75,21 +76,21 @@ public final class JobTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final User user = UserFacade.getUserService().find(table.getValue().toString());
-            final UserBean bean = new UserUtil().getBean(user);
+            final Job job = JobFacade.getJobService().find(table.getValue().toString());
+            final JobBean bean = new JobUtil().getBean(job);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.jurisdictionList) {
-            jusrisdicationIds = (Collection<String>) property.getValue();
-        } else if (property == form.rolesList) {
-            rolesIds = (Collection<String>) property.getValue();
+        } else if (property == form.positionList) {
+            positionIds = (Collection<String>) property.getValue();
+        } else if (property == form.jobClassificationCombo) {
+            jobClassificationComboId = property.getValue().toString();
         }
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+            JobFacade.getJobService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -101,7 +102,7 @@ public final class JobTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().merge(getUpdateEntity(binder));
+            JobFacade.getJobService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -111,63 +112,54 @@ public final class JobTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        UserFacade.getUserService().remove(getUpdateEntity(binder));
+        JobFacade.getJobService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
-        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
+    private Job getNewEntity(FieldGroup binder) {
+        final JobBean bean = ((BeanItem<JobBean>) binder.getItemDataSource()).getBean();
+
+        List<Position> positions = new ArrayList<>();
+        for (String id : positionIds) {
+            Position position = PositionFacade.getPositionService().find(id);
+            positions.add(position);
         }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
+
+        JobClassification jobClassification = JobClassificationFacade.getJobClassificationService().find(jobClassificationComboId);
+
+        final Job job = new Job.Builder(bean.getTitle())
+                .code(bean.getCode())
+                .description(bean.getDescription())
+                .jobClassification(jobClassification)
+                .positions(positions)
                 .build();
-        return user;
+        return job;
     }
 
-    private User getUpdateEntity(FieldGroup binder) {
+    private Job getUpdateEntity(FieldGroup binder) {
 
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
+        final JobBean bean = ((BeanItem<JobBean>) binder.getItemDataSource()).getBean();
+
+        List<Position> positions = new ArrayList<>();
+        for (String id : positionIds) {
+            Position position = PositionFacade.getPositionService().find(id);
+            positions.add(position);
         }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(bean.getPasswd())
-                .jusridication(facilities)
-                .roles(roles)
+
+        JobClassification jobClassification = JobClassificationFacade.getJobClassificationService().find(jobClassificationComboId);
+
+        final Job job = new Job.Builder(bean.getTitle())
+                .code(bean.getCode())
+                .description(bean.getDescription())
+                .jobClassification(jobClassification)
+                .positions(positions)
                 .id(bean.getId())
                 .build();
-        return user;
+        return job;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "LANDING"));
+        main.content.setSecondComponent(new PositionsMenu(main, "JOB"));
     }
 
     private void setEditFormProperties() {
@@ -198,8 +190,7 @@ public final class JobTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-        form.rolesList.addValueChangeListener((ValueChangeListener) this);
+        form.positionList.addValueChangeListener((ValueChangeListener) this);
+        form.jobClassificationCombo.addValueChangeListener((ValueChangeListener) this);
     }
-
 }

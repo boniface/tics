@@ -18,19 +18,26 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import zm.hashcode.tics.app.facade.offices.DepartmentFacade;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
+import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.ui.job.JobFacade;
+import zm.hashcode.tics.app.facade.ui.position.PositionFacade;
+import zm.hashcode.tics.app.facade.ui.position.PositionTypeFacade;
+import zm.hashcode.tics.app.facade.ui.util.StatusFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.forms.UserForm;
-import zm.hashcode.tics.client.web.content.users.models.UserBean;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
-import zm.hashcode.tics.client.web.content.users.util.UserUtil;
+import zm.hashcode.tics.client.web.content.system.positions.PositionsMenu;
+import zm.hashcode.tics.client.web.content.system.positions.forms.PositionForm;
+import zm.hashcode.tics.client.web.content.system.positions.model.PositionBean;
+import zm.hashcode.tics.client.web.content.system.positions.tables.PositionTable;
+import zm.hashcode.tics.client.web.content.system.positions.util.PositionUtil;
+import zm.hashcode.tics.domain.offices.Department;
 import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.ui.demographics.Role;
-import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.domain.people.Person;
+import zm.hashcode.tics.domain.ui.job.Job;
+import zm.hashcode.tics.domain.ui.position.Position;
+import zm.hashcode.tics.domain.ui.position.PositionType;
+import zm.hashcode.tics.domain.ui.util.Status;
 
 /**
  *
@@ -40,15 +47,22 @@ public final class PositionTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final UserForm form;
-    private final UserTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private final PositionForm form;
+    private final PositionTable table;
+    private Collection<String> subodinateIds = new HashSet<>();
+//    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private String currentOccupantId;
+    private String departmentId;
+    private String facilityId;
+    private String jobId;
+    private String positionStatusId;
+    private String positionTypeId;
+    private String supervisorId;
 
     public PositionTab(TicsMain app) {
         main = app;
-        form = new UserForm();
-        table = new UserTable(main);
+        form = new PositionForm();
+        table = new PositionTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -75,21 +89,33 @@ public final class PositionTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final User user = UserFacade.getUserService().find(table.getValue().toString());
-            final UserBean bean = new UserUtil().getBean(user);
+            final Position user = PositionFacade.getPositionService().find(table.getValue().toString());
+            final PositionBean bean = new PositionUtil().getBean(user);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.jurisdictionList) {
-            jusrisdicationIds = (Collection<String>) property.getValue();
-        } else if (property == form.rolesList) {
-            rolesIds = (Collection<String>) property.getValue();
+        } else if (property == form.currentOccupantCombo) {
+            currentOccupantId = property.getValue().toString();
+        } else if (property == form.departmentCombo) {
+            departmentId = property.getValue().toString();
+        } else if (property == form.facilityCombo) {
+            facilityId = property.getValue().toString();
+        } else if (property == form.jobCombo) {
+            jobId = property.getValue().toString();
+        } else if (property == form.positionStatusCombo) {
+            positionStatusId = property.getValue().toString();
+        } else if (property == form.positionTypeCombo) {
+            positionTypeId = property.getValue().toString();
+        } else if (property == form.supervisorCombo) {
+            supervisorId = property.getValue().toString();
+        } else if (property == form.subodinateList) {
+            subodinateIds = (Collection<String>) property.getValue();
         }
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+            PositionFacade.getPositionService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -101,7 +127,7 @@ public final class PositionTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().merge(getUpdateEntity(binder));
+            PositionFacade.getPositionService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -111,63 +137,73 @@ public final class PositionTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        UserFacade.getUserService().remove(getUpdateEntity(binder));
+        PositionFacade.getPositionService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
-        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
+    private Position getNewEntity(FieldGroup binder) {
+
+        final PositionBean bean = ((BeanItem<PositionBean>) binder.getItemDataSource()).getBean();
+
+        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
+        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
+        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
+        Job job = JobFacade.getJobService().find(jobId);
+        Status status = StatusFacade.getStatusService().find(positionStatusId);
+        PositionType postionType = PositionTypeFacade.getPositionTypeService().find(positionTypeId);
+        Position position = PositionFacade.getPositionService().find(supervisorId);
+
+        final Position iPosition = new Position.Builder(bean.getPositionTitle())
+                .currentOccupant(currentOccupant)
+                .department(department)
+                .description(bean.getDescription())
+                .facility(facility)
+                .job(job)
+                .positionCode(bean.getPositionCode())
+                .positionComments(bean.getPositionComments())
+                .positionEndDate(bean.getPositionEndDate())
+                .positionStatus(status)
+                .positionType(postionType)
+                .postionEntryDate(bean.getPositionEndDate())
+                //. suburdinateIds
+                .supervisor(position)
                 .build();
-        return user;
+        return iPosition;
     }
 
-    private User getUpdateEntity(FieldGroup binder) {
+    private Position getUpdateEntity(FieldGroup binder) {
 
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
-        }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
-        }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(bean.getPasswd())
-                .jusridication(facilities)
-                .roles(roles)
+        final PositionBean bean = ((BeanItem<PositionBean>) binder.getItemDataSource()).getBean();
+
+        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
+        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
+        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
+        Job job = JobFacade.getJobService().find(jobId);
+        Status status = StatusFacade.getStatusService().find(positionStatusId);
+        PositionType postionType = PositionTypeFacade.getPositionTypeService().find(positionTypeId);
+        Position position = PositionFacade.getPositionService().find(supervisorId);
+
+        final Position iPosition = new Position.Builder(bean.getPositionTitle())
+                .currentOccupant(currentOccupant)
+                .department(department)
+                .description(bean.getDescription())
+                .facility(facility)
+                .job(job)
+                .positionCode(bean.getPositionCode())
+                .positionComments(bean.getPositionComments())
+                .positionEndDate(bean.getPositionEndDate())
+                .positionStatus(status)
+                .positionType(postionType)
+                .postionEntryDate(bean.getPositionEndDate())
+                //. suburdinateIds
+                .supervisor(position)
                 .id(bean.getId())
                 .build();
-        return user;
+        return iPosition;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "LANDING"));
+        main.content.setSecondComponent(new PositionsMenu(main, "POSITION"));
     }
 
     private void setEditFormProperties() {
@@ -198,8 +234,13 @@ public final class PositionTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-        form.rolesList.addValueChangeListener((ValueChangeListener) this);
+        form.currentOccupantCombo.addValueChangeListener((ValueChangeListener) this);
+        form.departmentCombo.addValueChangeListener((ValueChangeListener) this);
+        form.facilityCombo.addValueChangeListener((ValueChangeListener) this);
+        form.jobCombo.addValueChangeListener((ValueChangeListener) this);
+        form.positionStatusCombo.addValueChangeListener((ValueChangeListener) this);
+        form.positionTypeCombo.addValueChangeListener((ValueChangeListener) this);
+        form.supervisorCombo.addValueChangeListener((ValueChangeListener) this);
+        form.subodinateList.addValueChangeListener((ValueChangeListener) this);
     }
-
 }

@@ -11,7 +11,7 @@ import zm.hashcode.tics.client.web.content.system.positions.tabs.JobClassificati
 import zm.hashcode.tics.client.web.content.system.positions.tabs.JobTab;
 import zm.hashcode.tics.client.web.content.system.positions.tabs.PositionTab;
 import zm.hashcode.tics.client.web.content.system.positions.tabs.PositionTypeTab;
-import zm.hashcode.tics.client.web.content.system.positions.tabs.ReasonsForDeparttureab;
+import zm.hashcode.tics.client.web.content.system.positions.tabs.ReasonsForDepartureTab;
 
 /**
  *
@@ -24,7 +24,7 @@ public class PositionsMenu extends Menu {
 
         final VerticalLayout reasonsTab = new VerticalLayout();
         reasonsTab.setMargin(true);
-        reasonsTab.addComponent(new ReasonsForDeparttureab(getMain()));
+        reasonsTab.addComponent(new ReasonsForDepartureTab(getMain()));
 
         final VerticalLayout jobClassificatrionTab = new VerticalLayout();
         jobClassificatrionTab.setMargin(true);

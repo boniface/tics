@@ -112,7 +112,7 @@ public class LocationAddressTab extends VerticalLayout implements
 //    }
 
     private void getHome() {
-        main.content.setSecondComponent(new LocationsMenu(main, "TITLE"));
+        main.content.setSecondComponent(new LocationsMenu(main, "LOCATIONADDRESS"));
     }
 
     private void setEditFormProperties() {

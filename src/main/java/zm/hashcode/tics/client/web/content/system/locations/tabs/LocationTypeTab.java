@@ -118,7 +118,7 @@ public class LocationTypeTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new LocationsMenu(main, "TITLE"));
+        main.content.setSecondComponent(new LocationsMenu(main, "LOCATIONTYPE"));
     }
 
     private void setEditFormProperties() {

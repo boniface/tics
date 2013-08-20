@@ -42,9 +42,5 @@ public class UserTable extends Table {
         setSelectable(true);
         // Send changes in selection immediately to server.
         setImmediate(true);
-
-
-
-
     }
 }

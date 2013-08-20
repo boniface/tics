@@ -138,7 +138,7 @@ public final class TrainingInstitution implements Serializable {
         return ImmutableList.copyOf(courses);
     }
 
-    public List<ScheduledCourse> getScheduledCourseses() {
+    public List<ScheduledCourse> getScheduledCourses() {
         return ImmutableList.copyOf(scheduledCourseses);
     }
 

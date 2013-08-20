@@ -15,21 +15,28 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import zm.hashcode.tics.app.facade.offices.FacilityFacade;
+import zm.hashcode.tics.app.facade.training.course.CourseFacade;
+import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
+import zm.hashcode.tics.app.facade.training.institutions.TrainingInstructorsFacade;
+import zm.hashcode.tics.app.facade.training.schedule.ScheduledCourseFacade;
+import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.app.security.PasswordEncrypt;
-import zm.hashcode.tics.app.security.PasswordGenerator;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.forms.UserForm;
-import zm.hashcode.tics.client.web.content.users.models.UserBean;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
-import zm.hashcode.tics.client.web.content.users.util.UserUtil;
-import zm.hashcode.tics.domain.offices.Facility;
-import zm.hashcode.tics.domain.ui.demographics.Role;
+import zm.hashcode.tics.client.web.content.system.traininginstitution.TrainingInstitutionsMenu;
+import zm.hashcode.tics.client.web.content.system.traininginstitution.forms.TrainingInstitutionForm;
+import zm.hashcode.tics.client.web.content.system.traininginstitution.model.TrainingInstitutionBean;
+import zm.hashcode.tics.client.web.content.system.traininginstitution.tables.TrainingInstitutionTable;
+import zm.hashcode.tics.client.web.content.system.traininginstitution.util.TrainingInstitutionUtil;
+import zm.hashcode.tics.domain.training.course.Course;
+import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
+import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
+import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
+import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.users.User;
 
 /**
@@ -40,15 +47,18 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final UserForm form;
-    private final UserTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
+    private final TrainingInstitutionForm form;
+    private final TrainingInstitutionTable table;
+    private String locationIds;
+    private Collection<String> usersListIds = new HashSet<>();
+    private Collection<String> coursesListIds = new HashSet<>();
+    private Collection<String> scheduledCoursesListIds = new HashSet<>();
+    private Collection<String> trainingInstructorsListIds = new HashSet<>();
 
     public TrainingInstitutionTab(TicsMain app) {
         main = app;
-        form = new UserForm();
-        table = new UserTable(main);
+        form = new TrainingInstitutionForm();
+        table = new TrainingInstitutionTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -75,21 +85,30 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final User user = UserFacade.getUserService().find(table.getValue().toString());
-            final UserBean bean = new UserUtil().getBean(user);
+            final TrainingInstitution trainingInstitution = TrainingInstitutionFacade.getTrainingInstitutionService().find(table.getValue().toString());
+            final TrainingInstitutionBean bean = new TrainingInstitutionUtil().getBean(trainingInstitution);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.jurisdictionList) {
-            jusrisdicationIds = (Collection<String>) property.getValue();
-        } else if (property == form.rolesList) {
-            rolesIds = (Collection<String>) property.getValue();
+        } else if (property == form.locationCombo) {
+            locationIds = (String) property.getValue();
+        } else if (property == form.coursesList) {
+            coursesListIds = (Collection<String>) property.getValue();
+        } else if (property == form.scheduledCoursesList) {
+            scheduledCoursesListIds = (Collection<String>) property.getValue();
+        } else if (property == form.trainingInstructorsList) {
+            trainingInstructorsListIds = (Collection<String>) property.getValue();
+        } else if (property == form.usersList) {
+            usersListIds = (Collection<String>) property.getValue();
         }
+
+
+
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+            TrainingInstitutionFacade.getTrainingInstitutionService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -101,7 +120,7 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().merge(getUpdateEntity(binder));
+            TrainingInstitutionFacade.getTrainingInstitutionService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -111,63 +130,95 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        UserFacade.getUserService().remove(getUpdateEntity(binder));
+        TrainingInstitutionFacade.getTrainingInstitutionService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
-        String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
+    private TrainingInstitution getNewEntity(FieldGroup binder) {
+
+        final TrainingInstitutionBean bean = ((BeanItem<TrainingInstitutionBean>) binder.getItemDataSource()).getBean();
+
+        Location location = LocationFacade.getLocationService().find(locationIds);
+
+        List<User> users = new ArrayList<>();
+        for (String id : usersListIds) {
+            User user = UserFacade.getUserService().find(id);
+            users.add(user);
         }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
+
+        List<Course> courses = new ArrayList<>();
+        for (String id : coursesListIds) {
+            Course course = CourseFacade.getCourseService().find(id);
+            courses.add(course);
         }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
+
+        List<ScheduledCourse> scheduledCourses = new ArrayList<>();
+        for (String id : scheduledCoursesListIds) {
+            ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(id);
+            scheduledCourses.add(scheduledCourse);
+        }
+
+        List<TrainingInstructors> trainingInstructors = new ArrayList<>();
+        for (String id : trainingInstructorsListIds) {
+            TrainingInstructors trainingInstructor = TrainingInstructorsFacade.getTrainingInstructorsService().find(id);
+            trainingInstructors.add(trainingInstructor);
+        }
+
+        final TrainingInstitution trainingInstitution = new TrainingInstitution.Builder(bean.getName())
+                .city(location)
+                //                .contact(null)
+                .courses(courses)
+                .scheduledCourseses(scheduledCourses)
+                .trainingInstructors(trainingInstructors)
+                .users(users)
                 .build();
-        return user;
+        return trainingInstitution;
     }
 
-    private User getUpdateEntity(FieldGroup binder) {
+    private TrainingInstitution getUpdateEntity(FieldGroup binder) {
 
-        final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
-        Set<Role> roles = new HashSet<>();
-        for (String id : rolesIds) {
-            Role role = UserFacade.getRoleService().find(id);
-            roles.add(role);
+        final TrainingInstitutionBean bean = ((BeanItem<TrainingInstitutionBean>) binder.getItemDataSource()).getBean();
+
+        Location location = LocationFacade.getLocationService().find(locationIds);
+
+        List<User> users = new ArrayList<>();
+        for (String id : usersListIds) {
+            User user = UserFacade.getUserService().find(id);
+            users.add(user);
         }
-        Set<Facility> facilities = new HashSet<>();
-        for (String id : jusrisdicationIds) {
-            Facility facility = FacilityFacade.getFacilityService().find(id);
-            facilities.add(facility);
+
+        List<Course> courses = new ArrayList<>();
+        for (String id : coursesListIds) {
+            Course course = CourseFacade.getCourseService().find(id);
+            courses.add(course);
         }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(bean.getPasswd())
-                .jusridication(facilities)
-                .roles(roles)
+
+        List<ScheduledCourse> scheduledCourses = new ArrayList<>();
+        for (String id : scheduledCoursesListIds) {
+            ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(id);
+            scheduledCourses.add(scheduledCourse);
+        }
+
+        List<TrainingInstructors> trainingInstructors = new ArrayList<>();
+        for (String id : trainingInstructorsListIds) {
+            TrainingInstructors trainingInstructor = TrainingInstructorsFacade.getTrainingInstructorsService().find(id);
+            trainingInstructors.add(trainingInstructor);
+        }
+
+        final TrainingInstitution trainingInstitution = new TrainingInstitution.Builder(bean.getName())
+                .city(location)
+                //                .contact(null)
+                .courses(courses)
+                .scheduledCourseses(scheduledCourses)
+                .trainingInstructors(trainingInstructors)
+                .users(users)
                 .id(bean.getId())
                 .build();
-        return user;
+        return trainingInstitution;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "LANDING"));
+        main.content.setSecondComponent(new TrainingInstitutionsMenu(main, "LANDING"));
     }
 
     private void setEditFormProperties() {
@@ -198,8 +249,12 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.jurisdictionList.addValueChangeListener((ValueChangeListener) this);
-        form.rolesList.addValueChangeListener((ValueChangeListener) this);
-    }
+        form.coursesList.addValueChangeListener((ValueChangeListener) this);
+        form.locationCombo.addValueChangeListener((ValueChangeListener) this);
+        form.scheduledCoursesList.addValueChangeListener((ValueChangeListener) this);
+        form.trainingInstructorsList.addValueChangeListener((ValueChangeListener) this);
+        form.usersList.addValueChangeListener((ValueChangeListener) this);
 
+
+    }
 }

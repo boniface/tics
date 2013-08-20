@@ -22,15 +22,6 @@ public class JobTable extends Table {
         this.main = main;
         setSizeFull();
 
-        //        private String id;
-//    private String title;
-//    private String code;
-//    private String description;
-//    @DBRef
-//    private JobClassification jobClassification;
-//    @DBRef
-//    private List<Position> positions;
-
         addContainerProperty("Job Title", String.class, null);
         addContainerProperty("Job Code", String.class, null);
         addContainerProperty("Job Description", String.class, null);

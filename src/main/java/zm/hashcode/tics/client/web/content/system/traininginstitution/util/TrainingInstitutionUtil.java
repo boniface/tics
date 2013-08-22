@@ -26,7 +26,7 @@ public class TrainingInstitutionUtil {
         bean.setId(trainingInstitution.getId());
         bean.setName(trainingInstitution.getName());
         bean.setCoursesIds(getCourseIdz(trainingInstitution.getCourses()));
-        bean.setLocationId(getLocationId(trainingInstitution.getCity()));
+//        bean.setLocationId(getLocationId(trainingInstitution.getCity()));
         bean.setScheduledCoursesIds(getScheduledCoursesIdz(trainingInstitution.getScheduledCourses()));
         bean.setTrainingInstructorsIds(getTrainingInstructorsIdz(trainingInstitution.getTrainingInstructors()));
         bean.setUsersIds(getUserIdz(trainingInstitution.getUsers()));

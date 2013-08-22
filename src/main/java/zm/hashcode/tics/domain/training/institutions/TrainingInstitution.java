@@ -13,8 +13,6 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import zm.hashcode.tics.domain.people.Contact;
-import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.users.User;
 
 /**
@@ -29,8 +27,7 @@ public final class TrainingInstitution implements Serializable {
     private String id;
     private String name;
     @DBRef
-    private Location city;
-    private Contact contact;
+    List<InstitutionAddress> institutionAddresses;
     @DBRef
     private List<User> users;
     @DBRef
@@ -46,12 +43,11 @@ public final class TrainingInstitution implements Serializable {
     private TrainingInstitution(Builder builder) {
         id = builder.id;
         name = builder.name;
-        city = builder.city;
-        contact = builder.contact;
+        institutionAddresses = builder.institutionAddresses;
         users = builder.users;
         trainingInstructors = builder.trainingInstructors;
-        courses=builder.courses;
-        scheduledCourseses=builder.scheduledCourseses;
+        courses = builder.courses;
+        scheduledCourseses = builder.scheduledCourseses;
 
     }
 
@@ -59,8 +55,7 @@ public final class TrainingInstitution implements Serializable {
 
         private String id;
         private final String name;
-        private Location city;
-        private Contact contact;
+        List<InstitutionAddress> institutionAddresses;
         private List<User> users;
         private List<TrainingInstructors> trainingInstructors;
         private List<Course> courses;
@@ -75,13 +70,8 @@ public final class TrainingInstitution implements Serializable {
             return this;
         }
 
-        public Builder city(Location value) {
-            city = value;
-            return this;
-        }
-
-        public Builder contact(Contact value) {
-            contact = value;
+        public Builder institutionAddresses(List<InstitutionAddress> value) {
+            institutionAddresses = value;
             return this;
         }
 
@@ -118,12 +108,12 @@ public final class TrainingInstitution implements Serializable {
         return name;
     }
 
-    public Location getCity() {
-        return city;
+    public List<InstitutionAddress> getInstitutionAddresses() {
+        return institutionAddresses;
     }
 
-    public Contact getContact() {
-        return contact;
+    public List<ScheduledCourse> getScheduledCourseses() {
+        return scheduledCourseses;
     }
 
     public List<User> getUsers() {
@@ -168,5 +158,4 @@ public final class TrainingInstitution implements Serializable {
         }
         return true;
     }
-    
 }

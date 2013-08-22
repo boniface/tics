@@ -24,7 +24,7 @@ public class JobUtil {
         bean.setCode(job.getCode());
         bean.setJobClassificationId(getJobClassificationId(job.getJobClassification()));
         bean.setDescription(job.getDescription());
-        bean.setPositionIds(getPositionIds(job.getPositions()));
+
         bean.setTitle(job.getTitle());
 
         return bean;

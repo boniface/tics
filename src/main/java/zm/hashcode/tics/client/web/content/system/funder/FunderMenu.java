@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.competencies;
+package zm.hashcode.tics.client.web.content.system.funder;
 
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
@@ -15,9 +15,9 @@ import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
  *
  * @author boniface
  */
-public class CompetenciesMenu extends Menu {
+public class FunderMenu extends Menu {
 
-    public CompetenciesMenu(TicsMain app, String selectedTab) {
+    public FunderMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
         final VerticalLayout userTab = new VerticalLayout();
@@ -33,9 +33,9 @@ public class CompetenciesMenu extends Menu {
         resetTab.setMargin(true);
         resetTab.addComponent(new ResetTab(getMain()));
 
-        getTab().addTab(userTab, "Add System USERS", null);
-        getTab().addTab(roleTab, "Add System ROLES", null);
-        getTab().addTab(resetTab, "Reset CREDENTIALS", null);
+        getTab().addTab(userTab, "Add FUNDER", null);
+        getTab().addTab(roleTab, "Add TARGET GROUP", null);
+        getTab().addTab(resetTab, "Add STATUS", null);
 
         switch (selectedTab) {
             case "LANDING":

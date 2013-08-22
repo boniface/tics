@@ -131,7 +131,6 @@ public final class JobTab extends VerticalLayout implements
                 .code(bean.getCode())
                 .description(bean.getDescription())
                 .jobClassification(jobClassification)
-                .positions(positions)
                 .build();
         return job;
     }
@@ -152,7 +151,6 @@ public final class JobTab extends VerticalLayout implements
                 .code(bean.getCode())
                 .description(bean.getDescription())
                 .jobClassification(jobClassification)
-                .positions(positions)
                 .id(bean.getId())
                 .build();
         return job;

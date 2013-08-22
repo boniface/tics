@@ -62,7 +62,7 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
         setSizeFull();
         addComponent(form);
         addComponent(table);
-        addListeners();
+//        addListeners();
     }
 
     @Override
@@ -71,9 +71,9 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
         if (source == form.save) {
             saveForm(form.binder);
         } else if (source == form.edit) {
-            setEditFormProperties();
+//            setEditFormProperties();
         } else if (source == form.cancel) {
-            getHome();
+//            getHome();
         } else if (source == form.update) {
             saveEditedForm(form.binder);
         } else if (source == form.delete) {
@@ -88,7 +88,7 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
             final TrainingInstitution trainingInstitution = TrainingInstitutionFacade.getTrainingInstitutionService().find(table.getValue().toString());
             final TrainingInstitutionBean bean = new TrainingInstitutionUtil().getBean(trainingInstitution);
             form.binder.setItemDataSource(new BeanItem<>(bean));
-            setReadFormProperties();
+//            setReadFormProperties();
         } else if (property == form.locationCombo) {
             locationIds = (String) property.getValue();
         } else if (property == form.coursesList) {
@@ -108,7 +108,7 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            TrainingInstitutionFacade.getTrainingInstitutionService().persist(getNewEntity(binder));
+//            TrainingInstitutionFacade.getTrainingInstitutionService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -120,7 +120,7 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            TrainingInstitutionFacade.getTrainingInstitutionService().merge(getUpdateEntity(binder));
+//            TrainingInstitutionFacade.getTrainingInstitutionService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -130,131 +130,125 @@ public final class TrainingInstitutionTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        TrainingInstitutionFacade.getTrainingInstitutionService().remove(getUpdateEntity(binder));
+//        TrainingInstitutionFacade.getTrainingInstitutionService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private TrainingInstitution getNewEntity(FieldGroup binder) {
-
-        final TrainingInstitutionBean bean = ((BeanItem<TrainingInstitutionBean>) binder.getItemDataSource()).getBean();
-
-        Location location = LocationFacade.getLocationService().find(locationIds);
-
-        List<User> users = new ArrayList<>();
-        for (String id : usersListIds) {
-            User user = UserFacade.getUserService().find(id);
-            users.add(user);
-        }
-
-        List<Course> courses = new ArrayList<>();
-        for (String id : coursesListIds) {
-            Course course = CourseFacade.getCourseService().find(id);
-            courses.add(course);
-        }
-
-        List<ScheduledCourse> scheduledCourses = new ArrayList<>();
-        for (String id : scheduledCoursesListIds) {
-            ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(id);
-            scheduledCourses.add(scheduledCourse);
-        }
-
-        List<TrainingInstructors> trainingInstructors = new ArrayList<>();
-        for (String id : trainingInstructorsListIds) {
-            TrainingInstructors trainingInstructor = TrainingInstructorsFacade.getTrainingInstructorsService().find(id);
-            trainingInstructors.add(trainingInstructor);
-        }
-
-        final TrainingInstitution trainingInstitution = new TrainingInstitution.Builder(bean.getName())
-                .city(location)
-                //                .contact(null)
-                .courses(courses)
-                .scheduledCourseses(scheduledCourses)
-                .trainingInstructors(trainingInstructors)
-                .users(users)
-                .build();
-        return trainingInstitution;
-    }
-
-    private TrainingInstitution getUpdateEntity(FieldGroup binder) {
-
-        final TrainingInstitutionBean bean = ((BeanItem<TrainingInstitutionBean>) binder.getItemDataSource()).getBean();
-
-        Location location = LocationFacade.getLocationService().find(locationIds);
-
-        List<User> users = new ArrayList<>();
-        for (String id : usersListIds) {
-            User user = UserFacade.getUserService().find(id);
-            users.add(user);
-        }
-
-        List<Course> courses = new ArrayList<>();
-        for (String id : coursesListIds) {
-            Course course = CourseFacade.getCourseService().find(id);
-            courses.add(course);
-        }
-
-        List<ScheduledCourse> scheduledCourses = new ArrayList<>();
-        for (String id : scheduledCoursesListIds) {
-            ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(id);
-            scheduledCourses.add(scheduledCourse);
-        }
-
-        List<TrainingInstructors> trainingInstructors = new ArrayList<>();
-        for (String id : trainingInstructorsListIds) {
-            TrainingInstructors trainingInstructor = TrainingInstructorsFacade.getTrainingInstructorsService().find(id);
-            trainingInstructors.add(trainingInstructor);
-        }
-
-        final TrainingInstitution trainingInstitution = new TrainingInstitution.Builder(bean.getName())
-                .city(location)
-                //                .contact(null)
-                .courses(courses)
-                .scheduledCourseses(scheduledCourses)
-                .trainingInstructors(trainingInstructors)
-                .users(users)
-                .id(bean.getId())
-                .build();
-        return trainingInstitution;
-    }
-
+//    private TrainingInstitution getNewEntity(FieldGroup binder) {
+//
+//        final TrainingInstitutionBean bean = ((BeanItem<TrainingInstitutionBean>) binder.getItemDataSource()).getBean();
+//
+//        Location location = LocationFacade.getLocationService().find(locationIds);
+//
+//        List<User> users = new ArrayList<>();
+//        for (String id : usersListIds) {
+//            User user = UserFacade.getUserService().find(id);
+//            users.add(user);
+//        }
+//
+//        List<Course> courses = new ArrayList<>();
+//        for (String id : coursesListIds) {
+//            Course course = CourseFacade.getCourseService().find(id);
+//            courses.add(course);
+//        }
+//
+//        List<ScheduledCourse> scheduledCourses = new ArrayList<>();
+//        for (String id : scheduledCoursesListIds) {
+//            ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(id);
+//            scheduledCourses.add(scheduledCourse);
+//        }
+//
+//        List<TrainingInstructors> trainingInstructors = new ArrayList<>();
+//        for (String id : trainingInstructorsListIds) {
+//            TrainingInstructors trainingInstructor = TrainingInstructorsFacade.getTrainingInstructorsService().find(id);
+//            trainingInstructors.add(trainingInstructor);
+//        }
+//
+////        final TrainingInstitution trainingInstitution = new TrainingInstitution.Builder(bean.getName())
+////                .city(location)
+////                //                .contact(null)
+////                .courses(courses)
+////                .scheduledCourseses(scheduledCourses)
+////                .trainingInstructors(trainingInstructors)
+////                .users(users)
+////                .build();
+//        return trainingInstitution;
+//    }
+//    private TrainingInstitution getUpdateEntity(FieldGroup binder) {
+//
+//        final TrainingInstitutionBean bean = ((BeanItem<TrainingInstitutionBean>) binder.getItemDataSource()).getBean();
+//
+//        Location location = LocationFacade.getLocationService().find(locationIds);
+//
+//        List<User> users = new ArrayList<>();
+//        for (String id : usersListIds) {
+//            User user = UserFacade.getUserService().find(id);
+//            users.add(user);
+//        }
+//
+//        List<Course> courses = new ArrayList<>();
+//        for (String id : coursesListIds) {
+//            Course course = CourseFacade.getCourseService().find(id);
+//            courses.add(course);
+//        }
+//
+//        List<ScheduledCourse> scheduledCourses = new ArrayList<>();
+//        for (String id : scheduledCoursesListIds) {
+//            ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(id);
+//            scheduledCourses.add(scheduledCourse);
+//        }
+//
+//        List<TrainingInstructors> trainingInstructors = new ArrayList<>();
+//        for (String id : trainingInstructorsListIds) {
+//            TrainingInstructors trainingInstructor = TrainingInstructorsFacade.getTrainingInstructorsService().find(id);
+//            trainingInstructors.add(trainingInstructor);
+//        }
+//        final TrainingInstitution trainingInstitution = new TrainingInstitution.Builder(bean.getName())
+//                .city(location)
+//                //                .contact(null)
+//                .courses(courses)
+//                .scheduledCourseses(scheduledCourses)
+//                .trainingInstructors(trainingInstructors)
+//                .users(users)
+//                .id(bean.getId())
+//                .build();
+//        return trainingInstitution;
+//    }
     private void getHome() {
         main.content.setSecondComponent(new TrainingInstitutionsMenu(main, "LANDING"));
     }
-
-    private void setEditFormProperties() {
-        form.binder.setReadOnly(false);
-        form.save.setVisible(false);
-        form.edit.setVisible(false);
-        form.cancel.setVisible(true);
-        form.delete.setVisible(false);
-        form.update.setVisible(true);
-    }
-
-    private void setReadFormProperties() {
-        form.binder.setReadOnly(true);
-        //Buttons Behaviou
-        form.save.setVisible(false);
-        form.edit.setVisible(true);
-        form.cancel.setVisible(true);
-        form.delete.setVisible(true);
-        form.update.setVisible(false);
-    }
-
-    private void addListeners() {
-        //Register Button Listeners
-        form.save.addClickListener((ClickListener) this);
-        form.edit.addClickListener((ClickListener) this);
-        form.cancel.addClickListener((ClickListener) this);
-        form.update.addClickListener((ClickListener) this);
-        form.delete.addClickListener((ClickListener) this);
-        //Register Table Listerners
-        table.addValueChangeListener((ValueChangeListener) this);
-        form.coursesList.addValueChangeListener((ValueChangeListener) this);
-        form.locationCombo.addValueChangeListener((ValueChangeListener) this);
-        form.scheduledCoursesList.addValueChangeListener((ValueChangeListener) this);
-        form.trainingInstructorsList.addValueChangeListener((ValueChangeListener) this);
-        form.usersList.addValueChangeListener((ValueChangeListener) this);
-
-
-    }
+//    private void setEditFormProperties() {
+//        form.binder.setReadOnly(false);
+//        form.save.setVisible(false);
+//        form.edit.setVisible(false);
+//        form.cancel.setVisible(true);
+//        form.delete.setVisible(false);
+//        form.update.setVisible(true);
+//    }
+//    private void setReadFormProperties() {
+//        form.binder.setReadOnly(true);
+//        //Buttons Behaviou
+//        form.save.setVisible(false);
+//        form.edit.setVisible(true);
+//        form.cancel.setVisible(true);
+//        form.delete.setVisible(true);
+//        form.update.setVisible(false);
+//    }
+//    private void addListeners() {
+//        //Register Button Listeners
+//        form.save.addClickListener((ClickListener) this);
+//        form.edit.addClickListener((ClickListener) this);
+//        form.cancel.addClickListener((ClickListener) this);
+//        form.update.addClickListener((ClickListener) this);
+//        form.delete.addClickListener((ClickListener) this);
+//        //Register Table Listerners
+//        table.addValueChangeListener((ValueChangeListener) this);
+//        form.coursesList.addValueChangeListener((ValueChangeListener) this);
+//        form.locationCombo.addValueChangeListener((ValueChangeListener) this);
+//        form.scheduledCoursesList.addValueChangeListener((ValueChangeListener) this);
+//        form.trainingInstructorsList.addValueChangeListener((ValueChangeListener) this);
+//        form.usersList.addValueChangeListener((ValueChangeListener) this);
+//
+//
+//    }
 }

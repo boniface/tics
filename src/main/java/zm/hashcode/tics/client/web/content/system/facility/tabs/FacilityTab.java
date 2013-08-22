@@ -29,6 +29,7 @@ import zm.hashcode.tics.client.web.content.users.models.UserBean;
 import zm.hashcode.tics.client.web.content.users.tables.UserTable;
 import zm.hashcode.tics.client.web.content.users.util.UserUtil;
 import zm.hashcode.tics.domain.offices.Facility;
+import zm.hashcode.tics.domain.people.Contact;
 import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.domain.users.User;
 
@@ -89,7 +90,7 @@ public final class FacilityTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            UserFacade.getUserService().persist(getNewEntity(binder));
+//            UserFacade.getUserService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -115,7 +116,7 @@ public final class FacilityTab extends VerticalLayout implements
         getHome();
     }
 
-    private User getNewEntity(FieldGroup binder) {
+    private Facility getNewEntity(FieldGroup binder) {
         String password = PasswordEncrypt.encrypt(new PasswordGenerator().getStaticPassword());
         final UserBean bean = ((BeanItem<UserBean>) binder.getItemDataSource()).getBean();
         Set<Role> roles = new HashSet<>();
@@ -128,16 +129,11 @@ public final class FacilityTab extends VerticalLayout implements
             Facility facility = FacilityFacade.getFacilityService().find(id);
             facilities.add(facility);
         }
-        final User user = new User.Builder(bean.getEmail())
-                .enable(bean.isEnabled())
-                .firstname(bean.getFirstname())
-                .lastname(bean.getLastname())
-                .middlename(bean.getMiddlename())
-                .passwd(password)
-                .jusridication(facilities)
-                .roles(roles)
-                .build();
-        return user;
+        //TODO
+        Contact contact = new Contact.Builder("name").build();
+        final Facility gacility = new Facility.Builder("ga").contact(contact).build();
+               
+        return gacility;
     }
 
     private User getUpdateEntity(FieldGroup binder) {

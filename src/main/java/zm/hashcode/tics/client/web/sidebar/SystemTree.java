@@ -7,7 +7,9 @@ package zm.hashcode.tics.client.web.sidebar;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Tree;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.system.competencies.CompetenciesMenu;
 import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
+import zm.hashcode.tics.client.web.content.system.funder.FunderMenu;
 import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.PeopleMetaDataMenu;
 import zm.hashcode.tics.client.web.content.system.positions.PositionsMenu;
@@ -25,6 +27,8 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
     public static final Object FACILITY_SETUP = "Facility SETUP";
     public static final Object TRAINING_INSTITUTIONS = "Training INSTITUTIONS";
     public static final Object POSITIONS_SETUP = "Positions SETUP";
+    public static final Object CONPETENCIES_SETUP = "Competancies SETUP";
+    public static final Object FUNDER_SETUP = "Funder SETUP";
     private static final String LANDING_TAB = "LANDING";
 
     public SystemTree(TicsMain main) {
@@ -34,6 +38,8 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
         addItem(FACILITY_SETUP);
         addItem(TRAINING_INSTITUTIONS);
         addItem(POSITIONS_SETUP);
+        addItem(CONPETENCIES_SETUP);
+        addItem(FUNDER_SETUP);
 
         //Add Listeners
         addItemClickListener((ItemClickEvent.ItemClickListener) this);
@@ -53,6 +59,10 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
                 trainingInstitutionView();
             } else if (POSITIONS_SETUP.equals(itemId)) {
                 positionInstitutionmView();
+            } else if (CONPETENCIES_SETUP.equals(itemId)) {
+                competenciesView();
+            } else if (FUNDER_SETUP.equals(itemId)) {
+                funderView();
             }
         }
     }
@@ -75,5 +85,13 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
 
     private void positionInstitutionmView() {
         main.content.setSecondComponent(new PositionsMenu(main, LANDING_TAB));
+    }
+
+    private void competenciesView() {
+        main.content.setSecondComponent(new CompetenciesMenu(main, LANDING_TAB));
+    }
+
+    private void funderView() {
+        main.content.setSecondComponent(new FunderMenu(main, LANDING_TAB));
     }
 }

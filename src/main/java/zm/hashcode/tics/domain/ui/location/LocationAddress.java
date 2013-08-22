@@ -11,7 +11,6 @@ import java.io.Serializable;
  * @author boniface
  */
 public final class LocationAddress implements Serializable {
-
     private String postalAddress;
     private String physicalAddress;
     private String contactNumber;

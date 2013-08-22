@@ -39,16 +39,10 @@ public class IdentificationTypeForm extends FormLayout {
         update.setVisible(false);
         delete.setVisible(false);
 
-        //        private String id;
-//    private String idvalue;
-//    private String description;
 
-        TextField idvalue = getTextField("Id Value", "idvalue");
+
+        TextField idvalue = getTextField("ID Type", "idvalue");
         TextField description = getTextField("Description", "description");
-
-        //        TextArea postalAddress = getTextArea("Postal Address", "postalAddress");
-//        TextArea physicalAddress = getTextArea("Physical  Address", "physicalAddress");
-//        ComboBox gender = getComboBox("Gender", "gender");
 
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();

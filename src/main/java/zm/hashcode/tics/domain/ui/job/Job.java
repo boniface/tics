@@ -4,14 +4,11 @@
  */
 package zm.hashcode.tics.domain.ui.job;
 
-import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import zm.hashcode.tics.domain.ui.position.Position;
 
 /**
  *
@@ -28,8 +25,6 @@ public final class Job implements Serializable, Comparable<Job> {
     private String description;
     @DBRef
     private JobClassification jobClassification;
-    @DBRef
-    private List<Position> positions;
 
     private Job() {
     }
@@ -38,9 +33,9 @@ public final class Job implements Serializable, Comparable<Job> {
         id = builder.id;
         title = builder.title;
         code = builder.code;
-        description=builder.description;
-        jobClassification=builder.jobClassification;
-        positions=builder.positions;
+        description = builder.description;
+        jobClassification = builder.jobClassification;
+
 
     }
 
@@ -51,7 +46,6 @@ public final class Job implements Serializable, Comparable<Job> {
         private String code;
         private String description;
         private JobClassification jobClassification;
-        private List<Position> positions;
 
         public Builder(String val) {
             this.title = val;
@@ -74,11 +68,6 @@ public final class Job implements Serializable, Comparable<Job> {
 
         public Builder description(String value) {
             description = value;
-            return this;
-        }
-
-        public Builder positions(List<Position> value) {
-            positions = value;
             return this;
         }
 
@@ -117,10 +106,6 @@ public final class Job implements Serializable, Comparable<Job> {
         return jobClassification;
     }
 
-    public List<Position> getPositions() {
-        return ImmutableList.copyOf(positions);
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -141,5 +126,5 @@ public final class Job implements Serializable, Comparable<Job> {
             return false;
         }
         return true;
-    }    
+    }
 }

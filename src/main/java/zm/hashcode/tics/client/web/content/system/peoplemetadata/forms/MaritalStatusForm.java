@@ -42,12 +42,9 @@ public class MaritalStatusForm extends FormLayout {
 //            private String id;
 //    private String statusName;
 
-        TextField statusName = getTextField("StatusName", "statusName");
+        TextField statusName = getTextField("Marital Status Name", "statusName");
 
-        //        TextArea postalAddress = getTextArea("Postal Address", "postalAddress");
-//        TextArea physicalAddress = getTextArea("Physical  Address", "physicalAddress");
-//        ComboBox gender = getComboBox("Gender", "gender");
-
+ 
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 

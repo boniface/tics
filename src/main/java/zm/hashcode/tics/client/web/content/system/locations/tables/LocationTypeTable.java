@@ -23,11 +23,22 @@ public class LocationTypeTable extends Table {
         setSizeFull();
         addContainerProperty("Name", String.class, null);
         addContainerProperty("Code", String.class, null);
+        addContainerProperty("Parent", String.class, null);
         List<LocationType> locations = LocationTypeFacade.getLocationTypeService().findAll();
-        for (LocationType iLocation : locations) {
-            addItem(new Object[]{iLocation.getName(),
-                iLocation.getCode()
-            }, iLocation.getId());
+        for (LocationType iLocationType : locations) {
+            LocationType parent = null;
+            String parentType = null;
+            try {
+                if (iLocationType.getLocationTypeParent().getId() != null) {
+                    parent = LocationTypeFacade.getLocationTypeService().find(iLocationType.getLocationTypeParent().getId());
+                    parentType = parent.getName() + " - " + parent.getCode();
+                }
+            } catch (NullPointerException ex) {
+            }
+            addItem(new Object[]{iLocationType.getName(),
+                iLocationType.getCode(),
+                parentType
+            }, iLocationType.getId());
         }
         // Allow selecting items from the table.
         setNullSelectionAllowed(false);

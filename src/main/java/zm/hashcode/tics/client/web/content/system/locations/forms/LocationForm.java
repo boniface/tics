@@ -8,6 +8,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -29,6 +30,7 @@ public class LocationForm extends FormLayout {
     public final FieldGroup binder;
     public ListSelect locationList = new ListSelect();
 //    public ListSelect rolesList = new ListSelect();
+    //
 //    // Define Buttons
     public Button save = new Button("Save");
     public Button edit = new Button("Edit");

@@ -7,6 +7,7 @@ package zm.hashcode.tics.domain.ui.location;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public final class LocationType implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -23,6 +25,8 @@ public final class LocationType implements Serializable {
     private String name;
     @NotNull
     private String code;
+    @Null
+    private LocationType locationTypeParent;
 
     private LocationType() {
     }
@@ -31,24 +35,35 @@ public final class LocationType implements Serializable {
         id = builder.id;
         name = builder.name;
         code = builder.code;
-
+        locationTypeParent = builder.locationTypeParent;
     }
+
     public static class Builder {
+
         private String id = null;
         private final String name;
         private String code = null;
+        private LocationType locationTypeParent = null;
 
         public Builder(String val) {
             this.name = val;
         }
+
         public Builder id(String value) {
             id = value;
             return this;
         }
+
         public Builder code(String value) {
             code = value;
             return this;
         }
+
+        public Builder locationTypeParent(LocationType value) {
+            locationTypeParent = value;
+            return this;
+        }
+
         public LocationType build() {
             return new LocationType(this);
         }
@@ -66,10 +81,15 @@ public final class LocationType implements Serializable {
         return code;
     }
 
+    /**
+     * @return the locationTypeParent
+     */
+    public LocationType getLocationTypeParent() {
+        return locationTypeParent;
+    }
+
     @Override
     public String toString() {
         return "LocationType{" + "name=" + name + ", code=" + code + '}';
     }
-    
-    
 }

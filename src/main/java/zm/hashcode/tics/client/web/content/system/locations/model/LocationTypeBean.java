@@ -13,10 +13,9 @@ import java.io.Serializable;
 public class LocationTypeBean implements Serializable {
 
     private String id;
-//    @NotNull
     private String name;
-//    @NotNull
     private String code;
+    private String locationTypeParentId;
 
     /**
      * @return the id
@@ -58,5 +57,19 @@ public class LocationTypeBean implements Serializable {
      */
     public void setCode(String code) {
         this.code = code;
+    }
+
+    /**
+     * @return the locationTypeParentId
+     */
+    public String getLocationTypeParentId() {
+        return locationTypeParentId;
+    }
+
+    /**
+     * @param locationTypeParentId the locationTypeParentId to set
+     */
+    public void setLocationTypeParentId(String locationTypeParentId) {
+        this.locationTypeParentId = locationTypeParentId;
     }
 }

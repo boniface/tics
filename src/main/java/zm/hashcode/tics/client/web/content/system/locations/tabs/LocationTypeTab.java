@@ -33,6 +33,7 @@ public class LocationTypeTab extends VerticalLayout implements
     private final TicsMain main;
     private final LocationTypeForm form;
     private final LocationTypeTable table;
+    private static String locationTypeParentId = null;
 
     public LocationTypeTab(TicsMain app) {
         main = app;
@@ -69,6 +70,10 @@ public class LocationTypeTab extends VerticalLayout implements
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
         }
+        if (property == form.locationTypeParentIdCombo) {
+            locationTypeParentId = property.getValue().toString();
+            System.out.println("Selected Location id is : " + locationTypeParentId);
+        }
     }
 
     private void saveForm(FieldGroup binder) {
@@ -101,17 +106,29 @@ public class LocationTypeTab extends VerticalLayout implements
     }
 
     private LocationType getNewEntity(FieldGroup binder) {
+        LocationType locationTypeParent = null;
+        if (locationTypeParentId == null) {
+        } else {
+            locationTypeParent = LocationTypeFacade.getLocationTypeService().find(locationTypeParentId);
+        }
         final LocationTypeBean bean = ((BeanItem<LocationTypeBean>) binder.getItemDataSource()).getBean();
         final LocationType locationType = new LocationType.Builder(bean.getName())
                 .code(bean.getCode())
+                .locationTypeParent(locationTypeParent)
                 .build();
         return locationType;
     }
 
     private LocationType getUpdateEntity(FieldGroup binder) {
+        LocationType locationTypeParent = null;
+        if (locationTypeParentId == null) {
+        } else {
+            locationTypeParent = LocationTypeFacade.getLocationTypeService().find(locationTypeParentId);
+        }
         final LocationTypeBean bean = ((BeanItem<LocationTypeBean>) binder.getItemDataSource()).getBean();
         final LocationType locationType = new LocationType.Builder(bean.getName())
                 .code(bean.getCode())
+                .locationTypeParent(locationTypeParent)
                 .id(bean.getId())
                 .build();
         return locationType;
@@ -149,5 +166,6 @@ public class LocationTypeTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
+        form.locationTypeParentIdCombo.addValueChangeListener((ValueChangeListener) this);
     }
 }

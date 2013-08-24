@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import zm.hashcode.tics.client.web.content.system.traininginstitution.model.TrainingInstitutionBean;
 import zm.hashcode.tics.domain.training.course.Course;
+import zm.hashcode.tics.domain.training.institutions.InstitutionAddress;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
 import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
@@ -25,13 +26,22 @@ public class TrainingInstitutionUtil {
         TrainingInstitutionBean bean = new TrainingInstitutionBean();
         bean.setId(trainingInstitution.getId());
         bean.setName(trainingInstitution.getName());
-        bean.setCoursesIds(getCourseIdz(trainingInstitution.getCourses()));
+//        bean.setCoursesIds(getCourseIdz(trainingInstitution.getCourses()));
 //        bean.setLocationId(getLocationId(trainingInstitution.getCity()));
-        bean.setScheduledCoursesIds(getScheduledCoursesIdz(trainingInstitution.getScheduledCourses()));
-        bean.setTrainingInstructorsIds(getTrainingInstructorsIdz(trainingInstitution.getTrainingInstructors()));
+//        bean.setScheduledCoursesIds(getScheduledCoursesIdz(trainingInstitution.getScheduledCourses()));
+//        bean.setTrainingInstructorsIds(getTrainingInstructorsIdz(trainingInstitution.getTrainingInstructors()));
+//        bean.setInstitutionAddressesIds(getInstitutionAddressIdz(trainingInstitution.getInstitutionAddresses()));
         bean.setUsersIds(getUserIdz(trainingInstitution.getUsers()));
 
         return bean;
+    }
+
+    public Set<String> getInstitutionAddressIdz(List<InstitutionAddress> institutionAddresses) {
+        Set<String> ids = new HashSet<>();
+        for (InstitutionAddress iInstitutionAddress : institutionAddresses) {
+//            ids.add(iInstitutionAddress.());
+        }
+        return ids;
     }
 
     public Set<String> getCourseIdz(List<Course> courses) {

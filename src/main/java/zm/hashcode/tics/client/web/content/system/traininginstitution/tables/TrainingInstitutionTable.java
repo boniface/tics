@@ -23,30 +23,19 @@ public class TrainingInstitutionTable extends Table {
         setSizeFull();
 
         addContainerProperty("Training Institution", String.class, null);
-        addContainerProperty("City", String.class, null);
-//        addContainerProperty("Job Description", String.class, null);
-//        addContainerProperty("Job Classification", String.class, null);
 
         List<TrainingInstitution> trainingInstitutionList = TrainingInstitutionFacade.getTrainingInstitutionService().findAll();
-//        for (TrainingInstitution iTrainingInstitution : trainingInstitutionList) {
-//            String location = iTrainingInstitution.getCity().getName() + "";
-//            addItem(new Object[]{iTrainingInstitution.getName(),
-//                location
-//            }, iTrainingInstitution.getId());
+        for (TrainingInstitution iTrainingInstitution : trainingInstitutionList) {
+            addItem(new Object[]{iTrainingInstitution.getName()
+            }, iTrainingInstitution.getId());
+        }
+//     Allow selecting items from the table.
+
+        setNullSelectionAllowed(false);
+//
+        setSelectable(true);
+        // Send changes in selection immediately to server.
+        setImmediate(true);
+
     }
-    // Allow selecting items from the table.
-//
-//    setNullSelectionAllowed(
-//
-//    false);
-////
-//        setSelectable(
-//
-//    true);
-//        // Send changes in selection immediately to server.
-//        setImmediate(
-//
-//true);
-//
-//    }
 }

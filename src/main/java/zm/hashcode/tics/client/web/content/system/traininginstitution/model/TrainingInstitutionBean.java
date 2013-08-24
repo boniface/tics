@@ -17,9 +17,21 @@ public class TrainingInstitutionBean implements Serializable {
     private String id;
     private String name; //******
 //    @DBRef
+//    List<InstitutionAddress> institutionAddresses;
+//    private Set<String> institutionAddressesIds = new HashSet<>();  // THis is and EMBEDDABLE, just blow up the attribute as below
+    ////////?????????????????????????????????
+//    private LocationAddress address; // THis is and EMBEDDABLE, just blow up the attribute as below
+    ////////?????????????????????????????????
+    private String postalAddress;
+    private String physicalAddress;
+    private String contactNumber;
+    private String postalCode;
+    private String emailAddress;
+    ////////?????????????????????????????????
+//    @DBRef
 //    private Location city;
-    private String LocationId;
-//    private Contact contact;
+    private String cityId;
+    ////////?????????????????????????????????
 //    @DBRef
 //    private List<User> users;
     private Set<String> usersIds = new HashSet<>();
@@ -59,20 +71,6 @@ public class TrainingInstitutionBean implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @return the LocationId
-     */
-    public String getLocationId() {
-        return LocationId;
-    }
-
-    /**
-     * @param LocationId the LocationId to set
-     */
-    public void setLocationId(String LocationId) {
-        this.LocationId = LocationId;
     }
 
     /**
@@ -129,5 +127,103 @@ public class TrainingInstitutionBean implements Serializable {
      */
     public void setScheduledCoursesIds(Set<String> scheduledCoursesIds) {
         this.scheduledCoursesIds = scheduledCoursesIds;
+    }
+//
+//    /**
+//     * @return the institutionAddressesIds
+//     */
+//    public Set<String> getInstitutionAddressesIds() {
+//        return institutionAddressesIds;
+//    }
+//
+//    /**
+//     * @param institutionAddressesIds the institutionAddressesIds to set
+//     */
+//    public void setInstitutionAddressesIds(Set<String> institutionAddressesIds) {
+//        this.institutionAddressesIds = institutionAddressesIds;
+//    }
+
+    /**
+     * @return the postalAddress
+     */
+    public String getPostalAddress() {
+        return postalAddress;
+    }
+
+    /**
+     * @param postalAddress the postalAddress to set
+     */
+    public void setPostalAddress(String postalAddress) {
+        this.postalAddress = postalAddress;
+    }
+
+    /**
+     * @return the physicalAddress
+     */
+    public String getPhysicalAddress() {
+        return physicalAddress;
+    }
+
+    /**
+     * @param physicalAddress the physicalAddress to set
+     */
+    public void setPhysicalAddress(String physicalAddress) {
+        this.physicalAddress = physicalAddress;
+    }
+
+    /**
+     * @return the contactNumber
+     */
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    /**
+     * @param contactNumber the contactNumber to set
+     */
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    /**
+     * @return the postalCode
+     */
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    /**
+     * @param postalCode the postalCode to set
+     */
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    /**
+     * @return the emailAddress
+     */
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    /**
+     * @param emailAddress the emailAddress to set
+     */
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    /**
+     * @return the cityId
+     */
+    public String getCityId() {
+        return cityId;
+    }
+
+    /**
+     * @param cityId the cityId to set
+     */
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 }

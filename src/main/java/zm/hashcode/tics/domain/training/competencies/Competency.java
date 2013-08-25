@@ -15,50 +15,51 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public final class Competency {
+
     @Id
     private String id;
     private String name;
     @DBRef
     private CompetencyType type;
     private String notes;
-    
+
     private Competency() {
     }
-    
+
     private Competency(Builder builder) {
         id = builder.id;
         name = builder.name;
         type = builder.type;
         notes = builder.notes;
-        
+
     }
-    
+
     public static class Builder {
-    
-    private String id;
-    private final String name;
-    private CompetencyType type;
-    private String notes;
+
+        private String id;
+        private final String name;
+        private CompetencyType type;
+        private String notes;
 
         public Builder(String val) {
             this.name = val;
         }
-        
+
         public Builder id(String value) {
             id = value;
             return this;
         }
-        
+
         public Builder notes(String value) {
             notes = value;
             return this;
         }
-        
-        public Builder roles(CompetencyType value) {
+
+        public Builder type(CompetencyType value) {
             type = value;
             return this;
         }
-        
+
         public Competency build() {
             return new Competency(this);
         }
@@ -106,7 +107,4 @@ public final class Competency {
     public String toString() {
         return "Competency{" + "name=" + name + '}';
     }
-    
-    
-    
 }

@@ -7,7 +7,9 @@ package zm.hashcode.tics.client.web.content.system.funder;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
+import zm.hashcode.tics.client.web.content.system.funder.tabs.FunderTab;
+import zm.hashcode.tics.client.web.content.system.funder.tabs.StatusTab;
+import zm.hashcode.tics.client.web.content.system.funder.tabs.TargetGroupTab;
 import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
 import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
 
@@ -20,32 +22,32 @@ public class FunderMenu extends Menu {
     public FunderMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout funderTab = new VerticalLayout();
+        funderTab.setMargin(true);
+        funderTab.addComponent(new FunderTab(getMain()));
 
 
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
+        final VerticalLayout targetGroupTab = new VerticalLayout();
+        targetGroupTab.setMargin(true);
+        targetGroupTab.addComponent(new TargetGroupTab(getMain()));
 
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
+        final VerticalLayout statusTab = new VerticalLayout();
+        statusTab.setMargin(true);
+        statusTab.addComponent(new StatusTab(getMain()));
 
-        getTab().addTab(userTab, "Add FUNDER", null);
-        getTab().addTab(roleTab, "Add TARGET GROUP", null);
-        getTab().addTab(resetTab, "Add STATUS", null);
+        getTab().addTab(funderTab, "Add FUNDER", null);
+        getTab().addTab(targetGroupTab, "Add TARGET GROUP", null);
+        getTab().addTab(statusTab, "Add STATUS", null);
 
         switch (selectedTab) {
             case "LANDING":
-                getTab().setSelectedTab(userTab);
+                getTab().setSelectedTab(funderTab);
                 break;
-            case "ROLES":
-                getTab().setSelectedTab(roleTab);
+            case "TARGETGROUP":
+                getTab().setSelectedTab(targetGroupTab);
                 break;
-            case "RESETS":
-                getTab().setSelectedTab(roleTab);
+            case "STATUS":
+                getTab().setSelectedTab(statusTab);
                 break;
         }
         addComponent(getTab());

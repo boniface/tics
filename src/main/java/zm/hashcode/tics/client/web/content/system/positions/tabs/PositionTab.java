@@ -51,9 +51,9 @@ public final class PositionTab extends VerticalLayout implements
     private final PositionTable table;
     private Collection<String> subodinateIds = new HashSet<>();
 //    private Collection<String> jusrisdicationIds = new HashSet<>();
-    private String currentOccupantId;
-    private String departmentId;
-    private String facilityId;
+//    private String currentOccupantId;
+//    private String departmentId;
+//    private String facilityId;
     private String jobId;
     private String positionStatusId;
     private String positionTypeId;
@@ -93,13 +93,14 @@ public final class PositionTab extends VerticalLayout implements
             final PositionBean bean = new PositionUtil().getBean(user);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.currentOccupantCombo) {
-            currentOccupantId = property.getValue().toString();
-        } else if (property == form.departmentCombo) {
-            departmentId = property.getValue().toString();
-        } else if (property == form.facilityCombo) {
-            facilityId = property.getValue().toString();
-        } else if (property == form.jobCombo) {
+        } //        else if (property == form.currentOccupantCombo) {
+        //            currentOccupantId = property.getValue().toString();
+        //        } else if (property == form.departmentCombo) {
+        //            departmentId = property.getValue().toString();
+        //        } else if (property == form.facilityCombo) {
+        //            facilityId = property.getValue().toString();
+        //        }
+        else if (property == form.jobCombo) {
             jobId = property.getValue().toString();
         } else if (property == form.positionStatusCombo) {
             positionStatusId = property.getValue().toString();
@@ -145,19 +146,19 @@ public final class PositionTab extends VerticalLayout implements
 
         final PositionBean bean = ((BeanItem<PositionBean>) binder.getItemDataSource()).getBean();
 
-        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
-        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
-        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
+//        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
+//        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
+//        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
         Job job = JobFacade.getJobService().find(jobId);
         Status status = StatusFacade.getStatusService().find(positionStatusId);
         PositionType postionType = PositionTypeFacade.getPositionTypeService().find(positionTypeId);
         Position position = PositionFacade.getPositionService().find(supervisorId);
 
         final Position iPosition = new Position.Builder(bean.getPositionTitle())
-                .currentOccupant(currentOccupant)
-                .department(department)
+                //                .currentOccupant(currentOccupant)
+                //                .department(department)
                 .description(bean.getDescription())
-                .facility(facility)
+                //                .facility(facility)
                 .job(job)
                 .positionCode(bean.getPositionCode())
                 .positionComments(bean.getPositionComments())
@@ -175,19 +176,19 @@ public final class PositionTab extends VerticalLayout implements
 
         final PositionBean bean = ((BeanItem<PositionBean>) binder.getItemDataSource()).getBean();
 
-        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
-        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
-        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
+//        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
+//        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
+//        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
         Job job = JobFacade.getJobService().find(jobId);
         Status status = StatusFacade.getStatusService().find(positionStatusId);
         PositionType postionType = PositionTypeFacade.getPositionTypeService().find(positionTypeId);
         Position position = PositionFacade.getPositionService().find(supervisorId);
 
         final Position iPosition = new Position.Builder(bean.getPositionTitle())
-                .currentOccupant(currentOccupant)
-                .department(department)
+                //                .currentOccupant(currentOccupant)
+                //                .department(department)
                 .description(bean.getDescription())
-                .facility(facility)
+                //                .facility(facility)
                 .job(job)
                 .positionCode(bean.getPositionCode())
                 .positionComments(bean.getPositionComments())
@@ -234,9 +235,9 @@ public final class PositionTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.currentOccupantCombo.addValueChangeListener((ValueChangeListener) this);
-        form.departmentCombo.addValueChangeListener((ValueChangeListener) this);
-        form.facilityCombo.addValueChangeListener((ValueChangeListener) this);
+//        form.currentOccupantCombo.addValueChangeListener((ValueChangeListener) this);
+//        form.departmentCombo.addValueChangeListener((ValueChangeListener) this);
+//        form.facilityCombo.addValueChangeListener((ValueChangeListener) this);
         form.jobCombo.addValueChangeListener((ValueChangeListener) this);
         form.positionStatusCombo.addValueChangeListener((ValueChangeListener) this);
         form.positionTypeCombo.addValueChangeListener((ValueChangeListener) this);

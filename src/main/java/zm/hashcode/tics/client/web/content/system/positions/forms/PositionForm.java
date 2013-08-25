@@ -49,12 +49,12 @@ public class PositionForm extends FormLayout {
     public Button delete = new Button("Delete");
     //
     public ListSelect subodinateList = new ListSelect();
-    public ComboBox currentOccupantCombo = new ComboBox();
+//    public ComboBox currentOccupantCombo = new ComboBox();
     public ComboBox positionTypeCombo = new ComboBox();
     public ComboBox positionStatusCombo = new ComboBox();
-    public ComboBox facilityCombo = new ComboBox();
+//    public ComboBox facilityCombo = new ComboBox();
     public ComboBox supervisorCombo = new ComboBox();
-    public ComboBox departmentCombo = new ComboBox();
+//    public ComboBox departmentCombo = new ComboBox();
     public ComboBox jobCombo = new ComboBox();
 
     public PositionForm() {
@@ -97,36 +97,36 @@ public class PositionForm extends FormLayout {
         TextField positionComments = getTextField("Position Comments", "positionComments");
 
         PopupDateField postionEntryDate = getPopupDateField("Postion Entry Date", "positionEntryDate");
-        PopupDateField positionEndDate = getPopupDateField("Postion End Date", "positionEndDate");
+//        PopupDateField positionEndDate = getPopupDateField("Postion End Date", "positionEndDate");
 
-        ComboBox currentOccupant = getCurrentOccupantComboBox("Current Occupant", "personId");
+//        ComboBox currentOccupant = getCurrentOccupantComboBox("Current Occupant", "personId");
         ComboBox positionType = getPositionTypeComboBox("Position Type", "positionTypeId");
         ComboBox positionStatus = getPositionStatusComboBox("Position Status", "statusId");
-        ComboBox facility = getFacilityComboBox("Facility", "facilityId");
+//        ComboBox facility = getFacilityComboBox("Facility", "facilityId");
 
         final ListSelect subodinateIds = getSubordinatesListSelect("Select Subordinate", "subodinateIds");
 
         ComboBox supervisor = getSupervisorComboBox("Supervisor", "positionId");
-        ComboBox department = getDepartmentComboBox("Department", "departmentId");
+//        ComboBox department = getDepartmentComboBox("Department", "departmentId");
         ComboBox job = getJobComboBox("Job", "jobId");
 
         GridLayout grid = new GridLayout(4, 10);  // ADJUSTS if neccesary Col, Row
         grid.setSizeFull();
 
         grid.addComponent(positionCode, 0, 0);
-        grid.addComponent(positionTitle, 0, 1);
-        grid.addComponent(description, 0, 2);
-        grid.addComponent(positionComments, 0, 3);
-        grid.addComponent(postionEntryDate, 1, 0);
-        grid.addComponent(positionEndDate, 1, 1);
-        grid.addComponent(currentOccupant, 1, 2);
-        grid.addComponent(positionType, 1, 3);
-        grid.addComponent(positionStatus, 2, 0);
-        grid.addComponent(facility, 2, 1);
-        grid.addComponent(supervisor, 2, 2);
-        grid.addComponent(department, 2, 3);
-        grid.addComponent(job, 3, 0);
-        grid.addComponent(subodinateIds, 3, 1);
+        grid.addComponent(positionTitle, 1, 0);
+        grid.addComponent(description, 2, 0);
+        grid.addComponent(positionComments, 0, 1);
+        grid.addComponent(postionEntryDate, 1, 1);
+//        grid.addComponent(positionEndDate, 1, 1);
+//        grid.addComponent(currentOccupant, 1, 2);
+        grid.addComponent(positionType, 2, 1);
+        grid.addComponent(positionStatus, 0, 2);
+//        grid.addComponent(facility, 2, 1);
+        grid.addComponent(supervisor, 1, 2);
+//        grid.addComponent(department, 2, 3);
+        grid.addComponent(job, 2, 2);
+        grid.addComponent(subodinateIds, 0, 3);
 
         grid.addComponent(buttons, 0, 4, 2, 4);
 
@@ -171,32 +171,31 @@ public class PositionForm extends FormLayout {
         return textField;
     }
 
-    private ComboBox getCurrentOccupantComboBox(String label, String field) {
-//        ComboBox comboBox = new ComboBox(label);
-        currentOccupantCombo.setCaption(label);
-        List<Person> allPersons = PersonFacade.getPersonService().findAll();
-        for (Person iPerson : allPersons) {
-            currentOccupantCombo.addItem(iPerson.getId());
-            currentOccupantCombo.setItemCaption(iPerson.getId(), iPerson.getFirstname() + " " + iPerson.getSurname());
-        }
-
-//        List<Location> locations = LocationFacade.getLocationModelService().findAll();
-//
-////        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
-////        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
-//
-//        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
-//        for (Location location : cities) {
-//            comboBox.addItem(location.getId());
-//            comboBox.setItemCaption(location.getId(), location.getName());
+//    private ComboBox getCurrentOccupantComboBox(String label, String field) {
+////        ComboBox comboBox = new ComboBox(label);
+//        currentOccupantCombo.setCaption(label);
+//        List<Person> allPersons = PersonFacade.getPersonService().findAll();
+//        for (Person iPerson : allPersons) {
+//            currentOccupantCombo.addItem(iPerson.getId());
+//            currentOccupantCombo.setItemCaption(iPerson.getId(), iPerson.getFirstname() + " " + iPerson.getSurname());
 //        }
-        currentOccupantCombo.addValidator(new BeanValidator(PositionBean.class, field));
-        currentOccupantCombo.setImmediate(true);
-        currentOccupantCombo.setWidth(250, Unit.PIXELS);
-        binder.bind(currentOccupantCombo, field);
-        return currentOccupantCombo;
-    }
-
+//
+////        List<Location> locations = LocationFacade.getLocationModelService().findAll();
+////
+//////        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
+//////        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
+////
+////        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
+////        for (Location location : cities) {
+////            comboBox.addItem(location.getId());
+////            comboBox.setItemCaption(location.getId(), location.getName());
+////        }
+//        currentOccupantCombo.addValidator(new BeanValidator(PositionBean.class, field));
+//        currentOccupantCombo.setImmediate(true);
+//        currentOccupantCombo.setWidth(250, Unit.PIXELS);
+//        binder.bind(currentOccupantCombo, field);
+//        return currentOccupantCombo;
+//    }
     private ComboBox getPositionTypeComboBox(String label, String field) {
 //        ComboBox comboBox = new ComboBox(label);
         positionTypeCombo.setCaption(label);
@@ -228,22 +227,22 @@ public class PositionForm extends FormLayout {
         binder.bind(positionStatusCombo, field);
         return positionStatusCombo;
     }
-
-    private ComboBox getFacilityComboBox(String label, String field) {
-//        ComboBox comboBox = new ComboBox(label);
-        facilityCombo.setCaption(label);
-        List<Facility> allFacilities = FacilityFacade.getFacilityService().findAll();
-        for (Facility iFacility : allFacilities) {
-            facilityCombo.addItem(iFacility.getId());
-            facilityCombo.setItemCaption(iFacility.getId(), iFacility.getFacilityName());
-        }
-
-        facilityCombo.addValidator(new BeanValidator(PositionBean.class, field));
-        facilityCombo.setImmediate(true);
-        facilityCombo.setWidth(250, Unit.PIXELS);
-        binder.bind(facilityCombo, field);
-        return facilityCombo;
-    }
+//
+//    private ComboBox getFacilityComboBox(String label, String field) {
+////        ComboBox comboBox = new ComboBox(label);
+//        facilityCombo.setCaption(label);
+//        List<Facility> allFacilities = FacilityFacade.getFacilityService().findAll();
+//        for (Facility iFacility : allFacilities) {
+//            facilityCombo.addItem(iFacility.getId());
+//            facilityCombo.setItemCaption(iFacility.getId(), iFacility.getFacilityName());
+//        }
+//
+//        facilityCombo.addValidator(new BeanValidator(PositionBean.class, field));
+//        facilityCombo.setImmediate(true);
+//        facilityCombo.setWidth(250, Unit.PIXELS);
+//        binder.bind(facilityCombo, field);
+//        return facilityCombo;
+//    }
 
     private ComboBox getSupervisorComboBox(String label, String field) {
 //        ComboBox comboBox = new ComboBox(label);
@@ -260,22 +259,22 @@ public class PositionForm extends FormLayout {
         binder.bind(supervisorCombo, field);
         return supervisorCombo;
     }
-
-    private ComboBox getDepartmentComboBox(String label, String field) {
-//        ComboBox comboBox = new ComboBox(label);
-        departmentCombo.setCaption(label);
-        List<Department> allDepartments = DepartmentFacade.getDepartmentService().findAll();
-        for (Department iDepartment : allDepartments) {
-            departmentCombo.addItem(iDepartment.getId());
-            departmentCombo.setItemCaption(iDepartment.getId(), iDepartment.getName());
-        }
-
-        departmentCombo.addValidator(new BeanValidator(PositionBean.class, field));
-        departmentCombo.setImmediate(true);
-        departmentCombo.setWidth(250, Unit.PIXELS);
-        binder.bind(departmentCombo, field);
-        return departmentCombo;
-    }
+//
+//    private ComboBox getDepartmentComboBox(String label, String field) {
+////        ComboBox comboBox = new ComboBox(label);
+//        departmentCombo.setCaption(label);
+//        List<Department> allDepartments = DepartmentFacade.getDepartmentService().findAll();
+//        for (Department iDepartment : allDepartments) {
+//            departmentCombo.addItem(iDepartment.getId());
+//            departmentCombo.setItemCaption(iDepartment.getId(), iDepartment.getName());
+//        }
+//
+//        departmentCombo.addValidator(new BeanValidator(PositionBean.class, field));
+//        departmentCombo.setImmediate(true);
+//        departmentCombo.setWidth(250, Unit.PIXELS);
+//        binder.bind(departmentCombo, field);
+//        return departmentCombo;
+//    }
 
     private ComboBox getJobComboBox(String label, String field) {
 //        ComboBox comboBox = new ComboBox(label);

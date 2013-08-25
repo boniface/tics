@@ -51,7 +51,7 @@ public class PositionTable extends Table {
         addContainerProperty("Position Title", String.class, null);
         addContainerProperty("Description", String.class, null);
         addContainerProperty("Position Entry Date", Date.class, null);
-        addContainerProperty("Position End Date", Date.class, null);
+//        addContainerProperty("Position End Date", Date.class, null);
         addContainerProperty("Position Comments", String.class, null);
 
         List<Position> positionList = PositionFacade.getPositionService().findAll();
@@ -60,7 +60,7 @@ public class PositionTable extends Table {
                 iPosition.getPositionTitle(),
                 iPosition.getDescription(),
                 iPosition.getPostionEntryDate(),
-                iPosition.getPositionEndDate(),
+                //                iPosition.getPositionEndDate(),
                 iPosition.getPositionComments()
             }, iPosition.getId());
         }

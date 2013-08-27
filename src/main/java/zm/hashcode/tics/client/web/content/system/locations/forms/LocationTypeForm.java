@@ -13,10 +13,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import java.util.List;
-import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
 import zm.hashcode.tics.client.web.content.system.locations.model.LocationTypeBean;
-import zm.hashcode.tics.domain.ui.location.LocationType;
 
 /**
  *
@@ -40,26 +37,17 @@ public class LocationTypeForm extends FormLayout {
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         HorizontalLayout buttons = getButtons();
-        // Determines which properties are shown
         update.setVisible(false);
         delete.setVisible(false);
 
-//           private String id;
-//    @NotNull
-//    private String name;
-//    @NotNull
-//    private String code;
-//        private String locationTypeParentId;
-
         TextField name = getTextField("Location Type Name", "name");
-        TextField code = getTextField("Code", "code");
-        final ComboBox locationTypeParentIdComboBox = getlocationTypeParentIdComboBox("Location Parent Type", "locationTypeParentId");
+        TextField code = getTextField("Code Type Code", "code");
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
         grid.addComponent(name, 0, 0);
-        grid.addComponent(code, 0, 1);
-        grid.addComponent(locationTypeParentIdComboBox, 1, 0);
+        grid.addComponent(code, 1, 0);
+
         grid.addComponent(buttons, 0, 3, 2, 3);
 
         addComponent(grid);
@@ -74,21 +62,6 @@ public class LocationTypeForm extends FormLayout {
         textField.setImmediate(true);
         binder.bind(textField, field);
         return textField;
-    }
-
-    private ComboBox getlocationTypeParentIdComboBox(String label, String field) {
-//        ComboBox comboBox = new ComboBox(label);
-        locationTypeParentIdCombo.setCaption(label);
-        List<LocationType> locationTypes = LocationTypeFacade.getLocationTypeService().findAll();
-        for (LocationType iLocationType : locationTypes) {
-            locationTypeParentIdCombo.addItem(iLocationType.getId());
-            locationTypeParentIdCombo.setItemCaption(iLocationType.getId(), iLocationType.getName() + " - " + iLocationType.getCode());
-        }
-        locationTypeParentIdCombo.addValidator(new BeanValidator(LocationTypeBean.class, field));
-        locationTypeParentIdCombo.setImmediate(true);
-        locationTypeParentIdCombo.setWidth(250, Unit.PIXELS);
-        binder.bind(locationTypeParentIdCombo, field);
-        return locationTypeParentIdCombo;
     }
 
     private HorizontalLayout getButtons() {

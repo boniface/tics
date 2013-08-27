@@ -15,9 +15,16 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 import java.util.List;
+import zm.hashcode.tics.app.facade.ui.demographics.RaceFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
+import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
+import zm.hashcode.tics.app.facade.user.UserFacade;
+import zm.hashcode.tics.client.web.content.people.admin.model.PersonBean;
 import zm.hashcode.tics.client.web.content.system.locations.model.LocationBean;
+import zm.hashcode.tics.domain.ui.demographics.Race;
+import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.ui.location.LocationType;
 
 /**
  *
@@ -29,9 +36,7 @@ public class LocationForm extends FormLayout {
     public final BeanItem<LocationBean> item;
     public final FieldGroup binder;
     public ListSelect locationList = new ListSelect();
-//    public ListSelect rolesList = new ListSelect();
-    //
-//    // Define Buttons
+    // Define Buttons
     public Button save = new Button("Save");
     public Button edit = new Button("Edit");
     public Button cancel = new Button("Cancel");
@@ -48,33 +53,29 @@ public class LocationForm extends FormLayout {
         update.setVisible(false);
         delete.setVisible(false);
 
-//    private String id;
-//    private String name;
-//    private String code;
-//    private String latitude;
-//    private String longitude;
-//    @DBRef
-//    private LocationType locationType;
-//    @DBRef
-//    private List<Location> children;
-//    @DBRef
-//    private Location parent;
+        final ComboBox locationTypeId = getLocationTypeComboBox("Location Type", "locationTypeId");
+        final TextField name = getTextField("Location Name", "name");
+        final TextField code = getTextField("Location Code", "code");
 
-        TextField name = getTextField("Name", "name");
-        TextField code = getTextField("Physical Address", "code");
         TextField latitude = getTextField("Latitude", "latitude");
         TextField longitude = getTextField("Longitude", "longitude");
+        final ComboBox parentId = getLocationParentComboBox("Parent Location", "parentId");
 
-        final ListSelect locations = getLocations("Select Location", "locationId");
+
+        final ListSelect childrenIds = getLocations("Select Child Location", "childrenIds");
 
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
-        grid.addComponent(name, 0, 0);
-        grid.addComponent(code, 1, 0);
-        grid.addComponent(latitude, 2, 0);
+        grid.addComponent(locationTypeId, 0, 0);
+        grid.addComponent(name, 1, 0);
+        grid.addComponent(code, 2, 0);
+
         grid.addComponent(longitude, 0, 1);
-        grid.addComponent(locations, 1, 1);
+        grid.addComponent(latitude, 0, 2);
+
+        grid.addComponent(childrenIds, 1, 1, 1, 2);
+        grid.addComponent(parentId, 2, 1);
 
         grid.addComponent(buttons, 0, 3, 2, 3);
 
@@ -82,16 +83,43 @@ public class LocationForm extends FormLayout {
 
     }
 
+    private ComboBox getLocationParentComboBox(String label, String field) {
+        ComboBox comboBox = new ComboBox(label);
+        List<Location> locations = LocationFacade.getLocationService().findAll();
+        for (Location location : locations) {
+            comboBox.addItem(location.getId());
+            comboBox.setItemCaption(location.getId(), location.getName());
+        }
+        comboBox.addValidator(new BeanValidator(LocationBean.class, field));
+        comboBox.setImmediate(true);
+        comboBox.setWidth(250, Unit.PIXELS);
+        binder.bind(comboBox, field);
+        return comboBox;
+    }
+
+    private ComboBox getLocationTypeComboBox(String label, String field) {
+        ComboBox comboBox = new ComboBox(label);
+        List<LocationType> locationTypes = LocationTypeFacade.getLocationTypeService().findAll();
+        for (LocationType locationType : locationTypes) {
+            comboBox.addItem(locationType.getId());
+            comboBox.setItemCaption(locationType.getId(), locationType.getName());
+        }
+        comboBox.addValidator(new BeanValidator(LocationBean.class, field));
+        comboBox.setImmediate(true);
+        comboBox.setWidth(250, Unit.PIXELS);
+        binder.bind(comboBox, field);
+        return comboBox;
+    }
+
     private ListSelect getLocations(String label, String field) {
         locationList.setCaption(label);
-        locationList.setItemCaption(Long.valueOf("1"), "UNDER CONSTRUCTION");
-//        List<Location> locations = LocationFacade.getLocationService().findAll();
-//        for (Location iLocation : locations) {
-//            locationList.setItemCaption(iLocation.getId(), iLocation.g() + " " + iLocation.getDescription());
-//            locationList.setNullSelectionAllowed(false);
-//            locationList.setMultiSelect(true);
-//            locationList.addItem(iLocation.getId());
-//        }
+        List<Location> locations = LocationFacade.getLocationService().findAll();
+        for (Location location : locations) {
+            locationList.setItemCaption(location.getId(), location.getName() + " " + location.getLocationType().getName());
+            locationList.setNullSelectionAllowed(false);
+            locationList.setMultiSelect(true);
+            locationList.addItem(location.getId());
+        }
         locationList.setWidth("250px");
         binder.bind(locationList, field);
 

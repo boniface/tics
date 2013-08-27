@@ -18,9 +18,7 @@ public class LocationTypeUtil {
         bean.setId(locationType.getId());
         bean.setCode(locationType.getCode());
         bean.setName(locationType.getName());
-        if (locationType.getLocationTypeParent() != null) {
-            bean.setLocationTypeParentId(locationType.getLocationTypeParent().getId());
-        }
+
 
         return bean;
     }

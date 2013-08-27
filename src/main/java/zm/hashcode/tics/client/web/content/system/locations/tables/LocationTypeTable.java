@@ -21,24 +21,15 @@ public class LocationTypeTable extends Table {
     public LocationTypeTable(TicsMain main) {
         this.main = main;
         setSizeFull();
-        addContainerProperty("Name", String.class, null);
-        addContainerProperty("Code", String.class, null);
-        addContainerProperty("Parent", String.class, null);
-        List<LocationType> locations = LocationTypeFacade.getLocationTypeService().findAll();
-        for (LocationType iLocationType : locations) {
-            LocationType parent = null;
-            String parentType = null;
-            try {
-                if (iLocationType.getLocationTypeParent().getId() != null) {
-                    parent = LocationTypeFacade.getLocationTypeService().find(iLocationType.getLocationTypeParent().getId());
-                    parentType = parent.getName() + " - " + parent.getCode();
-                }
-            } catch (NullPointerException ex) {
-            }
-            addItem(new Object[]{iLocationType.getName(),
-                iLocationType.getCode(),
-                parentType
-            }, iLocationType.getId());
+        addContainerProperty("Location Type Name", String.class, null);
+        addContainerProperty("Location Type Code", String.class, null);
+
+        List<LocationType> locationsLocationTypes = LocationTypeFacade.getLocationTypeService().findAll();
+        for (LocationType locationType : locationsLocationTypes) {
+            addItem(new Object[]{
+                locationType.getName(),
+                locationType.getCode()
+            }, locationType.getId());
         }
         // Allow selecting items from the table.
         setNullSelectionAllowed(false);

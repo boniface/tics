@@ -14,8 +14,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Collection;
-import java.util.HashSet;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
 import zm.hashcode.tics.app.facade.offices.FacilityGroupingFacade;
 import zm.hashcode.tics.app.facade.offices.FacilityTypeFacade;
@@ -26,7 +24,6 @@ import zm.hashcode.tics.client.web.content.system.facility.model.FacilityBean;
 import zm.hashcode.tics.client.web.content.system.facility.tables.FacilityTable;
 import zm.hashcode.tics.client.web.content.system.facility.util.FacilityUtil;
 import zm.hashcode.tics.client.web.content.users.UserMenu;
-import zm.hashcode.tics.client.web.content.users.tables.UserTable;
 import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.domain.offices.FacilityGrouping;
 import zm.hashcode.tics.domain.offices.FacilityType;
@@ -43,8 +40,6 @@ public final class FacilityTab extends VerticalLayout implements
     private final TicsMain main;
     private final FacilityForm form;
     private final FacilityTable table;
-    private Collection<String> rolesIds = new HashSet<>();
-    private Collection<String> jusrisdicationIds = new HashSet<>();
 
     public FacilityTab(TicsMain app) {
         main = app;

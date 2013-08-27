@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.tabs;
+package zm.hashcode.tics.client.web.content.training.course.tabs;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -28,10 +28,10 @@ import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFaca
 import zm.hashcode.tics.app.facade.ui.util.StatusFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
-import zm.hashcode.tics.client.web.content.training.institutions.forms.CourseForm;
-import zm.hashcode.tics.client.web.content.training.institutions.model.CourseBean;
-import zm.hashcode.tics.client.web.content.training.institutions.tables.CourseTable;
-import zm.hashcode.tics.client.web.content.training.institutions.util.CourseUtil;
+import zm.hashcode.tics.client.web.content.training.course.forms.CourseForm;
+import zm.hashcode.tics.client.web.content.training.course.model.CourseBean;
+import zm.hashcode.tics.client.web.content.training.course.tables.CourseTable;
+import zm.hashcode.tics.client.web.content.training.course.util.CourseUtil;
 import zm.hashcode.tics.domain.training.competencies.Competency;
 import zm.hashcode.tics.domain.training.course.Category;
 import zm.hashcode.tics.domain.training.course.Course;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.tabs;
+package zm.hashcode.tics.client.web.content.training.course.tabs;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -17,10 +17,10 @@ import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.app.facade.training.course.CriteriaFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
-import zm.hashcode.tics.client.web.content.training.institutions.forms.CriteriaForm;
-import zm.hashcode.tics.client.web.content.training.institutions.model.CriteriaBean;
-import zm.hashcode.tics.client.web.content.training.institutions.tables.CriteriaTable;
-import zm.hashcode.tics.client.web.content.training.institutions.util.CriteriaUtil;
+import zm.hashcode.tics.client.web.content.training.course.forms.CriteriaForm;
+import zm.hashcode.tics.client.web.content.training.course.model.CriteriaBean;
+import zm.hashcode.tics.client.web.content.training.course.tables.CriteriaTable;
+import zm.hashcode.tics.client.web.content.training.course.util.CriteriaUtil;
 import zm.hashcode.tics.domain.training.course.Criteria;
 
 /**

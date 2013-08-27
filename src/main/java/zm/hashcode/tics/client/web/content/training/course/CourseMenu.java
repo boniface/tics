@@ -7,6 +7,10 @@ package zm.hashcode.tics.client.web.content.training.course;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTab;
+import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTypeTab;
+import zm.hashcode.tics.client.web.content.training.course.tabs.CriteriaTab;
+import zm.hashcode.tics.client.web.content.training.course.tabs.ScheduledCourseTab;
 import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
 import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
 import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
@@ -20,32 +24,39 @@ public class CourseMenu extends Menu {
     public CourseMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout courseTypeTab = new VerticalLayout();
+        courseTypeTab.setMargin(true);
+        courseTypeTab.addComponent(new CourseTypeTab(getMain()));
 
+        final VerticalLayout criteriaTab = new VerticalLayout();
+        criteriaTab.setMargin(true);
+        criteriaTab.addComponent(new CriteriaTab(getMain()));
 
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
+        final VerticalLayout courseTab = new VerticalLayout();
+        courseTab.setMargin(true);
+        courseTab.addComponent(new CourseTab(getMain()));
 
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
+        final VerticalLayout scheduledCourseTab = new VerticalLayout();
+        scheduledCourseTab.setMargin(true);
+        scheduledCourseTab.addComponent(new ScheduledCourseTab(getMain()));
 
-        getTab().addTab(userTab, "Add System USERS", null);
-        getTab().addTab(roleTab, "Add System ROLES", null);
-        getTab().addTab(resetTab, "Reset CREDENTIALS", null);
+        getTab().addTab(courseTypeTab, "Add COURSE TYPE", null);
+        getTab().addTab(criteriaTab, "Add COURSE CRITERIA", null);
+        getTab().addTab(courseTab, "Add COURSES", null);
+        getTab().addTab(scheduledCourseTab, "Schedeule COURSES", null);
 
         switch (selectedTab) {
-            case "LANDING":
-                getTab().setSelectedTab(userTab);
+            case "COURSETYPE":
+                getTab().setSelectedTab(courseTypeTab);
                 break;
-            case "ROLES":
-                getTab().setSelectedTab(roleTab);
+            case "COURSECRITERIA":
+                getTab().setSelectedTab(criteriaTab);
                 break;
-            case "RESETS":
-                getTab().setSelectedTab(roleTab);
+            case "COURSES":
+                getTab().setSelectedTab(courseTab);
+                break;
+            case "SCHEDULECOURSES":
+                getTab().setSelectedTab(scheduledCourseTab);
                 break;
         }
         addComponent(getTab());

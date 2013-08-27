@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.forms;
+package zm.hashcode.tics.client.web.content.training.course.forms;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -22,7 +22,7 @@ import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.training.institutions.TrainingInstructorsFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.util.FunderFacade;
-import zm.hashcode.tics.client.web.content.training.institutions.model.ScheduledCourseBean;
+import zm.hashcode.tics.client.web.content.training.course.model.ScheduledCourseBean;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.training.course.Course;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;

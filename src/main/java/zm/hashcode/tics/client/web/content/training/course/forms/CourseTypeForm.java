@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.forms;
+package zm.hashcode.tics.client.web.content.training.course.forms;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -12,16 +12,16 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import zm.hashcode.tics.client.web.content.training.institutions.model.CriteriaBean;
+import zm.hashcode.tics.client.web.content.training.course.model.CourseTypeBean;
 
 /**
  *
  * @author geek
  */
-public class CriteriaForm extends FormLayout {
+public class CourseTypeForm extends FormLayout {
 
-    private final CriteriaBean bean;
-    public final BeanItem<CriteriaBean> item;
+    private final CourseTypeBean bean;
+    public final BeanItem<CourseTypeBean> item;
     public final FieldGroup binder;
 //    // Define Buttons
     public Button save = new Button("Save");
@@ -31,8 +31,8 @@ public class CriteriaForm extends FormLayout {
     public Button delete = new Button("Delete");
 //
 
-    public CriteriaForm() {
-        bean = new CriteriaBean();
+    public CourseTypeForm() {
+        bean = new CourseTypeBean();
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         HorizontalLayout buttons = getButtons();
@@ -56,7 +56,7 @@ public class CriteriaForm extends FormLayout {
         TextField textField = new TextField(label);
         textField.setWidth(250, Unit.PIXELS);
         textField.setNullRepresentation("");
-        textField.addValidator(new BeanValidator(CriteriaBean.class, field));
+        textField.addValidator(new BeanValidator(CourseTypeBean.class, field));
         textField.setImmediate(true);
         binder.bind(textField, field);
         return textField;

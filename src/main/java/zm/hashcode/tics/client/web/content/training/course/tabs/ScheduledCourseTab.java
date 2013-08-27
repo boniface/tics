@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.tabs;
+package zm.hashcode.tics.client.web.content.training.course.tabs;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -27,10 +27,10 @@ import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.util.FunderFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
-import zm.hashcode.tics.client.web.content.training.institutions.forms.ScheduledCourseForm;
-import zm.hashcode.tics.client.web.content.training.institutions.model.ScheduledCourseBean;
-import zm.hashcode.tics.client.web.content.training.institutions.tables.ScheduledCourseTable;
-import zm.hashcode.tics.client.web.content.training.institutions.util.ScheduledCourseUtil;
+import zm.hashcode.tics.client.web.content.training.course.forms.ScheduledCourseForm;
+import zm.hashcode.tics.client.web.content.training.course.model.ScheduledCourseBean;
+import zm.hashcode.tics.client.web.content.training.course.tables.ScheduledCourseTable;
+import zm.hashcode.tics.client.web.content.training.course.util.ScheduledCourseUtil;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.training.course.Course;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.model;
+package zm.hashcode.tics.client.web.content.training.course.model;
 
 import java.io.Serializable;
 import java.util.Date;

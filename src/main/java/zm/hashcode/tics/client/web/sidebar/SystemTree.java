@@ -22,7 +22,7 @@ import zm.hashcode.tics.client.web.content.system.traininginstitution.TrainingIn
 public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener {
 
     private final TicsMain main;
-    public static final Object GEOGRAPHICAL_LOCATIONS = "Geogrphical LOCATIONS";
+    public static final Object GEOGRAPHICAL_LOCATIONS = "Geographical LOCATIONS";
     public static final Object PEOPLE_META_DATA = "People META DATA";
     public static final Object FACILITY_SETUP = "Facility SETUP";
     public static final Object TRAINING_INSTITUTIONS = "Training INSTITUTIONS";

@@ -12,11 +12,11 @@ import zm.hashcode.tics.domain.ui.location.LocationType;
  *
  * @author boniface
  */
-public class CityPredicate implements Predicate<Location> {
+public class SubDistrictPredicate implements Predicate<Location> {
 
     @Override
     public boolean apply(Location location) {
-        if (LocationEnumType.CITY.name().equalsIgnoreCase(getLocationName(location))) {
+        if (LocationEnumType.SUBDISTRICT.name().equalsIgnoreCase(getLocationName(location))) {
             return true;
         }
         return false;

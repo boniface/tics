@@ -6,8 +6,7 @@ package zm.hashcode.tics.client.web.content.system.locations.model;
 
 import java.io.Serializable;
 import java.util.List;
-import zm.hashcode.tics.domain.ui.location.Location;
-import zm.hashcode.tics.domain.ui.location.LocationType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -20,14 +19,10 @@ public class LocationBean implements Serializable {
     private String code;
     private String latitude;
     private String longitude;
-//    @DBRef
-    private LocationType locationType;
+    @NotNull
     private String locationTypeId;
-//    @DBRef
-    private List<Location> children;
-//    @DBRef
-    private Location parent;
-    private String locationId;
+    private List<String> childrenIds;
+    private String parentId;
 
     /**
      * @return the id
@@ -100,48 +95,6 @@ public class LocationBean implements Serializable {
     }
 
     /**
-     * @return the locationType
-     */
-    public LocationType getLocationType() {
-        return locationType;
-    }
-
-    /**
-     * @param locationType the locationType to set
-     */
-    public void setLocationType(LocationType locationType) {
-        this.locationType = locationType;
-    }
-
-    /**
-     * @return the children
-     */
-    public List<Location> getChildren() {
-        return children;
-    }
-
-    /**
-     * @param children the children to set
-     */
-    public void setChildren(List<Location> children) {
-        this.children = children;
-    }
-
-    /**
-     * @return the parent
-     */
-    public Location getParent() {
-        return parent;
-    }
-
-    /**
-     * @param parent the parent to set
-     */
-    public void setParent(Location parent) {
-        this.parent = parent;
-    }
-
-    /**
      * @return the locationTypeId
      */
     public String getLocationTypeId() {
@@ -155,17 +108,19 @@ public class LocationBean implements Serializable {
         this.locationTypeId = locationTypeId;
     }
 
-    /**
-     * @return the locationId
-     */
-    public String getLocationId() {
-        return locationId;
+    public List<String> getChildrenIds() {
+        return childrenIds;
     }
 
-    /**
-     * @param locationId the locationId to set
-     */
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
+    public void setChildrenIds(List<String> childrenIds) {
+        this.childrenIds = childrenIds;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

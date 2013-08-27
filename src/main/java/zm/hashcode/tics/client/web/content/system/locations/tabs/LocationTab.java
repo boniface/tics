@@ -15,7 +15,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
-import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
 import zm.hashcode.tics.client.web.content.system.locations.forms.LocationForm;
@@ -23,7 +22,6 @@ import zm.hashcode.tics.client.web.content.system.locations.model.LocationBean;
 import zm.hashcode.tics.client.web.content.system.locations.tables.LocationTable;
 import zm.hashcode.tics.client.web.content.system.locations.util.LocationUtil;
 import zm.hashcode.tics.domain.ui.location.Location;
-import zm.hashcode.tics.domain.ui.location.LocationType;
 
 /**
  *
@@ -106,7 +104,6 @@ public class LocationTab extends VerticalLayout implements
         final LocationBean bean = ((BeanItem<LocationBean>) binder.getItemDataSource()).getBean();
 //        LocationType locationTyp = LocationTypeFacade.getLocationTypeService().find(bean.g)
         final Location location = new Location.Builder(bean.getName())
-                .children(bean.getChildren())
                 .code(bean.getCode())
                 .latitude(bean.getLatitude())
                 //                .locationType(bean.getLocationType())
@@ -121,7 +118,6 @@ public class LocationTab extends VerticalLayout implements
         final LocationBean bean = ((BeanItem<LocationBean>) binder.getItemDataSource()).getBean();
 //        LocationType locationTyp = LocationTypeFacade.getLocationTypeService().find(bean.g)
         final Location location = new Location.Builder(bean.getName())
-                .children(bean.getChildren())
                 .code(bean.getCode())
                 .latitude(bean.getLatitude())
                 //                .locationType(bean.getLocationType())

@@ -47,31 +47,17 @@ public class InstitutionMenu extends Menu {
 
 
         getTab().addTab(trainingInstructorsTab, "Add INSTRUCTORS", null);
-        getTab().addTab(courseTypeTab, "Add COURSE TYPE", null);
-        getTab().addTab(criteriaTab, "Add COURSE CRITERIA", null);
-        getTab().addTab(courseTab, "Add COURSES", null);
-        getTab().addTab(scheduledCourseTab, "Schedeule COURSES", null);
-//        getTab().addTab(rese0tTab, "Grade PARTICIPANTS", null);
+        getTab().addTab(courseTypeTab, "Add CONTACTS", null);
+
 
         switch (selectedTab) {
             case "LANDING":
                 getTab().setSelectedTab(trainingInstructorsTab);
                 break;
-            case "COURSETYPE":
+            case "CONTACTS":
                 getTab().setSelectedTab(courseTypeTab);
                 break;
-            case "COURSECRITERIA":
-                getTab().setSelectedTab(criteriaTab);
-                break;
-            case "COURSES":
-                getTab().setSelectedTab(courseTab);
-                break;
-            case "SCHEDULECOURSES":
-                getTab().setSelectedTab(scheduledCourseTab);
-                break;
-//            case "GRADEPARTICIPANTS":
-//                getTab().setSelectedTab(ypeTab);
-//                break;
+
         }
         addComponent(getTab());
 

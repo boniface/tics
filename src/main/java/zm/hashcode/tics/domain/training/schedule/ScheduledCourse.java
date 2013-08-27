@@ -102,12 +102,12 @@ public final class ScheduledCourse implements Serializable {
             return this;
         }
 
-        public Builder venue(Date value) {
+        public Builder endDate(Date value) {
             endDate = value;
             return this;
         }
 
-        public Builder venue(Location value) {
+        public Builder location(Location value) {
             location = value;
             return this;
         }
@@ -206,6 +206,4 @@ public final class ScheduledCourse implements Serializable {
         }
         return true;
     }
-    
-    
 }

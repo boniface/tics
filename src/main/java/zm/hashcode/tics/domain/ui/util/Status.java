@@ -19,7 +19,7 @@ public final class Status implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private String statusType;
+    private String statusType;//**********
     private String statusValue;
 
     private Status() {
@@ -43,6 +43,11 @@ public final class Status implements Serializable {
 
         public Builder id(String value) {
             id = value;
+            return this;
+        }
+
+        public Builder statusValue(String value) {
+            statusValue = value;
             return this;
         }
 

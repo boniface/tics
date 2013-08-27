@@ -23,7 +23,7 @@ public class Funder implements Serializable {
     @Id
     private String id;
     private String trainingFunderName;
-    private String costCenter;
+    private String courseCenter;
     @DBRef
     private Location city;
     private LocationAddress contact;
@@ -34,16 +34,16 @@ public class Funder implements Serializable {
     private Funder(Builder builder) {
         id = builder.id;
         trainingFunderName = builder.trainingFunderName;
-        costCenter = builder.costCenter;
-        city= builder.city;
-        contact=builder.contact;
+        courseCenter = builder.courseCenter;
+        city = builder.city;
+        contact = builder.contact;
     }
 
     public static class Builder {
 
         private String id;
         private final String trainingFunderName;
-        private String costCenter;
+        private String courseCenter;
         private Location city;
         private LocationAddress contact;
 
@@ -56,8 +56,8 @@ public class Funder implements Serializable {
             return this;
         }
 
-        public Builder costCenter(String value) {
-            costCenter = value;
+        public Builder courseCenter(String value) {
+            courseCenter = value;
             return this;
         }
 
@@ -84,8 +84,8 @@ public class Funder implements Serializable {
         return trainingFunderName;
     }
 
-    public String getCostCenter() {
-        return costCenter;
+    public String getCourseCenter() {
+        return courseCenter;
     }
 
     public Location getCity() {
@@ -122,5 +122,4 @@ public class Funder implements Serializable {
     public String toString() {
         return "Funder{" + "trainingFunderName=" + trainingFunderName + '}';
     }
-    
 }

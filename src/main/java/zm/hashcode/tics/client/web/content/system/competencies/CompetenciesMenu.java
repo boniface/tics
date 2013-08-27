@@ -7,9 +7,9 @@ package zm.hashcode.tics.client.web.content.system.competencies;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
+import zm.hashcode.tics.client.web.content.system.competencies.tabs.CompetencyTab;
+import zm.hashcode.tics.client.web.content.system.competencies.tabs.CompetencyTypeTab;
+import zm.hashcode.tics.client.web.content.system.competencies.tabs.EvaluationTab;
 
 /**
  *
@@ -20,32 +20,32 @@ public class CompetenciesMenu extends Menu {
     public CompetenciesMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout competencyTypeTab = new VerticalLayout();
+        competencyTypeTab.setMargin(true);
+        competencyTypeTab.addComponent(new CompetencyTypeTab(getMain()));
 
 
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
+        final VerticalLayout competencyTab = new VerticalLayout();
+        competencyTab.setMargin(true);
+        competencyTab.addComponent(new CompetencyTab(getMain()));
 
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
+        final VerticalLayout evaluationTab = new VerticalLayout();
+        evaluationTab.setMargin(true);
+        evaluationTab.addComponent(new EvaluationTab(getMain()));
 
-        getTab().addTab(userTab, "Add Compentency TYPE", null);
-        getTab().addTab(roleTab, "Add COMPETENCY", null);
-        getTab().addTab(resetTab, "Add EVALUATION", null);
+        getTab().addTab(competencyTypeTab, "Add Compentency TYPE", null);
+        getTab().addTab(competencyTab, "Add COMPETENCY", null);
+        getTab().addTab(evaluationTab, "Add EVALUATION", null);
 
         switch (selectedTab) {
             case "LANDING":
-                getTab().setSelectedTab(userTab);
+                getTab().setSelectedTab(competencyTypeTab);
                 break;
-            case "ROLES":
-                getTab().setSelectedTab(roleTab);
+            case "COMPETENCY":
+                getTab().setSelectedTab(competencyTab);
                 break;
-            case "RESETS":
-                getTab().setSelectedTab(roleTab);
+            case "EVALUATION":
+                getTab().setSelectedTab(evaluationTab);
                 break;
         }
         addComponent(getTab());

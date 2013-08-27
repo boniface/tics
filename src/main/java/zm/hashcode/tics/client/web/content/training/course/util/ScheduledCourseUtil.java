@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.util;
+package zm.hashcode.tics.client.web.content.training.course.util;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import zm.hashcode.tics.client.web.content.training.institutions.model.ScheduledCourseBean;
+import zm.hashcode.tics.client.web.content.training.course.model.ScheduledCourseBean;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
 import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;

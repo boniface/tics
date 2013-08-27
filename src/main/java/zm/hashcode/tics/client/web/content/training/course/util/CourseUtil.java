@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.util;
+package zm.hashcode.tics.client.web.content.training.course.util;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import zm.hashcode.tics.client.web.content.training.institutions.model.CourseBean;
+import zm.hashcode.tics.client.web.content.training.course.model.CourseBean;
 import zm.hashcode.tics.domain.training.competencies.Competency;
 import zm.hashcode.tics.domain.training.course.Category;
 import zm.hashcode.tics.domain.training.course.Course;

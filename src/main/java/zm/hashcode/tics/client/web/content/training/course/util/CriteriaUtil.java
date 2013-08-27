@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.institutions.util;
+package zm.hashcode.tics.client.web.content.training.course.util;
 
-import zm.hashcode.tics.client.web.content.training.institutions.model.CourseTypeBean;
-import zm.hashcode.tics.client.web.content.training.institutions.model.CriteriaBean;
+import zm.hashcode.tics.client.web.content.training.course.model.CourseTypeBean;
+import zm.hashcode.tics.client.web.content.training.course.model.CriteriaBean;
 import zm.hashcode.tics.domain.training.course.CourseType;
 import zm.hashcode.tics.domain.training.course.Criteria;
 

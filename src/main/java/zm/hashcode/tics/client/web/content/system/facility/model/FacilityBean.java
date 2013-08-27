@@ -5,7 +5,6 @@
 package zm.hashcode.tics.client.web.content.system.facility.model;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  *
@@ -16,15 +15,13 @@ public class FacilityBean implements Serializable {
     private String id;
     private String facilityName;
     private String facilityTypeId;
+    //Address
+    private String postalAddress;
+    private String physicalAddress;
+    private String contactNumber;
+    private String postalCode;
+    private String emailAddress;
     private String cityId;
-    private String mailingAddress;
-    private String telephoneNumber;
-    private String cellnumber;
-    private String faxnumber;
-    private String email;
-    private String addressType;
-    private Set<String> positionsIds;
-    private Set<String> facilityMentorsIds;
     private String facilityGroupingId;
 
     public String getId() {
@@ -51,76 +48,52 @@ public class FacilityBean implements Serializable {
         this.facilityTypeId = facilityTypeId;
     }
 
+    public String getPostalAddress() {
+        return postalAddress;
+    }
+
+    public void setPostalAddress(String postalAddress) {
+        this.postalAddress = postalAddress;
+    }
+
+    public String getPhysicalAddress() {
+        return physicalAddress;
+    }
+
+    public void setPhysicalAddress(String physicalAddress) {
+        this.physicalAddress = physicalAddress;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
     public String getCityId() {
         return cityId;
     }
 
     public void setCityId(String cityId) {
         this.cityId = cityId;
-    }
-
-    public String getMailingAddress() {
-        return mailingAddress;
-    }
-
-    public void setMailingAddress(String mailingAddress) {
-        this.mailingAddress = mailingAddress;
-    }
-
-    public String getTelephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
-
-    public String getCellnumber() {
-        return cellnumber;
-    }
-
-    public void setCellnumber(String cellnumber) {
-        this.cellnumber = cellnumber;
-    }
-
-    public String getFaxnumber() {
-        return faxnumber;
-    }
-
-    public void setFaxnumber(String faxnumber) {
-        this.faxnumber = faxnumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddressType() {
-        return addressType;
-    }
-
-    public void setAddressType(String addressType) {
-        this.addressType = addressType;
-    }
-
-    public Set<String> getPositionsIds() {
-        return positionsIds;
-    }
-
-    public void setPositionsIds(Set<String> positionsIds) {
-        this.positionsIds = positionsIds;
-    }
-
-    public Set<String> getFacilityMentorsIds() {
-        return facilityMentorsIds;
-    }
-
-    public void setFacilityMentorsIds(Set<String> facilityMentorsIds) {
-        this.facilityMentorsIds = facilityMentorsIds;
     }
 
     public String getFacilityGroupingId() {

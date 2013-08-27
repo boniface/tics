@@ -4,8 +4,8 @@
  */
 package zm.hashcode.tics.client.web.content.system.facility.util;
 
-import zm.hashcode.tics.client.web.content.system.facility.model.FacilityTypeBean;
-import zm.hashcode.tics.domain.offices.FacilityType;
+import zm.hashcode.tics.client.web.content.system.facility.model.FacilityBean;
+import zm.hashcode.tics.domain.offices.Facility;
 
 /**
  *
@@ -13,10 +13,10 @@ import zm.hashcode.tics.domain.offices.FacilityType;
  */
 public class FacilityUtil {
 
-    public FacilityTypeBean getBean(FacilityType facilityType) {
-        FacilityTypeBean bean = new FacilityTypeBean();
-        bean.setId(facilityType.getId());
-        bean.setFacilityName(facilityType.getFacilityName());
+    public FacilityBean getBean(Facility facility) {
+        FacilityBean bean = new FacilityBean();
+        bean.setId(facility.getId());
+        bean.setFacilityName(facility.getFacilityName());
         return bean;
     }
 }

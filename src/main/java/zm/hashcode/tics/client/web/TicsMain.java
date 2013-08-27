@@ -25,7 +25,8 @@ import zm.hashcode.tics.client.web.sidebar.Sidebar;
  */
 @PreserveOnRefresh
 public class TicsMain extends UI {
- public final HorizontalSplitPanel content = new HorizontalSplitPanel();
+
+    public final HorizontalSplitPanel content = new HorizontalSplitPanel();
     public final Footer footer = new Footer();
     private static ThreadLocal<TicsMain> threadLocal = new ThreadLocal<>();
     private AuthenticationManager authenticationManager;
@@ -43,7 +44,7 @@ public class TicsMain extends UI {
         return threadLocal.get();
     }
 
-    // Set the current application instance 	
+    // Set the current application instance
     public static void setInstance(TicsMain application) {
         if (getInstance() == null) {
             threadLocal.set(application);
@@ -53,7 +54,7 @@ public class TicsMain extends UI {
     public Authentication authenticate(String login, String password) throws Exception {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login, password);
         ctx = new SpringContext();
-        authenticationManager = (AuthenticationManager)ctx.getStringBean("authenticationManager");        
+        authenticationManager = (AuthenticationManager) ctx.getStringBean("authenticationManager");
         setAuth(authenticationManager.authenticate(token));
         if (getAuth() != null) {
             SecurityContextHolder.getContext().setAuthentication(getAuth());

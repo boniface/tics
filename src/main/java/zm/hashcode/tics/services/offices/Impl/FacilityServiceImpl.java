@@ -7,6 +7,7 @@ package zm.hashcode.tics.services.offices.Impl;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.repository.offices.FacilityRepository;
@@ -44,6 +45,11 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     public List<Facility> findAll() {
-        return ImmutableList.copyOf(facilityRepository.findAll());
+        return ImmutableList.copyOf(facilityRepository.findAll(sortByFacilityName()));
+    }
+
+    private Sort sortByFacilityName() {
+        return new Sort(
+                new Sort.Order(Sort.Direction.ASC, "facilityName"));
     }
 }

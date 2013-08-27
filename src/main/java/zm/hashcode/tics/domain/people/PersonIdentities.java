@@ -5,32 +5,40 @@
 package zm.hashcode.tics.domain.people;
 
 import java.io.Serializable;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
 
 /**
  *
  * @author boniface
  */
-public final class Identities implements Serializable {
+@Document
+public final class PersonIdentities implements Serializable {
 
-    private String idType;
+    @Id
+    private String id;
+    @DBRef
+    private IdentificationType idType;
     @Indexed(unique = true)
     private String idValue;
 
-    private Identities() {
+    private PersonIdentities() {
     }
 
-    private Identities(Builder builder) {
+    private PersonIdentities(Builder builder) {
         idValue = builder.idValue;
         idType = builder.idType;
     }
 
     public static class Builder {
 
-        private final String idType;
+        private IdentificationType idType;
         private String idValue;
 
-        public Builder(String val) {
+        public Builder(IdentificationType val) {
             this.idType = val;
         }
 
@@ -39,17 +47,16 @@ public final class Identities implements Serializable {
             return this;
         }
 
-        public Identities build() {
-            return new Identities(this);
+        public PersonIdentities build() {
+            return new PersonIdentities(this);
         }
     }
 
-    public String getIdType() {
+    public IdentificationType getIdType() {
         return idType;
     }
 
     public String getIdValue() {
         return idValue;
     }
-    
 }

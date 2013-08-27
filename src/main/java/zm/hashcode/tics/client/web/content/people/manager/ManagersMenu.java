@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.people;
+package zm.hashcode.tics.client.web.content.people.manager;
 
 import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
@@ -16,9 +16,9 @@ import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
  *
  * @author boniface
  */
-public class PeopleMenu extends Menu {
+public class ManagersMenu extends Menu {
 
-    public PeopleMenu(TicsMain app, String selectedTab) {
+    public ManagersMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
         final VerticalLayout userTab = new VerticalLayout();
@@ -29,6 +29,8 @@ public class PeopleMenu extends Menu {
         final VerticalLayout roleTab = new VerticalLayout();
         roleTab.setMargin(true);
         roleTab.addComponent(new RoleTab(getMain()));
+
+
 
         final VerticalLayout resetTab = new VerticalLayout();
         resetTab.setMargin(true);

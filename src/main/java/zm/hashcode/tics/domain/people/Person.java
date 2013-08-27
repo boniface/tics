@@ -37,7 +37,8 @@ public class Person implements Serializable, Comparable<Person> {
     private Facility facility;
     private List<EmployeePosition> positions;
     private List<EducationHistory> educationHistory;
-    private List<Identities> identities;
+    @DBRef
+    private List<PersonIdentities> identities;
     private List<ProfessionalRegistration> professionalRegistration;
     private List<EmployeeCourses> courses;
     private List<EmployeeLanguages> languages;
@@ -90,7 +91,7 @@ public class Person implements Serializable, Comparable<Person> {
         private List<Contact> contacts;
         private List<EmployeePosition> positions;
         private List<EducationHistory> educationHistory;
-        private List<Identities> identities;
+        private List<PersonIdentities> identities;
         private List<ProfessionalRegistration> professionalRegistration;
         private List<EmployeeCourses> courses;
         private List<EmployeeLanguages> languages;
@@ -135,7 +136,7 @@ public class Person implements Serializable, Comparable<Person> {
             return this;
         }
 
-        public Builder identities(List<Identities> value) {
+        public Builder identities(List<PersonIdentities> value) {
             identities = value;
             return this;
         }
@@ -192,6 +193,28 @@ public class Person implements Serializable, Comparable<Person> {
 
         public Builder contacts(List<Contact> value) {
             contacts = value;
+            return this;
+        }
+
+        public Builder person(Person person) {
+            id = person.getId();
+            othername = person.getOthername();
+            residence = person.getResidence();
+            contacts = person.getContacts();
+            demography = person.getDemography();
+            facility = person.getFacility();
+            positions = person.getPositions();
+            educationHistory = person.getEducationHistory();
+            identities = person.getIdentities();
+            professionalRegistration = person.getProfessionalRegistration();
+            courses = person.getCourses();
+            languages = person.getLanguages();
+            mentoring = person.getMentoring();
+            mentees = person.getMentees();
+            mentorExpertiseAreas = person.getMentorExpertiseAreas();
+            personRoles = person.getPersonRoles();
+            actionPlans = person.getActionPlans();
+            title = person.getTitle();
             return this;
         }
 
@@ -276,7 +299,7 @@ public class Person implements Serializable, Comparable<Person> {
         return educationHistory;
     }
 
-    public List<Identities> getIdentities() {
+    public List<PersonIdentities> getIdentities() {
         return ImmutableList.copyOf(identities);
     }
 

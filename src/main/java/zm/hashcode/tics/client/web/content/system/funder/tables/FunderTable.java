@@ -27,7 +27,7 @@ public class FunderTable extends Table {
         List<Funder> funders = FunderFacade.getFunderService().findAll();
         for (Funder iFunder : funders) {
             addItem(new Object[]{iFunder.getTrainingFunderName(),
-                iFunder.getCity(),
+                iFunder.getCity().getName(),
                 iFunder.getCourseCenter()
             }, iFunder.getId());
         }

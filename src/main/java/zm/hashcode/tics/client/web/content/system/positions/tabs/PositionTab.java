@@ -15,8 +15,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import zm.hashcode.tics.app.facade.offices.DepartmentFacade;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
@@ -152,8 +154,13 @@ public final class PositionTab extends VerticalLayout implements
         Job job = JobFacade.getJobService().find(jobId);
         Status status = StatusFacade.getStatusService().find(positionStatusId);
         PositionType postionType = PositionTypeFacade.getPositionTypeService().find(positionTypeId);
-        Position position = PositionFacade.getPositionService().find(supervisorId);
-
+        List<String> subordinateIdz = new ArrayList<>(bean.getSubodinateIds());
+        Position position = null;
+        //
+        if (supervisorId != null) {
+            position = PositionFacade.getPositionService().find(supervisorId);
+        }
+        //
         final Position iPosition = new Position.Builder(bean.getPositionTitle())
                 //                .currentOccupant(currentOccupant)
                 //                .department(department)
@@ -162,28 +169,31 @@ public final class PositionTab extends VerticalLayout implements
                 .job(job)
                 .positionCode(bean.getPositionCode())
                 .positionComments(bean.getPositionComments())
-                .positionEndDate(bean.getPositionEndDate())
+                .postionEntryDate(bean.getPositionEntryDate())
+                //                .positionEndDate(bean.getPositionEndDate())
                 .positionStatus(status)
                 .positionType(postionType)
-                .postionEntryDate(bean.getPositionEndDate())
-                //. suburdinateIds
+                .subodinateIds(subordinateIdz)
                 .supervisor(position)
                 .build();
         return iPosition;
     }
 
     private Position getUpdateEntity(FieldGroup binder) {
-
         final PositionBean bean = ((BeanItem<PositionBean>) binder.getItemDataSource()).getBean();
-
 //        Person currentOccupant = PersonFacade.getPersonService().find(currentOccupantId);
 //        Department department = DepartmentFacade.getDepartmentService().find(departmentId);
 //        Facility facility = FacilityFacade.getFacilityService().find(facilityId);
         Job job = JobFacade.getJobService().find(jobId);
         Status status = StatusFacade.getStatusService().find(positionStatusId);
         PositionType postionType = PositionTypeFacade.getPositionTypeService().find(positionTypeId);
-        Position position = PositionFacade.getPositionService().find(supervisorId);
-
+        List<String> subordinateIdz = new ArrayList<>(bean.getSubodinateIds());
+        Position position = null;
+        //
+        if (supervisorId != null) {
+            position = PositionFacade.getPositionService().find(supervisorId);
+        }
+        //
         final Position iPosition = new Position.Builder(bean.getPositionTitle())
                 //                .currentOccupant(currentOccupant)
                 //                .department(department)
@@ -192,11 +202,11 @@ public final class PositionTab extends VerticalLayout implements
                 .job(job)
                 .positionCode(bean.getPositionCode())
                 .positionComments(bean.getPositionComments())
-                .positionEndDate(bean.getPositionEndDate())
+                .postionEntryDate(bean.getPositionEntryDate())
+                //                .positionEndDate(bean.getPositionEndDate())
                 .positionStatus(status)
                 .positionType(postionType)
-                .postionEntryDate(bean.getPositionEndDate())
-                //. suburdinateIds
+                .subodinateIds(subordinateIdz)
                 .supervisor(position)
                 .id(bean.getId())
                 .build();

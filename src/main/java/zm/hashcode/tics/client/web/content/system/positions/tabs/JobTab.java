@@ -43,7 +43,7 @@ public final class JobTab extends VerticalLayout implements
     private final TicsMain main;
     private final JobForm form;
     private final JobTable table;
-    private Collection<String> positionIds = new HashSet<>();
+//    private Collection<String> positionIds = new HashSet<>();
     private String jobClassificationComboId;
 
     public JobTab(TicsMain app) {
@@ -80,9 +80,10 @@ public final class JobTab extends VerticalLayout implements
             final JobBean bean = new JobUtil().getBean(job);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.positionList) {
-            positionIds = (Collection<String>) property.getValue();
-        } else if (property == form.jobClassificationCombo) {
+        } //        else if (property == form.positionList) {
+        //            positionIds = (Collection<String>) property.getValue();
+        //        }
+        else if (property == form.jobClassificationCombo) {
             jobClassificationComboId = property.getValue().toString();
         }
     }
@@ -119,11 +120,11 @@ public final class JobTab extends VerticalLayout implements
     private Job getNewEntity(FieldGroup binder) {
         final JobBean bean = ((BeanItem<JobBean>) binder.getItemDataSource()).getBean();
 
-        List<Position> positions = new ArrayList<>();
-        for (String id : positionIds) {
-            Position position = PositionFacade.getPositionService().find(id);
-            positions.add(position);
-        }
+//        List<Position> positions = new ArrayList<>();
+//        for (String id : positionIds) {
+//            Position position = PositionFacade.getPositionService().find(id);
+//            positions.add(position);
+//        }
 
         JobClassification jobClassification = JobClassificationFacade.getJobClassificationService().find(jobClassificationComboId);
 
@@ -139,11 +140,11 @@ public final class JobTab extends VerticalLayout implements
 
         final JobBean bean = ((BeanItem<JobBean>) binder.getItemDataSource()).getBean();
 
-        List<Position> positions = new ArrayList<>();
-        for (String id : positionIds) {
-            Position position = PositionFacade.getPositionService().find(id);
-            positions.add(position);
-        }
+//        List<Position> positions = new ArrayList<>();
+//        for (String id : positionIds) {
+//            Position position = PositionFacade.getPositionService().find(id);
+//            positions.add(position);
+//        }
 
         JobClassification jobClassification = JobClassificationFacade.getJobClassificationService().find(jobClassificationComboId);
 
@@ -188,7 +189,7 @@ public final class JobTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
-        form.positionList.addValueChangeListener((ValueChangeListener) this);
+//        form.positionList.addValueChangeListener((ValueChangeListener) this);
         form.jobClassificationCombo.addValueChangeListener((ValueChangeListener) this);
     }
 }

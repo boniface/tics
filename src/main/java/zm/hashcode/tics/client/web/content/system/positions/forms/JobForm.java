@@ -37,7 +37,7 @@ public class JobForm extends FormLayout {
     public Button update = new Button("Update");
     public Button delete = new Button("Delete");
     //
-    public ListSelect positionList = new ListSelect();
+//    public ListSelect positionList = new ListSelect();
     public ComboBox jobClassificationCombo = new ComboBox();
 
     public JobForm() {
@@ -60,18 +60,18 @@ public class JobForm extends FormLayout {
         TextField title = getTextField("Title", "title");
         TextField code = getTextField("Code", "code");
         TextField description = getTextField("Description", "description");
-        final ListSelect positionIds = getPositionListSelect("Select Positions", "positionIds");
+//        final ListSelect positionIds = getPositionListSelect("Select Positions", "positionIds");
         ComboBox jobClassificationId = getJobClassificationComboBox("Job Classification", "jobClassificationId");
 
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
         grid.addComponent(title, 0, 0);
-        grid.addComponent(code, 0, 1);
-        grid.addComponent(description, 0, 2);
+        grid.addComponent(code, 1, 0);
+        grid.addComponent(description, 0, 1);
 
-        grid.addComponent(jobClassificationId, 1, 0);
-        grid.addComponent(positionIds, 1, 1);
+        grid.addComponent(jobClassificationId, 1, 1);
+//        grid.addComponent(positionIds, 1, 1);
 
         grid.addComponent(buttons, 0, 3, 2, 3);
 
@@ -79,22 +79,21 @@ public class JobForm extends FormLayout {
 
     }
 
-    private ListSelect getPositionListSelect(String label, String field) {
-        positionList.setCaption(label);
-        List<Position> allPositions = PositionFacade.getPositionService().findAll();
-        for (Position iPosition : allPositions) {
-            positionList.setItemCaption(iPosition.getId(), iPosition.getPositionTitle() + " " + iPosition.getPositionCode());
-            positionList.addItem(iPosition.getId());
-            positionList.setNullSelectionAllowed(false);
-            positionList.setMultiSelect(true);
-
-        }
-        positionList.setWidth("250px");
-        binder.bind(positionList, field);
-
-        return positionList;
-    }
-
+//    private ListSelect getPositionListSelect(String label, String field) {
+//        positionList.setCaption(label);
+//        List<Position> allPositions = PositionFacade.getPositionService().findAll();
+//        for (Position iPosition : allPositions) {
+//            positionList.setItemCaption(iPosition.getId(), iPosition.getPositionTitle() + " " + iPosition.getPositionCode());
+//            positionList.addItem(iPosition.getId());
+//            positionList.setNullSelectionAllowed(false);
+//            positionList.setMultiSelect(true);
+//
+//        }
+//        positionList.setWidth("250px");
+//        binder.bind(positionList, field);
+//
+//        return positionList;
+//    }
     private ComboBox getJobClassificationComboBox(String label, String field) {
         ComboBox comboBox = new ComboBox(label);
         jobClassificationCombo.setCaption(label);

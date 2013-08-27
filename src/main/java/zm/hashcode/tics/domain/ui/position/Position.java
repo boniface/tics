@@ -105,7 +105,7 @@ public class Position implements Serializable, Comparable<Position> {
             return this;
         }
 
-        public Builder roles(List<String> value) {
+        public Builder subodinateIds(List<String> value) {
             subodinateIds = value;
             return this;
         }

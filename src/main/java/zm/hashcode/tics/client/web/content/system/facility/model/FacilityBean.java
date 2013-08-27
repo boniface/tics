@@ -11,22 +11,20 @@ import java.util.Set;
  *
  * @author boniface
  */
-public class FacilityBean implements Serializable{
-  
+public class FacilityBean implements Serializable {
+
     private String id;
     private String facilityName;
-    private String  facilityTypeId;
-    private String  cityId;
+    private String facilityTypeId;
+    private String cityId;
     private String mailingAddress;
     private String telephoneNumber;
     private String cellnumber;
     private String faxnumber;
     private String email;
     private String addressType;
-   
     private Set<String> positionsIds;
-    private Set<String> facilityMentorsId;
-    
+    private Set<String> facilityMentorsIds;
     private String facilityGroupingId;
 
     public String getId() {
@@ -117,12 +115,12 @@ public class FacilityBean implements Serializable{
         this.positionsIds = positionsIds;
     }
 
-    public Set<String> getFacilityMentorsId() {
-        return facilityMentorsId;
+    public Set<String> getFacilityMentorsIds() {
+        return facilityMentorsIds;
     }
 
-    public void setFacilityMentorsId(Set<String> facilityMentorsId) {
-        this.facilityMentorsId = facilityMentorsId;
+    public void setFacilityMentorsIds(Set<String> facilityMentorsIds) {
+        this.facilityMentorsIds = facilityMentorsIds;
     }
 
     public String getFacilityGroupingId() {
@@ -132,8 +130,4 @@ public class FacilityBean implements Serializable{
     public void setFacilityGroupingId(String facilityGroupingId) {
         this.facilityGroupingId = facilityGroupingId;
     }
-    
-    
-
-    
 }

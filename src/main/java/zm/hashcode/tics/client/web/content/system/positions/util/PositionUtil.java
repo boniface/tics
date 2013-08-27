@@ -25,14 +25,14 @@ public class PositionUtil {
     public PositionBean getBean(Position position) {
         PositionBean bean = new PositionBean();
         bean.setId(position.getId());
-        bean.setDepartmentId(getDepartmentId(position.getDepartment()));
+//        bean.setDepartmentId(getDepartmentId(position.getDepartment()));
         bean.setDescription(position.getDescription());
-        bean.setFacilityId(getFacilityId(position.getFacility()));
+//        bean.setFacilityId(getFacilityId(position.getFacility()));
         bean.setJobId(getJobId(position.getJob()));
-        bean.setPersonId(getCurrentOccupantId(position.getCurrentOccupant()));
+//        bean.setPersonId(getCurrentOccupantId(position.getCurrentOccupant()));
         bean.setPositionCode(position.getPositionCode());
         bean.setPositionComments(position.getPositionComments());
-        bean.setPositionEndDate(position.getPositionEndDate());
+//        bean.setPositionEndDate(position.getPositionEndDate());
         bean.setPositionEntryDate(position.getPostionEntryDate());
         bean.setPositionId(getSupervisorId(position.getSupervisor()));
         bean.setPositionTitle(position.getPositionTitle());
@@ -43,7 +43,11 @@ public class PositionUtil {
     }
 
     public String getDepartmentId(Department department) {
-        return department.getId();
+        if (department.getId() != null) {
+            return department.getId();
+        }
+
+        return null;
     }
 
     public String getFacilityId(Facility facility) {
@@ -59,7 +63,15 @@ public class PositionUtil {
     }
 
     public String getSupervisorId(Position position) {
-        return position.getId();
+        try {
+            if (position.getId() != null) {
+                return position.getId();
+            }
+        } catch (NullPointerException ex) {
+            return null;
+        }
+        return null;
+
     }
 
     public String getPositionTypeId(PositionType positionType) {
@@ -71,9 +83,16 @@ public class PositionUtil {
     }
 
     public Set<String> getSubordinateIds(List<String> idz) {
-        Set<String> ids = new HashSet<>(idz);
 
-        return ids;
+        try {
+            if (idz != null) {
+                Set<String> ids = new HashSet<>(idz);
+                return ids;
+            }
+        } catch (NullPointerException ex) {
+            return null;
+        }
+        return null;
 
     }
 }

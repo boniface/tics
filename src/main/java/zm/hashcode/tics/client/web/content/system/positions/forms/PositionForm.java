@@ -66,31 +66,6 @@ public class PositionForm extends FormLayout {
         update.setVisible(false);
         delete.setVisible(false);
 
-//        private String id;
-//    private String positionCode;
-//    //Make it from Job and Position Title Nurse-Code
-//    private String positionTitle;
-//    private String description;
-//    private String positionComments;
-//    private Date postionEntryDate;
-//    private Date positionEndDate;
-//    @DBRef
-//    private Person currentOccupant; // personId
-//    @DBRef
-//    private PositionType positionType; // positionTypeId
-//    @DBRef
-//    private Status positionStatus; // statusId
-
-//    @DBRef
-//    private Facility facility; // facilityId
-//    private List<String> subodinateIds; // subodinateIds
-//    @DBRef
-//    private Position supervisor; // positionId
-//    @DBRef
-//    private Department department; // departmentId
-//    @DBRef
-//    private Job job; // jobId
-
         TextField positionCode = getTextField("Position Code", "positionCode");
         TextField positionTitle = getTextField("Position Title", "positionTitle");
         TextField description = getTextField("Description", "description");
@@ -137,15 +112,14 @@ public class PositionForm extends FormLayout {
     private ListSelect getSubordinatesListSelect(String label, String field) {
         subodinateList.setCaption(label);
 
-//        QUESTION: Who are Subordinates
-
-//        List<Subordinate> roles = UserFacade.getRoleService().findAll();
-//        for (Role role : roles) {
-//            subodinateList.setItemCaption(role.getId(), role.getRolename() + " " + role.getDescription());
-//            subodinateList.setNullSelectionAllowed(false);
-//            subodinateList.setMultiSelect(true);
-//            subodinateList.addItem(role.getId());
-//        }
+//        QUESTION: Who are Subordinates. Those answerable and below a position as opposed to SUpervisors
+        List<Position> allPositions = PositionFacade.getPositionService().findAll();
+        for (Position uPosition : allPositions) {
+            subodinateList.setItemCaption(uPosition.getId(), uPosition.getPositionTitle());
+            subodinateList.setNullSelectionAllowed(false);
+            subodinateList.setMultiSelect(true);
+            subodinateList.addItem(uPosition.getId());
+        }
         subodinateList.setWidth("250px");
         binder.bind(subodinateList, field);
 

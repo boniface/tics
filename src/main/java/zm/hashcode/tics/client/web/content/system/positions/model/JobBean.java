@@ -18,12 +18,8 @@ public class JobBean implements Serializable {
     private String title;
     private String code;
     private String description;
-//    @DBRef
-//    private JobClassification jobClassification;
-//    @DBRef
-//    private List<Position> positions;
     private String jobClassificationId;
-    private Set<String> positionIds = new HashSet<>();
+//    private Set<String> positionIds = new HashSet<>();
 
     /**
      * @return the id
@@ -94,18 +90,17 @@ public class JobBean implements Serializable {
     public void setJobClassificationId(String jobClassificationId) {
         this.jobClassificationId = jobClassificationId;
     }
-
-    /**
-     * @return the positionIds
-     */
-    public Set<String> getPositionIds() {
-        return positionIds;
-    }
-
-    /**
-     * @param positionIds the positionIds to set
-     */
-    public void setPositionIds(Set<String> positionIds) {
-        this.positionIds = positionIds;
-    }
+//    /**
+//     * @return the positionIds
+//     */
+//    public Set<String> getPositionIds() {
+//        return positionIds;
+//    }
+//
+//    /**
+//     * @param positionIds the positionIds to set
+//     */
+//    public void setPositionIds(Set<String> positionIds) {
+//        this.positionIds = positionIds;
+//    }
 }

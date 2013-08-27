@@ -8,6 +8,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -15,6 +16,7 @@ import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 import java.util.List;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
+import zm.hashcode.tics.client.web.content.system.facility.model.FacilityBean;
 import zm.hashcode.tics.domain.offices.Facility;
 
 /**
@@ -22,77 +24,101 @@ import zm.hashcode.tics.domain.offices.Facility;
  * @author geek
  */
 public class FacilityForm extends FormLayout {
-//    private final FacilityBean bean;
-//    public final BeanItem<FacilityBean> item;
-//    public final FieldGroup binder;
-//    public ListSelect positionList = new ListSelect();
-//    public ListSelect facilityMentorsList = new ListSelect();
-//    // Define Buttons
-//    public final Button save = new Button("Save");
-//    public final Button edit = new Button("Edit");
-//    public final Button cancel = new Button("Cancel");
-//    public final Button update = new Button("Update");
-//    public final Button delete = new Button("Delete");
+
+    private final FacilityBean bean;
+    public final BeanItem<FacilityBean> item;
+    public final FieldGroup binder;
+    //
+    public ComboBox facilityTypeComboBox = new ComboBox();
+    public ComboBox locationCityComboBox = new ComboBox();
+    public ComboBox facilityGroupingComboBox = new ComboBox();
+    //
+    public ListSelect positionList = new ListSelect();
+    public ListSelect facilityMentorsList = new ListSelect();
+    // Define Buttons
+    public final Button save = new Button("Save");
+    public final Button edit = new Button("Edit");
+    public final Button cancel = new Button("Cancel");
+    public final Button update = new Button("Update");
+    public final Button delete = new Button("Delete");
+
+    public FacilityForm() {
+        bean = new FacilityBean();
+        item = new BeanItem<>(bean);
+        binder = new FieldGroup(item);
+        final HorizontalLayout buttons = getButtons();
+        // Determines which properties are shown
+        update.setVisible(false);
+        delete.setVisible(false);
 //
-//    public FacilityForm() {
-//        bean = new FacilityBean();
-//        item = new BeanItem<>(bean);
-//        binder = new FieldGroup(item);
-//        final HorizontalLayout buttons = getButtons();
-//        // Determines which properties are shown
-//        update.setVisible(false);
-//        delete.setVisible(false);
+// @Id
+//    private String id;
+//    private String facilityName;
+//    @DBRef
+//    private FacilityType facilityType;
+//    @DBRef
+//    private Location city;
+//    private Contact contact; // Embeddable
+//    @DBRef
+//    private List<Position> positions ;
+//    private List<FacilityMentors> facilityMentors;  // Embeddable
+//    @DBRef
+//    private FacilityGrouping facilityGrouping;
+
+        // Embeddables
+        final TextField mailingAddress = getTextField("Mailing Address", "mailingAddress");
+        final TextField telephoneNumber = getTextField("Telephone Number", "telephoneNumber");
+        final TextField cellnumber = getTextField("Cell Number", "cellnumber");
+        final TextField faxnumber = getTextField("Fax Number", "faxnumber");
+        final TextField email = getTextField("Email", "email");
+        final TextField addressType = getTextField("Address Type", "addressType"); //??????????????????????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //
+        TextField facilityName = getTextField("Facility Name", "facilityName");
+        //
+        final ListSelect positions = getPositions("Select Cluster", "positionsIds");
+        final ListSelect facilityMentors = getFacilityMentors("Select Node", "facilityMentorsIds");
+//        final ComboBox facilityTypeCombo = getFacilityTypeComboBox("Facility Type", "facilityTypeId"); //
+//        final ComboBox cityCombo = getFacilityTypeComboBox("City", "cityId"); //
+//        final ComboBox facilityGroupingCombo = getFacilityGroupingComboBox("Facility Grouping", "facilityGroupingId");//    private String facilityGroupingId;
+        //
+        final GridLayout grid = new GridLayout(2, 10);
+
+        grid.setSizeFull();
+
+        grid.addComponent(positions,
+                0, 0);
+        grid.addComponent(facilityMentors,
+                1, 0);
+//        grid.addComponent(lastname, 2, 0);
 //
-////        private String id;
-////    private String facilityName;
-////    @DBRef
-////    private FacilityType facilityType;
-////    @DBRef
-////    private Location city;
-////    private Contact contact;
-////    @DBRef
-////    private FacilityGrouping facilityGrouping;
-////    @DBRef
-////    private List<Position> positions ;
-////    private List<FacilityMentors> facilityMentors;
+//        grid.addComponent(email, 0, 1);
+//        grid.addComponent(enable, 0, 2);
 //
-//        TextField facilityName = getTextField("Facility Name", "facilityName");
+//        grid.addComponent(roles, 1, 1, 1, 2);
 //
-//        final ListSelect positions = getPositions("Select Cluster", "positions");
-//        final ListSelect facilityMentors = getFacilityMentors("Select Node", "facilityMentors");
+//        grid.addComponent(jurisdictions, 2, 1, 2, 2);
 //
-//        final GridLayout grid = new GridLayout(2, 10);
-//        grid.setSizeFull();
-//
-//        grid.addComponent(positions, 0, 0);
-//        grid.addComponent(facilityMentors, 1, 0);
-////        grid.addComponent(lastname, 2, 0);
-////
-////        grid.addComponent(email, 0, 1);
-////        grid.addComponent(enable, 0, 2);
-////
-////        grid.addComponent(roles, 1, 1, 1, 2);
-////
-////        grid.addComponent(jurisdictions, 2, 1, 2, 2);
-////
-////        grid.addComponent(buttons, 0, 3, 2, 3);
-//        grid.addComponent(buttons, 0, 1);
-//
-//        addComponent(grid);
-//    }
-//
-//    private TextField getTextField(String label, String field) {
-//        TextField textField = new TextField(label);
-//        textField.setWidth(250, Unit.PIXELS);
-//        textField.setNullRepresentation("");
-//        textField.addValidator(new BeanValidator(FacilityBean.class, field));
-//        textField.setImmediate(true);
-//        binder.bind(textField, field);
-//        return textField;
-//    }
-//
-//    private ListSelect getFacilityMentors(String label, String field) {
-//        facilityMentorsList.setCaption(label);
+//        grid.addComponent(buttons, 0, 3, 2, 3);
+        grid.addComponent(buttons,
+                0, 1);
+
+        addComponent(grid);
+    }
+
+    private TextField getTextField(String label, String field) {
+        TextField textField = new TextField(label);
+        textField.setWidth(250, Unit.PIXELS);
+        textField.setNullRepresentation("");
+        textField
+                .addValidator(new BeanValidator(FacilityBean.class, field));
+        textField.setImmediate(
+                true);
+        binder.bind(textField, field);
+        return textField;
+    }
+
+    private ListSelect getFacilityMentors(String label, String field) {
+        facilityMentorsList.setCaption(label);
 //        List<Facility> facilities = FacilityFacade.getFacilityService().findAll();
 //
 //        for (Facility iFacility : facilities) {
@@ -103,11 +129,11 @@ public class FacilityForm extends FormLayout {
 //        }
 //        facilityMentorsList.setWidth("250px");
 //        binder.bind(facilityMentorsList, field);
-//
-//        return facilityMentorsList;
-//    }
-//
-//    private ListSelect getPositions(String label, String field) {
+
+        return facilityMentorsList;
+    }
+
+    private ListSelect getPositions(String label, String field) {
 //        positionList.setCaption(label);
 //        List<Cluster> clusters = ClusterFacade.getClusterService().findAll();
 //        for (Cluster iClusters : clusters) {
@@ -118,16 +144,16 @@ public class FacilityForm extends FormLayout {
 //        }
 //        positionList.setWidth("250px");
 //        binder.bind(positionList, field);
-//        return positionList;
-//    }
-//
-//    private HorizontalLayout getButtons() {
-//        HorizontalLayout buttons = new HorizontalLayout();
-//        buttons.addComponent(save);
-//        buttons.addComponent(edit);
-//        buttons.addComponent(cancel);
-//        buttons.addComponent(update);
-//        buttons.addComponent(delete);
-//        return buttons;
-//    }
+        return positionList;
+    }
+
+    private HorizontalLayout getButtons() {
+        HorizontalLayout buttons = new HorizontalLayout();
+        buttons.addComponent(save);
+        buttons.addComponent(edit);
+        buttons.addComponent(cancel);
+        buttons.addComponent(update);
+        buttons.addComponent(delete);
+        return buttons;
+    }
 }

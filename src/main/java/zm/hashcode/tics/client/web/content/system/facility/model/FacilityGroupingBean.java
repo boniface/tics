@@ -4,8 +4,7 @@
  */
 package zm.hashcode.tics.client.web.content.system.facility.model;
 
-import zm.hashcode.tics.domain.offices.Cluster;
-import zm.hashcode.tics.domain.offices.Node;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -14,7 +13,9 @@ import zm.hashcode.tics.domain.offices.Node;
 public class FacilityGroupingBean {
 
     private String id;
+    @NotNull
     private String nodeId;
+    @NotNull
     private String clusterId;
 
     /**

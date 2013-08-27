@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author boniface
  */
 public final class LocationAddress implements Serializable {
+
     private String postalAddress;
     private String physicalAddress;
     private String contactNumber;
@@ -36,8 +37,8 @@ public final class LocationAddress implements Serializable {
         private String postalCode;
         private String emailAddress;
 
-        public Builder(String val) {
-            this.contactNumber = val;
+        public Builder(String contactNumber) {
+            this.contactNumber = contactNumber;
         }
 
         public Builder postalAddress(String value) {
@@ -54,8 +55,7 @@ public final class LocationAddress implements Serializable {
             postalCode = value;
             return this;
         }
-        
-        
+
         public Builder emailAddress(String value) {
             emailAddress = value;
             return this;
@@ -90,6 +90,4 @@ public final class LocationAddress implements Serializable {
     public String toString() {
         return "LocationAddress{" + "postalCode=" + postalCode + ", emailAddress=" + emailAddress + '}';
     }
-    
-    
 }

@@ -12,8 +12,8 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import zm.hashcode.tics.domain.people.Contact;
 import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.ui.location.LocationAddress;
 import zm.hashcode.tics.domain.ui.position.Position;
 
 /**
@@ -30,9 +30,9 @@ public class Facility implements Serializable, Comparable<Facility> {
     private FacilityType facilityType;
     @DBRef
     private Location city;
-    private Contact contact;
+    private LocationAddress address;
     @DBRef
-    private List<Position> positions ;
+    private List<Position> positions;
     private List<FacilityMentors> facilityMentors;
     @DBRef
     private FacilityGrouping facilityGrouping;
@@ -45,7 +45,7 @@ public class Facility implements Serializable, Comparable<Facility> {
         facilityName = builder.facilityName;
         facilityType = builder.facilityType;
         city = builder.city;
-        contact = builder.contact;
+        address = builder.address;
         positions = builder.positions;
         facilityMentors = builder.facilityMentors;
         facilityGrouping = builder.facilityGrouping;
@@ -53,11 +53,12 @@ public class Facility implements Serializable, Comparable<Facility> {
     }
 
     public static class Builder {
+
         private final String facilityName;
         private String id;
         private FacilityType facilityType;
         private Location city;
-        private Contact contact;
+        private LocationAddress address;
         private List<Position> positions = new ArrayList<>();
         private List<FacilityMentors> facilityMentors = new ArrayList<>();
         private FacilityGrouping facilityGrouping;
@@ -81,8 +82,8 @@ public class Facility implements Serializable, Comparable<Facility> {
             return this;
         }
 
-        public Builder contact(Contact value) {
-            contact = value;
+        public Builder address(LocationAddress value) {
+            address = value;
             return this;
         }
 
@@ -99,6 +100,18 @@ public class Facility implements Serializable, Comparable<Facility> {
         public Builder facilityGrouping(FacilityGrouping value) {
             facilityGrouping = value;
             return this;
+        }
+
+        public Builder facility(Facility facility) {
+            id = facility.getId();
+            facilityType = facility.getFacilityType();
+            city = facility.getCity();
+            address = facility.getAddress();
+            positions = facility.getPositions();
+            facilityMentors = facility.getFacilityMentors();
+            facilityGrouping = facility.getFacilityGrouping();
+            return this;
+
         }
 
         public Facility build() {
@@ -122,8 +135,8 @@ public class Facility implements Serializable, Comparable<Facility> {
         return city;
     }
 
-    public Contact getContact() {
-        return contact;
+    public LocationAddress getAddress() {
+        return address;
     }
 
     public List<Position> getPositions() {
@@ -138,7 +151,6 @@ public class Facility implements Serializable, Comparable<Facility> {
         return facilityGrouping;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;

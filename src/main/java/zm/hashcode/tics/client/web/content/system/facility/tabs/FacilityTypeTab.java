@@ -20,7 +20,7 @@ import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
 import zm.hashcode.tics.client.web.content.system.facility.forms.FacilityTypeForm;
 import zm.hashcode.tics.client.web.content.system.facility.model.FacilityTypeBean;
 import zm.hashcode.tics.client.web.content.system.facility.tables.FacilityTypeTable;
-import zm.hashcode.tics.client.web.content.system.facility.util.FacilityUtil;
+import zm.hashcode.tics.client.web.content.system.facility.util.FacilityTypeUtil;
 import zm.hashcode.tics.domain.offices.FacilityType;
 
 /**
@@ -65,7 +65,7 @@ public final class FacilityTypeTab extends VerticalLayout implements
         final Property property = event.getProperty();
         if (property == table) {
             final FacilityType facilityType = FacilityTypeFacade.getFacilityTypeService().find(table.getValue().toString());
-            final FacilityTypeBean bean = new FacilityUtil().getBean(facilityType);
+            final FacilityTypeBean bean = new FacilityTypeUtil().getBean(facilityType);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
         }

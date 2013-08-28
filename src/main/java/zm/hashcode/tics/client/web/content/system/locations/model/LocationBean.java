@@ -5,7 +5,7 @@
 package zm.hashcode.tics.client.web.content.system.locations.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,7 +21,7 @@ public class LocationBean implements Serializable {
     private String longitude;
     @NotNull
     private String locationTypeId;
-    private List<String> childrenIds;
+    private Set<String> childrenIds;
     private String parentId;
 
     /**
@@ -108,11 +108,11 @@ public class LocationBean implements Serializable {
         this.locationTypeId = locationTypeId;
     }
 
-    public List<String> getChildrenIds() {
+    public Set<String> getChildrenIds() {
         return childrenIds;
     }
 
-    public void setChildrenIds(List<String> childrenIds) {
+    public void setChildrenIds(Set<String> childrenIds) {
         this.childrenIds = childrenIds;
     }
 

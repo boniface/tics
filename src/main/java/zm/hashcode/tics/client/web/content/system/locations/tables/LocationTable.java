@@ -5,7 +5,11 @@
 package zm.hashcode.tics.client.web.content.system.locations.tables;
 
 import com.vaadin.ui.Table;
+import java.util.List;
+import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.ui.location.LocationType;
 
 /**
  *
@@ -18,18 +22,31 @@ public class LocationTable extends Table {
     public LocationTable(TicsMain main) {
         this.main = main;
         setSizeFull();
-        addContainerProperty("UNDER CONSTRUCTION", String.class, null);
+        addContainerProperty("Location Name", String.class, null);
+        addContainerProperty("Location Type", String.class, null);
+        addContainerProperty("Location Code", String.class, null);
 
-//        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
-//        for (AddressType iAddressType : addressTypes) {
-//            addItem(new Object[]{iAddressType.getAddressTypeName()
-//            }, iAddressType.getId());
-//        }
+
+        List<Location> locations = LocationFacade.getLocationService().findAll();
+        for (Location location : locations) {
+            addItem(new Object[]{
+                location.getName(),
+                getLocationType(location.getLocationType()),
+                location.getCode()
+            }, location.getId());
+        }
         // Allow selecting items from the table.
         setNullSelectionAllowed(false);
 //
         setSelectable(true);
         // Send changes in selection immediately to server.
         setImmediate(true);
+    }
+
+    private String getLocationType(LocationType locationType) {
+        if (locationType != null) {
+            return locationType.getName();
+        }
+        return null;
     }
 }

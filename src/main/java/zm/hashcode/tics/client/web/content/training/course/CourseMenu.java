@@ -11,9 +11,6 @@ import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTypeTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.CriteriaTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.ScheduledCourseTab;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
 
 /**
  *

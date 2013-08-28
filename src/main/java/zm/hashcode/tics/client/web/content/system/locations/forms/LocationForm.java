@@ -15,14 +15,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 import java.util.List;
-import zm.hashcode.tics.app.facade.ui.demographics.RaceFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.client.web.content.people.admin.model.PersonBean;
 import zm.hashcode.tics.client.web.content.system.locations.model.LocationBean;
-import zm.hashcode.tics.domain.ui.demographics.Race;
-import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.location.LocationType;
 
@@ -115,7 +110,7 @@ public class LocationForm extends FormLayout {
         locationList.setCaption(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
         for (Location location : locations) {
-            locationList.setItemCaption(location.getId(), location.getName() + " " + location.getLocationType().getName());
+            locationList.setItemCaption(location.getId(), location.getName() + " " + getLocationType(location.getLocationType()));
             locationList.setNullSelectionAllowed(false);
             locationList.setMultiSelect(true);
             locationList.addItem(location.getId());
@@ -145,5 +140,12 @@ public class LocationForm extends FormLayout {
         buttons.addComponent(delete);
 
         return buttons;
+    }
+
+    private String getLocationType(LocationType locationType) {
+        if (locationType != null) {
+            return locationType.getName();
+        }
+        return null;
     }
 }

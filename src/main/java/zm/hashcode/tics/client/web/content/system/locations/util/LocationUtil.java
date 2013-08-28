@@ -4,8 +4,8 @@
  */
 package zm.hashcode.tics.client.web.content.system.locations.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import zm.hashcode.tics.client.web.content.system.locations.model.LocationBean;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.location.LocationType;
@@ -24,7 +24,9 @@ public class LocationUtil {
         bean.setLatitude(location.getLatitude());
         bean.setLongitude(location.getLongitude());
         bean.setLocationTypeId(getLocationTypeId(location.getLocationType()));
-        bean.setChildrenIds(getLocationChildren(location.getChildren()));
+        Set<Location> locasets = new HashSet<>();
+        locasets.addAll(location.getChildren());
+        bean.setChildrenIds(getLocationChildren(locasets));
         bean.setParentId(getLocationParent(location.getParent()));
 
         return bean;
@@ -37,8 +39,8 @@ public class LocationUtil {
         return null;
     }
 
-    private List<String> getLocationChildren(List<Location> children) {
-        List<String> ids = new ArrayList<>();
+    private Set<String> getLocationChildren(Set<Location> children) {
+        Set<String> ids = new HashSet<>();
         for (Location location : children) {
             ids.add(location.getId());
 

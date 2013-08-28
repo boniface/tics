@@ -9,7 +9,6 @@ import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.AddressTypeTab;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.ContactListTab;
-import zm.hashcode.tics.client.web.content.system.locations.tabs.LocationAddressTab;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.LocationTab;
 import zm.hashcode.tics.client.web.content.system.locations.tabs.LocationTypeTab;
 
@@ -41,12 +40,12 @@ public class LocationsMenu extends Menu {
         locationTypeTab.setMargin(true);
         locationTypeTab.addComponent(new LocationTypeTab(getMain()));
 
-        getTab().addTab(addressTypeTab, "Address Type", null);
-        getTab().addTab(contactListTab, "Contact List", null);
-        getTab().addTab(locationTypeTab, "Location Type", null);
-        getTab().addTab(locationTab, "Location", null);
-      
-       
+        getTab().addTab(addressTypeTab, "Address TYPE", null);
+        getTab().addTab(contactListTab, "Contact LIST", null);
+        getTab().addTab(locationTypeTab, "Location TYPE", null);
+        getTab().addTab(locationTab, "Location NAME", null);
+
+
 
         switch (selectedTab) {
             case "LANDING":
@@ -56,7 +55,7 @@ public class LocationsMenu extends Menu {
                 getTab().setSelectedTab(contactListTab);
                 break;
             case "LOCATION":
-                getTab().setSelectedTab(locationTypeTab);
+                getTab().setSelectedTab(locationTab);
                 break;
             case "LOCATIONTYPE":
                 getTab().setSelectedTab(locationTypeTab);

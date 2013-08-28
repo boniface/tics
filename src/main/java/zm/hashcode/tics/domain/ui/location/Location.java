@@ -58,7 +58,6 @@ public final class Location implements Serializable {
         private LocationType locationType;
         private Location parent;
         private List<Location> children = new ArrayList<>();
-//        //        return ImmutableList.copyOf(roles);
 
         public Builder(String name) {
             this.name = name;
@@ -80,22 +79,22 @@ public final class Location implements Serializable {
         }
 
         public Builder latitude(String value) {
-            code = value;
+            latitude = value;
             return this;
         }
 
         public Builder longitude(String value) {
-            code = value;
+            longitude = value;
             return this;
         }
 
-        public Builder locationType(String value) {
-            code = value;
+        public Builder locationType(LocationType value) {
+            locationType = value;
             return this;
         }
 
-        public Builder parent(String value) {
-            code = value;
+        public Builder parent(Location value) {
+            parent = value;
             return this;
         }
 
@@ -140,5 +139,4 @@ public final class Location implements Serializable {
     public String toString() {
         return "Location{" + "name=" + name + '}';
     }
-    
 }

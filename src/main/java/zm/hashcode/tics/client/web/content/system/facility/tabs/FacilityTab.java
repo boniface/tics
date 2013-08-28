@@ -19,11 +19,11 @@ import zm.hashcode.tics.app.facade.offices.FacilityGroupingFacade;
 import zm.hashcode.tics.app.facade.offices.FacilityTypeFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
 import zm.hashcode.tics.client.web.content.system.facility.forms.FacilityForm;
 import zm.hashcode.tics.client.web.content.system.facility.model.FacilityBean;
 import zm.hashcode.tics.client.web.content.system.facility.tables.FacilityTable;
 import zm.hashcode.tics.client.web.content.system.facility.util.FacilityUtil;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
 import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.domain.offices.FacilityGrouping;
 import zm.hashcode.tics.domain.offices.FacilityType;
@@ -47,7 +47,7 @@ public final class FacilityTab extends VerticalLayout implements
         table = new FacilityTable(main);
         setSizeFull();
         addComponent(form);
-//        addComponent(table);
+        addComponent(table);
         addListeners();
     }
 
@@ -124,7 +124,11 @@ public final class FacilityTab extends VerticalLayout implements
 
         FacilityType facilityType = FacilityTypeFacade.getFacilityTypeService().find(bean.getFacilityTypeId());
         Location city = LocationFacade.getLocationService().find(bean.getCityId());
-        FacilityGrouping facilityGrouping = FacilityGroupingFacade.getFacilityGroupingService().find(bean.getFacilityGroupingId());
+
+        FacilityGrouping facilityGrouping = null;
+        if (bean.getFacilityGroupingId() != null) {
+            facilityGrouping = FacilityGroupingFacade.getFacilityGroupingService().find(bean.getFacilityGroupingId());
+        }
 
         LocationAddress address = new LocationAddress.Builder(bean.getContactNumber())
                 .emailAddress(bean.getEmailAddress())
@@ -150,7 +154,11 @@ public final class FacilityTab extends VerticalLayout implements
 
         FacilityType facilityType = FacilityTypeFacade.getFacilityTypeService().find(bean.getFacilityTypeId());
         Location city = LocationFacade.getLocationService().find(bean.getCityId());
-        FacilityGrouping facilityGrouping = FacilityGroupingFacade.getFacilityGroupingService().find(bean.getFacilityGroupingId());
+
+        FacilityGrouping facilityGrouping = null;
+        if (bean.getFacilityGroupingId() != null) {
+            facilityGrouping = FacilityGroupingFacade.getFacilityGroupingService().find(bean.getFacilityGroupingId());
+        }
 
         LocationAddress address = new LocationAddress.Builder(bean.getContactNumber())
                 .emailAddress(bean.getEmailAddress())
@@ -169,7 +177,7 @@ public final class FacilityTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new UserMenu(main, "FACILITY"));
+        main.content.setSecondComponent(new FacilityMenu(main, "FACILITY"));
     }
 
     private void setEditFormProperties() {

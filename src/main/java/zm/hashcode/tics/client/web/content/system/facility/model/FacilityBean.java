@@ -5,6 +5,7 @@
 package zm.hashcode.tics.client.web.content.system.facility.model;
 
 import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -13,7 +14,9 @@ import java.io.Serializable;
 public class FacilityBean implements Serializable {
 
     private String id;
+    @NotNull
     private String facilityName;
+    @NotNull
     private String facilityTypeId;
     //Address
     private String postalAddress;
@@ -21,6 +24,7 @@ public class FacilityBean implements Serializable {
     private String contactNumber;
     private String postalCode;
     private String emailAddress;
+    @NotNull
     private String cityId;
     private String facilityGroupingId;
 

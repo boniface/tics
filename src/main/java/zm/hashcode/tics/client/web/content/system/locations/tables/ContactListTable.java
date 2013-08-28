@@ -8,7 +8,7 @@ import com.vaadin.ui.Table;
 import java.util.List;
 import zm.hashcode.tics.app.facade.ui.location.ContactListFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.domain.ui.location.ContactList;
+import zm.hashcode.tics.domain.ui.location.Contact;
 
 /**
  *
@@ -22,8 +22,8 @@ public class ContactListTable extends Table {
         this.main = main;
         setSizeFull();
         addContainerProperty("Name", String.class, null);
-        List<ContactList> contactLists = ContactListFacade.getContactListService().findAll();
-        for (ContactList iContactList : contactLists) {
+        List<Contact> contactLists = ContactListFacade.getContactListService().findAll();
+        for (Contact iContactList : contactLists) {
             addItem(new Object[]{iContactList.getName()
             }, iContactList.getId());
         }

@@ -15,14 +15,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextField;
 import java.util.List;
-import zm.hashcode.tics.app.facade.ui.demographics.RaceFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
-import zm.hashcode.tics.client.web.content.people.admin.model.PersonBean;
 import zm.hashcode.tics.client.web.content.system.locations.model.LocationBean;
-import zm.hashcode.tics.domain.ui.demographics.Race;
-import zm.hashcode.tics.domain.ui.demographics.Role;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.location.LocationType;
 
@@ -72,10 +67,10 @@ public class LocationForm extends FormLayout {
         grid.addComponent(code, 2, 0);
 
         grid.addComponent(longitude, 0, 1);
-        grid.addComponent(latitude, 0, 2);
-
-        grid.addComponent(childrenIds, 1, 1, 1, 2);
+        grid.addComponent(latitude, 1, 1);
         grid.addComponent(parentId, 2, 1);
+        grid.addComponent(childrenIds, 0, 2);
+
 
         grid.addComponent(buttons, 0, 3, 2, 3);
 
@@ -114,15 +109,17 @@ public class LocationForm extends FormLayout {
     private ListSelect getLocations(String label, String field) {
         locationList.setCaption(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
-        for (Location location : locations) {
-            locationList.setItemCaption(location.getId(), location.getName() + " " + location.getLocationType().getName());
-            locationList.setNullSelectionAllowed(false);
-            locationList.setMultiSelect(true);
-            locationList.addItem(location.getId());
+        try {
+            for (Location location : locations) {
+                locationList.setItemCaption(location.getId(), location.getName() + " " + location.getLocationType().getName());
+                locationList.setNullSelectionAllowed(false);
+                locationList.setMultiSelect(true);
+                locationList.addItem(location.getId());
+            }
+            locationList.setWidth("250px");
+            binder.bind(locationList, field);
+        } catch (NullPointerException exception) {
         }
-        locationList.setWidth("250px");
-        binder.bind(locationList, field);
-
         return locationList;
     }
 

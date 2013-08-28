@@ -5,7 +5,7 @@
 package zm.hashcode.tics.client.web.content.system.locations.util;
 
 import zm.hashcode.tics.client.web.content.system.locations.model.ContactListBean;
-import zm.hashcode.tics.domain.ui.location.ContactList;
+import zm.hashcode.tics.domain.ui.location.Contact;
 
 /**
  *
@@ -13,7 +13,7 @@ import zm.hashcode.tics.domain.ui.location.ContactList;
  */
 public class ContactListUtil {
 
-    public ContactListBean getBean(ContactList contactList) {
+    public ContactListBean getBean(Contact contactList) {
         ContactListBean bean = new ContactListBean();
         bean.setId(contactList.getId());
         bean.setName(contactList.getName());

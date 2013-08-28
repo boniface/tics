@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zm.hashcode.tics.domain.ui.location.ContactList;
+import zm.hashcode.tics.domain.ui.location.Contact;
 import zm.hashcode.tics.repository.ui.location.ContactListRepository;
 import zm.hashcode.tics.services.ui.location.ContactListService;
 
@@ -23,27 +23,27 @@ public class ContactListServiceImpl implements ContactListService {
     private ContactListRepository contactListRepository;
 
     @Override
-    public ContactList find(String id) {
+    public Contact find(String id) {
         return contactListRepository.findOne(id);
     }
 
     @Override
-    public ContactList persist(ContactList entity) {
+    public Contact persist(Contact entity) {
         return contactListRepository.save(entity);
     }
 
     @Override
-    public ContactList merge(ContactList entity) {
+    public Contact merge(Contact entity) {
         return contactListRepository.save(entity);
     }
 
     @Override
-    public void remove(ContactList entity) {
+    public void remove(Contact entity) {
         contactListRepository.delete(entity);
     }
 
     @Override
-    public List<ContactList> findAll() {
+    public List<Contact> findAll() {
         return ImmutableList.copyOf(contactListRepository.findAll());
     }
 }

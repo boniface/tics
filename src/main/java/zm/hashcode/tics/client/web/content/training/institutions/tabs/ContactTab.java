@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.system.locations.tabs;
+package zm.hashcode.tics.client.web.content.training.institutions.tabs;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -14,30 +14,26 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import zm.hashcode.tics.app.facade.ui.location.ContactListFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
-import zm.hashcode.tics.client.web.content.system.locations.forms.ContactListForm;
-import zm.hashcode.tics.client.web.content.system.locations.model.ContactListBean;
-import zm.hashcode.tics.client.web.content.system.locations.tables.ContactListTable;
-import zm.hashcode.tics.client.web.content.system.locations.util.ContactListUtil;
-import zm.hashcode.tics.domain.ui.location.Contact;
+import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
+import zm.hashcode.tics.client.web.content.training.institutions.forms.ContactForm;
+import zm.hashcode.tics.client.web.content.training.institutions.tables.ContactTable;
 
 /**
  *
  * @author geek
  */
-public class ContactListTab extends VerticalLayout implements
+public class ContactTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final ContactListForm form;
-    private final ContactListTable table;
+    private final ContactForm form;
+    private final ContactTable table;
 
-    public ContactListTab(TicsMain app) {
+    public ContactTab(TicsMain app) {
         main = app;
-        form = new ContactListForm();
-        table = new ContactListTable(main);
+        form = new ContactForm();
+        table = new ContactTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -64,9 +60,9 @@ public class ContactListTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final Contact title = ContactListFacade.getContactListService().find(table.getValue().toString());
-            final ContactListBean bean = new ContactListUtil().getBean(title);
-            form.binder.setItemDataSource(new BeanItem<>(bean));
+//            final ContactList title = ContactListFacade.getContactListService().find(table.getValue().toString());
+//            final ContactBean bean = new ContactUtil().getBean(title);
+//            form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
         }
     }
@@ -74,7 +70,7 @@ public class ContactListTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            ContactListFacade.getContactListService().persist(getNewEntity(binder));
+//            ContactListFacade.getContactListService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -86,7 +82,7 @@ public class ContactListTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            ContactListFacade.getContactListService().merge(getUpdateEntity(binder));
+//            ContactListFacade.getContactListService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -96,27 +92,26 @@ public class ContactListTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        ContactListFacade.getContactListService().remove(getUpdateEntity(binder));
+//        ContactListFacade.getContactListService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private Contact getNewEntity(FieldGroup binder) {
-        final ContactListBean bean = ((BeanItem<ContactListBean>) binder.getItemDataSource()).getBean();
-        final Contact contactList = new Contact.Builder(bean.getName())
-                .build();
-        return contactList;
-    }
-
-    private Contact getUpdateEntity(FieldGroup binder) {
-        final ContactListBean bean = ((BeanItem<ContactListBean>) binder.getItemDataSource()).getBean();
-        final Contact contactList = new Contact.Builder(bean.getName())
-                .id(bean.getId())
-                .build();
-        return contactList;
-    }
-
+//    private Contact getNewEntity(FieldGroup binder) {
+//        final ContactBean bean = ((BeanItem<ContactBean>) binder.getItemDataSource()).getBean();
+//        final Contact contactList = new Contact.Builder(bean.getName())
+//                .build();
+//        return contactList;
+//    }
+//
+//    private Contact getUpdateEntity(FieldGroup binder) {
+//        final ContactBean bean = ((BeanItem<ContactBean>) binder.getItemDataSource()).getBean();
+//        final Contact contactList = new Contact.Builder(bean.getName())
+//                .id(bean.getId())
+//                .build();
+//        return contactList;
+//    }
     private void getHome() {
-        main.content.setSecondComponent(new LocationsMenu(main, "CONTACTLIST"));
+        main.content.setSecondComponent(new InstitutionMenu(main, "CONTACTS"));
     }
 
     private void setEditFormProperties() {

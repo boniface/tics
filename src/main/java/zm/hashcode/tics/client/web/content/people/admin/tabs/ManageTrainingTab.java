@@ -15,7 +15,8 @@ import zm.hashcode.tics.client.web.TicsMain;
  *
  * @author boniface
  */
-public class ManageTrainingTab extends VerticalLayout {
+public class ManageTrainingTab extends VerticalLayout implements
+        Button.ClickListener {
 
     private final TicsMain main;
     private final HorizontalLayout headerBar = new HorizontalLayout();
@@ -34,5 +35,10 @@ public class ManageTrainingTab extends VerticalLayout {
 
         addComponent(headerBar);
 
+    }
+
+    @Override
+    public void buttonClick(Button.ClickEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

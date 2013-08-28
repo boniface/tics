@@ -6,7 +6,6 @@ package zm.hashcode.tics.domain.training.institutions;
 
 import java.io.Serializable;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import zm.hashcode.tics.domain.people.Contact;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.location.LocationAddress;
 
@@ -14,7 +13,8 @@ import zm.hashcode.tics.domain.ui.location.LocationAddress;
  *
  * @author boniface
  */
-public class InstitutionAddress implements Serializable{
+public class InstitutionAddress implements Serializable {
+
     private LocationAddress address;
     @DBRef
     private Location city;
@@ -34,6 +34,4 @@ public class InstitutionAddress implements Serializable{
     public void setCity(Location city) {
         this.city = city;
     }
-    
-    
 }

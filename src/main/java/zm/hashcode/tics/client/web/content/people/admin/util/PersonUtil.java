@@ -26,6 +26,7 @@ public class PersonUtil {
         bean.setId(person.getId());
         bean.setFirstname(person.getFirstname());
         bean.setOthername(person.getOthername());
+        bean.setSurname(person.getSurname());
 
         List<PersonIdentities> ids = person.getIdentities();
         PersonIdentities pid = ids.get(0);

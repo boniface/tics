@@ -10,7 +10,6 @@ import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.ManageMentoringTab;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.ManagePeopleTab;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.ManageTrainingTab;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.PersonTab;
 
 /**
  *
@@ -34,22 +33,13 @@ public class AdministerMenu extends Menu {
         manageMentoringTab.setMargin(true);
         manageMentoringTab.addComponent(new ManageMentoringTab(getMain()));
 
-
-        final VerticalLayout addNewPersonTab = new VerticalLayout();
-        addNewPersonTab.setMargin(true);
-        addNewPersonTab.addComponent(new PersonTab(getMain()));
-
         getTab().addTab(managePeopleTab, "Manage PEOPLE", null);
-        getTab().addTab(addNewPersonTab, "Add New Person", null);
         getTab().addTab(manageTrainingTab, "Manage TRAINING", null);
         getTab().addTab(manageMentoringTab, "Manage MENTORING", null);
 
         switch (selectedTab) {
             case "LANDING":
                 getTab().setSelectedTab(managePeopleTab);
-                break;
-            case "NEW":
-                getTab().setSelectedTab(manageTrainingTab);
                 break;
             case "TRAINING":
                 getTab().setSelectedTab(manageTrainingTab);

@@ -31,38 +31,24 @@ import zm.hashcode.tics.domain.ui.demographics.Title;
  *
  * @author boniface
  */
-public final class PersonForm extends FormLayout {
+public final class EditPersonForm extends FormLayout {
 
     private final PersonBean bean;
     public final BeanItem<PersonBean> item;
     public final FieldGroup binder;
     // Define Buttons
-    public final Button save = new Button("Save");
     public final Button edit = new Button("Edit");
     public final Button cancel = new Button("Cancel");
-    public final Button update = new Button("Update");
-    public final Button delete = new Button("Delete");
 
-    public PersonForm() {
-        bean = new PersonBean();
+    public EditPersonForm(PersonBean personBean) {
+        bean = personBean;
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         final HorizontalLayout buttons = getButtons();
         // Determines which properties are shown
-        update.setVisible(false);
-        delete.setVisible(false);
-//
-//    private String firstname;
-//    private String surname;
-//    private String othername;
 
-//    private String identitiesId;
-//    private String idValue;
-//    private String facilityId;
 
-//    private String titleId;
-//    private String genderId;
-//    private String raceId;
+
 
         final TextField firstname = getTextField("First Name", "firstname");
         final TextField surname = getTextField("Last Name", "surname");
@@ -200,11 +186,9 @@ public final class PersonForm extends FormLayout {
 
     private HorizontalLayout getButtons() {
         HorizontalLayout buttons = new HorizontalLayout();
-        buttons.addComponent(save);
         buttons.addComponent(edit);
         buttons.addComponent(cancel);
-        buttons.addComponent(update);
-        buttons.addComponent(delete);
+
         return buttons;
     }
 }

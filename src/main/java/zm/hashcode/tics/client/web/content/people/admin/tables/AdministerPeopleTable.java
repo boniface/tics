@@ -10,6 +10,11 @@ import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.people.admin.forms.EditPersonForm;
+import zm.hashcode.tics.client.web.content.people.admin.model.PersonBean;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.ManagePeopleTab;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.EditPersonWindow;
+import zm.hashcode.tics.client.web.content.people.admin.util.PersonUtil;
 import zm.hashcode.tics.domain.people.Demography;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.ui.demographics.Gender;
@@ -23,8 +28,9 @@ public class AdministerPeopleTable extends Table {
 
     private final TicsMain main;
 
-    public AdministerPeopleTable(TicsMain main) {
+    public AdministerPeopleTable(final TicsMain main, final ManagePeopleTab peopleTab) {
         this.main = main;
+
         setSizeFull();
 
         addContainerProperty("Title", String.class, null);
@@ -33,11 +39,29 @@ public class AdministerPeopleTable extends Table {
         addContainerProperty("Other Name", String.class, null);
         addContainerProperty("Gender", String.class, null);
         addContainerProperty("Details", Button.class, null);
+        addContainerProperty("Edit", Button.class, null);
         addContainerProperty("Delete", Button.class, null);
 
 
         List<Person> personlist = PersonFacade.getPersonService().findAll();
         for (Person person : personlist) {
+
+            Button editField = new Button("Edit");
+            editField.setData(person.getId());
+            editField.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    // Get the item identifier from the user-defined data.
+                    String itemId = (String) event.getButton().getData();
+                    Person person = PersonFacade.getPersonService().find(itemId);
+                    PersonBean bean = new PersonUtil().getBean(person);
+                    EditPersonForm form = new EditPersonForm(bean);
+
+                    peopleTab.contentPanel.removeAllComponents();
+                    peopleTab.contentPanel.addComponent(new EditPersonWindow(main, form));
+
+                }
+            });
 
             Button detailsField = new Button("Show details");
             detailsField.setData(person.getId());
@@ -62,6 +86,7 @@ public class AdministerPeopleTable extends Table {
             });
 
             deleteButton.setStyleName(Reindeer.BUTTON_LINK);
+            editField.setStyleName(Reindeer.BUTTON_LINK);
             detailsField.setStyleName(Reindeer.BUTTON_LINK);
 
             addItem(new Object[]{
@@ -71,6 +96,7 @@ public class AdministerPeopleTable extends Table {
                 person.getOthername(),
                 getGender(person.getDemography()),
                 detailsField,
+                editField,
                 deleteButton
             }, person.getId());
         }

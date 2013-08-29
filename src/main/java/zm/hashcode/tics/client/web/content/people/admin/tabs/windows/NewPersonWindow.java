@@ -55,19 +55,13 @@ public final class NewPersonWindow extends VerticalLayout implements
         final Button source = event.getButton();
         if (source == form.save) {
             saveForm(form.binder);
-        } else if (source == form.edit) {
-            setEditFormProperties();
         } else if (source == form.cancel) {
             getHome();
-        } else if (source == form.update) {
-//            saveEditedForm(form.binder);
-        } else if (source == form.delete) {
-            deleteForm(form.binder);
         }
     }
 
     private void saveForm(FieldGroup binder) {
-        System.out.println("SAVE EMTHOD ENTERED ");
+
         try {
             binder.commit();
             PersonFacade.getPersonService().persist(getNewEntity(binder));
@@ -117,29 +111,22 @@ public final class NewPersonWindow extends VerticalLayout implements
     private void setEditFormProperties() {
         form.binder.setReadOnly(false);
         form.save.setVisible(false);
-        form.edit.setVisible(false);
         form.cancel.setVisible(true);
-        form.delete.setVisible(false);
-        form.update.setVisible(true);
+
     }
 
     private void setReadFormProperties() {
         form.binder.setReadOnly(true);
         //Buttons Behaviou
         form.save.setVisible(false);
-        form.edit.setVisible(true);
         form.cancel.setVisible(true);
-        form.delete.setVisible(true);
-        form.update.setVisible(false);
+
     }
 
     private void addListeners() {
         //Register Button Listeners
         form.save.addClickListener((ClickListener) this);
-        form.edit.addClickListener((ClickListener) this);
         form.cancel.addClickListener((ClickListener) this);
-        form.update.addClickListener((ClickListener) this);
-        form.delete.addClickListener((ClickListener) this);
 
     }
 }

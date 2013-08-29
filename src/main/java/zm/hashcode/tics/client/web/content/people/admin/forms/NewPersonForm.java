@@ -38,10 +38,7 @@ public final class NewPersonForm extends FormLayout {
     public final FieldGroup binder;
     // Define Buttons
     public final Button save = new Button("Save");
-    public final Button edit = new Button("Edit");
     public final Button cancel = new Button("Cancel");
-    public final Button update = new Button("Update");
-    public final Button delete = new Button("Delete");
 
     public NewPersonForm() {
         bean = new PersonBean();
@@ -49,20 +46,7 @@ public final class NewPersonForm extends FormLayout {
         binder = new FieldGroup(item);
         final HorizontalLayout buttons = getButtons();
         // Determines which properties are shown
-        update.setVisible(false);
-        delete.setVisible(false);
-//
-//    private String firstname;
-//    private String surname;
-//    private String othername;
 
-//    private String identitiesId;
-//    private String idValue;
-//    private String facilityId;
-
-//    private String titleId;
-//    private String genderId;
-//    private String raceId;
 
         final TextField firstname = getTextField("First Name", "firstname");
         final TextField surname = getTextField("Last Name", "surname");
@@ -111,8 +95,6 @@ public final class NewPersonForm extends FormLayout {
         ComboBox comboBox = new ComboBox(label);
         List<IdentificationType> identitiesType = IdentificationTypeFacade.getIdentificationTypeService().findAll();
 
-//        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
-//        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
         for (IdentificationType location : identitiesType) {
             comboBox.addItem(location.getId());
             comboBox.setItemCaption(location.getId(), location.getIdvalue());
@@ -128,9 +110,6 @@ public final class NewPersonForm extends FormLayout {
         ComboBox comboBox = new ComboBox(label);
         List<Facility> facilities = FacilityFacade.getFacilityService().findAll();
 
-//        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
-//        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
-
         for (Facility facility : facilities) {
             comboBox.addItem(facility.getId());
             comboBox.setItemCaption(facility.getId(), facility.getFacilityName());
@@ -145,10 +124,6 @@ public final class NewPersonForm extends FormLayout {
     private ComboBox getTitleComboBox(String label, String field) {
         ComboBox comboBox = new ComboBox(label);
         List<Title> titles = TitleFacade.getTitleService().findAll();
-
-//        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
-//        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
-
         for (Title title : titles) {
             comboBox.addItem(title.getId());
             comboBox.setItemCaption(title.getId(), title.getTitle());
@@ -163,10 +138,6 @@ public final class NewPersonForm extends FormLayout {
     private ComboBox getGenderComboBox(String label, String field) {
         ComboBox comboBox = new ComboBox(label);
         List<Gender> genders = GenderFacade.getGenderService().findAll();
-
-//        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
-//        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
-
 
         for (Gender gender : genders) {
             comboBox.addItem(gender.getId());
@@ -183,10 +154,6 @@ public final class NewPersonForm extends FormLayout {
         ComboBox comboBox = new ComboBox(label);
         List<Race> races = RaceFacade.getRaceService().findAll();
 
-//        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
-//        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
-
-
         for (Race race : races) {
             comboBox.addItem(race.getId());
             comboBox.setItemCaption(race.getId(), race.getRaceName());
@@ -201,10 +168,8 @@ public final class NewPersonForm extends FormLayout {
     private HorizontalLayout getButtons() {
         HorizontalLayout buttons = new HorizontalLayout();
         buttons.addComponent(save);
-        buttons.addComponent(edit);
         buttons.addComponent(cancel);
-        buttons.addComponent(update);
-        buttons.addComponent(delete);
+
         return buttons;
     }
 }

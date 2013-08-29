@@ -102,14 +102,14 @@
           compilation classpath by vaadin-maven-plugin so normally there is no need for an
           explicit dependency.
         -->
-        <!--
-        <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-client-compiler</artifactId>
-                <version>${vaadin.version}</version>
-                <scope>provided</scope>
-        </dependency>
-        -->
+
+        <!--        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiler</artifactId>
+            <version>${vaadin.version}</version>
+            <scope>provided</scope>
+        </dependency>-->
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client</artifactId>
@@ -221,7 +221,7 @@
             <artifactId>googlemaps</artifactId>
             <version>0.4</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>digitalclock</artifactId>

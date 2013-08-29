@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public final class ContactList implements Serializable {
+public final class Contact implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,10 +24,10 @@ public final class ContactList implements Serializable {
     @NotNull
     private String name;
 
-    private ContactList() {
+    private Contact() {
     }
 
-    private ContactList(Builder builder) {
+    private Contact(Builder builder) {
         id = builder.id;
         name = builder.name;
     }
@@ -41,13 +41,13 @@ public final class ContactList implements Serializable {
             this.name = val;
         }
 
-        public ContactList.Builder id(String value) {
+        public Contact.Builder id(String value) {
             id = value;
             return this;
         }
 
-        public ContactList build() {
-            return new ContactList(this);
+        public Contact build() {
+            return new Contact(this);
         }
     }
 
@@ -79,7 +79,7 @@ public final class ContactList implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ContactList other = (ContactList) obj;
+        final Contact other = (Contact) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

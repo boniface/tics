@@ -25,12 +25,9 @@ public class LocationsMenu extends Menu {
         addressTypeTab.setMargin(true);
         addressTypeTab.addComponent(new AddressTypeTab(getMain()));
 
-
         final VerticalLayout contactListTab = new VerticalLayout();
         contactListTab.setMargin(true);
         contactListTab.addComponent(new ContactListTab(getMain()));
-
-
 
         final VerticalLayout locationTab = new VerticalLayout();
         locationTab.setMargin(true);

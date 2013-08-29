@@ -6,6 +6,7 @@ package zm.hashcode.tics.domain.people;
 
 import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
@@ -37,7 +38,6 @@ public class Person implements Serializable, Comparable<Person> {
     private Facility facility;
     private List<EmployeePosition> positions;
     private List<EducationHistory> educationHistory;
-    @DBRef
     private List<PersonIdentities> identities;
     private List<ProfessionalRegistration> professionalRegistration;
     private List<EmployeeCourses> courses;
@@ -49,7 +49,7 @@ public class Person implements Serializable, Comparable<Person> {
     private List<MentorExpertiseArea> mentorExpertiseAreas;
     private List<PersonRoles> personRoles;
     @DBRef
-    private List<EmployeeActionPlan> actionPlans;
+    private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
 
     private Person() {
     }

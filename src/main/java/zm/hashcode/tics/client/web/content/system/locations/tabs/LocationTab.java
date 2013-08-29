@@ -14,7 +14,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
+import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
 import zm.hashcode.tics.client.web.content.system.locations.forms.LocationForm;
@@ -22,6 +27,7 @@ import zm.hashcode.tics.client.web.content.system.locations.model.LocationBean;
 import zm.hashcode.tics.client.web.content.system.locations.tables.LocationTable;
 import zm.hashcode.tics.client.web.content.system.locations.util.LocationUtil;
 import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.ui.location.LocationType;
 
 /**
  *
@@ -33,6 +39,7 @@ public class LocationTab extends VerticalLayout implements
     private final TicsMain main;
     private final LocationForm form;
     private final LocationTable table;
+    private Collection<String> childrenIds = new ArrayList<>();
 
     public LocationTab(TicsMain app) {
         main = app;
@@ -68,6 +75,8 @@ public class LocationTab extends VerticalLayout implements
             final LocationBean bean = new LocationUtil().getBean(location);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
+        } else if (property == form.locationList) {
+            childrenIds = (Collection<String>) property.getValue();
         }
     }
 
@@ -101,29 +110,48 @@ public class LocationTab extends VerticalLayout implements
     }
 
     private Location getNewEntity(FieldGroup binder) {
+        Location locationParent = null;
         final LocationBean bean = ((BeanItem<LocationBean>) binder.getItemDataSource()).getBean();
-//        LocationType locationTyp = LocationTypeFacade.getLocationTypeService().find(bean.g)
+        LocationType locationType = LocationTypeFacade.getLocationTypeService().find(bean.getLocationTypeId());
+        if (bean.getParentId() != null) {
+            locationParent = LocationFacade.getLocationService().find(bean.getParentId());
+        }
+        List<Location> childLocations = new ArrayList<>();
+        for (String id : childrenIds) {
+            Location child = LocationFacade.getLocationService().find(bean.getParentId());
+            childLocations.add(child);
+        }
         final Location location = new Location.Builder(bean.getName())
                 .code(bean.getCode())
                 .latitude(bean.getLatitude())
-                //                .locationType(bean.getLocationType())
+                .locationType(locationType)
                 .longitude(bean.getLongitude())
-                //                .parent(bean.getParent())
-
+                .parent(locationParent)
+                .children(childLocations)
                 .build();
         return location;
     }
 
     private Location getUpdateEntity(FieldGroup binder) {
+        Location locationParent = null;
         final LocationBean bean = ((BeanItem<LocationBean>) binder.getItemDataSource()).getBean();
-//        LocationType locationTyp = LocationTypeFacade.getLocationTypeService().find(bean.g)
+        LocationType locationType = LocationTypeFacade.getLocationTypeService().find(bean.getLocationTypeId());
+        if (bean.getParentId() != null) {
+            locationParent = LocationFacade.getLocationService().find(bean.getParentId());
+        }
+        List<Location> childLocations = new ArrayList<>();
+        for (String id : childrenIds) {
+            Location child = LocationFacade.getLocationService().find(bean.getParentId());
+            childLocations.add(child);
+        }
         final Location location = new Location.Builder(bean.getName())
+                .id(bean.getId())
                 .code(bean.getCode())
                 .latitude(bean.getLatitude())
-                //                .locationType(bean.getLocationType())
+                .locationType(locationType)
                 .longitude(bean.getLongitude())
-                //                .parent(bean.getParent())
-                .id(bean.getId())
+                .parent(locationParent)
+                .children(childLocations)
                 .build();
         return location;
     }

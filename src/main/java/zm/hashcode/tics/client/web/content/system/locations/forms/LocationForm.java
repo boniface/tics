@@ -109,16 +109,11 @@ public class LocationForm extends FormLayout {
     private ListSelect getLocations(String label, String field) {
         locationList.setCaption(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
-        try {
-            for (Location location : locations) {
-                locationList.setItemCaption(location.getId(), location.getName() + " " + location.getLocationType().getName());
-                locationList.setNullSelectionAllowed(false);
-                locationList.setMultiSelect(true);
-                locationList.addItem(location.getId());
-            }
-            locationList.setWidth("250px");
-            binder.bind(locationList, field);
-        } catch (NullPointerException exception) {
+        for (Location location : locations) {
+            locationList.setItemCaption(location.getId(), location.getName() + " " + getLocationType(location.getLocationType()));
+            locationList.setNullSelectionAllowed(false);
+            locationList.setMultiSelect(true);
+            locationList.addItem(location.getId());
         }
         return locationList;
     }
@@ -142,5 +137,12 @@ public class LocationForm extends FormLayout {
         buttons.addComponent(delete);
 
         return buttons;
+    }
+
+    private String getLocationType(LocationType locationType) {
+        if (locationType != null) {
+            return locationType.getName();
+        }
+        return null;
     }
 }

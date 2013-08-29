@@ -8,14 +8,12 @@ import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
 
 /**
  *
  * @author boniface
  */
-@Document
 public final class PersonIdentities implements Serializable {
 
     @Id

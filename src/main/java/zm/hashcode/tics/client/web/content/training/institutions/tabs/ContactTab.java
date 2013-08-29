@@ -29,6 +29,7 @@ public class ContactTab extends VerticalLayout implements
     private final TicsMain main;
     private final ContactForm form;
     private final ContactTable table;
+    private String cityId;
 
     public ContactTab(TicsMain app) {
         main = app;
@@ -64,6 +65,8 @@ public class ContactTab extends VerticalLayout implements
 //            final ContactBean bean = new ContactUtil().getBean(title);
 //            form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
+        } else if (property == form.cityCombo) {
+            cityId = property.getValue().toString();
         }
     }
 
@@ -142,5 +145,6 @@ public class ContactTab extends VerticalLayout implements
         form.delete.addClickListener((ClickListener) this);
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
+        form.cityCombo.addValueChangeListener((ValueChangeListener) this);
     }
 }

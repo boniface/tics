@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web.content.training.institutions;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.training.institutions.tabs.ContactTab;
 import zm.hashcode.tics.client.web.content.training.institutions.tabs.TrainingInstructorsTab;
 
 /**
@@ -27,7 +28,7 @@ public class InstitutionMenu extends Menu {
         contactListTab.addComponent(new ContactTab(getMain()));
 
         getTab().addTab(trainingInstructorsTab, "Add INSTRUCTORS", null);
-        getTab().addTab(trainingInstructorsTab, "Add CONTACTS", null);
+        getTab().addTab(contactListTab, "Add CONTACTS", null);
 
 
         switch (selectedTab) {
@@ -35,7 +36,7 @@ public class InstitutionMenu extends Menu {
                 getTab().setSelectedTab(trainingInstructorsTab);
                 break;
             case "CONTACTS":
-                getTab().setSelectedTab(trainingInstructorsTab);
+                getTab().setSelectedTab(contactListTab);
                 break;
 
         }

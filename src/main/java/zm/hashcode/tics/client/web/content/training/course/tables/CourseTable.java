@@ -31,7 +31,7 @@ public class CourseTable extends Table {
             addItem(new Object[]{iCourse.getName(),
                 iCourse.getCourseObjective(),
                 iCourse.getCourseTopic(),
-                iCourse.getCourseStatus()
+                iCourse.getCourseStatus().getStatusValue() + " - " + iCourse.getCourseStatus().getStatusType()
             }, iCourse.getId());
         }
         // Allow selecting items from the table.

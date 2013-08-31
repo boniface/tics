@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web.content.training.course;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.training.course.tabs.CategoryTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTypeTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.CriteriaTab;
@@ -37,7 +38,12 @@ public class CourseMenu extends Menu {
         scheduledCourseTab.setMargin(true);
         scheduledCourseTab.addComponent(new ScheduledCourseTab(getMain()));
 
+        final VerticalLayout courseCategoryTab = new VerticalLayout();
+        courseCategoryTab.setMargin(true);
+        courseCategoryTab.addComponent(new CategoryTab(getMain()));
+
         getTab().addTab(courseTypeTab, "Add COURSE TYPE", null);
+        getTab().addTab(courseCategoryTab, "Add COURSE CATEGORY", null);
         getTab().addTab(criteriaTab, "Add COURSE CRITERIA", null);
         getTab().addTab(courseTab, "Add COURSES", null);
         getTab().addTab(scheduledCourseTab, "Schedeule COURSES", null);
@@ -45,6 +51,9 @@ public class CourseMenu extends Menu {
         switch (selectedTab) {
             case "COURSETYPE":
                 getTab().setSelectedTab(courseTypeTab);
+                break;
+            case "COURSECATEGORY":
+                getTab().setSelectedTab(courseCategoryTab);
                 break;
             case "COURSECRITERIA":
                 getTab().setSelectedTab(criteriaTab);

@@ -159,6 +159,7 @@ public class ScheduledCourseTab extends VerticalLayout implements
         Location location = LocationFacade.getLocationService().find(locationId);
         Course course = CourseFacade.getCourseService().find(courseId);
 
+
         final ScheduledCourse scheduledCourse = new ScheduledCourse.Builder(course)
                 .classInstructors(trainingInstructors)
                 .courseCapacity(bean.getCourseCapacity())
@@ -197,8 +198,9 @@ public class ScheduledCourseTab extends VerticalLayout implements
         //
         Location location = LocationFacade.getLocationService().find(locationId);
         Course course = CourseFacade.getCourseService().find(courseId);
-
+        ScheduledCourse currentScheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(bean.getId());
         final ScheduledCourse scheduledCourse = new ScheduledCourse.Builder(course)
+                .scheduledCourse(currentScheduledCourse)
                 .classInstructors(trainingInstructors)
                 .courseCapacity(bean.getCourseCapacity())
                 .courseFunders(funders)

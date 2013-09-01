@@ -153,20 +153,6 @@ public class ScheduledCourseForm extends FormLayout {
         return locationCombo;
     }
 
-//    private ListSelect getCourseParticipantsListSelect(String label, String field) {
-//        courseParticipantsList.setCaption(label);
-//        List<Person> persons = PersonFacade.getPersonService().findAll();
-//        for (Person iPerson : persons) {
-//            courseParticipantsList.setItemCaption(iPerson.getId(), iPerson.getFirstname() + " " + iPerson.getOthername() + " " + iPerson.getSurname());
-//            courseParticipantsList.setNullSelectionAllowed(false);
-//            courseParticipantsList.setMultiSelect(true);
-//            courseParticipantsList.addItem(iPerson.getId());
-//        }
-//        courseParticipantsList.setWidth("250px");
-//        binder.bind(courseParticipantsList, field);
-//
-//        return courseParticipantsList;
-//    }
     private ListSelect getCourseInstructorsListSelect(String label, String field) {
         courseInstructorsList.setCaption(label);
         List<TrainingInstructors> trainingInstructors = TrainingInstructorsFacade.getTrainingInstructorsService().findAll();

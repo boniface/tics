@@ -46,6 +46,7 @@ public final class ScheduledCourse implements Serializable {
     private List<TrainingInstructors> classInstructors = new ArrayList();
     @DBRef
     private List<Funder> courseFunders = new ArrayList();
+    List<CourseRating> courseRatings = new ArrayList();
 
     private ScheduledCourse() {
     }
@@ -54,6 +55,16 @@ public final class ScheduledCourse implements Serializable {
         id = builder.id;
         venue = builder.venue;
         notes = builder.notes;
+        courseCapacity = builder.courseCapacity;
+        creditHours = builder.creditHours;
+        startDate = builder.startDate;
+        endDate = builder.endDate;
+        course = builder.course;
+        location = builder.location;
+        participants = builder.participants;
+        classInstructors = builder.classInstructors;
+        courseFunders = builder.courseFunders;
+        courseRatings = builder.courseRatings;
 
     }
 
@@ -71,6 +82,7 @@ public final class ScheduledCourse implements Serializable {
         private Set<Person> participants;
         private List<TrainingInstructors> classInstructors;
         private List<Funder> courseFunders;
+        List<CourseRating> courseRatings;
 
         public Builder(Course val) {
             this.course = val;
@@ -126,8 +138,29 @@ public final class ScheduledCourse implements Serializable {
             return this;
         }
 
+        public Builder courseRatings(List<CourseRating> value) {
+            courseRatings = value;
+            return this;
+        }
+
         public Builder classInstructors(List<TrainingInstructors> value) {
             classInstructors = value;
+            return this;
+        }
+
+        public Builder scheduledCourse(ScheduledCourse scheduledCourse) {
+            id = scheduledCourse.getId();
+            venue = scheduledCourse.getVenue();
+            notes = scheduledCourse.getNotes();
+            courseCapacity = scheduledCourse.getCourseCapacity();
+            creditHours = scheduledCourse.getCreditHours();
+            startDate = scheduledCourse.getStartDate();
+            endDate = scheduledCourse.getEndDate();
+            location = scheduledCourse.getLocation();
+            participants = scheduledCourse.getParticipants();
+            classInstructors = scheduledCourse.getClassInstructors();
+            courseFunders = scheduledCourse.getCourseFunders();
+            courseRatings = scheduledCourse.getCourseRatings();
             return this;
         }
 
@@ -182,6 +215,10 @@ public final class ScheduledCourse implements Serializable {
 
     public List<Funder> getCourseFunders() {
         return courseFunders;
+    }
+
+    public List<CourseRating> getCourseRatings() {
+        return courseRatings;
     }
 
     @Override

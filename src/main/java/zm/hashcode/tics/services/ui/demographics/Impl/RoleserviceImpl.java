@@ -51,7 +51,11 @@ public class RoleserviceImpl implements RoleService {
     private Sort sortByRoleNameAndDescriptionAsc() {
         return new Sort(
                 new Sort.Order(Sort.Direction.ASC, "rolename"),
-                new Sort.Order(Sort.Direction.ASC, "description")
-                );
+                new Sort.Order(Sort.Direction.ASC, "description"));
+    }
+
+    @Override
+    public Role findByRolename(String name) {
+        return roleRepository.findByRolename(name);
     }
 }

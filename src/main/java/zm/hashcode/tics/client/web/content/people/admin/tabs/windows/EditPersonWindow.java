@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.people.PersonIdentitiesFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.GenderFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.IdentificationTypeFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.RaceFacade;
@@ -41,6 +42,9 @@ public final class EditPersonWindow extends VerticalLayout implements
 
     private final TicsMain main;
     public final EditPersonForm form;
+    PersonIdentities personIdentities;
+    private PersonIdentities updatedPersonIdentities;
+    private IdentificationType identificationType;
 
     public EditPersonWindow(TicsMain app, EditPersonForm editPersonForm) {
         main = app;
@@ -77,16 +81,33 @@ public final class EditPersonWindow extends VerticalLayout implements
     private Person getUpdateEntity(FieldGroup binder) {
         final PersonBean bean = ((BeanItem<PersonBean>) binder.getItemDataSource()).getBean();
 
-        Person currentPerson = PersonFacade.getPersonService().find(bean.getId());
-        final IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(bean.getIdentitiesId());
+
+
+
         final Facility facility = FacilityFacade.getFacilityService().find(bean.getFacilityId());
         final Title title = TitleFacade.getTitleService().find(bean.getTitleId());
         final Gender gender = GenderFacade.getGenderService().find(bean.getGenderId());
         final Race race = RaceFacade.getRaceService().find(bean.getRaceId());
         final Demography demo = new Demography.Builder(gender).race(race).build();
-        PersonIdentities personIdentities = new PersonIdentities.Builder(identificationType)
-                .idValue(bean.getIdValue())
-                .build();
+
+        Person currentPerson = PersonFacade.getPersonService().find(bean.getId());
+        if (bean.getIdentitiesId() != null) {
+            identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(bean.getIdentitiesId());
+            personIdentities = getIdentity(currentPerson.getIdentities(), identificationType);
+            if (personIdentities != null) {
+                updatedPersonIdentities = new PersonIdentities.Builder(identificationType)
+                        .idValue(bean.getIdValue())
+                        .id(personIdentities.getId())
+                        .build();
+                PersonIdentitiesFacade.getPersonIdentitiesService().merge(personIdentities);
+            }
+        } else {
+            updatedPersonIdentities = new PersonIdentities.Builder(identificationType)
+                    .idValue(bean.getIdValue())
+                    .build();
+            PersonIdentitiesFacade.getPersonIdentitiesService().persist(personIdentities);
+        }
+
         final List<PersonIdentities> ids = new ArrayList<>();
         ids.add(personIdentities);
 
@@ -120,5 +141,14 @@ public final class EditPersonWindow extends VerticalLayout implements
         form.cancel.addClickListener((ClickListener) this);
 
 
+    }
+
+    private PersonIdentities getIdentity(List<PersonIdentities> identities, IdentificationType identificationType) {
+        for (PersonIdentities pid : identities) {
+            if (identificationType.equals(pid.getIdType())) {
+                return pid;
+            }
+        }
+        return null;
     }
 }

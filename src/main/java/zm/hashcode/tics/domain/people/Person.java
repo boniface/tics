@@ -30,26 +30,28 @@ public class Person implements Serializable, Comparable<Person> {
     private String surname;
     private String othername;
     private Location residence;
-    private List<Contact> contacts;
-    @DBRef
-    private Title title;
+    private List<Contact> contacts = new ArrayList<>();
     private Demography demography;
+    private List<EmployeePosition> positions = new ArrayList<>();
+    private List<EducationHistory> educationHistory = new ArrayList<>();
+    private List<ProfessionalRegistration> professionalRegistration = new ArrayList<>();
+    private List<EmployeeLanguages> languages = new ArrayList<>();
+    private List<MentorExpertiseArea> mentorExpertiseAreas = new ArrayList<>();
+    private List<PersonRoles> personRoles = new ArrayList<>();
+    @DBRef //Delete
+    private List<EmployeeCourses> courses = new ArrayList<>();
+    @DBRef //Deletable
+    private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
+    @DBRef //Deletable
+    private List<EmployeeMentoring> mentoring = new ArrayList<>();
+    @DBRef
+    private List<Person> mentees = new ArrayList<>();
+    @DBRef //Deletable
+    private List<PersonIdentities> identities = new ArrayList<>();
     @DBRef
     private Facility facility;
-    private List<EmployeePosition> positions;
-    private List<EducationHistory> educationHistory;
-    private List<PersonIdentities> identities;
-    private List<ProfessionalRegistration> professionalRegistration;
-    private List<EmployeeCourses> courses;
-    private List<EmployeeLanguages> languages;
     @DBRef
-    private List<EmployeeMentoring> mentoring;
-    @DBRef
-    private List<Person> mentees;
-    private List<MentorExpertiseArea> mentorExpertiseAreas;
-    private List<PersonRoles> personRoles;
-    @DBRef
-    private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
+    private Title title;
 
     private Person() {
     }
@@ -88,18 +90,26 @@ public class Person implements Serializable, Comparable<Person> {
         private Location residence;
         private Demography demography;
         private Facility facility;
-        private List<Contact> contacts;
-        private List<EmployeePosition> positions;
-        private List<EducationHistory> educationHistory;
-        private List<PersonIdentities> identities;
-        private List<ProfessionalRegistration> professionalRegistration;
-        private List<EmployeeCourses> courses;
-        private List<EmployeeLanguages> languages;
-        private List<EmployeeMentoring> mentoring;
-        private List<Person> mentees;
-        private List<MentorExpertiseArea> mentorExpertiseAreas;
-        private List<PersonRoles> personRoles;
-        private List<EmployeeActionPlan> actionPlans;
+        private List<Contact> contacts = new ArrayList<>();
+        ;
+        private List<EmployeePosition> positions = new ArrayList<>();
+        ;
+        private List<EducationHistory> educationHistory = new ArrayList<>();
+        ;
+        private List<PersonIdentities> identities = new ArrayList<>();
+        ;
+        private List<ProfessionalRegistration> professionalRegistration = new ArrayList<>();
+        ;
+        private List<EmployeeCourses> courses = new ArrayList<>();
+        ;
+        private List<EmployeeLanguages> languages = new ArrayList<>();
+        ;
+        private List<EmployeeMentoring> mentoring = new ArrayList<>();
+        private List<Person> mentees = new ArrayList<>();
+        ;
+        private List<MentorExpertiseArea> mentorExpertiseAreas = new ArrayList<>();
+        private List<PersonRoles> personRoles = new ArrayList<>();
+        private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
 
         public Builder(String firstname, String surname) {
             this.firstname = firstname;

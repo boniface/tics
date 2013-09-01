@@ -16,6 +16,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.app.facade.training.course.CriteriaFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.course.forms.CriteriaForm;
 import zm.hashcode.tics.client.web.content.training.course.model.CriteriaBean;
@@ -118,7 +119,7 @@ public class CriteriaTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new InstitutionMenu(main, "COURSECRITERIA"));
+        main.content.setSecondComponent(new CourseMenu(main, "COURSECRITERIA"));
     }
 
     private void setEditFormProperties() {

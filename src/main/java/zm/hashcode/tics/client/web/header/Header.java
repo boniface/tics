@@ -26,7 +26,7 @@ public class Header extends HorizontalLayout implements Button.ClickListener {
         User user = new GetUserCredentials().getLoggedInUser();
         setHeight(90, Unit.PIXELS);
         setWidth(100, Unit.PERCENTAGE);
-        addComponent(new Label(" Welcome " + user.getFirstname()+ " " + user.getLastname()));
+        addComponent(new Label(" Welcome " + user.getFirstname() + " " + user.getLastname()));
         addComponent(button);
 
         button.addClickListener(this);

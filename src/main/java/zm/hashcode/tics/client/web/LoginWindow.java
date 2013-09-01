@@ -13,7 +13,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.Reindeer;
 
 /**
  *
@@ -32,6 +31,7 @@ public class LoginWindow extends VerticalLayout {
     private final TicsMain main;
 
     public LoginWindow(TicsMain app) {
+        addStyleName("login");
         main = app;
         setCaption("login");
         initUI();
@@ -39,14 +39,15 @@ public class LoginWindow extends VerticalLayout {
 
     private void initUI() {
 
+
         rootPanel.setSizeFull();
         rootPanel.setMargin(true);
 
-        panel.addStyleName(Reindeer.WINDOW_LIGHT);
+
         panel.setWidth("400px");
         form.setMargin(true);
-        form.addStyleName(Reindeer.LAYOUT_BLACK);
-
+        form.addStyleName("login-layout");
+        btnLogin.addStyleName("default");
         form.addComponent(login);
         form.addComponent(password);
         form.addComponent(btnLogin);

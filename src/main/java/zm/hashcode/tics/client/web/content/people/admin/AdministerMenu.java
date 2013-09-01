@@ -48,6 +48,7 @@ public class AdministerMenu extends Menu {
                 getTab().setSelectedTab(manageTrainingTab);
                 break;
         }
+
         addComponent(getTab());
 
     }

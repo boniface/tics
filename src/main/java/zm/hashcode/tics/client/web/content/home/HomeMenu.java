@@ -4,13 +4,13 @@
  */
 package zm.hashcode.tics.client.web.content.home;
 
-import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.home.tabs.FacilitiesMapStatsTab;
+import zm.hashcode.tics.client.web.content.home.tabs.FacilitiesStatsTab;
+import zm.hashcode.tics.client.web.content.home.tabs.PeopleStatsTab;
 import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
 
 /**
  *
@@ -21,32 +21,40 @@ public class HomeMenu extends Menu {
     public HomeMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout peeopleStatsTab = new VerticalLayout();
+        peeopleStatsTab.setMargin(true);
+        peeopleStatsTab.addComponent(new PeopleStatsTab(getMain()));
 
 
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
+        final VerticalLayout facilitiesStatsTab = new VerticalLayout();
+        facilitiesStatsTab.setMargin(true);
+        facilitiesStatsTab.addComponent(new FacilitiesStatsTab(getMain()));
 
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
+        final VerticalLayout coursesStatsTab = new VerticalLayout();
+        coursesStatsTab.setMargin(true);
+        coursesStatsTab.addComponent(new ResetTab(getMain()));
 
-        getTab().addTab(userTab, "Add System USERS", null);
-        getTab().addTab(roleTab, "Add System ROLES", null);
-        getTab().addTab(resetTab, "Reset CREDENTIALS", null);
+        final VerticalLayout facilitiesMapTab = new VerticalLayout();
+        facilitiesMapTab.setMargin(true);
+        facilitiesMapTab.addComponent(new FacilitiesMapStatsTab(getMain()));
+
+        getTab().addTab(peeopleStatsTab, "People Stats", null);
+        getTab().addTab(facilitiesStatsTab, "Facilities Stats", null);
+        getTab().addTab(coursesStatsTab, "Courses Stats", null);
+        getTab().addTab(facilitiesMapTab, "Facilities Map", null);
 
         switch (selectedTab) {
             case "LANDING":
-                getTab().setSelectedTab(userTab);
+                getTab().setSelectedTab(peeopleStatsTab);
                 break;
-            case "ROLES":
-                getTab().setSelectedTab(roleTab);
+            case "FACILITIES":
+                getTab().setSelectedTab(facilitiesStatsTab);
                 break;
-            case "RESETS":
-                getTab().setSelectedTab(roleTab);
+            case "COURSES":
+                getTab().setSelectedTab(coursesStatsTab);
+                break;
+            case "MAP":
+                getTab().setSelectedTab(facilitiesMapTab);
                 break;
         }
         addComponent(getTab());

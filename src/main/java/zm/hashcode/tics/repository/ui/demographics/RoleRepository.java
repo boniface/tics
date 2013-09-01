@@ -12,9 +12,10 @@ import zm.hashcode.tics.domain.ui.demographics.Role;
  *
  * @author boniface
  */
-
 public interface RoleRepository extends PagingAndSortingRepository<Role, String> {
+
     @Override
     List<Role> findAll();
-   
+
+    public Role findByRolename(String name);
 }

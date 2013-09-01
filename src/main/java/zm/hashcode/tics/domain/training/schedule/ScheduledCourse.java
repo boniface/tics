@@ -6,7 +6,9 @@ package zm.hashcode.tics.domain.training.schedule;
 
 import zm.hashcode.tics.domain.training.course.Course;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -34,14 +36,16 @@ public final class ScheduledCourse implements Serializable {
     private int creditHours;
     private Date startDate;
     private Date endDate;
+    @DBRef
     private Course course;
+    @DBRef
     private Location location;
     @DBRef
-    private Set<Person> participants;
+    private Set<Person> participants = new HashSet<>();
     @DBRef
-    private List<TrainingInstructors> classInstructors;
+    private List<TrainingInstructors> classInstructors = new ArrayList();
     @DBRef
-    private List<Funder> courseFunders;
+    private List<Funder> courseFunders = new ArrayList();
 
     private ScheduledCourse() {
     }

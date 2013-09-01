@@ -6,7 +6,9 @@ package zm.hashcode.tics.client.web.sidebar;
 
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.VerticalLayout;
+import zm.hashcode.tics.app.security.GetUserCredentials;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.services.users.predicates.RolesEnum;
 
 /**
  *
@@ -14,6 +16,7 @@ import zm.hashcode.tics.client.web.TicsMain;
  */
 public class Sidebar extends Accordion {
 
+    final GetUserCredentials creds = new GetUserCredentials();
     private final TicsMain main;
     public static final String HOME_PAGE = "Home PAGE ";
     public static final String MANAGE_PEOPLE = "Manage PEOPLE ";
@@ -59,14 +62,27 @@ public class Sidebar extends Accordion {
 
 
         // Add the components as tabs in the Accordion.
-        addTab(homeMenu, HOME_PAGE, null);
-        addTab(peopleMenu, MANAGE_PEOPLE, null);
-        addTab(trainingMenu, MANAGE_TRAINING, null);
-        addTab(passwordMenu, CHANGE_PASSWORD, null);
-        addTab(reportsMenu, GENERATE_REPORT, null);
-        addTab(usersMenu, MANAGE_USERS, null);
-        addTab(setupMenu, SYSTEM_SETUP, null);
-
+        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+            addTab(homeMenu, HOME_PAGE, null);
+        }
+        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+            addTab(peopleMenu, MANAGE_PEOPLE, null);
+        }
+        if (creds.isUserWithRole(RolesEnum.ROLE_TRAINER.name())) {
+            addTab(trainingMenu, MANAGE_TRAINING, null);
+        }
+        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+            addTab(reportsMenu, GENERATE_REPORT, null);
+        }
+        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+            addTab(usersMenu, MANAGE_USERS, null);
+        }
+        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+            addTab(setupMenu, SYSTEM_SETUP, null);
+        }
+        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+            addTab(passwordMenu, CHANGE_PASSWORD, null);
+        }
 
 
     }

@@ -8,12 +8,14 @@ import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
 
 /**
  *
  * @author boniface
  */
+@Document
 public final class PersonIdentities implements Serializable {
 
     @Id
@@ -27,12 +29,14 @@ public final class PersonIdentities implements Serializable {
     }
 
     private PersonIdentities(Builder builder) {
+
         idValue = builder.idValue;
         idType = builder.idType;
     }
 
     public static class Builder {
 
+        private String id;
         private IdentificationType idType;
         private String idValue;
 
@@ -42,6 +46,11 @@ public final class PersonIdentities implements Serializable {
 
         public Builder idValue(String value) {
             idValue = value;
+            return this;
+        }
+
+        public Builder id(String value) {
+            this.id = value;
             return this;
         }
 
@@ -56,5 +65,9 @@ public final class PersonIdentities implements Serializable {
 
     public String getIdValue() {
         return idValue;
+    }
+
+    public String getId() {
+        return id;
     }
 }

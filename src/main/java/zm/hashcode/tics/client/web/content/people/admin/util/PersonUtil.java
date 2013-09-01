@@ -4,10 +4,17 @@
  */
 package zm.hashcode.tics.client.web.content.people.admin.util;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.people.PersonIdentitiesFacade;
 import zm.hashcode.tics.client.web.content.people.admin.model.PersonBean;
 import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.domain.people.Demography;
+import zm.hashcode.tics.domain.people.EmployeeActionPlan;
+import zm.hashcode.tics.domain.people.EmployeeCourses;
+import zm.hashcode.tics.domain.people.EmployeeMentoring;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.people.PersonIdentities;
 import zm.hashcode.tics.domain.ui.demographics.Gender;
@@ -20,6 +27,28 @@ import zm.hashcode.tics.domain.ui.demographics.Title;
  * @author boniface
  */
 public class PersonUtil {
+
+    public static void deletePerson(Person person) {
+
+        List<EmployeeCourses> courses = person.getCourses();
+        for (EmployeeCourses employeeCourses : courses) {
+            PersonFacade.getEmployeeCoursesService().remove(employeeCourses);
+
+        }
+        List<EmployeeActionPlan> actionPlans = person.getActionPlans();
+        for (EmployeeActionPlan employeeActionPlan : actionPlans) {
+            PersonFacade.getEmployeeActionPlanService().remove(employeeActionPlan);
+        }
+        List<EmployeeMentoring> mentoring = person.getMentoring();
+        for (EmployeeMentoring employeeMentoring : mentoring) {
+            PersonFacade.getEmployeeMentoringService().remove(employeeMentoring);
+        }
+        List<PersonIdentities> identities = person.getIdentities();
+        for (PersonIdentities personIdentities : identities) {
+            PersonIdentitiesFacade.getPersonIdentitiesService().remove(personIdentities);
+        }
+        PersonFacade.getPersonService().remove(person);
+    }
 
     public PersonBean getBean(Person person) {
         PersonBean bean = new PersonBean();

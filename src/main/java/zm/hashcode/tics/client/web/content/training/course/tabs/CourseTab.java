@@ -27,6 +27,7 @@ import zm.hashcode.tics.app.facade.training.course.TargetGroupFacade;
 import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
 import zm.hashcode.tics.app.facade.ui.util.StatusFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.course.forms.CourseForm;
 import zm.hashcode.tics.client.web.content.training.course.model.CourseBean;
@@ -216,7 +217,7 @@ public class CourseTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new InstitutionMenu(main, "COURSES"));
+        main.content.setSecondComponent(new CourseMenu(main, "COURSES"));
     }
 
     private void setEditFormProperties() {

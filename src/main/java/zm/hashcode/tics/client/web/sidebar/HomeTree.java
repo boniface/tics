@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web.sidebar;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.ui.Tree;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.home.HomeMenu;
 import zm.hashcode.tics.client.web.content.password.PasswordMenu;
 import static zm.hashcode.tics.client.web.sidebar.PasswordTree.MANAGE_USERS;
 
@@ -14,10 +15,12 @@ import static zm.hashcode.tics.client.web.sidebar.PasswordTree.MANAGE_USERS;
  *
  * @author Tiwana Siyabonga
  */
-public class HomeTree extends Tree implements ItemClickEvent.ItemClickListener{
-   private final TicsMain main;
-    public static final Object MANAGE_USERS = "Change PASSWORD";
+public class HomeTree extends Tree implements ItemClickEvent.ItemClickListener {
+
+    private final TicsMain main;
+    public static final Object MANAGE_USERS = "Tics DASHBAORD";
     private static final String LANDING_TAB = "LANDING";
+
     public HomeTree(TicsMain main) {
         this.main = main;
         addItem(MANAGE_USERS);
@@ -25,7 +28,7 @@ public class HomeTree extends Tree implements ItemClickEvent.ItemClickListener{
         //Add Listeners
         addItemClickListener((ItemClickEvent.ItemClickListener) this);
     }
-    
+
     @Override
     public void itemClick(ItemClickEvent event) {
         Object itemId = event.getItemId();
@@ -35,9 +38,9 @@ public class HomeTree extends Tree implements ItemClickEvent.ItemClickListener{
             }
         }
     }
+
     private void manageUsersView() {
-        main.content.setSecondComponent(new PasswordMenu(main, LANDING_TAB));
+        main.content.setSecondComponent(new HomeMenu(main, LANDING_TAB));
 
     }
-
 }

@@ -26,6 +26,7 @@ import zm.hashcode.tics.app.facade.training.schedule.ScheduledCourseFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.util.FunderFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.course.forms.ScheduledCourseForm;
 import zm.hashcode.tics.client.web.content.training.course.model.ScheduledCourseBean;
@@ -214,7 +215,7 @@ public class ScheduledCourseTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new InstitutionMenu(main, "SCHEDULECOURSES"));
+        main.content.setSecondComponent(new CourseMenu(main, "SCHEDULECOURSES"));
     }
 
     private void setEditFormProperties() {

@@ -10,10 +10,12 @@ import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.people.admin.AdministerMenu;
 import zm.hashcode.tics.client.web.content.people.admin.forms.EditPersonForm;
 import zm.hashcode.tics.client.web.content.people.admin.model.PersonBean;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.ManagePeopleTab;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.EditPersonWindow;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.PersonDetails;
 import zm.hashcode.tics.client.web.content.people.admin.util.PersonUtil;
 import zm.hashcode.tics.domain.people.Demography;
 import zm.hashcode.tics.domain.people.Person;
@@ -60,6 +62,7 @@ public class AdministerPeopleTable extends Table {
                     peopleTab.contentPanel.removeAllComponents();
                     peopleTab.contentPanel.addComponent(new EditPersonWindow(main, form));
 
+
                 }
             });
 
@@ -69,7 +72,10 @@ public class AdministerPeopleTable extends Table {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
-                    Long itemId = (Long) event.getButton().getData();
+                    String itemId = (String) event.getButton().getData();
+                    Person person = PersonFacade.getPersonService().find(itemId);
+                    peopleTab.contentPanel.removeAllComponents();
+                    peopleTab.contentPanel.addComponent(new PersonDetails(main, person));
 
                 }
             });
@@ -80,7 +86,12 @@ public class AdministerPeopleTable extends Table {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
-                    Long itemId = (Long) event.getButton().getData();
+                    String itemId = (String) event.getButton().getData();
+                    Person person = PersonFacade.getPersonService().find(itemId);
+                    PersonUtil.deletePerson(person);
+
+                    getHome();
+
 
                 }
             });
@@ -127,5 +138,9 @@ public class AdministerPeopleTable extends Table {
             return gender.getGender();
         }
         return null;
+    }
+
+    private void getHome() {
+        main.content.setSecondComponent(new AdministerMenu(main, "LANDING"));
     }
 }

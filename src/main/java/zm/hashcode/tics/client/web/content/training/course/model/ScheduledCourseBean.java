@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web.content.training.course.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -19,11 +20,14 @@ public class ScheduledCourseBean implements Serializable {
     private String notes;
     private int courseCapacity;
     private int creditHours;
+    @NotNull
     private Date startDate;
+    @NotNull
     private Date endDate;
-    private String courseId; // EMBEDDABLE
-    private String locationId; // EMBEDDABLE
-//    private Set<String> personsIds;
+    @NotNull
+    private String courseId;
+    @NotNull
+    private String locationId;
     private Set<String> trainingInstructorsIds;
     private Set<String> fundersIds;
 

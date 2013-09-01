@@ -17,13 +17,11 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import java.util.List;
-import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.training.institutions.TrainingInstructorsFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.util.FunderFacade;
 import zm.hashcode.tics.client.web.content.training.course.model.ScheduledCourseBean;
-import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.training.course.Course;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
 import zm.hashcode.tics.domain.ui.location.Location;
@@ -64,7 +62,7 @@ public class ScheduledCourseForm extends FormLayout {
         delete.setVisible(false);
 
         //
-        final TextField venueTextField = getTextField("Venue", "venue");
+        final TextArea venueTextField = getTextArea("Venue", "venue");
         final TextArea notesTextArea = getTextArea("Notes", "notes");
         final TextField courseCapacityTextField = getTextField("Course Capacity", "courseCapacity");
         final TextField creditHoursTextField = getTextField("Credit Hours", "creditHours");
@@ -72,27 +70,28 @@ public class ScheduledCourseForm extends FormLayout {
         final PopupDateField endDatePopupDateField = getPopupDateField("End Date", "endDate");
         final ComboBox courseComboBox = getCourseComboBox("Course", "courseId");
         final ComboBox locationComboBox = getlocationComboBox("Location", "locationId");
-//        final ListSelect participantsListSelect = getCourseParticipantsListSelect("Course Participants", "personsIds");
         final ListSelect trainingInstructorsListSelect = getCourseInstructorsListSelect("Training Instructors", "trainingInstructorsIds");
         final ListSelect courseFundersListSelect = getCourseFundersListSelect("Course Funders", "fundersIds");
         //
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
-        grid.addComponent(venueTextField, 0, 0);
-        grid.addComponent(notesTextArea, 1, 0);
-        grid.addComponent(courseCapacityTextField, 2, 0);
-        grid.addComponent(creditHoursTextField, 3, 0);
-        grid.addComponent(startDatePopupDateField, 0, 1);
-        grid.addComponent(endDatePopupDateField, 1, 1);
-        grid.addComponent(courseComboBox, 2, 1);
-        grid.addComponent(locationComboBox, 3, 1);
-//        grid.addComponent(participantsListSelect, 0, 2);
-        grid.addComponent(trainingInstructorsListSelect, 1, 2);
-        grid.addComponent(courseFundersListSelect, 2, 2);
+        grid.addComponent(courseComboBox, 0, 0);
+        grid.addComponent(startDatePopupDateField, 1, 0);
+        grid.addComponent(endDatePopupDateField, 2, 0);
+
+        grid.addComponent(courseCapacityTextField, 0, 1);
+        grid.addComponent(creditHoursTextField, 1, 1);
+        grid.addComponent(locationComboBox, 2, 1);
+
+        grid.addComponent(venueTextField, 0, 2, 0, 3);
+        grid.addComponent(notesTextArea, 1, 2, 1, 3);
+
+        grid.addComponent(trainingInstructorsListSelect, 0, 4, 0, 5);
+        grid.addComponent(courseFundersListSelect, 1, 4, 1, 5);
 
 
-        grid.addComponent(buttons, 0, 3, 2, 3);
+        grid.addComponent(buttons, 0, 6, 2, 6);
 
         addComponent(grid);
     }

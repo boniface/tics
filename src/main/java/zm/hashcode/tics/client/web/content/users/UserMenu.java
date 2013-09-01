@@ -45,7 +45,7 @@ public class UserMenu extends Menu {
                 getTab().setSelectedTab(roleTab);
                 break;
             case "RESETS":
-                getTab().setSelectedTab(roleTab);
+                getTab().setSelectedTab(resetTab);
                 break;
         }
         addComponent(getTab());

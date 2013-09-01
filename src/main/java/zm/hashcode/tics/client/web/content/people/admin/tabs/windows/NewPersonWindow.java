@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.people.PersonIdentitiesFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.GenderFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.IdentificationTypeFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.RaceFacade;
@@ -89,6 +90,7 @@ public final class NewPersonWindow extends VerticalLayout implements
         PersonIdentities personIdentities = new PersonIdentities.Builder(identificationType)
                 .idValue(bean.getIdValue())
                 .build();
+        PersonIdentitiesFacade.getPersonIdentitiesService().persist(personIdentities);
 
         final List<PersonIdentities> ids = new ArrayList<>();
         ids.add(personIdentities);
@@ -106,21 +108,6 @@ public final class NewPersonWindow extends VerticalLayout implements
 
     private void getHome() {
         main.content.setSecondComponent(new AdministerMenu(main, "LANDING"));
-    }
-
-    private void setEditFormProperties() {
-        form.binder.setReadOnly(false);
-        form.save.setVisible(false);
-        form.cancel.setVisible(true);
-
-    }
-
-    private void setReadFormProperties() {
-        form.binder.setReadOnly(true);
-        //Buttons Behaviou
-        form.save.setVisible(false);
-        form.cancel.setVisible(true);
-
     }
 
     private void addListeners() {

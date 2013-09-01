@@ -9,6 +9,7 @@ import com.mongodb.WriteConcern;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -21,7 +22,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @ComponentScan("zm.hashcode.tics")
 @EnableMongoRepositories(basePackages = "zm.hashcode.tics.repository")
 public class RepositoryConfig extends AbstractMongoConfiguration {
-    
+
     @Override
     protected String getDatabaseName() {
         return "tics";

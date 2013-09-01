@@ -11,8 +11,7 @@ import zm.hashcode.tics.services.Services;
  *
  * @author boniface
  */
+public interface RoleService extends Services<Role, String> {
 
-public interface RoleService extends Services<Role,String>{
-    
-  
+    public Role findByRolename(String name);
 }

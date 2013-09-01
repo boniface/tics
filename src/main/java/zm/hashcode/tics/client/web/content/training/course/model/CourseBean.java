@@ -6,8 +6,7 @@ package zm.hashcode.tics.client.web.content.training.course.model;
 
 import java.io.Serializable;
 import java.util.Set;
-import zm.hashcode.tics.domain.training.competencies.Competency;
-import zm.hashcode.tics.domain.training.course.TargetGroup;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -19,6 +18,7 @@ public class CourseBean implements Serializable {
     private String name;
     private String courseCategoryId;
     private String courseTopic;
+    @NotNull
     private String institutionNameId;
     private String courseStatusId;
     private String courseObjective;

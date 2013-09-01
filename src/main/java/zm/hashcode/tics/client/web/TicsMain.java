@@ -5,6 +5,7 @@
 package zm.hashcode.tics.client.web;
 
 import com.vaadin.annotations.PreserveOnRefresh;
+import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import zm.hashcode.tics.app.conf.SpringContext;
+import zm.hashcode.tics.client.web.content.home.HomeMenu;
 import zm.hashcode.tics.client.web.footer.Footer;
 import zm.hashcode.tics.client.web.header.Header;
 import zm.hashcode.tics.client.web.sidebar.Sidebar;
@@ -24,6 +26,7 @@ import zm.hashcode.tics.client.web.sidebar.Sidebar;
  * @author boniface
  */
 @PreserveOnRefresh
+//@Theme("dashboard")
 public class TicsMain extends UI {
 
     public final HorizontalSplitPanel content = new HorizontalSplitPanel();
@@ -37,7 +40,6 @@ public class TicsMain extends UI {
     protected void init(VaadinRequest request) {
         setInstance(this);
         setContent(new LoginWindow(this));
-//        loadProtectedResources();
     }
 
     public static TicsMain getInstance() {
@@ -81,8 +83,9 @@ public class TicsMain extends UI {
         content.setMaxSplitPosition(20, Unit.PERCENTAGE);
         content.setLocked(true);
         content.setFirstComponent(new Sidebar(this));
-        content.setSecondComponent(new Button("This is a Button"));
+        content.setSecondComponent(new HomeMenu(this, "LANDING"));
         final VerticalLayout root = new VerticalLayout();
+
         root.addComponent(header);
         root.addComponent(content);
         root.addComponent(footer);

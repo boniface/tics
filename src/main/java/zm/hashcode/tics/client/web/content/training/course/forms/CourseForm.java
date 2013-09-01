@@ -4,6 +4,7 @@
  */
 package zm.hashcode.tics.client.web.content.training.course.forms;
 
+import com.google.common.collect.Collections2;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
@@ -15,6 +16,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
 import java.util.List;
 import zm.hashcode.tics.app.facade.training.competencies.CompetencyFacade;
 import zm.hashcode.tics.app.facade.training.course.CategoryFacade;
@@ -31,6 +33,7 @@ import zm.hashcode.tics.domain.training.course.Criteria;
 import zm.hashcode.tics.domain.training.course.TargetGroup;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
 import zm.hashcode.tics.domain.ui.util.Status;
+import zm.hashcode.tics.services.training.institutions.predicates.TrainerInstitutionPredicate;
 
 /**
  *
@@ -69,10 +72,10 @@ public class CourseForm extends FormLayout {
 
         final TextField name = getTextField("Name", "name");
         final ComboBox courseCategory = getCourseCategoryComboBox("Course Category", "courseCategoryId");
-        final TextField courseTopic = getTextField("Course Topic", "courseTopic");
+        final TextArea courseTopic = getTextArea("Course Topic", "courseTopic");
         final ComboBox institutionName = getTrainingInstitutionComboBox("Training Institution", "institutionNameId");
         final ComboBox courseStatus = getCourseStatusComboBox("Course Status", "courseStatusId");
-        final TextField courseObjective = getTextField("Course Objective", "courseObjective");
+        final TextArea courseObjective = getTextArea("Course Objective", "courseObjective");
         final ComboBox courseType = getCourseTypeComboBox("Course Type", "courseTypeId");
         final ListSelect courseCompetenciesListSelect = getCourseCompetenciesListSelect("Select Course Competencies", "courseCompetenciesIds");
         final ListSelect courseTargetGroupListSelect = getCourseTargetGroupListSelect("Select Course Target Group", "courseTargetGroupIds");
@@ -85,19 +88,20 @@ public class CourseForm extends FormLayout {
 
         grid.addComponent(name, 0, 0);
         grid.addComponent(courseCategory, 1, 0);
-        grid.addComponent(courseTopic, 2, 0);
-        grid.addComponent(institutionName, 3, 0);
-        grid.addComponent(courseStatus, 0, 1);
-        grid.addComponent(courseObjective, 1, 1);
-        grid.addComponent(courseType, 2, 1);
-        grid.addComponent(courseCriteria, 3, 1);
-        grid.addComponent(courseCompetenciesListSelect, 0, 2);
-        grid.addComponent(courseTargetGroupListSelect, 1, 2);
-        grid.addComponent(notes, 2, 2);
+        grid.addComponent(courseType, 2, 0);
 
+        grid.addComponent(institutionName, 0, 1);
+        grid.addComponent(courseStatus, 1, 1);
+        grid.addComponent(courseCriteria, 2, 1);
 
-        grid.addComponent(buttons, 0, 3, 2, 3);
+        grid.addComponent(courseTopic, 0, 2, 0, 3);
+        grid.addComponent(courseObjective, 1, 2, 1, 3);
+        grid.addComponent(notes, 2, 2, 2, 3);
 
+        grid.addComponent(courseTargetGroupListSelect, 0, 4, 0, 5);
+        grid.addComponent(courseCompetenciesListSelect, 1, 4, 1, 5);
+
+        grid.addComponent(buttons, 0, 6, 2, 6);
         addComponent(grid);
     }
 
@@ -138,7 +142,8 @@ public class CourseForm extends FormLayout {
     private ComboBox getTrainingInstitutionComboBox(String label, String field) {
         trainingInstitutionCombo.setCaption(label);
         List<TrainingInstitution> trainingInstitutions = TrainingInstitutionFacade.getTrainingInstitutionService().findAll();
-        for (TrainingInstitution iTrainingInstitution : trainingInstitutions) {
+        Collection<TrainingInstitution> institutions = Collections2.filter(trainingInstitutions, new TrainerInstitutionPredicate());
+        for (TrainingInstitution iTrainingInstitution : institutions) {
             trainingInstitutionCombo.addItem(iTrainingInstitution.getId());
             trainingInstitutionCombo.setItemCaption(iTrainingInstitution.getId(), iTrainingInstitution.getName());
         }

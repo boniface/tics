@@ -2,45 +2,69 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package zm.hashcode.tics.domain.training.mentoring;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-
+@Document
 public class MentoringMentors implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+    @Id
+    private String id;
     private Long mentorsId;
 
-    public Long getId() {
-        return id;
+    private MentoringMentors() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private MentoringMentors(Builder builder) {
+        id = builder.id;
+        mentorsId = builder.mentorsId;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private Long mentorsId;
+
+        public Builder(Long val) {
+            this.mentorsId = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public MentoringMentors build() {
+            return new MentoringMentors(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MentoringMentors)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        MentoringMentors other = (MentoringMentors) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MentoringMentors other = (MentoringMentors) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -48,7 +72,11 @@ public class MentoringMentors implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.MentoringMentors[id=" + id + "]";
+        return "MentoringMentors{" + "mentorsId=" + mentorsId + "}";
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -57,12 +85,4 @@ public class MentoringMentors implements Serializable {
     public Long getMentorsId() {
         return mentorsId;
     }
-
-    /**
-     * @param mentorsId the mentorsId to set
-     */
-    public void setMentorsId(Long mentorsId) {
-        this.mentorsId = mentorsId;
-    }
-
 }

@@ -7,7 +7,9 @@ package zm.hashcode.tics.domain.training.mentoring;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.ui.util.Funder;
 
 /**
  *
@@ -20,7 +22,8 @@ public class MentoringFunders implements Serializable {
     @Id
     private String id;
     private String fundersName;
-    private Long fundersId;
+    @DBRef
+    private Funder funder;
 
     private MentoringFunders() {
     }
@@ -28,14 +31,14 @@ public class MentoringFunders implements Serializable {
     private MentoringFunders(Builder builder) {
         id = builder.id;
         fundersName = builder.fundersName;
-        fundersId = builder.fundersId;
+        funder = builder.funder;
     }
 
     public static class Builder {
 
         private String id;
         private String fundersName;
-        private Long fundersId;
+        private Funder funder;
 
         public Builder(String val) {
             this.fundersName = val;
@@ -46,8 +49,8 @@ public class MentoringFunders implements Serializable {
             return this;
         }
 
-        public Builder fundersId(Long value) {
-            fundersId = value;
+        public Builder funder(Funder value) {
+            funder = value;
             return this;
         }
 
@@ -94,10 +97,7 @@ public class MentoringFunders implements Serializable {
         return fundersName;
     }
 
-    /**
-     * @return the fundersId
-     */
-    public Long getFundersId() {
-        return fundersId;
+    public Funder getFunder() {
+        return funder;
     }
 }

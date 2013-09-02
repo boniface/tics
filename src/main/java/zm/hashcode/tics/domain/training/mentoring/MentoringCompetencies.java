@@ -7,7 +7,9 @@ package zm.hashcode.tics.domain.training.mentoring;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import zm.hashcode.tics.domain.training.competencies.Competency;
 
 /**
  *
@@ -20,7 +22,8 @@ public class MentoringCompetencies implements Serializable {
     @Id
     private String id;
     private String competencyName;
-    private Long competencyId;
+    @DBRef
+    private Competency competency;
 
     private MentoringCompetencies() {
     }
@@ -28,14 +31,16 @@ public class MentoringCompetencies implements Serializable {
     private MentoringCompetencies(Builder builder) {
         id = builder.id;
         competencyName = builder.competencyName;
-        competencyId = builder.competencyId;
+        competency = builder.competency;
     }
 
     public static class Builder {
 
         private String id;
         private String competencyName;
-        private Long competencyId;
+        private Competency competency;
+
+        ;
 
         public Builder(String val) {
             this.competencyName = val;
@@ -46,8 +51,8 @@ public class MentoringCompetencies implements Serializable {
             return this;
         }
 
-        public Builder competencyId(Long value) {
-            competencyId = value;
+        public Builder competency(Competency value) {
+            competency = value;
             return this;
         }
 
@@ -94,10 +99,7 @@ public class MentoringCompetencies implements Serializable {
         return competencyName;
     }
 
-    /**
-     * @return the competencyId
-     */
-    public Long getCompetencyId() {
-        return competencyId;
+    public Competency getCompetency() {
+        return competency;
     }
 }

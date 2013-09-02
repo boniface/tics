@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zm.hashcode.tics.domain.training.mentoring.MentoringAreasList;
+import zm.hashcode.tics.domain.training.mentoring.MentoringSubjectArea;
 import zm.hashcode.tics.repository.training.mentoring.MentoringAreasListRepository;
 import zm.hashcode.tics.services.training.mentoring.MentoringAreasListService;
 
@@ -23,27 +23,27 @@ public class MentoringAreasListServiceImpl implements MentoringAreasListService 
     private MentoringAreasListRepository mentoringAreasListRepository;
 
     @Override
-    public MentoringAreasList find(String id) {
+    public MentoringSubjectArea find(String id) {
         return mentoringAreasListRepository.findOne(id);
     }
 
     @Override
-    public MentoringAreasList persist(MentoringAreasList entity) {
+    public MentoringSubjectArea persist(MentoringSubjectArea entity) {
         return mentoringAreasListRepository.save(entity);
     }
 
     @Override
-    public MentoringAreasList merge(MentoringAreasList entity) {
+    public MentoringSubjectArea merge(MentoringSubjectArea entity) {
         return mentoringAreasListRepository.save(entity);
     }
 
     @Override
-    public void remove(MentoringAreasList entity) {
+    public void remove(MentoringSubjectArea entity) {
         mentoringAreasListRepository.delete(entity);
     }
 
     @Override
-    public List<MentoringAreasList> findAll() {
+    public List<MentoringSubjectArea> findAll() {
         return ImmutableList.copyOf(mentoringAreasListRepository.findAll());
     }
 }

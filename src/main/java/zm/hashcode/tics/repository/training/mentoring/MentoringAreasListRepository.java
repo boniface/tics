@@ -5,11 +5,11 @@
 package zm.hashcode.tics.repository.training.mentoring;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import zm.hashcode.tics.domain.training.mentoring.MentoringAreasList;
+import zm.hashcode.tics.domain.training.mentoring.MentoringSubjectArea;
 
 /**
  *
  * @author geek
  */
-public interface MentoringAreasListRepository extends PagingAndSortingRepository<MentoringAreasList, String> {
+public interface MentoringAreasListRepository extends PagingAndSortingRepository<MentoringSubjectArea, String> {
 }

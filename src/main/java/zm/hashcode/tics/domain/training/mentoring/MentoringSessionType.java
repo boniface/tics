@@ -19,7 +19,7 @@ public class MentoringSessionType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private Long mentoringSessionType;
+    private String mentoringSessionType;
 
     public String getId() {
         return id;
@@ -36,9 +36,9 @@ public class MentoringSessionType implements Serializable {
     public static class Builder {
 
         private String id;
-        private Long mentoringSessionType;
+        private String mentoringSessionType;
 
-        public Builder(Long val) {
+        public Builder(String val) {
             this.mentoringSessionType = val;
         }
 
@@ -79,10 +79,7 @@ public class MentoringSessionType implements Serializable {
         return "MentoringSessionType{" + "id=" + id + ", mentoringSessionType=" + mentoringSessionType + '}';
     }
 
-    /**
-     * @return the mentoringSessionType
-     */
-    public Long getMentoringSessionType() {
+    public String getMentoringSessionType() {
         return mentoringSessionType;
     }
 }

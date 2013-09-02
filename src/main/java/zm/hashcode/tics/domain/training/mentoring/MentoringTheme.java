@@ -7,6 +7,7 @@ package zm.hashcode.tics.domain.training.mentoring;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -20,6 +21,7 @@ public class MentoringTheme implements Serializable {
     @Id
     private String id;
     private String mentoringTheme;
+    @DBRef
     private MentoringField mentoringField;
 
     private MentoringTheme() {

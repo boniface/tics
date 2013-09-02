@@ -14,28 +14,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class MentoringSessionObjective implements Serializable {
+public class MentoringSubjectArea implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private Long mentoringObjectiveId;
+    private String subjectArea;
 
-    private MentoringSessionObjective() {
+    private MentoringSubjectArea() {
     }
 
-    private MentoringSessionObjective(Builder builder) {
+    private MentoringSubjectArea(Builder builder) {
         id = builder.id;
-        mentoringObjectiveId = builder.mentoringObjectiveId;
+        subjectArea = builder.subjectarea;
     }
 
     public static class Builder {
 
         private String id;
-        private Long mentoringObjectiveId;
+        private String subjectarea;
 
-        public Builder(Long val) {
-            this.mentoringObjectiveId = val;
+        public Builder(String val) {
+            this.subjectarea = val;
         }
 
         public Builder id(String value) {
@@ -43,15 +43,15 @@ public class MentoringSessionObjective implements Serializable {
             return this;
         }
 
-        public MentoringSessionObjective build() {
-            return new MentoringSessionObjective(this);
+        public MentoringSubjectArea build() {
+            return new MentoringSubjectArea(this);
         }
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -63,7 +63,7 @@ public class MentoringSessionObjective implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final MentoringSessionObjective other = (MentoringSessionObjective) obj;
+        final MentoringSubjectArea other = (MentoringSubjectArea) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -72,7 +72,7 @@ public class MentoringSessionObjective implements Serializable {
 
     @Override
     public String toString() {
-        return "MentoringSessionObjective{" + "id=" + id + ", mentoringObjectiveId=" + mentoringObjectiveId + '}';
+        return "MentoringAreasList{" + "areasofStrenthening=" + subjectArea + "}";
     }
 
     public String getId() {
@@ -80,9 +80,9 @@ public class MentoringSessionObjective implements Serializable {
     }
 
     /**
-     * @return the mentoringObjectiveId
+     * @return the areasofStrenthening
      */
-    public Long getMentoringObjectiveId() {
-        return mentoringObjectiveId;
+    public String getSubjectArea() {
+        return subjectArea;
     }
 }

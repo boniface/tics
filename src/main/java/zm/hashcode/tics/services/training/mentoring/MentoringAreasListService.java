@@ -4,12 +4,12 @@
  */
 package zm.hashcode.tics.services.training.mentoring;
 
-import zm.hashcode.tics.domain.training.mentoring.MentoringAreasList;
+import zm.hashcode.tics.domain.training.mentoring.MentoringSubjectArea;
 import zm.hashcode.tics.services.Services;
 
 /**
  *
  * @author geek
  */
-public interface MentoringAreasListService extends Services<MentoringAreasList, String> {
+public interface MentoringAreasListService extends Services<MentoringSubjectArea, String> {
 }

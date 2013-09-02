@@ -14,28 +14,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author boniface
  */
 @Document
-public class MentoringMentors implements Serializable {
+public class MentoringToolsMethods implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private Long mentorsId;
+    private String toolsMethod;
 
-    private MentoringMentors() {
+    private MentoringToolsMethods() {
     }
 
-    private MentoringMentors(Builder builder) {
+    private MentoringToolsMethods(Builder builder) {
         id = builder.id;
-        mentorsId = builder.mentorsId;
+        toolsMethod = builder.toolsMethod;
     }
 
     public static class Builder {
 
         private String id;
-        private Long mentorsId;
+        private String toolsMethod;
 
-        public Builder(Long val) {
-            this.mentorsId = val;
+        public Builder(String val) {
+            this.toolsMethod = val;
         }
 
         public Builder id(String value) {
@@ -43,8 +43,8 @@ public class MentoringMentors implements Serializable {
             return this;
         }
 
-        public MentoringMentors build() {
-            return new MentoringMentors(this);
+        public MentoringToolsMethods build() {
+            return new MentoringToolsMethods(this);
         }
     }
 
@@ -63,7 +63,7 @@ public class MentoringMentors implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final MentoringMentors other = (MentoringMentors) obj;
+        final MentoringToolsMethods other = (MentoringToolsMethods) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -72,17 +72,14 @@ public class MentoringMentors implements Serializable {
 
     @Override
     public String toString() {
-        return "MentoringMentors{" + "mentorsId=" + mentorsId + "}";
+        return "MentoringField{" + "fieldName=" + toolsMethod + "}";
     }
 
     public String getId() {
         return id;
     }
 
-    /**
-     * @return the mentorsId
-     */
-    public Long getMentorsId() {
-        return mentorsId;
+    public String getToolsMethod() {
+        return toolsMethod;
     }
 }

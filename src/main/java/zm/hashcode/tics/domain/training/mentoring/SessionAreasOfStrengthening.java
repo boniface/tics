@@ -19,23 +19,23 @@ public class SessionAreasOfStrengthening implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
-    private Long areasOfStrengtheningId;
+    private String areasOfStrengthening;
 
     private SessionAreasOfStrengthening() {
     }
 
     private SessionAreasOfStrengthening(Builder builder) {
         id = builder.id;
-        areasOfStrengtheningId = builder.areasOfStrengtheningId;
+        areasOfStrengthening = builder.areasOfStrengthening;
     }
 
     public static class Builder {
 
         private String id;
-        private Long areasOfStrengtheningId;
+        private String areasOfStrengthening;
 
-        public Builder(Long val) {
-            this.areasOfStrengtheningId = val;
+        public Builder(String val) {
+            this.areasOfStrengthening = val;
         }
 
         public Builder id(String value) {
@@ -72,17 +72,14 @@ public class SessionAreasOfStrengthening implements Serializable {
 
     @Override
     public String toString() {
-        return "SessionAreasOfStrengthening{" + "areasOfStrengtheningId=" + areasOfStrengtheningId + "}";
+        return "SessionAreasOfStrengthening{" + "areasOfStrengtheningId=" + areasOfStrengthening + "}";
     }
 
     public String getId() {
         return id;
     }
 
-    /**
-     * @return the areasOfStrentheningId
-     */
-    public Long getAreasOfStrentheningId() {
-        return areasOfStrengtheningId;
+    public String getAreasOfStrengthening() {
+        return areasOfStrengthening;
     }
 }

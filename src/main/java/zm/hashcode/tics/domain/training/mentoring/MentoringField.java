@@ -20,9 +20,6 @@ public class MentoringField implements Serializable {
     @Id
     private String id;
     private String fieldName;
-//    @OneToMany(orphanRemoval = true, cascade = {javax.persistence.CascadeType.ALL})
-//    @JoinColumn(name = "mentoringfield_id")
-//    private List<MentoringTheme> mentoringTheme;
 
     private MentoringField() {
     }

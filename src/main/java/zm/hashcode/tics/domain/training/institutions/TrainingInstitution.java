@@ -55,7 +55,7 @@ public final class TrainingInstitution implements Serializable {
 
         private String id;
         private final String name;
-        List<InstitutionAddress> institutionAddresses;
+        private List<InstitutionAddress> institutionAddresses;
         private List<User> users;
         private List<TrainingInstructors> trainingInstructors;
         private List<Course> courses;

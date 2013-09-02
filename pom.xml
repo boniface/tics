@@ -248,6 +248,7 @@
     </dependencies>
 
     <build>
+        <finalName>tics</finalName>
         <plugins>
 
             <plugin>

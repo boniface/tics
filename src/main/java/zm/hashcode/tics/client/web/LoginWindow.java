@@ -6,10 +6,10 @@ package zm.hashcode.tics.client.web;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -23,50 +23,71 @@ public class LoginWindow extends VerticalLayout {
     private Button btnLogin = new Button("Login");
     private TextField login = new TextField("E-Mail Address");
     private PasswordField password = new PasswordField("Password");
-    private final VerticalLayout rootPanel = new VerticalLayout();
-    private final HorizontalLayout sponsors = new HorizontalLayout();
-    private final HorizontalLayout header = new HorizontalLayout();
-    private final Panel panel = new Panel("Please login to use the System");
-    private final FormLayout form = new FormLayout();
+    private final CssLayout loginPanel = new CssLayout();
     private final TicsMain main;
 
     public LoginWindow(TicsMain app) {
-        addStyleName("login");
+        addStyleName("login-layout");
+        setMargin(true);
+        setSizeFull();
         main = app;
         setCaption("login");
         initUI();
     }
 
     private void initUI() {
+        loginPanel.addStyleName("login-panel");
+        loginPanel.setWidth("800px");
+        HorizontalLayout labels = new HorizontalLayout();
+        labels.setWidth("100%");
+        labels.setMargin(true);
+        labels.addStyleName("labels");
+        loginPanel.addComponent(labels);
+
+        Label welcome = new Label("Welcome to TICS");
+        welcome.setSizeUndefined();
+        welcome.addStyleName("h4");
+        labels.addComponent(welcome);
+        labels.setComponentAlignment(welcome, Alignment.MIDDLE_LEFT);
+
+        Label title = new Label("Training  Information Co-ordination System");
+        title.setSizeUndefined();
+        title.addStyleName("h2");
+        title.addStyleName("light");
+        labels.addComponent(title);
+        labels.setComponentAlignment(title, Alignment.MIDDLE_RIGHT);
+
+        HorizontalLayout fields = new HorizontalLayout();
+        fields.setSpacing(true);
+        fields.setMargin(true);
+        fields.addStyleName("fields");
 
 
-        rootPanel.setSizeFull();
-        rootPanel.setMargin(true);
+        login.focus();
+        fields.addComponent(login);
 
 
-        panel.setWidth("400px");
-        form.setMargin(true);
-        form.addStyleName("login-layout");
+        fields.addComponent(password);
+
         btnLogin.addStyleName("default");
-        form.addComponent(login);
-        form.addComponent(password);
-        form.addComponent(btnLogin);
-        panel.setContent(form);
+        fields.addComponent(btnLogin);
+        fields.setComponentAlignment(btnLogin, Alignment.BOTTOM_LEFT);
+
+        btnLogin.addStyleName("default");
+
+        loginPanel.addComponent(fields);
 
 
-        rootPanel.addComponent(header);
-        rootPanel.setComponentAlignment(header, Alignment.MIDDLE_CENTER);
+        addComponent(loginPanel);
+        setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
 
-        rootPanel.addComponent(panel);
-        rootPanel.setComponentAlignment(panel, Alignment.MIDDLE_CENTER);
 
-        rootPanel.addComponent(sponsors);
-        rootPanel.setComponentAlignment(sponsors, Alignment.MIDDLE_CENTER);
 
         btnLogin.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 try {
+
                     main.authenticate((String) login.getValue(), (String) password.getValue());
 //                    open(new ExternalResource(HashWorkMain.getInstance().getURL()));
                 } catch (Exception e) {
@@ -75,7 +96,7 @@ public class LoginWindow extends VerticalLayout {
             }
         });
 
-        addComponent(rootPanel);
+
 
     }
 }

@@ -7,7 +7,6 @@ package zm.hashcode.tics.client.web;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -26,7 +25,7 @@ import zm.hashcode.tics.client.web.sidebar.Sidebar;
  * @author boniface
  */
 @PreserveOnRefresh
-//@Theme("dashboard")
+@Theme("dashboard")
 public class TicsMain extends UI {
 
     public final HorizontalSplitPanel content = new HorizontalSplitPanel();
@@ -85,7 +84,7 @@ public class TicsMain extends UI {
         content.setFirstComponent(new Sidebar(this));
         content.setSecondComponent(new HomeMenu(this, "LANDING"));
         final VerticalLayout root = new VerticalLayout();
-
+        root.addStyleName("main-view");
         root.addComponent(header);
         root.addComponent(content);
         root.addComponent(footer);

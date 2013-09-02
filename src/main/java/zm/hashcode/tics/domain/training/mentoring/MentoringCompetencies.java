@@ -5,44 +5,74 @@
 package zm.hashcode.tics.domain.training.mentoring;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-
+@Document
 public class MentoringCompetencies implements Serializable {
 
     private static final long serialVersionUID = 1L;
- 
-    private Long id;
-   
+    @Id
+    private String id;
     private String competencyName;
     private Long competencyId;
 
-    public Long getId() {
-        return id;
+    private MentoringCompetencies() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private MentoringCompetencies(Builder builder) {
+        id = builder.id;
+        competencyName = builder.competencyName;
+        competencyId = builder.competencyId;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String competencyName;
+        private Long competencyId;
+
+        public Builder(String val) {
+            this.competencyName = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder competencyId(Long value) {
+            competencyId = value;
+            return this;
+        }
+
+        public MentoringCompetencies build() {
+            return new MentoringCompetencies(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MentoringCompetencies)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        MentoringCompetencies other = (MentoringCompetencies) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MentoringCompetencies other = (MentoringCompetencies) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -50,7 +80,11 @@ public class MentoringCompetencies implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.MentoringCompetencies[id=" + id + "]";
+        return "MentoringCompetencies{" + "competencyName=" + competencyName + "}";
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -61,23 +95,9 @@ public class MentoringCompetencies implements Serializable {
     }
 
     /**
-     * @param competencyName the competencyName to set
-     */
-    public void setCompetencyName(String competencyName) {
-        this.competencyName = competencyName;
-    }
-
-    /**
      * @return the competencyId
      */
     public Long getCompetencyId() {
         return competencyId;
-    }
-
-    /**
-     * @param competencyId the competencyId to set
-     */
-    public void setCompetencyId(Long competencyId) {
-        this.competencyId = competencyId;
     }
 }

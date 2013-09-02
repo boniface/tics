@@ -5,45 +5,90 @@
 package zm.hashcode.tics.domain.training.mentoring;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-
+@Document
 public class Mentors implements Serializable {
 
     private static long serialVersionUID = 1L;
-
-    private Long id;
+    @Id
+    private String id;
     private String firstName;
     private String lastName;
     private String title;
     private String qualification;
 
-    public Long getId() {
-        return id;
+    private Mentors() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private Mentors(Builder builder) {
+        id = builder.id;
+        firstName = builder.firstName;
+        lastName = builder.lastName;
+        title = builder.title;
+        qualification = builder.qualification;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String firstName;
+        private String lastName;
+        private String title;
+        private String qualification;
+
+        public Builder(String val) {
+            this.title = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public Builder firstName(String value) {
+            firstName = value;
+            return this;
+        }
+
+        public Builder lastName(String value) {
+            lastName = value;
+            return this;
+        }
+
+        public Builder qualification(String value) {
+            qualification = value;
+            return this;
+        }
+
+        public Mentors build() {
+            return new Mentors(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (getId() != null ? getId().hashCode() : 0);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Mentors)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Mentors other = (Mentors) object;
-        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Mentors other = (Mentors) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -51,7 +96,11 @@ public class Mentors implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.Mentors[id=" + getId() + "]";
+        return "Mentors{" + "id=" + id + ", title=" + title + '}';
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -62,24 +111,10 @@ public class Mentors implements Serializable {
     }
 
     /**
-     * @param lastName the lastName to set
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
      * @return the title
      */
     public String getTitle() {
         return title;
-    }
-
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**
@@ -90,23 +125,9 @@ public class Mentors implements Serializable {
     }
 
     /**
-     * @param qualification the qualification to set
-     */
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    /**
      * @return the firstName
      */
     public String getFirstName() {
         return firstName;
-    }
-
-    /**
-     * @param firstName the firstName to set
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 }

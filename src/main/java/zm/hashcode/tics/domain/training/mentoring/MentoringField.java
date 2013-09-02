@@ -5,45 +5,69 @@
 package zm.hashcode.tics.domain.training.mentoring;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-
+@Document
 public class MentoringField implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private Long id;
+    @Id
+    private String id;
     private String fieldName;
 //    @OneToMany(orphanRemoval = true, cascade = {javax.persistence.CascadeType.ALL})
 //    @JoinColumn(name = "mentoringfield_id")
 //    private List<MentoringTheme> mentoringTheme;
 
-    public Long getId() {
-        return id;
+    private MentoringField() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private MentoringField(Builder builder) {
+        id = builder.id;
+        fieldName = builder.fieldName;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String fieldName;
+
+        public Builder(String val) {
+            this.fieldName = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public MentoringField build() {
+            return new MentoringField(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MentoringField)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        MentoringField other = (MentoringField) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MentoringField other = (MentoringField) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -51,7 +75,11 @@ public class MentoringField implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.MentoringField[id=" + id + "]";
+        return "MentoringField{" + "fieldName=" + fieldName + "}";
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -60,14 +88,4 @@ public class MentoringField implements Serializable {
     public String getFieldName() {
         return fieldName;
     }
-
-    /**
-     * @param fieldName the fieldName to set
-     */
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-    }
-
-   
-
 }

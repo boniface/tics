@@ -5,41 +5,66 @@
 package zm.hashcode.tics.domain.training.mentoring;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-
+@Document
 public class SessionAreasOfStrengthening implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+    @Id
+    private String id;
     private Long areasOfStrengtheningId;
 
-    public Long getId() {
-        return id;
+    private SessionAreasOfStrengthening() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private SessionAreasOfStrengthening(Builder builder) {
+        id = builder.id;
+        areasOfStrengtheningId = builder.areasOfStrengtheningId;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private Long areasOfStrengtheningId;
+
+        public Builder(Long val) {
+            this.areasOfStrengtheningId = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public SessionAreasOfStrengthening build() {
+            return new SessionAreasOfStrengthening(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SessionAreasOfStrengthening)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        SessionAreasOfStrengthening other = (SessionAreasOfStrengthening) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SessionAreasOfStrengthening other = (SessionAreasOfStrengthening) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -47,7 +72,11 @@ public class SessionAreasOfStrengthening implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.SessionAreasOfStrengthening[ id=" + id + " ]";
+        return "SessionAreasOfStrengthening{" + "areasOfStrengtheningId=" + areasOfStrengtheningId + "}";
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -56,12 +85,4 @@ public class SessionAreasOfStrengthening implements Serializable {
     public Long getAreasOfStrentheningId() {
         return areasOfStrengtheningId;
     }
-
-    /**
-     * @param areasOfStrentheningId the areasOfStrentheningId to set
-     */
-    public void setAreasOfStrentheningId(Long areasOfStrentheningId) {
-        this.areasOfStrengtheningId = areasOfStrentheningId;
-    }
-    
 }

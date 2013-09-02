@@ -5,41 +5,66 @@
 package zm.hashcode.tics.domain.training.mentoring;
 
 import java.io.Serializable;
+import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author boniface
  */
-
+@Document
 public class MentoringSessionTheme implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private static final long serialVersionUID = 1L;
+    @Id
+    private String id;
     private Long sessionMentoringTheme;
 
-    public Long getId() {
-        return id;
+    private MentoringSessionTheme() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private MentoringSessionTheme(Builder builder) {
+        id = builder.id;
+        sessionMentoringTheme = builder.sessionMentoringTheme;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private Long sessionMentoringTheme;
+
+        public Builder(Long val) {
+            this.sessionMentoringTheme = val;
+        }
+
+        public Builder id(String value) {
+            id = value;
+            return this;
+        }
+
+        public MentoringSessionTheme build() {
+            return new MentoringSessionTheme(this);
+        }
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MentoringSessionTheme)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        MentoringSessionTheme other = (MentoringSessionTheme) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MentoringSessionTheme other = (MentoringSessionTheme) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -47,7 +72,11 @@ public class MentoringSessionTheme implements Serializable {
 
     @Override
     public String toString() {
-        return "com.hashthrims.domain.traininglist.MentoringSessionTheme[ id=" + id + " ]";
+        return "MentoringSessionTheme{" + "id=" + id + ", sessionMentoringTheme=" + sessionMentoringTheme + '}';
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -56,12 +85,4 @@ public class MentoringSessionTheme implements Serializable {
     public Long getSessionMentoringTheme() {
         return sessionMentoringTheme;
     }
-
-    /**
-     * @param sessionMentoringTheme the sessionMentoringTheme to set
-     */
-    public void setSessionMentoringTheme(Long sessionMentoringTheme) {
-        this.sessionMentoringTheme = sessionMentoringTheme;
-    }
-    
 }

@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author geek
  */
-public class ContactBean implements Serializable {
+public class ContactAddressBean implements Serializable {
 
 //  private LocationAddress address;
     // Blow out LocationAddress

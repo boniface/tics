@@ -16,25 +16,25 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
-import zm.hashcode.tics.client.web.content.training.institutions.forms.ContactForm;
-import zm.hashcode.tics.client.web.content.training.institutions.tables.ContactTable;
+import zm.hashcode.tics.client.web.content.training.institutions.forms.ContactAddressForm;
+import zm.hashcode.tics.client.web.content.training.institutions.tables.ContactAddressTable;
 
 /**
  *
  * @author geek
  */
-public class ContactTab extends VerticalLayout implements
+public class ContactAddressTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final ContactForm form;
-    private final ContactTable table;
+    private final ContactAddressForm form;
+    private final ContactAddressTable table;
     private String cityId;
 
-    public ContactTab(TicsMain app) {
+    public ContactAddressTab(TicsMain app) {
         main = app;
-        form = new ContactForm();
-        table = new ContactTable(main);
+        form = new ContactAddressForm();
+        table = new ContactAddressTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);

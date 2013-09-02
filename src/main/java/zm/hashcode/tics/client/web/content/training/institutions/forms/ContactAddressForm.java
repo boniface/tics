@@ -15,17 +15,17 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import java.util.List;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
-import zm.hashcode.tics.client.web.content.training.institutions.model.ContactBean;
+import zm.hashcode.tics.client.web.content.training.institutions.model.ContactAddressBean;
 import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
  *
  * @author geek
  */
-public class ContactForm extends FormLayout {
+public class ContactAddressForm extends FormLayout {
 
-    private final ContactBean bean;
-    public final BeanItem<ContactBean> item;
+    private final ContactAddressBean bean;
+    public final BeanItem<ContactAddressBean> item;
     public final FieldGroup binder;
     public ComboBox cityCombo = new ComboBox();
     // Define Buttons
@@ -35,8 +35,8 @@ public class ContactForm extends FormLayout {
     public Button update = new Button("Update");
     public Button delete = new Button("Delete");
 
-    public ContactForm() {
-        bean = new ContactBean();
+    public ContactAddressForm() {
+        bean = new ContactAddressBean();
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         HorizontalLayout buttons = getButtons();
@@ -74,7 +74,7 @@ public class ContactForm extends FormLayout {
             cityCombo.addItem(city.getId());
             cityCombo.setItemCaption(city.getId(), city.getName());
         }
-        cityCombo.addValidator(new BeanValidator(ContactBean.class, field));
+        cityCombo.addValidator(new BeanValidator(ContactAddressBean.class, field));
         cityCombo.setImmediate(true);
         cityCombo.setWidth(250, Unit.PIXELS);
         binder.bind(cityCombo, field);
@@ -85,7 +85,7 @@ public class ContactForm extends FormLayout {
         TextField textField = new TextField(label);
         textField.setWidth(250, Unit.PIXELS);
         textField.setNullRepresentation("");
-        textField.addValidator(new BeanValidator(ContactBean.class, field));
+        textField.addValidator(new BeanValidator(ContactAddressBean.class, field));
         textField.setImmediate(true);
         binder.bind(textField, field);
         return textField;

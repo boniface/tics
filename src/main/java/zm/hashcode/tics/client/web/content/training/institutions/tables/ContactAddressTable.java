@@ -8,17 +8,17 @@ import com.vaadin.ui.Table;
 import java.util.Set;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.training.institutions.model.ContactBean;
+import zm.hashcode.tics.client.web.content.training.institutions.model.ContactAddressBean;
 
 /**
  *
  * @author geek
  */
-public class ContactTable extends Table {
+public class ContactAddressTable extends Table {
 
     private final TicsMain main;
 
-    public ContactTable(TicsMain main) {
+    public ContactAddressTable(TicsMain main) {
         this.main = main;
         setSizeFull();
         addContainerProperty("Postal Address", String.class, null);
@@ -41,7 +41,7 @@ public class ContactTable extends Table {
         setImmediate(true);
     }
 
-    public void populateTable(Set<ContactBean> contactBeans) {
+    public void populateTable(Set<ContactAddressBean> contactBeans) {
 
 //            private String postalAddress;
 //    private String physicalAddress;
@@ -55,7 +55,7 @@ public class ContactTable extends Table {
 //
 
 
-        for (ContactBean contactBean : contactBeans) {
+        for (ContactAddressBean contactBean : contactBeans) {
 //            String city = LocationFacade.getLocationService().find(contactBean.getCityId()).getName();
 //            addItem(new Object[]{contactBean.getPostalAddress(),
 //                contactBean.getPhysicalAddress(),

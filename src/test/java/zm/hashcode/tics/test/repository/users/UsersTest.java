@@ -36,10 +36,10 @@ public class UsersTest extends AppTest {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         String password = PasswordEncrypt.encrypt("pass");
-        User user = new User.Builder("admin@test.com").enable(true)
+        User user = new User.Builder("pass").enable(true)
                 .firstname("Admin")
-                .lastname("System")
-                .middlename("Administrator")
+                .lastname("chanda")
+                .middlename("lulu")
                 .passwd(password)
                 .roles(roles).build();
         usersRepository.save(user);

@@ -14,6 +14,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
+import java.util.List;
+import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
 import zm.hashcode.tics.app.facade.training.institutions.TrainingInstructorsFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
@@ -21,6 +24,7 @@ import zm.hashcode.tics.client.web.content.training.institutions.forms.TrainingI
 import zm.hashcode.tics.client.web.content.training.institutions.model.TrainingInstructorBean;
 import zm.hashcode.tics.client.web.content.training.institutions.tables.TrainingInstructorTable;
 import zm.hashcode.tics.client.web.content.training.institutions.util.TrainingInstructorUtil;
+import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
 
 /**
@@ -64,8 +68,8 @@ public class TrainingInstructorsTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final TrainingInstructors funder = TrainingInstructorsFacade.getTrainingInstructorsService().find(table.getValue().toString());
-            final TrainingInstructorBean bean = new TrainingInstructorUtil().getBean(funder);
+            final TrainingInstructors trainingInstructors = TrainingInstructorsFacade.getTrainingInstructorsService().find(table.getValue().toString());
+            final TrainingInstructorBean bean = new TrainingInstructorUtil().getBean(trainingInstructors);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
         }
@@ -74,7 +78,19 @@ public class TrainingInstructorsTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            TrainingInstructorsFacade.getTrainingInstructorsService().persist(getNewEntity(binder));
+            TrainingInstructors trainingInstructors = getNewEntity(binder);
+            TrainingInstructorsFacade.getTrainingInstructorsService().persist(trainingInstructors);
+            List<TrainingInstructors> inst = new ArrayList<>();
+
+            TrainingInstitution trainingInstitution = TrainingInstructorUtil.getTrainingInstitution();
+            inst.add(trainingInstructors);
+            inst.addAll(trainingInstitution.getTrainingInstructors());
+            TrainingInstitution updatedTrainingInstitution = new TrainingInstitution.Builder(trainingInstitution.getName())
+                    .trainingInstitution(trainingInstitution)
+                    .trainingInstructors(inst)
+                    .build();
+
+            TrainingInstitutionFacade.getTrainingInstitutionService().merge(updatedTrainingInstitution);
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -96,7 +112,13 @@ public class TrainingInstructorsTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
+        final TrainingInstructors trainingInstructors = getUpdateEntity(binder);
+        TrainingInstitution trainingInstitution = TrainingInstructorUtil.getTrainingInstitution();
+        trainingInstitution.getTrainingInstructors().remove(trainingInstructors);
+        //add Immutability here
+        TrainingInstitutionFacade.getTrainingInstitutionService().merge(trainingInstitution);
         TrainingInstructorsFacade.getTrainingInstructorsService().remove(getUpdateEntity(binder));
+
         getHome();
     }
 

@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
 import zm.hashcode.tics.domain.training.course.Course;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
@@ -26,16 +27,15 @@ public final class TrainingInstitution implements Serializable {
     @Id
     private String id;
     private String name;
+    List<InstitutionAddress> institutionAddresses = new ArrayList<>();
     @DBRef
-    List<InstitutionAddress> institutionAddresses;
+    private List<User> users = new ArrayList<>();
     @DBRef
-    private List<User> users;
+    private List<TrainingInstructors> trainingInstructors = new ArrayList<>();
     @DBRef
-    private List<TrainingInstructors> trainingInstructors;
+    private List<Course> courses = new ArrayList<>();
     @DBRef
-    private List<Course> courses;
-    @DBRef
-    private List<ScheduledCourse> scheduledCourseses;
+    private List<ScheduledCourse> scheduledCourseses = new ArrayList<>();
 
     private TrainingInstitution() {
     }
@@ -55,11 +55,11 @@ public final class TrainingInstitution implements Serializable {
 
         private String id;
         private final String name;
-        private List<InstitutionAddress> institutionAddresses;
-        private List<User> users;
-        private List<TrainingInstructors> trainingInstructors;
-        private List<Course> courses;
-        private List<ScheduledCourse> scheduledCourseses;
+        private List<InstitutionAddress> institutionAddresses = new ArrayList<>();
+        private List<User> users = new ArrayList<>();
+        private List<TrainingInstructors> trainingInstructors = new ArrayList<>();
+        private List<Course> courses = new ArrayList<>();
+        private List<ScheduledCourse> scheduledCourseses = new ArrayList<>();
 
         public Builder(String val) {
             this.name = val;
@@ -98,6 +98,16 @@ public final class TrainingInstitution implements Serializable {
         public TrainingInstitution build() {
             return new TrainingInstitution(this);
         }
+
+        public Builder trainingInstitution(TrainingInstitution trainingInstitution) {
+            id = trainingInstitution.getId();
+            institutionAddresses = trainingInstitution.getInstitutionAddresses();
+            users = trainingInstitution.getUsers();
+            trainingInstructors = trainingInstitution.getTrainingInstructors();
+            courses = trainingInstitution.getCourses();
+            scheduledCourseses = trainingInstitution.getScheduledCourses();
+            return this;
+        }
     }
 
     public String getId() {
@@ -121,7 +131,7 @@ public final class TrainingInstitution implements Serializable {
     }
 
     public List<TrainingInstructors> getTrainingInstructors() {
-        return ImmutableList.copyOf(trainingInstructors);
+        return trainingInstructors;
     }
 
     public List<Course> getCourses() {

@@ -4,14 +4,23 @@
  */
 package zm.hashcode.tics.client.web.content.training.institutions.util;
 
+import com.google.common.collect.Collections2;
+import java.util.Collection;
+import java.util.List;
+import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
+import zm.hashcode.tics.app.security.GetUserCredentials;
 import zm.hashcode.tics.client.web.content.training.institutions.model.TrainingInstructorBean;
+import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
+import zm.hashcode.tics.services.training.institutions.predicates.TrainerInstitutionPredicate;
 
 /**
  *
  * @author geek
  */
 public class TrainingInstructorUtil {
+
+    private final GetUserCredentials creds = new GetUserCredentials();
 
     public TrainingInstructorBean getBean(TrainingInstructors trainingInstructor) {
         TrainingInstructorBean bean = new TrainingInstructorBean();
@@ -22,5 +31,13 @@ public class TrainingInstructorUtil {
         bean.setOtherName(trainingInstructor.getOtherName());
         bean.setQualification(trainingInstructor.getQualification());
         return bean;
+    }
+
+    public static TrainingInstitution getTrainingInstitution() {
+
+        List<TrainingInstitution> trainingInstitutions = TrainingInstitutionFacade.getTrainingInstitutionService().findAll();
+        Collection<TrainingInstitution> institutions = Collections2.filter(trainingInstitutions, new TrainerInstitutionPredicate());
+        return institutions.iterator().next();
+
     }
 }

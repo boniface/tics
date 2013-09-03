@@ -5,8 +5,6 @@
 package zm.hashcode.tics.domain.training.institutions;
 
 import com.google.common.collect.ImmutableList;
-import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
-import zm.hashcode.tics.domain.training.course.Course;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +30,6 @@ public final class TrainingInstitution implements Serializable {
     private List<User> users = new ArrayList<>();
     @DBRef
     private List<TrainingInstructors> trainingInstructors = new ArrayList<>();
-    @DBRef
-    private List<Course> courses = new ArrayList<>();
-    @DBRef
-    private List<ScheduledCourse> scheduledCourseses = new ArrayList<>();
 
     private TrainingInstitution() {
     }
@@ -46,8 +40,6 @@ public final class TrainingInstitution implements Serializable {
         institutionAddresses = builder.institutionAddresses;
         users = builder.users;
         trainingInstructors = builder.trainingInstructors;
-        courses = builder.courses;
-        scheduledCourseses = builder.scheduledCourseses;
 
     }
 
@@ -58,8 +50,6 @@ public final class TrainingInstitution implements Serializable {
         private List<InstitutionAddress> institutionAddresses = new ArrayList<>();
         private List<User> users = new ArrayList<>();
         private List<TrainingInstructors> trainingInstructors = new ArrayList<>();
-        private List<Course> courses = new ArrayList<>();
-        private List<ScheduledCourse> scheduledCourseses = new ArrayList<>();
 
         public Builder(String val) {
             this.name = val;
@@ -85,16 +75,6 @@ public final class TrainingInstitution implements Serializable {
             return this;
         }
 
-        public Builder scheduledCourseses(List<ScheduledCourse> value) {
-            scheduledCourseses = value;
-            return this;
-        }
-
-        public Builder courses(List<Course> value) {
-            courses = value;
-            return this;
-        }
-
         public TrainingInstitution build() {
             return new TrainingInstitution(this);
         }
@@ -104,8 +84,6 @@ public final class TrainingInstitution implements Serializable {
             institutionAddresses = trainingInstitution.getInstitutionAddresses();
             users = trainingInstitution.getUsers();
             trainingInstructors = trainingInstitution.getTrainingInstructors();
-            courses = trainingInstitution.getCourses();
-            scheduledCourseses = trainingInstitution.getScheduledCourses();
             return this;
         }
     }
@@ -122,24 +100,12 @@ public final class TrainingInstitution implements Serializable {
         return institutionAddresses;
     }
 
-    public List<ScheduledCourse> getScheduledCourseses() {
-        return scheduledCourseses;
-    }
-
     public List<User> getUsers() {
         return ImmutableList.copyOf(users);
     }
 
     public List<TrainingInstructors> getTrainingInstructors() {
         return trainingInstructors;
-    }
-
-    public List<Course> getCourses() {
-        return ImmutableList.copyOf(courses);
-    }
-
-    public List<ScheduledCourse> getScheduledCourses() {
-        return ImmutableList.copyOf(scheduledCourseses);
     }
 
     @Override

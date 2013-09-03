@@ -80,8 +80,8 @@ public class TrainingInstructorsTab extends VerticalLayout implements
             binder.commit();
             TrainingInstructors trainingInstructors = getNewEntity(binder);
             TrainingInstructorsFacade.getTrainingInstructorsService().persist(trainingInstructors);
-            List<TrainingInstructors> inst = new ArrayList<>();
 
+            List<TrainingInstructors> inst = new ArrayList<>();
             TrainingInstitution trainingInstitution = TrainingInstructorUtil.getTrainingInstitution();
             inst.add(trainingInstructors);
             inst.addAll(trainingInstitution.getTrainingInstructors());
@@ -89,8 +89,8 @@ public class TrainingInstructorsTab extends VerticalLayout implements
                     .trainingInstitution(trainingInstitution)
                     .trainingInstructors(inst)
                     .build();
-
             TrainingInstitutionFacade.getTrainingInstitutionService().merge(updatedTrainingInstitution);
+
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {

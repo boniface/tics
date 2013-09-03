@@ -4,11 +4,16 @@
  */
 package zm.hashcode.tics.client.web.content.training.course.tables;
 
+import com.google.common.collect.Collections2;
 import com.vaadin.ui.Table;
+import java.util.Collection;
 import java.util.List;
 import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.domain.training.course.Course;
+import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
+import zm.hashcode.tics.services.training.course.predicates.InstitutionCoursePredicate;
+import zm.hashcode.tics.services.training.institutions.predicates.TrainerInstitutionPredicate;
 
 /**
  *
@@ -27,7 +32,8 @@ public class CourseTable extends Table {
         addContainerProperty("Course Status", String.class, null);
 
         List<Course> courses = CourseFacade.getCourseService().findAll();
-        for (Course iCourse : courses) {
+        Collection<Course> institutionCourses = Collections2.filter(courses, new InstitutionCoursePredicate());
+        for (Course iCourse : institutionCourses) {
             addItem(new Object[]{iCourse.getName(),
                 iCourse.getCourseObjective(),
                 iCourse.getCourseTopic(),

@@ -11,7 +11,6 @@ import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.mentoring.MentoringMenu;
 import zm.hashcode.tics.client.web.content.training.nimart.NimartMenu;
-import zm.hashcode.tics.client.web.content.users.UserMenu;
 
 /**
  *
@@ -31,7 +30,7 @@ public class TrainingTree extends Tree implements ItemClickEvent.ItemClickListen
         addItem(INSTITUTION);
         addItem(COURSES);
         addItem(MENTORING);
-        addItem(NIMART);
+//        addItem(NIMART);
 
         //Add Listeners
         addItemClickListener((ItemClickEvent.ItemClickListener) this);

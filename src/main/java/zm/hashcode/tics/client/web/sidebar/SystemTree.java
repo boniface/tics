@@ -11,6 +11,7 @@ import zm.hashcode.tics.client.web.content.system.competencies.CompetenciesMenu;
 import zm.hashcode.tics.client.web.content.system.facility.FacilityMenu;
 import zm.hashcode.tics.client.web.content.system.funder.FunderMenu;
 import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
+import zm.hashcode.tics.client.web.content.system.mentoring.MentoringSetupMenu;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.PeopleMetaDataMenu;
 import zm.hashcode.tics.client.web.content.system.positions.PositionsMenu;
 import zm.hashcode.tics.client.web.content.system.training.TrainingSetupMenu;
@@ -101,6 +102,6 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
     }
 
     private void mentoringSetupView() {
-        main.content.setSecondComponent(new MentoringMenu(main, LANDING_TAB));
+        main.content.setSecondComponent(new MentoringSetupMenu(main, LANDING_TAB));
     }
 }

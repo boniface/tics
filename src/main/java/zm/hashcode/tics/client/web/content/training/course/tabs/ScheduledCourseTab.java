@@ -27,7 +27,6 @@ import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.util.FunderFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
-import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.course.forms.ScheduledCourseForm;
 import zm.hashcode.tics.client.web.content.training.course.model.ScheduledCourseBean;
 import zm.hashcode.tics.client.web.content.training.course.tables.ScheduledCourseTable;
@@ -100,9 +99,6 @@ public class ScheduledCourseTab extends VerticalLayout implements
         } else if (property == form.courseInstructorsList) {
             courseInstructorsIds = (Collection<String>) property.getValue();
         }
-//        else if (property == form.courseParticipantsList) {
-//            courseParticipantsIds = (Collection<String>) property.getValue();
-//        }
 
     }
 

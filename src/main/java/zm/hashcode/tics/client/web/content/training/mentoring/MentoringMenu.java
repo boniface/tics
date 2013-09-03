@@ -7,9 +7,9 @@ package zm.hashcode.tics.client.web.content.training.mentoring;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
+import zm.hashcode.tics.client.web.content.training.mentoring.tabs.EnrollMenteesTab;
+import zm.hashcode.tics.client.web.content.training.mentoring.tabs.MentoringSessionTab;
+import zm.hashcode.tics.client.web.content.training.mentoring.tabs.ReportMentoringTab;
 
 /**
  *
@@ -20,32 +20,32 @@ public class MentoringMenu extends Menu {
     public MentoringMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout creatingMentoringSession = new VerticalLayout();
+        creatingMentoringSession.setMargin(true);
+        creatingMentoringSession.addComponent(new MentoringSessionTab(getMain()));
 
 
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
+        final VerticalLayout enrollMenteesTab = new VerticalLayout();
+        enrollMenteesTab.setMargin(true);
+        enrollMenteesTab.addComponent(new EnrollMenteesTab(getMain()));
 
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
+        final VerticalLayout reportMentoringTab = new VerticalLayout();
+        reportMentoringTab.setMargin(true);
+        reportMentoringTab.addComponent(new ReportMentoringTab(getMain()));
 
-        getTab().addTab(userTab, "Add System USERS", null);
-        getTab().addTab(roleTab, "Add System ROLES", null);
-        getTab().addTab(resetTab, "Reset CREDENTIALS", null);
+        getTab().addTab(creatingMentoringSession, "Create Mentoring Session", null);
+        getTab().addTab(enrollMenteesTab, "Enroll Mentoring Mentees", null);
+        getTab().addTab(reportMentoringTab, "Report mentoring Session ", null);
 
         switch (selectedTab) {
             case "LANDING":
-                getTab().setSelectedTab(userTab);
+                getTab().setSelectedTab(creatingMentoringSession);
                 break;
             case "ROLES":
-                getTab().setSelectedTab(roleTab);
+                getTab().setSelectedTab(enrollMenteesTab);
                 break;
             case "RESETS":
-                getTab().setSelectedTab(roleTab);
+                getTab().setSelectedTab(reportMentoringTab);
                 break;
         }
         addComponent(getTab());

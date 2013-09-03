@@ -16,7 +16,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.app.facade.training.course.CourseTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
+import zm.hashcode.tics.client.web.content.system.training.TrainingSetupMenu;
 import zm.hashcode.tics.client.web.content.system.training.forms.CourseTypeForm;
 import zm.hashcode.tics.client.web.content.system.training.model.CourseTypeBean;
 import zm.hashcode.tics.client.web.content.system.training.tables.CourseTypeTable;
@@ -118,7 +118,7 @@ public class CourseTypeTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new InstitutionMenu(main, "COURSETYPE"));
+        main.content.setSecondComponent(new TrainingSetupMenu(main, "COURSETYPE"));
     }
 
     private void setEditFormProperties() {

@@ -4,12 +4,15 @@
  */
 package zm.hashcode.tics.client.web.content.training.course.tables;
 
+import com.google.common.collect.Collections2;
 import com.vaadin.ui.Table;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import zm.hashcode.tics.app.facade.training.schedule.ScheduledCourseFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
+import zm.hashcode.tics.services.training.institutions.schedule.predicates.InstitutionScheduledCoursePredicate;
 
 /**
  *
@@ -29,7 +32,8 @@ public class ScheduledCourseTable extends Table {
         addContainerProperty("End Date", Date.class, null);
 
         List<ScheduledCourse> scheduledCourses = ScheduledCourseFacade.getScheduledCourseService().findAll();
-        for (ScheduledCourse uScheduledCourse : scheduledCourses) {
+        Collection<ScheduledCourse> institutionScheduledCourses = Collections2.filter(scheduledCourses, new InstitutionScheduledCoursePredicate());
+        for (ScheduledCourse uScheduledCourse : institutionScheduledCourses) {
             addItem(new Object[]{uScheduledCourse.getVenue(),
                 uScheduledCourse.getCourseCapacity(),
                 uScheduledCourse.getCreditHours(),

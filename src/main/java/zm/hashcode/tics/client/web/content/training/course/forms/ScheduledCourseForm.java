@@ -4,6 +4,7 @@
  */
 package zm.hashcode.tics.client.web.content.training.course.forms;
 
+import com.google.common.collect.Collections2;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
@@ -16,6 +17,7 @@ import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
 import java.util.List;
 import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.training.institutions.TrainingInstructorsFacade;
@@ -26,6 +28,8 @@ import zm.hashcode.tics.domain.training.course.Course;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.util.Funder;
+import zm.hashcode.tics.services.training.course.predicates.InstitutionCoursePredicate;
+import zm.hashcode.tics.services.ui.location.predicates.CityPredicate;
 
 /**
  *
@@ -128,7 +132,9 @@ public class ScheduledCourseForm extends FormLayout {
     private ComboBox getCourseComboBox(String label, String field) {
         courseCombo.setCaption(label);
         List<Course> courses = CourseFacade.getCourseService().findAll();
-        for (Course iCourse : courses) {
+        Collection<Course> institutionCourses = Collections2.filter(courses, new InstitutionCoursePredicate());
+
+        for (Course iCourse : institutionCourses) {
             courseCombo.addItem(iCourse.getId());
             courseCombo.setItemCaption(iCourse.getId(), iCourse.getName());
         }
@@ -142,7 +148,8 @@ public class ScheduledCourseForm extends FormLayout {
     private ComboBox getlocationComboBox(String label, String field) {
         locationCombo.setCaption(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
-        for (Location iLocation : locations) {
+        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
+        for (Location iLocation : cities) {
             locationCombo.addItem(iLocation.getId());
             locationCombo.setItemCaption(iLocation.getId(), iLocation.getName());
         }

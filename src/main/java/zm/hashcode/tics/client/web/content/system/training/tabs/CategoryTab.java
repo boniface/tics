@@ -16,7 +16,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.app.facade.training.course.CategoryFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
+import zm.hashcode.tics.client.web.content.system.training.TrainingSetupMenu;
 import zm.hashcode.tics.client.web.content.system.training.forms.CategoryForm;
 import zm.hashcode.tics.client.web.content.system.training.model.CategoryBean;
 import zm.hashcode.tics.client.web.content.system.training.tables.CategoryTable;
@@ -118,7 +118,7 @@ public class CategoryTab extends VerticalLayout implements
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new CourseMenu(main, "COURSECATEGORY"));
+        main.content.setSecondComponent(new TrainingSetupMenu(main, "COURSECATEGORY"));
     }
 
     private void setEditFormProperties() {

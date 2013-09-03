@@ -8,6 +8,7 @@ import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.course.tabs.CourseTab;
+import zm.hashcode.tics.client.web.content.training.course.tabs.EvaluateParticipantsTab;
 import zm.hashcode.tics.client.web.content.training.course.tabs.ScheduledCourseTab;
 
 /**
@@ -29,7 +30,7 @@ public class CourseMenu extends Menu {
 
         final VerticalLayout evaluationTab = new VerticalLayout();
         evaluationTab.setMargin(true);
-        evaluationTab.addComponent(new ScheduledCourseTab(getMain()));
+        evaluationTab.addComponent(new EvaluateParticipantsTab(getMain()));
 
         getTab().addTab(courseTab, "Add COURSES", null);
         getTab().addTab(scheduledCourseTab, "Schedeule COURSES", null);

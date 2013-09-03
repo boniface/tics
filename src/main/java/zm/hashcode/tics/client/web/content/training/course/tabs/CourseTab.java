@@ -28,7 +28,6 @@ import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFaca
 import zm.hashcode.tics.app.facade.ui.util.StatusFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.course.CourseMenu;
-import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.course.forms.CourseForm;
 import zm.hashcode.tics.client.web.content.training.course.model.CourseBean;
 import zm.hashcode.tics.client.web.content.training.course.tables.CourseTable;
@@ -117,7 +116,12 @@ public class CourseTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            CourseFacade.getCourseService().persist(getNewEntity(binder));
+            Course course = getNewEntity(binder);
+            CourseFacade.getCourseService().persist(course);
+
+            List<Course> courses = new ArrayList<>();
+
+
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {

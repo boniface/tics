@@ -41,10 +41,10 @@ public class MentoringMenu extends Menu {
             case "LANDING":
                 getTab().setSelectedTab(creatingMentoringSession);
                 break;
-            case "ROLES":
+            case "ENROLMENTEES":
                 getTab().setSelectedTab(enrollMenteesTab);
                 break;
-            case "RESETS":
+            case "REPORTSESSION":
                 getTab().setSelectedTab(reportMentoringTab);
                 break;
         }

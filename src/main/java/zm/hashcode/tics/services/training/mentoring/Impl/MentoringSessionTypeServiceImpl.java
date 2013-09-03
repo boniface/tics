@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.services.training.mentoring.Imp;
+package zm.hashcode.tics.services.training.mentoring.Impl;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;

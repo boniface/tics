@@ -72,7 +72,7 @@ public class MentoringSubjectArea implements Serializable {
 
     @Override
     public String toString() {
-        return "MentoringAreasList{" + "areasofStrenthening=" + subjectArea + "}";
+        return "MentoringSubjectArea{" + "subjectArea=" + subjectArea + "}";
     }
 
     public String getId() {

@@ -5,17 +5,17 @@
 package zm.hashcode.tics.app.facade.training.mentoring;
 
 import zm.hashcode.tics.app.conf.SpringContext;
-import zm.hashcode.tics.services.training.mentoring.MentoringAreasListService;
+import zm.hashcode.tics.services.training.mentoring.MentoringSubjectAreaService;
 
 /**
  *
  * @author geek
  */
-public class MentoringAreasListFacade {
+public class MentoringSubjectAreaFacade {
 
     private final static SpringContext ctx = new SpringContext();
 
-    public static MentoringAreasListService getMentoringAreasListService() {
-        return ctx.getBean(MentoringAreasListService.class);
+    public static MentoringSubjectAreaService getMentoringSubjectAreaService() {
+        return ctx.getBean(MentoringSubjectAreaService.class);
     }
 }

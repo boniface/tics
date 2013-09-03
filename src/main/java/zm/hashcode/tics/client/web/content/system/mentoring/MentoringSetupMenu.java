@@ -7,7 +7,6 @@ package zm.hashcode.tics.client.web.content.system.mentoring;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.tabs.TrainingInstitutionTab;
 
 /**
  *

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.course.model;
+package zm.hashcode.tics.client.web.content.system.training.model;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author geek
  */
-public class CategoryBean implements Serializable {
+public class CriteriaBean implements Serializable {
 
     private String id;
     private String name;

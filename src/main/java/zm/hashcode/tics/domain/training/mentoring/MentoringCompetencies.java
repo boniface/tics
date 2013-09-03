@@ -40,8 +40,6 @@ public class MentoringCompetencies implements Serializable {
         private String competencyName;
         private Competency competency;
 
-        ;
-
         public Builder(String val) {
             this.competencyName = val;
         }

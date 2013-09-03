@@ -14,10 +14,20 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
+import java.util.List;
+import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
+import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.training.institutions.InstitutionMenu;
 import zm.hashcode.tics.client.web.content.training.institutions.forms.ContactAddressForm;
+import zm.hashcode.tics.client.web.content.training.institutions.model.ContactAddressBean;
 import zm.hashcode.tics.client.web.content.training.institutions.tables.ContactAddressTable;
+import zm.hashcode.tics.client.web.content.training.institutions.util.TrainingInstructorUtil;
+import zm.hashcode.tics.domain.training.institutions.InstitutionAddress;
+import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
+import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.domain.ui.location.LocationAddress;
 
 /**
  *
@@ -29,7 +39,6 @@ public class ContactAddressTab extends VerticalLayout implements
     private final TicsMain main;
     private final ContactAddressForm form;
     private final ContactAddressTable table;
-    private String cityId;
 
     public ContactAddressTab(TicsMain app) {
         main = app;
@@ -61,19 +70,26 @@ public class ContactAddressTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-//            final ContactList title = ContactListFacade.getContactListService().find(table.getValue().toString());
-//            final ContactBean bean = new ContactUtil().getBean(title);
+//            final ContactAddressBean title = ContactListFacade.getContactListService().find(table.getValue().toString());
+//            final ContactAddressBean bean = new ContactUtil().getBean(title);
 //            form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
-        } else if (property == form.cityCombo) {
-            cityId = property.getValue().toString();
         }
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-//            ContactListFacade.getContactListService().persist(getNewEntity(binder));
+            InstitutionAddress address = getNewEntity(binder);
+            List<InstitutionAddress> addresses = new ArrayList<>();
+            TrainingInstitution trainingInstitution = TrainingInstructorUtil.getTrainingInstitution();
+            addresses.add(address);
+            addresses.addAll(trainingInstitution.getInstitutionAddresses());
+            TrainingInstitution updatedTrainingInstitution = new TrainingInstitution.Builder(trainingInstitution.getName())
+                    .trainingInstitution(trainingInstitution)
+                    .institutionAddresses(addresses)
+                    .build();
+            TrainingInstitutionFacade.getTrainingInstitutionService().merge(updatedTrainingInstitution);
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -99,12 +115,20 @@ public class ContactAddressTab extends VerticalLayout implements
         getHome();
     }
 
-//    private Contact getNewEntity(FieldGroup binder) {
-//        final ContactBean bean = ((BeanItem<ContactBean>) binder.getItemDataSource()).getBean();
-//        final Contact contactList = new Contact.Builder(bean.getName())
-//                .build();
-//        return contactList;
-//    }
+    private InstitutionAddress getNewEntity(FieldGroup binder) {
+        final ContactAddressBean bean = ((BeanItem<ContactAddressBean>) binder.getItemDataSource()).getBean();
+        final Location city = LocationFacade.getLocationService().find(bean.getCityId());
+        final LocationAddress locationAddress = new LocationAddress.Builder(bean.getContactNumber())
+                .emailAddress(bean.getEmailAddres())
+                .physicalAddress(bean.getPhysicalAddress())
+                .postalAddress(bean.getPostalAddress())
+                .postalCode(bean.getPostalCode())
+                .build();
+        final InstitutionAddress institutionAddress = new InstitutionAddress.Builder(locationAddress)
+                .city(city)
+                .build();
+        return institutionAddress;
+    }
 //
 //    private Contact getUpdateEntity(FieldGroup binder) {
 //        final ContactBean bean = ((BeanItem<ContactBean>) binder.getItemDataSource()).getBean();
@@ -113,6 +137,7 @@ public class ContactAddressTab extends VerticalLayout implements
 //                .build();
 //        return contactList;
 //    }
+
     private void getHome() {
         main.content.setSecondComponent(new InstitutionMenu(main, "CONTACTS"));
     }

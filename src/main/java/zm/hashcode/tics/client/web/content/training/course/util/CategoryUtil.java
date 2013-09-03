@@ -4,7 +4,7 @@
  */
 package zm.hashcode.tics.client.web.content.training.course.util;
 
-import zm.hashcode.tics.client.web.content.training.course.model.CategoryBean;
+import zm.hashcode.tics.client.web.content.system.training.model.CategoryBean;
 import zm.hashcode.tics.domain.training.course.Category;
 
 /**

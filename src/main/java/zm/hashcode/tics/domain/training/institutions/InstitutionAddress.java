@@ -19,19 +19,38 @@ public class InstitutionAddress implements Serializable {
     @DBRef
     private Location city;
 
+    private InstitutionAddress() {
+    }
+
+    private InstitutionAddress(Builder builder) {
+        address = builder.address;
+        city = builder.city;
+    }
+
+    public static class Builder {
+
+        private LocationAddress address;
+        private Location city;
+
+        public Builder(LocationAddress val) {
+            this.address = val;
+        }
+
+        public Builder city(Location value) {
+            city = value;
+            return this;
+        }
+
+        public InstitutionAddress build() {
+            return new InstitutionAddress(this);
+        }
+    }
+
     public LocationAddress getAddress() {
         return address;
     }
 
-    public void setAddress(LocationAddress address) {
-        this.address = address;
-    }
-
     public Location getCity() {
         return city;
-    }
-
-    public void setCity(Location city) {
-        this.city = city;
     }
 }

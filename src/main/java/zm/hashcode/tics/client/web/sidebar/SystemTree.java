@@ -13,7 +13,8 @@ import zm.hashcode.tics.client.web.content.system.funder.FunderMenu;
 import zm.hashcode.tics.client.web.content.system.locations.LocationsMenu;
 import zm.hashcode.tics.client.web.content.system.peoplemetadata.PeopleMetaDataMenu;
 import zm.hashcode.tics.client.web.content.system.positions.PositionsMenu;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.TrainingInstitutionsMenu;
+import zm.hashcode.tics.client.web.content.system.training.TrainingSetupMenu;
+import zm.hashcode.tics.client.web.content.training.mentoring.MentoringMenu;
 
 /**
  *
@@ -22,10 +23,11 @@ import zm.hashcode.tics.client.web.content.system.traininginstitution.TrainingIn
 public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener {
 
     private final TicsMain main;
-    public static final Object GEOGRAPHICAL_LOCATIONS = "Geographical LOCATIONS";
-    public static final Object PEOPLE_META_DATA = "People META DATA";
+    public static final Object LOCATIONS_SETUP = "Locations SETUP";
+    public static final Object PEOPLE_SETUP = "People SETUP";
     public static final Object FACILITY_SETUP = "Facility SETUP";
-    public static final Object TRAINING_INSTITUTIONS = "Training INSTITUTIONS";
+    public static final Object TRAINING_SETUP = "Training SETUP";
+    public static final Object MENTORING_SETUP = "Mentoring SETUP";
     public static final Object POSITIONS_SETUP = "Positions SETUP";
     public static final Object CONPETENCIES_SETUP = "Competancies SETUP";
     public static final Object FUNDER_SETUP = "Funder SETUP";
@@ -33,10 +35,11 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
 
     public SystemTree(TicsMain main) {
         this.main = main;
-        addItem(GEOGRAPHICAL_LOCATIONS);
-        addItem(PEOPLE_META_DATA);
+        addItem(LOCATIONS_SETUP);
+        addItem(PEOPLE_SETUP);
         addItem(FACILITY_SETUP);
-        addItem(TRAINING_INSTITUTIONS);
+        addItem(TRAINING_SETUP);
+        addItem(MENTORING_SETUP);
         addItem(POSITIONS_SETUP);
         addItem(CONPETENCIES_SETUP);
         addItem(FUNDER_SETUP);
@@ -49,20 +52,22 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
     public void itemClick(ItemClickEvent event) {
         Object itemId = event.getItemId();
         if (itemId != null) {
-            if (GEOGRAPHICAL_LOCATIONS.equals(itemId)) {
+            if (LOCATIONS_SETUP.equals(itemId)) {
                 geogrphicalView();
-            } else if (PEOPLE_META_DATA.equals(itemId)) {
+            } else if (PEOPLE_SETUP.equals(itemId)) {
                 peoplemetadataView();
             } else if (FACILITY_SETUP.equals(itemId)) {
                 facilityView();
-            } else if (TRAINING_INSTITUTIONS.equals(itemId)) {
-                trainingInstitutionView();
+            } else if (TRAINING_SETUP.equals(itemId)) {
+                trainingSetupView();
             } else if (POSITIONS_SETUP.equals(itemId)) {
                 positionInstitutionmView();
             } else if (CONPETENCIES_SETUP.equals(itemId)) {
                 competenciesView();
             } else if (FUNDER_SETUP.equals(itemId)) {
                 funderView();
+            } else if (MENTORING_SETUP.equals(itemId)) {
+                mentoringSetupView();
             }
         }
     }
@@ -79,8 +84,8 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
         main.content.setSecondComponent(new FacilityMenu(main, LANDING_TAB));
     }
 
-    private void trainingInstitutionView() {
-        main.content.setSecondComponent(new TrainingInstitutionsMenu(main, LANDING_TAB));
+    private void trainingSetupView() {
+        main.content.setSecondComponent(new TrainingSetupMenu(main, LANDING_TAB));
     }
 
     private void positionInstitutionmView() {
@@ -93,5 +98,9 @@ public class SystemTree extends Tree implements ItemClickEvent.ItemClickListener
 
     private void funderView() {
         main.content.setSecondComponent(new FunderMenu(main, LANDING_TAB));
+    }
+
+    private void mentoringSetupView() {
+        main.content.setSecondComponent(new MentoringMenu(main, LANDING_TAB));
     }
 }

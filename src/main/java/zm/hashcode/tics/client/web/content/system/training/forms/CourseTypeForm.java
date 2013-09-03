@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.course.forms;
+package zm.hashcode.tics.client.web.content.system.training.forms;
 
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -12,7 +12,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import zm.hashcode.tics.client.web.content.training.course.model.CourseTypeBean;
+import zm.hashcode.tics.client.web.content.system.training.model.CourseTypeBean;
 
 /**
  *

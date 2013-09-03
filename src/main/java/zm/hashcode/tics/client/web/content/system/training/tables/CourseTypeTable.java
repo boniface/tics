@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.course.tables;
+package zm.hashcode.tics.client.web.content.system.training.tables;
 
 import com.vaadin.ui.Table;
 import java.util.List;

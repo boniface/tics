@@ -4,6 +4,7 @@
  */
 package zm.hashcode.tics.client.web.content.training.institutions.forms;
 
+import com.google.common.collect.Collections2;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.BeanValidator;
@@ -13,10 +14,12 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
 import java.util.List;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.client.web.content.training.institutions.model.ContactAddressBean;
 import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.services.ui.location.predicates.CityPredicate;
 
 /**
  *
@@ -69,8 +72,8 @@ public class ContactAddressForm extends FormLayout {
     private ComboBox getCityIdComboBox(String label, String field) {
         cityCombo.setCaption(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
-//        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
-        for (Location city : locations) {
+        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
+        for (Location city : cities) {
             cityCombo.addItem(city.getId());
             cityCombo.setItemCaption(city.getId(), city.getName());
         }

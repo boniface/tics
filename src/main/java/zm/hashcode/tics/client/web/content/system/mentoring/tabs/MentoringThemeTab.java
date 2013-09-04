@@ -159,6 +159,6 @@ public final class MentoringThemeTab extends VerticalLayout implements
         //Register Table Listerners
         table.addValueChangeListener((ValueChangeListener) this);
         //
-
+        form.mentoringFieldCombo.addValueChangeListener((ValueChangeListener) this);
     }
 }

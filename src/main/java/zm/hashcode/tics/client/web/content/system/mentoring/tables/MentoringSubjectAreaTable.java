@@ -29,13 +29,12 @@ public class MentoringSubjectAreaTable extends Table {
             addItem(new Object[]{mentoringSubjectArea.getSubjectArea()
             }, mentoringSubjectArea.getId());
         }
-//     Allow selecting items from the table.
+        //     Allow selecting items from the table.
 
         setNullSelectionAllowed(false);
-//
+        //
         setSelectable(true);
         // Send changes in selection immediately to server.
         setImmediate(true);
-
     }
 }

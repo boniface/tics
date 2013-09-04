@@ -6,28 +6,28 @@ package zm.hashcode.tics.client.web.content.system.mentoring.tables;
 
 import com.vaadin.ui.Table;
 import java.util.List;
-import zm.hashcode.tics.app.facade.training.mentoring.MentoringThemeFacade;
+import zm.hashcode.tics.app.facade.training.mentoring.MentoringFieldFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.domain.training.mentoring.MentoringTheme;
+import zm.hashcode.tics.domain.training.mentoring.MentoringField;
 
 /**
  *
  * @author geek
  */
-public class MentoringThemeTable extends Table {
+public class MentoringFieldTable extends Table {
 
     private final TicsMain main;
 
-    public MentoringThemeTable(TicsMain main) {
+    public MentoringFieldTable(TicsMain main) {
         this.main = main;
         setSizeFull();
 
-        addContainerProperty("Mentoring Theme", String.class, null);
+        addContainerProperty("Field Name", String.class, null);
 
-        List<MentoringTheme> mentoringThemes = MentoringThemeFacade.getMentoringThemeService().findAll();
-        for (MentoringTheme mentoringTheme : mentoringThemes) {
-            addItem(new Object[]{mentoringTheme.getMentoringTheme()
-            }, mentoringTheme.getId());
+        List<MentoringField> mentoringFields = MentoringFieldFacade.getMentoringFieldService().findAll();
+        for (MentoringField mentoringField : mentoringFields) {
+            addItem(new Object[]{mentoringField.getFieldName()
+            }, mentoringField.getId());
         }
         //     Allow selecting items from the table.
 

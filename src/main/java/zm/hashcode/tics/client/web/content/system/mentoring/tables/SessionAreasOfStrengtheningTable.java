@@ -22,7 +22,7 @@ public class SessionAreasOfStrengtheningTable extends Table {
         this.main = main;
         setSizeFull();
 
-        addContainerProperty("Areas Of Strengthening;", String.class, null);
+        addContainerProperty("Areas Of Strengthening", String.class, null);
 
         List<SessionAreasOfStrengthening> areasOfStrengthenings = SessionAreasOfStrengtheningFacade.getSessionAreasOfStrengtheningService().findAll();
         for (SessionAreasOfStrengthening areasOfStrengthening : areasOfStrengthenings) {

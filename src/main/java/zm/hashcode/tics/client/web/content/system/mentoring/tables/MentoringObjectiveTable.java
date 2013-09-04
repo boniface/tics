@@ -22,7 +22,7 @@ public class MentoringObjectiveTable extends Table {
         this.main = main;
         setSizeFull();
 
-        addContainerProperty("Mentoring Objective;", String.class, null);
+        addContainerProperty("Mentoring Objective", String.class, null);
 
         List<MentoringObjective> mentoringObjectives = MentoringObjectiveFacade.getMentoringObjectiveService().findAll();
         for (MentoringObjective mentoringObjective : mentoringObjectives) {

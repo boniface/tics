@@ -22,7 +22,7 @@ public class MentoringToolsMethodsTable extends Table {
         this.main = main;
         setSizeFull();
 
-        addContainerProperty("Tools Method;", String.class, null);
+        addContainerProperty("Tools Method", String.class, null);
 
         List<MentoringToolsMethods> mentoringToolsMethods = MentoringToolsMethodsFacade.getMentoringToolsMethodsService().findAll();
         for (MentoringToolsMethods mentoringToolsMethod : mentoringToolsMethods) {

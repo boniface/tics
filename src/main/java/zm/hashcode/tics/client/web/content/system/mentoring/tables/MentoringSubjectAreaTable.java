@@ -22,7 +22,7 @@ public class MentoringSubjectAreaTable extends Table {
         this.main = main;
         setSizeFull();
 
-        addContainerProperty("Subject Area;", String.class, null);
+        addContainerProperty("Subject Area", String.class, null);
 
         List<MentoringSubjectArea> mentoringSubjectAreas = MentoringSubjectAreaFacade.getMentoringSubjectAreaService().findAll();
         for (MentoringSubjectArea mentoringSubjectArea : mentoringSubjectAreas) {

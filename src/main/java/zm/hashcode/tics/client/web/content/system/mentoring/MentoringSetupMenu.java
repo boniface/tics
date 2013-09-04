@@ -11,7 +11,7 @@ import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringObject
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringStrentheningTab;
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringSubjectAreaTab;
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringThemeTab;
-import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringToolsAndMethodsTab;
+import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringToolsMethodsTab;
 
 /**
  *
@@ -40,7 +40,7 @@ public class MentoringSetupMenu extends Menu {
 
         final VerticalLayout mentoringToolsTab = new VerticalLayout();
         mentoringToolsTab.setMargin(true);
-        mentoringToolsTab.addComponent(new MentoringToolsAndMethodsTab(getMain()));
+        mentoringToolsTab.addComponent(new MentoringToolsMethodsTab(getMain()));
 
         getTab().addTab(mentoringSubjectAreaTab, "Mentoring Subject AREA", null);
         getTab().addTab(mentoringThemeTab, "Mentoring THEME", null);

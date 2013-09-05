@@ -4,7 +4,6 @@
  */
 package zm.hashcode.tics.client.web.content.system.mentoring.tabs;
 
-import zm.hashcode.tics.client.web.content.users.tabs.*;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -15,29 +14,14 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import zm.hashcode.tics.app.facade.training.course.CourseFacade;
-import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
-import zm.hashcode.tics.app.facade.training.institutions.TrainingInstructorsFacade;
-import zm.hashcode.tics.app.facade.training.schedule.ScheduledCourseFacade;
-import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
-import zm.hashcode.tics.app.facade.user.UserFacade;
+import zm.hashcode.tics.app.facade.training.mentoring.SessionAreasOfStrengtheningFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.TrainingInstitutionsMenu;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.forms.TrainingInstitutionForm;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.model.TrainingInstitutionBean;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.tables.TrainingInstitutionTable;
-import zm.hashcode.tics.client.web.content.system.traininginstitution.util.TrainingInstitutionUtil;
-import zm.hashcode.tics.domain.training.course.Course;
-import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
-import zm.hashcode.tics.domain.training.institutions.TrainingInstructors;
-import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
-import zm.hashcode.tics.domain.ui.location.Location;
-import zm.hashcode.tics.domain.users.User;
+import zm.hashcode.tics.client.web.content.system.mentoring.MentoringSetupMenu;
+import zm.hashcode.tics.client.web.content.system.mentoring.forms.SessionAreasOfStrengtheningForm;
+import zm.hashcode.tics.client.web.content.system.mentoring.model.SessionAreasOfStrengtheningBean;
+import zm.hashcode.tics.client.web.content.system.mentoring.tables.SessionAreasOfStrengtheningTable;
+import zm.hashcode.tics.client.web.content.system.mentoring.util.SessionAreasOfStrengtheningUtil;
+import zm.hashcode.tics.domain.training.mentoring.SessionAreasOfStrengthening;
 
 /**
  *
@@ -47,28 +31,123 @@ public final class MentoringStrentheningTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
+    private final SessionAreasOfStrengtheningForm form;
+    private final SessionAreasOfStrengtheningTable table;
 
     public MentoringStrentheningTab(TicsMain app) {
         main = app;
+        form = new SessionAreasOfStrengtheningForm();
+        table = new SessionAreasOfStrengtheningTable(main);
+        setSizeFull();
+        addComponent(form);
+        addComponent(table);
+        addListeners();
     }
 
     @Override
     public void buttonClick(ClickEvent event) {
         final Button source = event.getButton();
-
+        if (source == form.save) {
+            saveForm(form.binder);
+        } else if (source == form.edit) {
+            setEditFormProperties();
+        } else if (source == form.cancel) {
+            getHome();
+        } else if (source == form.update) {
+            saveEditedForm(form.binder);
+        } else if (source == form.delete) {
+            deleteForm(form.binder);
+        }
     }
 
     @Override
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
+        if (property == table) {
+            final SessionAreasOfStrengthening mentoringObjective = SessionAreasOfStrengtheningFacade.getSessionAreasOfStrengtheningService().find(table.getValue().toString());
+            final SessionAreasOfStrengtheningBean bean = new SessionAreasOfStrengtheningUtil().getBean(mentoringObjective);
+            form.binder.setItemDataSource(new BeanItem<>(bean));
+            setReadFormProperties();
+        }
     }
 
     private void saveForm(FieldGroup binder) {
+        try {
+            binder.commit();
+            SessionAreasOfStrengtheningFacade.getSessionAreasOfStrengtheningService().persist(getNewEntity(binder));
+            getHome();
+            Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
     }
 
     private void saveEditedForm(FieldGroup binder) {
+        try {
+            binder.commit();
+            SessionAreasOfStrengtheningFacade.getSessionAreasOfStrengtheningService().merge(getUpdateEntity(binder));
+            getHome();
+            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
     }
 
     private void deleteForm(FieldGroup binder) {
+        SessionAreasOfStrengtheningFacade.getSessionAreasOfStrengtheningService().remove(getUpdateEntity(binder));
+        getHome();
+    }
+
+    private SessionAreasOfStrengthening getNewEntity(FieldGroup binder) {
+        final SessionAreasOfStrengtheningBean bean = ((BeanItem<SessionAreasOfStrengtheningBean>) binder.getItemDataSource()).getBean();
+        final SessionAreasOfStrengthening sessionAreasOfStrengthening = new SessionAreasOfStrengthening.Builder(bean.getAreasOfStrengthening())
+                .build();
+        return sessionAreasOfStrengthening;
+    }
+
+    private SessionAreasOfStrengthening getUpdateEntity(FieldGroup binder) {
+        final SessionAreasOfStrengtheningBean bean = ((BeanItem<SessionAreasOfStrengtheningBean>) binder.getItemDataSource()).getBean();
+        final SessionAreasOfStrengthening sessionAreasOfStrengthening = new SessionAreasOfStrengthening.Builder(bean.getAreasOfStrengthening())
+                .id(bean.getId())
+                .build();
+        return sessionAreasOfStrengthening;
+    }
+
+    private void getHome() {
+        main.content.setSecondComponent(new MentoringSetupMenu(main, "STRENTHENING"));
+    }
+
+    private void setEditFormProperties() {
+        form.binder.setReadOnly(false);
+        form.save.setVisible(false);
+        form.edit.setVisible(false);
+        form.cancel.setVisible(true);
+        form.delete.setVisible(false);
+        form.update.setVisible(true);
+    }
+
+    private void setReadFormProperties() {
+        form.binder.setReadOnly(true);
+        //Buttons Behaviou
+        form.save.setVisible(false);
+        form.edit.setVisible(true);
+        form.cancel.setVisible(true);
+        form.delete.setVisible(true);
+        form.update.setVisible(false);
+    }
+
+    private void addListeners() {
+        //Register Button Listeners
+        form.save.addClickListener((ClickListener) this);
+        form.edit.addClickListener((ClickListener) this);
+        form.cancel.addClickListener((ClickListener) this);
+        form.update.addClickListener((ClickListener) this);
+        form.delete.addClickListener((ClickListener) this);
+        //Register Table Listerners
+        table.addValueChangeListener((ValueChangeListener) this);
+        //
+
     }
 }

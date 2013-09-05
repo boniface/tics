@@ -7,11 +7,12 @@ package zm.hashcode.tics.client.web.content.system.mentoring;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringFieldTab;
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringObjectiveTab;
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringStrentheningTab;
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringSubjectAreaTab;
 import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringThemeTab;
-import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringToolsAndMethodsTab;
+import zm.hashcode.tics.client.web.content.system.mentoring.tabs.MentoringToolsMethodsTab;
 
 /**
  *
@@ -40,9 +41,14 @@ public class MentoringSetupMenu extends Menu {
 
         final VerticalLayout mentoringToolsTab = new VerticalLayout();
         mentoringToolsTab.setMargin(true);
-        mentoringToolsTab.addComponent(new MentoringToolsAndMethodsTab(getMain()));
+        mentoringToolsTab.addComponent(new MentoringToolsMethodsTab(getMain()));
+
+        final VerticalLayout mentoringFieldTab = new VerticalLayout();
+        mentoringFieldTab.setMargin(true);
+        mentoringFieldTab.addComponent(new MentoringFieldTab(getMain()));
 
         getTab().addTab(mentoringSubjectAreaTab, "Mentoring Subject AREA", null);
+        getTab().addTab(mentoringFieldTab, "Mentoring FIELD", null);
         getTab().addTab(mentoringThemeTab, "Mentoring THEME", null);
         getTab().addTab(mentoringObjectiveTab, "Mentoring OBJECTIVE", null);
         getTab().addTab(mentoringStrentheningTab, "Areas of STRENTHENING", null);
@@ -69,6 +75,9 @@ public class MentoringSetupMenu extends Menu {
                 getTab().setSelectedTab(mentoringToolsTab);
                 break;
 
+            case "FIELD":
+                getTab().setSelectedTab(mentoringFieldTab);
+                break;
         }
         addComponent(getTab());
 

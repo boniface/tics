@@ -14,30 +14,30 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import zm.hashcode.tics.app.facade.training.mentoring.MentoringObjectiveFacade;
+import zm.hashcode.tics.app.facade.training.mentoring.MentoringFieldFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.system.mentoring.MentoringSetupMenu;
-import zm.hashcode.tics.client.web.content.system.mentoring.forms.MentoringObjectiveForm;
-import zm.hashcode.tics.client.web.content.system.mentoring.model.MentoringObjectiveBean;
-import zm.hashcode.tics.client.web.content.system.mentoring.tables.MentoringObjectiveTable;
-import zm.hashcode.tics.client.web.content.system.mentoring.util.MentoringObjectiveUtil;
-import zm.hashcode.tics.domain.training.mentoring.MentoringObjective;
+import zm.hashcode.tics.client.web.content.system.mentoring.forms.MentoringFieldForm;
+import zm.hashcode.tics.client.web.content.system.mentoring.model.MentoringFieldBean;
+import zm.hashcode.tics.client.web.content.system.mentoring.tables.MentoringFieldTable;
+import zm.hashcode.tics.client.web.content.system.mentoring.util.MentoringFieldUtil;
+import zm.hashcode.tics.domain.training.mentoring.MentoringField;
 
 /**
  *
- * @author Ferox
+ * @author geek
  */
-public final class MentoringObjectiveTab extends VerticalLayout implements
+public class MentoringFieldTab extends VerticalLayout implements
         Button.ClickListener, Property.ValueChangeListener {
 
     private final TicsMain main;
-    private final MentoringObjectiveForm form;
-    private final MentoringObjectiveTable table;
+    private final MentoringFieldForm form;
+    private final MentoringFieldTable table;
 
-    public MentoringObjectiveTab(TicsMain app) {
+    public MentoringFieldTab(TicsMain app) {
         main = app;
-        form = new MentoringObjectiveForm();
-        table = new MentoringObjectiveTable(main);
+        form = new MentoringFieldForm();
+        table = new MentoringFieldTable(main);
         setSizeFull();
         addComponent(form);
         addComponent(table);
@@ -64,8 +64,8 @@ public final class MentoringObjectiveTab extends VerticalLayout implements
     public void valueChange(ValueChangeEvent event) {
         final Property property = event.getProperty();
         if (property == table) {
-            final MentoringObjective mentoringObjective = MentoringObjectiveFacade.getMentoringObjectiveService().find(table.getValue().toString());
-            final MentoringObjectiveBean bean = new MentoringObjectiveUtil().getBean(mentoringObjective);
+            final MentoringField mentoringObjective = MentoringFieldFacade.getMentoringFieldService().find(table.getValue().toString());
+            final MentoringFieldBean bean = new MentoringFieldUtil().getBean(mentoringObjective);
             form.binder.setItemDataSource(new BeanItem<>(bean));
             setReadFormProperties();
         }
@@ -74,7 +74,7 @@ public final class MentoringObjectiveTab extends VerticalLayout implements
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            MentoringObjectiveFacade.getMentoringObjectiveService().persist(getNewEntity(binder));
+            MentoringFieldFacade.getMentoringFieldService().persist(getNewEntity(binder));
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -86,7 +86,7 @@ public final class MentoringObjectiveTab extends VerticalLayout implements
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            MentoringObjectiveFacade.getMentoringObjectiveService().merge(getUpdateEntity(binder));
+            MentoringFieldFacade.getMentoringFieldService().merge(getUpdateEntity(binder));
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {
@@ -96,27 +96,27 @@ public final class MentoringObjectiveTab extends VerticalLayout implements
     }
 
     private void deleteForm(FieldGroup binder) {
-        MentoringObjectiveFacade.getMentoringObjectiveService().remove(getUpdateEntity(binder));
+        MentoringFieldFacade.getMentoringFieldService().remove(getUpdateEntity(binder));
         getHome();
     }
 
-    private MentoringObjective getNewEntity(FieldGroup binder) {
-        final MentoringObjectiveBean bean = ((BeanItem<MentoringObjectiveBean>) binder.getItemDataSource()).getBean();
-        final MentoringObjective mentoringObjective = new MentoringObjective.Builder(bean.getMentoringObjective())
+    private MentoringField getNewEntity(FieldGroup binder) {
+        final MentoringFieldBean bean = ((BeanItem< MentoringFieldBean>) binder.getItemDataSource()).getBean();
+        final MentoringField MentoringField = new MentoringField.Builder(bean.getFieldName())
                 .build();
-        return mentoringObjective;
+        return MentoringField;
     }
 
-    private MentoringObjective getUpdateEntity(FieldGroup binder) {
-        final MentoringObjectiveBean bean = ((BeanItem<MentoringObjectiveBean>) binder.getItemDataSource()).getBean();
-        final MentoringObjective mentoringObjective = new MentoringObjective.Builder(bean.getMentoringObjective())
+    private MentoringField getUpdateEntity(FieldGroup binder) {
+        final MentoringFieldBean bean = ((BeanItem< MentoringFieldBean>) binder.getItemDataSource()).getBean();
+        final MentoringField MentoringField = new MentoringField.Builder(bean.getFieldName())
                 .id(bean.getId())
                 .build();
-        return mentoringObjective;
+        return MentoringField;
     }
 
     private void getHome() {
-        main.content.setSecondComponent(new MentoringSetupMenu(main, "OBJECTIVE"));
+        main.content.setSecondComponent(new MentoringSetupMenu(main, "FIELD"));
     }
 
     private void setEditFormProperties() {

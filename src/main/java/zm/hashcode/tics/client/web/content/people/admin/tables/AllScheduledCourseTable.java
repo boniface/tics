@@ -2,30 +2,27 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package zm.hashcode.tics.client.web.content.training.course.tables;
+package zm.hashcode.tics.client.web.content.people.admin.tables;
 
-import com.google.common.collect.Collections2;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.Reindeer;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import zm.hashcode.tics.app.facade.training.schedule.ScheduledCourseFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.domain.training.schedule.ScheduledCourse;
-import zm.hashcode.tics.services.training.institutions.schedule.predicates.InstitutionScheduledCoursePredicate;
 
 /**
  *
  * @author geek
  */
-public class ScheduledCourseTable extends Table {
+public class AllScheduledCourseTable extends Table {
 
     private final TicsMain main;
 
-    public ScheduledCourseTable(TicsMain main) {
+    public AllScheduledCourseTable(TicsMain main) {
         this.main = main;
         setSizeFull();
         addContainerProperty("Course", String.class, null);
@@ -42,9 +39,8 @@ public class ScheduledCourseTable extends Table {
 
 
         List<ScheduledCourse> scheduledCourses = ScheduledCourseFacade.getScheduledCourseService().findAll();
-        Collection<ScheduledCourse> institutionScheduledCourses = Collections2.filter(scheduledCourses, new InstitutionScheduledCoursePredicate());
-        for (ScheduledCourse scheduledCourse : institutionScheduledCourses) {
-            Button showDetails = new Button("Edit");
+        for (ScheduledCourse scheduledCourse : scheduledCourses) {
+            Button showDetails = new Button("Details");
             showDetails.setData(scheduledCourse.getId());
             showDetails.addClickListener(new Button.ClickListener() {
                 @Override

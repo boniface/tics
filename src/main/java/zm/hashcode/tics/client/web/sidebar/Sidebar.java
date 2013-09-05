@@ -28,7 +28,7 @@ public class Sidebar extends Accordion {
 
     public Sidebar(TicsMain app) {
         setSizeFull();
-        setHeight("600px");
+        setHeight("350px");
         this.main = app;
 
         //Configure Manage People Menu

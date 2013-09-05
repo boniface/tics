@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -83,8 +84,11 @@ public class TicsMain extends UI {
         content.setLocked(true);
         content.setFirstComponent(new Sidebar(this));
         content.setSecondComponent(new HomeMenu(this, "LANDING"));
+        content.setHeight("1000px");
         final VerticalLayout root = new VerticalLayout();
         root.addStyleName("main-view");
+        root.setMargin(new MarginInfo(false, true, false, true));
+
         root.addComponent(header);
         root.addComponent(content);
         root.addComponent(footer);

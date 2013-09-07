@@ -7,12 +7,10 @@ package zm.hashcode.tics.client.web.content.people.admin.tabs.windows;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
-import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.people.admin.AdministerMenu;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.DemographicsWIndow;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tabs.TabPanel;
-import zm.hashcode.tics.client.web.content.people.admin.util.PersonUtil;
 import zm.hashcode.tics.domain.people.Person;
 
 /**
@@ -31,7 +29,7 @@ public class PersonDetails extends VerticalLayout {
         backtoMainPage.setSizeFull();
 
         addComponent(new DemographicsWIndow(main, person));
-        addComponent(new TabPanel(main, "LANDING"));
+        addComponent(new TabPanel(main, "LANDING", person));
         addComponent(backtoMainPage);
         backtoMainPage.addClickListener(new Button.ClickListener() {
             @Override

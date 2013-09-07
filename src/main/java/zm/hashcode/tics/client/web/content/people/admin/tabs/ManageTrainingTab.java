@@ -51,7 +51,7 @@ public class ManageTrainingTab extends VerticalLayout implements
 
 
 
-        List<Person> people = PersonFacade.getPersonService().findAll();
+        List<Person> people = PersonFacade.getPeople();
 
         this.main = main;
         table = new AllScheduledCourseTable(main);

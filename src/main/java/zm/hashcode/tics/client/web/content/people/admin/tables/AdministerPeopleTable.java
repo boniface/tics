@@ -45,7 +45,8 @@ public class AdministerPeopleTable extends Table {
         addContainerProperty("Delete", Button.class, null);
 
 
-        List<Person> personlist = PersonFacade.getPersonService().findAll();
+        List<Person> personlist = PersonFacade.getPeople();
+
         for (Person person : personlist) {
 
             Button editField = new Button("Edit");

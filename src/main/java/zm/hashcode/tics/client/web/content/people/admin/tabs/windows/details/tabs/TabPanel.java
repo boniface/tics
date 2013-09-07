@@ -7,6 +7,7 @@ package zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.ta
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.domain.people.Person;
 
 /**
  *
@@ -17,7 +18,7 @@ public class TabPanel extends VerticalLayout {
     private TabSheet tab;
     private final TicsMain main;
 
-    public TabPanel(TicsMain main, String selectedTab) {
+    public TabPanel(TicsMain main, String selectedTab, Person person) {
         this.main = main;
         tab = new TabSheet();
         tab.setHeight("100%");
@@ -25,7 +26,7 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout contactTab = new VerticalLayout();
         contactTab.setMargin(true);
-        contactTab.addComponent(new PersonContactTab(main));
+        contactTab.addComponent(new PersonContactTab(main, person));
 
         final VerticalLayout actionPlansTab = new VerticalLayout();
         actionPlansTab.setMargin(true);
@@ -88,6 +89,9 @@ public class TabPanel extends VerticalLayout {
 
         switch (selectedTab) {
             case "LANDING":
+                tab.setSelectedTab(contactTab);
+                break;
+            case "COURSES":
                 tab.setSelectedTab(personCoursesTab);
                 break;
             case "MENTORING":

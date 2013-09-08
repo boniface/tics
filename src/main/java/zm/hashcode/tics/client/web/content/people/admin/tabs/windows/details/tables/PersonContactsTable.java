@@ -21,13 +21,13 @@ import zm.hashcode.tics.domain.people.Person;
  *
  * @author boniface
  */
-public class ContactsTable extends Table {
+public class PersonContactsTable extends Table {
 
     private final TicsMain main;
     private final Person person;
     private final VerticalLayout content;
 
-    public ContactsTable(TicsMain main, final Person person, VerticalLayout content) {
+    public PersonContactsTable(TicsMain main, final Person person, VerticalLayout content) {
         this.main = main;
         this.person = person;
         this.content = content;
@@ -39,7 +39,7 @@ public class ContactsTable extends Table {
         addContainerProperty("Mailing Address", String.class, null);
         addContainerProperty("Address Type", String.class, null);
         addContainerProperty("Edit", Button.class, null);
-        addContainerProperty("Detele", Button.class, null);
+        addContainerProperty("Delete", Button.class, null);
 
 
         List<Contact> contacts = person.getContacts();
@@ -106,7 +106,7 @@ public class ContactsTable extends Table {
 
     private void getHome() {
         content.removeAllComponents();
-        ContactsTable updatetable = new ContactsTable(main, person, content);
+        PersonContactsTable updatetable = new PersonContactsTable(main, person, content);
         content.addComponent(updatetable);
     }
 }

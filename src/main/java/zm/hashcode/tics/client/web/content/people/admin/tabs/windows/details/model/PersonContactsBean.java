@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author boniface
  */
-public class ContactsBean implements Serializable {
+public class PersonContactsBean implements Serializable {
 
     private String mailingAddress;
     private String telephoneNumber;

@@ -121,7 +121,7 @@ public class FacilityForm extends FormLayout {
         ComboBox comboBox = new ComboBox(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
         Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
-        for (Location city : cities) {
+        for (Location city : locations) {
             comboBox.addItem(city.getId());
             comboBox.setItemCaption(city.getId(), city.getName());
         }

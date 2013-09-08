@@ -30,7 +30,7 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout actionPlansTab = new VerticalLayout();
         actionPlansTab.setMargin(true);
-        actionPlansTab.addComponent(new ActionPlansTab(main));
+        actionPlansTab.addComponent(new PersonActionPlansTab(main, person));
 
         final VerticalLayout personCoursesTab = new VerticalLayout();
         personCoursesTab.setMargin(true);
@@ -46,7 +46,7 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout personIdetitiesTab = new VerticalLayout();
         personIdetitiesTab.setMargin(true);
-        personIdetitiesTab.addComponent(new PersonIdentitiesTab(main));
+        personIdetitiesTab.addComponent(new PersonIdentitiesTab(main, person));
 
         final VerticalLayout personMenteesTab = new VerticalLayout();
         personMenteesTab.setMargin(true);

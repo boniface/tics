@@ -19,22 +19,26 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.ui.demographics.IdentificationTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.PersonContactsBean;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonContactsTable;
-import zm.hashcode.tics.domain.people.Contact;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.PersonIdentitiesBean;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonIdentitiesTable;
 import zm.hashcode.tics.domain.people.Person;
+import zm.hashcode.tics.domain.people.PersonIdentities;
+import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
 
 /**
  *
  * @author geek
  */
-public class PersonContactForm extends FormLayout implements Button.ClickListener, Property.ValueChangeListener {
+public class PersonIdentitiesForm extends FormLayout implements Button.ClickListener, Property.ValueChangeListener {
 
-    private final PersonContactsBean bean;
-    public final BeanItem<PersonContactsBean> item;
+    private final PersonIdentitiesBean bean;
+    public final BeanItem<PersonIdentitiesBean> item;
     public final FieldGroup binder;
-//    public ComboBox cityCombo = new ComboBox();
+    //
+    public ComboBox identificationTypeCombo = new ComboBox();
+    private String identificationTypeId;
     // Define Buttons
     public Button save = new Button("Save");
     public Button cancel = new Button("Cancel");
@@ -43,16 +47,16 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private final Person person;
     private final TicsMain main;
     private final VerticalLayout content;
-    private PersonContactsTable table;
+    private PersonIdentitiesTable table;
 
-    public PersonContactForm(TicsMain main, Person person, VerticalLayout contentLayout) {
+    public PersonIdentitiesForm(TicsMain main, Person person, VerticalLayout contentLayout) {
         setSizeFull();
         this.person = person;
         this.main = main;
         this.content = contentLayout;
 
-        addListeners();
-        bean = new PersonContactsBean();
+
+        bean = new PersonIdentitiesBean();
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         HorizontalLayout buttons = getButtons();
@@ -60,38 +64,48 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         update.setVisible(false);
         delete.setVisible(false);
 
+//    private String id;
+//    private String identificationTypeId; // IdentificationType ***
+//    private String idValue;
 
-        TextField mailingAddress = getTextField("Mailing Address", "mailingAddress");
-        TextField telephoneNumber = getTextField("Physical Address", "telephoneNumber");
-        TextField cellnumber = getTextField("Cell Number", "cellnumber");
-        TextField faxnumber = getTextField("Fax Number", "faxnumber");
-        TextField email = getTextField("Email", "email");
-        TextField addressType = getTextField("Address Type", "addressType");
+        final ComboBox identificationTypeIdComboBox = getIdentificationTypeIdComboBox("Identification Type", "identificationTypeId");
+        final TextField idValueTextField = getTextField("Id Value", "idValue");
+
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
-        grid.addComponent(email, 0, 0);
-        grid.addComponent(cellnumber, 1, 0);
-        grid.addComponent(telephoneNumber, 2, 0);
+        grid.addComponent(identificationTypeIdComboBox, 0, 0);
+        grid.addComponent(idValueTextField, 1, 0);
 
-        grid.addComponent(faxnumber, 0, 1);
-        grid.addComponent(mailingAddress, 1, 1);
-        grid.addComponent(addressType, 2, 1);
-
-        grid.addComponent(buttons, 0, 3, 2, 3);
+        grid.addComponent(buttons, 0, 1, 2, 1);
 
         addComponent(grid);
-
+        addListeners();
     }
 
     private TextField getTextField(String label, String field) {
         TextField textField = new TextField(label);
         textField.setWidth(250, Unit.PIXELS);
         textField.setNullRepresentation("");
-        textField.addValidator(new BeanValidator(PersonContactsBean.class, field));
+        textField.addValidator(new BeanValidator(PersonIdentitiesBean.class, field));
         textField.setImmediate(true);
         binder.bind(textField, field);
         return textField;
+    }
+
+    private ComboBox getIdentificationTypeIdComboBox(String label, String field) {
+        identificationTypeCombo.setCaption(label);
+        List<IdentificationType> identificationTypes = IdentificationTypeFacade.getIdentificationTypeService().findAll();
+//        Collection<TrainingInstitution> institutionCourses = Collections2.filter(trainingInstitutions, new TrainingInstitutionPredicate());
+        for (IdentificationType identificationType : identificationTypes) {
+            identificationTypeCombo.addItem(identificationType.getId());
+            identificationTypeCombo.setItemCaption(identificationType.getId(), identificationType.getIdvalue());
+        }
+        identificationTypeCombo.addValidator(new BeanValidator(PersonIdentitiesBean.class, field));
+        identificationTypeCombo.setImmediate(true);
+        identificationTypeCombo.setWidth(250, Unit.PIXELS);
+        binder.bind(identificationTypeCombo, field);
+        return identificationTypeCombo;
     }
 
     private HorizontalLayout getButtons() {
@@ -124,19 +138,19 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         update.addClickListener((Button.ClickListener) this);
         delete.addClickListener((Button.ClickListener) this);
         table.addValueChangeListener((Property.ValueChangeListener) this);
-//        cityCombo.addValueChangeListener((Property.ValueChangeListener) this);
+        identificationTypeCombo.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            Contact contact = getNewEntity(binder);
-            List<Contact> contacts = new ArrayList<>();
-            contacts.add(contact);
-            contacts.addAll(person.getContacts());
+            PersonIdentities personIdentities = getNewEntity(binder);
+            List<PersonIdentities> personIdentity = new ArrayList<>();
+            personIdentity.add(personIdentities);
+            personIdentity.addAll(person.getIdentities());
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
-                    .contacts(contacts)
+                    .identities(personIdentity)
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
             getHome();
@@ -159,25 +173,26 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
     private void getHome() {
         content.removeAllComponents();
-        table = new PersonContactsTable(main, person, content);
+        table = new PersonIdentitiesTable(main, person, content);
         content.addComponent(table);
     }
 
-    private Contact getNewEntity(FieldGroup binder) {
-        final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        final Contact contact = new Contact.Builder(entityBean.getEmail())
-                .addressType(entityBean.getAddressType())
-                .cellnumber(entityBean.getCellnumber())
-                .faxnumber(entityBean.getFaxnumber())
-                .mailingAddress(entityBean.getMailingAddress())
-                .telephoneNumber(entityBean.getTelephoneNumber())
+    private PersonIdentities getNewEntity(FieldGroup binder) {
+        final PersonIdentitiesBean entityBean = ((BeanItem<PersonIdentitiesBean>) binder.getItemDataSource()).getBean();
+        IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(identificationTypeId);
+        final PersonIdentities personIdentity = new PersonIdentities.Builder(identificationType)
+                .idValue(identificationTypeId)
                 .build();
-        return contact;
+        return personIdentity;
     }
 
     @Override
     public void valueChange(Property.ValueChangeEvent event) {
         final Property property = event.getProperty();
         System.out.println(" The value is " + property.getValue());
+
+        if (property == this.identificationTypeCombo) {
+            identificationTypeId = property.getValue().toString();
+        }
     }
 }

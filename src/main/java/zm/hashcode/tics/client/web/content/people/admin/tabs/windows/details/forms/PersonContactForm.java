@@ -19,11 +19,13 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.ui.location.AddressTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.PersonContactsBean;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonContactsTable;
 import zm.hashcode.tics.domain.people.Contact;
 import zm.hashcode.tics.domain.people.Person;
+import zm.hashcode.tics.domain.ui.location.AddressType;
 
 /**
  *
@@ -66,7 +68,8 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         TextField cellnumber = getTextField("Cell Number", "cellnumber");
         TextField faxnumber = getTextField("Fax Number", "faxnumber");
         TextField email = getTextField("Email", "email");
-        TextField addressType = getTextField("Address Type", "addressType");
+        ComboBox addressTypeComboBox = getAddressTypeComboBox("Address Type", "addressType");
+//        TextField addressType = getTextField("Address Type", "addressType");
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
@@ -76,12 +79,29 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
         grid.addComponent(faxnumber, 0, 1);
         grid.addComponent(mailingAddress, 1, 1);
-        grid.addComponent(addressType, 2, 1);
+        grid.addComponent(addressTypeComboBox, 2, 1);
 
         grid.addComponent(buttons, 0, 3, 2, 3);
 
         addComponent(grid);
 
+    }
+
+    private ComboBox getAddressTypeComboBox(String label, String field) {
+        ComboBox comboBox = new ComboBox(label);
+        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
+////        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
+////        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
+//        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
+        for (AddressType addressType : addressTypes) {
+            comboBox.addItem(addressType.getId());
+            comboBox.setItemCaption(addressType.getId(), addressType.getAddressTypeName());
+        }
+        comboBox.addValidator(new BeanValidator(PersonContactsBean.class, field));
+        comboBox.setImmediate(true);
+        comboBox.setWidth(250, Unit.PIXELS);
+        binder.bind(comboBox, field);
+        return comboBox;
     }
 
     private TextField getTextField(String label, String field) {
@@ -123,7 +143,7 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         cancel.addClickListener((Button.ClickListener) this);
         update.addClickListener((Button.ClickListener) this);
         delete.addClickListener((Button.ClickListener) this);
-        table.addValueChangeListener((Property.ValueChangeListener) this);
+//        table.addValueChangeListener((Property.ValueChangeListener) this); // add later in getHome()
 //        cityCombo.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
@@ -150,23 +170,72 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     }
 
     private void saveEditedForm(FieldGroup binder) {
-        getHome();
+        try {
+            binder.commit();
+            Contact contact = getEditedEntity(binder);
+            List<Contact> contacts = new ArrayList<>();
+            contacts.add(contact);
+            contacts.addAll(person.getContacts());
+            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                    .person(person)
+                    .contacts(contacts)
+                    .build();
+            PersonFacade.getPersonService().merge(updatePerson);
+            getHome();
+            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
     }
 
     private void deleteForm(FieldGroup binder) {
-        getHome();
+        try {
+            binder.commit();
+            Contact contact = getEditedEntity(binder);
+            List<Contact> contacts = new ArrayList<>();
+
+            contacts.addAll(person.getContacts());
+            contacts.remove(contact);
+            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                    .person(person)
+                    .contacts(contacts)
+                    .build();
+            PersonFacade.getPersonService().merge(updatePerson);
+            getHome();
+            Notification.show("Record DELETED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Record NOT DELETED!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
     }
 
     private void getHome() {
         content.removeAllComponents();
-        table = new PersonContactsTable(main, person, content);
+        Person personn = PersonFacade.getPersonService().find(person.getId()); // Get Person with current changes // refresh
+        table = new PersonContactsTable(main, personn, content);
         content.addComponent(table);
+        table.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
     private Contact getNewEntity(FieldGroup binder) {
         final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
+        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType());
         final Contact contact = new Contact.Builder(entityBean.getEmail())
-                .addressType(entityBean.getAddressType())
+                .addressType(addressType.getAddressTypeName())
+                .cellnumber(entityBean.getCellnumber())
+                .faxnumber(entityBean.getFaxnumber())
+                .mailingAddress(entityBean.getMailingAddress())
+                .telephoneNumber(entityBean.getTelephoneNumber())
+                .build();
+        return contact;
+    }
+
+    private Contact getEditedEntity(FieldGroup binder) {
+        final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
+        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType());
+        final Contact contact = new Contact.Builder(entityBean.getEmail())
+                .addressType(addressType.getAddressTypeName())
                 .cellnumber(entityBean.getCellnumber())
                 .faxnumber(entityBean.getFaxnumber())
                 .mailingAddress(entityBean.getMailingAddress())

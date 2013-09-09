@@ -20,6 +20,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
+import zm.hashcode.tics.app.facade.people.EmployeeActionPlanFacade;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.training.mentoring.MentoringSessionFacade;
@@ -47,10 +48,12 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
     public ComboBox scheduledCourseCombo = new ComboBox();
     public ComboBox mentoringSessionCombo = new ComboBox();
     public ComboBox nimmartSessionCombo = new ComboBox();
-    private String courseComboId; // for and ENTITY
-    private String scheduledCourseComboId; // for and ENTITY
-    private String mentoringSessionComboId; // for and ENTITY
-    private String nimmartSessionComboId; // for and ENTITY
+    /*
+     private String courseComboId; // for and ENTITY
+     private String scheduledCourseComboId; // for and ENTITY
+     private String mentoringSessionComboId; // for and ENTITY
+     private String nimmartSessionComboId; // for and ENTITY
+     */
     // Define Buttons
     public Button save = new Button("Save");
     public Button cancel = new Button("Cancel");
@@ -227,18 +230,20 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
         cancel.addClickListener((Button.ClickListener) this);
         update.addClickListener((Button.ClickListener) this);
         delete.addClickListener((Button.ClickListener) this);
-        table.addValueChangeListener((Property.ValueChangeListener) this);
-
-        courseCombo.addValueChangeListener((Property.ValueChangeListener) this);
-        scheduledCourseCombo.addValueChangeListener((Property.ValueChangeListener) this);
-        mentoringSessionCombo.addValueChangeListener((Property.ValueChangeListener) this);
-        nimmartSessionCombo.addValueChangeListener((Property.ValueChangeListener) this);
+//        table.addValueChangeListener((Property.ValueChangeListener) this); // add later in getHOme()
+        /*
+         courseCombo.addValueChangeListener((Property.ValueChangeListener) this);
+         scheduledCourseCombo.addValueChangeListener((Property.ValueChangeListener) this);
+         mentoringSessionCombo.addValueChangeListener((Property.ValueChangeListener) this);
+         nimmartSessionCombo.addValueChangeListener((Property.ValueChangeListener) this);
+         */
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
             EmployeeActionPlan employeeActionPlan = getNewEntity(binder);
+            EmployeeActionPlanFacade.getEmployeeActionPlanService().persist(employeeActionPlan);
             List<EmployeeActionPlan> employeeActionPlans = new ArrayList<>();
             employeeActionPlans.add(employeeActionPlan);
             employeeActionPlans.addAll(person.getActionPlans());
@@ -253,43 +258,89 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
         }
-
-
     }
 
     private void saveEditedForm(FieldGroup binder) {
-        getHome();
+        try {
+            binder.commit();
+            EmployeeActionPlan employeeActionPlan = getUpdateEntity(binder);
+            EmployeeActionPlanFacade.getEmployeeActionPlanService().merge(employeeActionPlan);
+            List<EmployeeActionPlan> employeeActionPlans = new ArrayList<>();
+            employeeActionPlans.add(employeeActionPlan);
+            employeeActionPlans.addAll(person.getActionPlans());
+            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                    .person(person)
+                    .actionPlans(employeeActionPlans)
+                    .build();
+            PersonFacade.getPersonService().merge(updatePerson);
+            getHome();
+            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
     }
 
     private void deleteForm(FieldGroup binder) {
-        getHome();
+
+        try {
+            binder.commit();
+            EmployeeActionPlan employeeActionPlan = getUpdateEntity(binder);
+            List<EmployeeActionPlan> employeeActionPlans = new ArrayList<>();
+            employeeActionPlans.addAll(person.getActionPlans());
+            employeeActionPlans.remove(employeeActionPlan);
+
+            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                    .person(person)
+                    .actionPlans(employeeActionPlans)
+                    .build();
+            PersonFacade.getPersonService().merge(updatePerson);
+            EmployeeActionPlanFacade.getEmployeeActionPlanService().remove(employeeActionPlan); // NOTE
+            getHome();
+            Notification.show("Record Deleted!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Record Not Deleted!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
     }
 
     private void getHome() {
         content.removeAllComponents();
-        table = new PersonActionPlanTable(main, person, content);
+        Person personn = PersonFacade.getPersonService().find(person.getId()); // Get Person with current changes // refresh
+        table = new PersonActionPlanTable(main, personn, content);
         content.addComponent(table);
+        table.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
     private EmployeeActionPlan getNewEntity(FieldGroup binder) {
         final PersonActionPlanBean entityBean = ((BeanItem<PersonActionPlanBean>) binder.getItemDataSource()).getBean();
-
-//        Course course = CourseFacade.getCourseService().find(courseComboId);
-//        ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(scheduledCourseComboId);
-//        MentoringSession mentoringSession = MentoringSessionFacade.getMentoringSessionService().find(mentoringSessionComboId);
-//        MentoringSession nimmartSession = MentoringSessionFacade.getMentoringSessionService().find(nimmartSessionComboId);
-
         final EmployeeActionPlan employeeActionPlan = new EmployeeActionPlan.Builder(entityBean.getActionPlan())
                 .actionPlanDate(entityBean.getActionPlanDate())
                 .actionPlanreview(entityBean.getActionPlanreview())
-                .courseId(courseComboId)
-                .mentoringSessionId(mentoringSessionComboId)
-                .nimmartSessionId(null)
+                .courseId(entityBean.getCourseId())
+                .mentoringSessionId(entityBean.getMentoringSessionId())
+                .nimmartSessionId(entityBean.getNimmartSessionId())
                 .review(entityBean.isReview())
                 .reviewPlanDate(entityBean.getReviewPlanDate())
                 .schduledCourseId(entityBean.getSchduledCourseId())
                 .status(entityBean.getStatus())
-                .nimmartSessionId(nimmartSessionComboId)
+                .build();
+        return employeeActionPlan;
+    }
+
+    private EmployeeActionPlan getUpdateEntity(FieldGroup binder) {
+        final PersonActionPlanBean entityBean = ((BeanItem<PersonActionPlanBean>) binder.getItemDataSource()).getBean();
+        final EmployeeActionPlan employeeActionPlan = new EmployeeActionPlan.Builder(entityBean.getActionPlan())
+                .actionPlanDate(entityBean.getActionPlanDate())
+                .actionPlanreview(entityBean.getActionPlanreview())
+                .courseId(entityBean.getCourseId())
+                .mentoringSessionId(entityBean.getMentoringSessionId())
+                .nimmartSessionId(entityBean.getNimmartSessionId())
+                .review(entityBean.isReview())
+                .reviewPlanDate(entityBean.getReviewPlanDate())
+                .schduledCourseId(entityBean.getSchduledCourseId())
+                .status(entityBean.getStatus())
+                .id(entityBean.getId())
                 .build();
         return employeeActionPlan;
     }
@@ -298,15 +349,16 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
     public void valueChange(Property.ValueChangeEvent event) {
         final Property property = event.getProperty();
         System.out.println(" The value is " + property.getValue());
-
-        if (property == this.courseCombo) {
-            courseComboId = property.getValue().toString();
-        } else if (property == this.scheduledCourseCombo) {
-            scheduledCourseComboId = property.getValue().toString();
-        } else if (property == this.mentoringSessionCombo) {
-            mentoringSessionComboId = property.getValue().toString();
-        } else if (property == this.nimmartSessionCombo) {
-            nimmartSessionComboId = property.getValue().toString();
-        }
+        /*
+         if (property == this.courseCombo) {
+         courseComboId = property.getValue().toString();
+         } else if (property == this.scheduledCourseCombo) {
+         scheduledCourseComboId = property.getValue().toString();
+         } else if (property == this.mentoringSessionCombo) {
+         mentoringSessionComboId = property.getValue().toString();
+         } else if (property == this.nimmartSessionCombo) {
+         nimmartSessionComboId = property.getValue().toString();
+         }
+         * */
     }
 }

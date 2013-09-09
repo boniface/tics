@@ -106,7 +106,8 @@ public class PersonContactsTable extends Table {
 
     private void getHome() {
         content.removeAllComponents();
-        PersonContactsTable updatetable = new PersonContactsTable(main, person, content);
+        Person personn = PersonFacade.getPersonService().find(person.getId());
+        PersonContactsTable updatetable = new PersonContactsTable(main, personn, content);
         content.addComponent(updatetable);
     }
 }

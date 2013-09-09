@@ -12,8 +12,10 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import zm.hashcode.tics.app.facade.people.EmployeeActionPlanFacade;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.training.mentoring.MentoringSessionFacade;
@@ -34,6 +36,8 @@ public class PersonActionPlanTable extends Table {
     private final TicsMain main;
     private final Person person;
     private final VerticalLayout content;
+    //
+    private static EmployeeActionPlan itemIdd;
 
     public PersonActionPlanTable(TicsMain main, final Person person, VerticalLayout content) {
         this.main = main;
@@ -55,7 +59,7 @@ public class PersonActionPlanTable extends Table {
 
 
         List<EmployeeActionPlan> employeeActionPlans = person.getActionPlans();
-        int i = 1;
+//        int i = 1;
         for (EmployeeActionPlan employeeActionPlan : employeeActionPlans) {
 
             Button deleteButton = new Button("Delete");
@@ -66,12 +70,21 @@ public class PersonActionPlanTable extends Table {
                     // Get the item identifier from the user-defined data.
                     EmployeeActionPlan itemId = (EmployeeActionPlan) event.getButton().getData();
                     System.out.println(" The is ia " + itemId.getActionPlan());
-                    List<EmployeeActionPlan> updatedEmployeeActionPlans = removeEntity(itemId, person.getActionPlans());
+
+                    ////////////////////////////////
+                    List<EmployeeActionPlan> updatedEmployeeActionPlans = new ArrayList<>();
+                    updatedEmployeeActionPlans.addAll(person.getActionPlans());
+                    updatedEmployeeActionPlans.remove(itemId);
+                    ////////////////////////////////////
+
+//                    List<EmployeeActionPlan> updatedEmployeeActionPlans = removeEntity(itemId, person.getActionPlans());
                     Person updatedPerson = new Person.Builder(person.getFirstname(), person.getSurname())
                             .person(person)
                             .actionPlans(updatedEmployeeActionPlans)
+                            .id(person.getId())
                             .build();
                     PersonFacade.getPersonService().merge(updatedPerson);
+                    EmployeeActionPlanFacade.getEmployeeActionPlanService().remove(itemId); // NOTE
                     getHome();
                 }
             });
@@ -84,14 +97,14 @@ public class PersonActionPlanTable extends Table {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
-                    EmployeeActionPlan itemId = (EmployeeActionPlan) event.getButton().getData();
+                    itemIdd = (EmployeeActionPlan) event.getButton().getData();
 
                 }
             });
 
             editbutton.setStyleName(Reindeer.BUTTON_LINK);
 
-            i++;
+//            i++;
 
             Course course = CourseFacade.getCourseService().find(employeeActionPlan.getCourseId());
             ScheduledCourse scheduledCourse = ScheduledCourseFacade.getScheduledCourseService().find(employeeActionPlan.getSchduledCourseId());
@@ -111,18 +124,13 @@ public class PersonActionPlanTable extends Table {
                 nimmartSession.getSessionName(),
                 editbutton,
                 deleteButton
-            }, i);
+            }, employeeActionPlan.getId()); //   }, i);
         }
 
-
-        setNullSelectionAllowed(
-                false);
-//
-        setSelectable(
-                true);
+        setNullSelectionAllowed(false);
+        setSelectable(true);
         // Send changes in selection immediately to server.
-        setImmediate(
-                true);
+        setImmediate(true);
 
     }
 
@@ -132,8 +140,10 @@ public class PersonActionPlanTable extends Table {
 
     private void getHome() {
         content.removeAllComponents();
-        PersonContactsTable updatetable = new PersonContactsTable(main, person, content);
+        Person personn = PersonFacade.getPersonService().find(person.getId());
+        PersonActionPlanTable updatetable = new PersonActionPlanTable(main, personn, content);
         content.addComponent(updatetable);
+
     }
     //
 }

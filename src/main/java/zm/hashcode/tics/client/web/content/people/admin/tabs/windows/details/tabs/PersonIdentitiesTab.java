@@ -37,7 +37,7 @@ public class PersonIdentitiesTab extends VerticalLayout implements Button.ClickL
         button.addClickListener(this);
         header.addComponent(button);
         header.setComponentAlignment(button, Alignment.TOP_RIGHT);
-        table = new PersonIdentitiesTable(main, person, contentLayout);
+        table = new PersonIdentitiesTable(main, this.person, contentLayout);
         table.setSizeFull();
         addComponent(header);
         addComponent(new Label("<hr/>", ContentMode.HTML));

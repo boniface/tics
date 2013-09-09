@@ -19,6 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
+import zm.hashcode.tics.app.facade.people.PersonIdentitiesFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.IdentificationTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.PersonIdentitiesBean;
@@ -38,7 +39,7 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
     public final FieldGroup binder;
     //
     public ComboBox identificationTypeCombo = new ComboBox();
-    private String identificationTypeId;
+//    private String identificationTypeId;
     // Define Buttons
     public Button save = new Button("Save");
     public Button cancel = new Button("Cancel");
@@ -137,20 +138,24 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
         cancel.addClickListener((Button.ClickListener) this);
         update.addClickListener((Button.ClickListener) this);
         delete.addClickListener((Button.ClickListener) this);
-        table.addValueChangeListener((Property.ValueChangeListener) this);
-        identificationTypeCombo.addValueChangeListener((Property.ValueChangeListener) this);
+//        table.addValueChangeListener((Property.ValueChangeListener) this); // add later in getHome();
+        /*
+         identificationTypeCombo.addValueChangeListener((Property.ValueChangeListener) this);
+         */
     }
 
     private void saveForm(FieldGroup binder) {
         try {
             binder.commit();
-            PersonIdentities personIdentities = getNewEntity(binder);
-            List<PersonIdentities> personIdentity = new ArrayList<>();
-            personIdentity.add(personIdentities);
-            personIdentity.addAll(person.getIdentities());
+            PersonIdentities personIdentity = getNewEntity(binder);
+            PersonIdentitiesFacade.getPersonIdentitiesService().persist(personIdentity);
+            List<PersonIdentities> personIdenties = new ArrayList<>();
+            personIdenties.add(personIdentity);
+            personIdenties.addAll(person.getIdentities());
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
-                    .identities(personIdentity)
+                    .identities(personIdenties)
+                    .id(person.getId())
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
             getHome();
@@ -164,35 +169,85 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
     }
 
     private void saveEditedForm(FieldGroup binder) {
+//        try {
+//            binder.commit();
+//            PersonIdentities personIdentity = getUpdateEntity(binder);
+//            PersonIdentitiesFacade.getPersonIdentitiesService().merge(personIdentity);
+//            List<PersonIdentities> personIdentities = new ArrayList<>();
+//            personIdentities.add(personIdentity);
+//            personIdentities.addAll(person.getIdentities());
+//            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+//                    .person(person)
+//                    .identities(personIdentities)
+//                    .id(person.getId())
+//                    .build();
+//            PersonFacade.getPersonService().merge(updatePerson);
+//            getHome();
+//            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+//        } catch (FieldGroup.CommitException e) {
+//            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+//            getHome();
+//        }
         getHome();
     }
 
     private void deleteForm(FieldGroup binder) {
+//        try {
+//            binder.commit();
+//            PersonIdentities personIdentity = getUpdateEntity(binder);
+//            List<PersonIdentities> personIdentities = new ArrayList<>();
+//
+//            personIdentities.addAll(person.getIdentities());
+//            personIdentities.remove(personIdentity);
+//            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+//                    .person(person)
+//                    .identities(personIdentities)
+//                    .build();
+//            PersonFacade.getPersonService().merge(updatePerson);
+//            PersonIdentitiesFacade.getPersonIdentitiesService().remove(personIdentity);// NOTE
+//            getHome();
+//            Notification.show("Record DELETED!", Notification.Type.TRAY_NOTIFICATION);
+//        } catch (FieldGroup.CommitException e) {
+//            Notification.show("Record NOT DELETED!", Notification.Type.TRAY_NOTIFICATION);
+//            getHome();
+//        }
         getHome();
     }
 
     private void getHome() {
         content.removeAllComponents();
-        table = new PersonIdentitiesTable(main, person, content);
+        Person personn = PersonFacade.getPersonService().find(person.getId()); // Get Person with current changes // refresh
+        table = new PersonIdentitiesTable(main, personn, content);
         content.addComponent(table);
+        table.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
     private PersonIdentities getNewEntity(FieldGroup binder) {
         final PersonIdentitiesBean entityBean = ((BeanItem<PersonIdentitiesBean>) binder.getItemDataSource()).getBean();
-        IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(identificationTypeId);
+        IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(entityBean.getIdentificationTypeId());
         final PersonIdentities personIdentity = new PersonIdentities.Builder(identificationType)
-                .idValue(identificationTypeId)
+                .idValue(entityBean.getIdValue())
                 .build();
         return personIdentity;
     }
 
+//    private PersonIdentities getUpdateEntity(FieldGroup binder) {
+//        final PersonIdentitiesBean entityBean = ((BeanItem<PersonIdentitiesBean>) binder.getItemDataSource()).getBean();
+//        IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(entityBean.getIdentificationTypeId());
+//        final PersonIdentities personIdentity = new PersonIdentities.Builder(identificationType)
+//                .idValue(entityBean.getIdValue())
+//                .id(entityBean.getId())
+//                .build();
+//        return personIdentity;
+//    }
     @Override
     public void valueChange(Property.ValueChangeEvent event) {
         final Property property = event.getProperty();
         System.out.println(" The value is " + property.getValue());
-
-        if (property == this.identificationTypeCombo) {
-            identificationTypeId = property.getValue().toString();
-        }
+        /*
+         if (property == this.identificationTypeCombo) {
+         identificationTypeId = property.getValue().toString();
+         }
+         */
     }
 }

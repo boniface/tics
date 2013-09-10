@@ -41,9 +41,9 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
     public ComboBox identificationTypeCombo = new ComboBox();
 //    private String identificationTypeId;
     // Define Buttons
-    public Button save = new Button("Save");
+    private Button save = new Button("Save");
     public Button cancel = new Button("Cancel");
-    public Button update = new Button("Update");
+    private Button update = new Button("Update");
     public Button delete = new Button("Delete");
     private final Person person;
     private final TicsMain main;
@@ -64,10 +64,6 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
         // Determines which properties are shown
         update.setVisible(false);
         delete.setVisible(false);
-
-//    private String id;
-//    private String identificationTypeId; // IdentificationType ***
-//    private String idValue;
 
         final ComboBox identificationTypeIdComboBox = getIdentificationTypeIdComboBox("Identification Type", "identificationTypeId");
         final TextField idValueTextField = getTextField("Id Value", "idValue");
@@ -111,9 +107,9 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
 
     private HorizontalLayout getButtons() {
         HorizontalLayout buttons = new HorizontalLayout();
-        buttons.addComponent(save);
+        buttons.addComponent(getSave());
         buttons.addComponent(cancel);
-        buttons.addComponent(update);
+        buttons.addComponent(getUpdate());
         buttons.addComponent(delete);
         return buttons;
     }
@@ -121,11 +117,11 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
     @Override
     public void buttonClick(Button.ClickEvent event) {
         final Button source = event.getButton();
-        if (source == save) {
+        if (source == getSave()) {
             saveForm(binder);
         } else if (source == cancel) {
             getHome();
-        } else if (source == update) {
+        } else if (source == getUpdate()) {
             saveEditedForm(binder);
         } else if (source == delete) {
             deleteForm(binder);
@@ -134,9 +130,9 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
 
     private void addListeners() {
         //Register Button Listeners
-        save.addClickListener((Button.ClickListener) this);
+        getSave().addClickListener((Button.ClickListener) this);
         cancel.addClickListener((Button.ClickListener) this);
-        update.addClickListener((Button.ClickListener) this);
+        getUpdate().addClickListener((Button.ClickListener) this);
         delete.addClickListener((Button.ClickListener) this);
 //        table.addValueChangeListener((Property.ValueChangeListener) this); // add later in getHome();
         /*
@@ -165,52 +161,33 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
             getHome();
         }
 
-
     }
 
     private void saveEditedForm(FieldGroup binder) {
-//        try {
-//            binder.commit();
-//            PersonIdentities personIdentity = getUpdateEntity(binder);
-//            PersonIdentitiesFacade.getPersonIdentitiesService().merge(personIdentity);
-//            List<PersonIdentities> personIdentities = new ArrayList<>();
-//            personIdentities.add(personIdentity);
-//            personIdentities.addAll(person.getIdentities());
-//            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-//                    .person(person)
-//                    .identities(personIdentities)
-//                    .id(person.getId())
-//                    .build();
-//            PersonFacade.getPersonService().merge(updatePerson);
-//            getHome();
-//            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
-//        } catch (FieldGroup.CommitException e) {
-//            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
-//            getHome();
-//        }
-        getHome();
+        try {
+            binder.commit();
+            PersonIdentities personIdentity = getUpdateEntity(binder);
+            PersonIdentitiesFacade.getPersonIdentitiesService().merge(personIdentity);
+            List<PersonIdentities> personIdentities = new ArrayList<>();
+            personIdentities.addAll(person.getIdentities());
+            personIdentities.add(personIdentity);
+
+            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                    .person(person)
+                    .identities(personIdentities)
+                    .id(person.getId())
+                    .build();
+            PersonFacade.getPersonService().merge(updatePerson);
+            getHome();
+            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+        } catch (FieldGroup.CommitException e) {
+            Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
+            getHome();
+        }
+
     }
 
     private void deleteForm(FieldGroup binder) {
-//        try {
-//            binder.commit();
-//            PersonIdentities personIdentity = getUpdateEntity(binder);
-//            List<PersonIdentities> personIdentities = new ArrayList<>();
-//
-//            personIdentities.addAll(person.getIdentities());
-//            personIdentities.remove(personIdentity);
-//            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-//                    .person(person)
-//                    .identities(personIdentities)
-//                    .build();
-//            PersonFacade.getPersonService().merge(updatePerson);
-//            PersonIdentitiesFacade.getPersonIdentitiesService().remove(personIdentity);// NOTE
-//            getHome();
-//            Notification.show("Record DELETED!", Notification.Type.TRAY_NOTIFICATION);
-//        } catch (FieldGroup.CommitException e) {
-//            Notification.show("Record NOT DELETED!", Notification.Type.TRAY_NOTIFICATION);
-//            getHome();
-//        }
         getHome();
     }
 
@@ -231,15 +208,16 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
         return personIdentity;
     }
 
-//    private PersonIdentities getUpdateEntity(FieldGroup binder) {
-//        final PersonIdentitiesBean entityBean = ((BeanItem<PersonIdentitiesBean>) binder.getItemDataSource()).getBean();
-//        IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(entityBean.getIdentificationTypeId());
-//        final PersonIdentities personIdentity = new PersonIdentities.Builder(identificationType)
-//                .idValue(entityBean.getIdValue())
-//                .id(entityBean.getId())
-//                .build();
-//        return personIdentity;
-//    }
+    private PersonIdentities getUpdateEntity(FieldGroup binder) {
+        final PersonIdentitiesBean entityBean = ((BeanItem<PersonIdentitiesBean>) binder.getItemDataSource()).getBean();
+        IdentificationType identificationType = IdentificationTypeFacade.getIdentificationTypeService().find(entityBean.getIdentificationTypeId());
+        PersonIdentities personIdentity = new PersonIdentities.Builder(identificationType)
+                .idValue(entityBean.getIdValue())
+                .id(entityBean.getId())
+                .build();
+        return personIdentity;
+    }
+
     @Override
     public void valueChange(Property.ValueChangeEvent event) {
         final Property property = event.getProperty();
@@ -249,5 +227,25 @@ public class PersonIdentitiesForm extends FormLayout implements Button.ClickList
          identificationTypeId = property.getValue().toString();
          }
          */
+    }
+
+    public void setBean(PersonIdentities personIdentity) {
+        item.getBean().setId(personIdentity.getId());
+        item.getBean().setIdValue(personIdentity.getIdValue());
+        item.getBean().setIdentificationTypeId(personIdentity.getIdType().getId());
+    }
+
+    /**
+     * @return the update
+     */
+    public Button getUpdate() {
+        return update;
+    }
+
+    /**
+     * @return the save
+     */
+    public Button getSave() {
+        return save;
     }
 }

@@ -21,6 +21,7 @@ import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.training.mentoring.MentoringSessionFacade;
 import zm.hashcode.tics.app.facade.training.schedule.ScheduledCourseFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonActionPlanForm;
 import zm.hashcode.tics.domain.people.EmployeeActionPlan;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.training.course.Course;
@@ -36,10 +37,9 @@ public class PersonActionPlanTable extends Table {
     private final TicsMain main;
     private final Person person;
     private final VerticalLayout content;
-    //
-    private static EmployeeActionPlan itemIdd;
+    private PersonActionPlanForm form;
 
-    public PersonActionPlanTable(TicsMain main, final Person person, VerticalLayout content) {
+    public PersonActionPlanTable(final TicsMain main, final Person person, final VerticalLayout content) {
         this.main = main;
         this.person = person;
         this.content = content;
@@ -97,7 +97,13 @@ public class PersonActionPlanTable extends Table {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
-                    itemIdd = (EmployeeActionPlan) event.getButton().getData();
+                    EmployeeActionPlan itemIdd = (EmployeeActionPlan) event.getButton().getData();
+                    form = new PersonActionPlanForm(main, person, content);
+                    content.removeAllComponents();
+                    form.setBean(itemIdd);
+                    form.getSave().setVisible(false);
+                    form.getUpdate().setVisible(true);
+                    content.addComponent(form);
 
                 }
             });

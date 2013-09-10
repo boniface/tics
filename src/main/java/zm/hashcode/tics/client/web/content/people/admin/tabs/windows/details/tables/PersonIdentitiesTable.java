@@ -17,6 +17,7 @@ import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.app.facade.people.PersonIdentitiesFacade;
 import zm.hashcode.tics.app.facade.ui.demographics.IdentificationTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonIdentitiesForm;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.people.PersonIdentities;
 import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
@@ -27,14 +28,14 @@ import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
  */
 public class PersonIdentitiesTable extends Table {
 
-    private final TicsMain main;
-    private final Person person;
-    private final VerticalLayout content;
-    private static PersonIdentities itemIdd;
+    public final TicsMain main;
+    public final Person person;
+    public final VerticalLayout content;
+    private PersonIdentitiesForm form;
 
-    public PersonIdentitiesTable(TicsMain main, final Person personn, VerticalLayout content) {
+    public PersonIdentitiesTable(final TicsMain main, final Person person, final VerticalLayout content) {
         this.main = main;
-        this.person = personn;
+        this.person = person;
         this.content = content;
 
         addContainerProperty("ID Type", String.class, null);
@@ -79,8 +80,13 @@ public class PersonIdentitiesTable extends Table {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
-                    itemIdd = (PersonIdentities) event.getButton().getData();
-
+                    PersonIdentities itemIdd = (PersonIdentities) event.getButton().getData();
+                    form = new PersonIdentitiesForm(main, person, content);
+                    content.removeAllComponents();
+                    form.setBean(itemIdd);
+                    form.getSave().setVisible(false);
+                    form.getUpdate().setVisible(true);
+                    content.addComponent(form);
                 }
             });
             editbutton.setStyleName(Reindeer.BUTTON_LINK);

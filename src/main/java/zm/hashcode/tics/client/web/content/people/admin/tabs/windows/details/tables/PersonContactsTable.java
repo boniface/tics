@@ -14,6 +14,7 @@ import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonContactForm;
 import zm.hashcode.tics.domain.people.Contact;
 import zm.hashcode.tics.domain.people.Person;
 
@@ -26,8 +27,9 @@ public class PersonContactsTable extends Table {
     private final TicsMain main;
     private final Person person;
     private final VerticalLayout content;
+    private PersonContactForm form;
 
-    public PersonContactsTable(TicsMain main, final Person person, VerticalLayout content) {
+    public PersonContactsTable(final TicsMain main, final Person person, final VerticalLayout content) {
         this.main = main;
         this.person = person;
         this.content = content;
@@ -40,7 +42,6 @@ public class PersonContactsTable extends Table {
         addContainerProperty("Address Type", String.class, null);
         addContainerProperty("Edit", Button.class, null);
         addContainerProperty("Delete", Button.class, null);
-
 
         List<Contact> contacts = person.getContacts();
         int i = 1;
@@ -61,6 +62,7 @@ public class PersonContactsTable extends Table {
                             .build();
                     PersonFacade.getPersonService().merge(updatedPerson);
                     getHome();
+
                 }
             });
 
@@ -73,6 +75,12 @@ public class PersonContactsTable extends Table {
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
                     Contact itemId = (Contact) event.getButton().getData();
+                    form = new PersonContactForm(main, person, content);
+                    content.removeAllComponents();
+                    form.setBean(itemId);
+                    form.getSave().setVisible(false);
+                    form.getUpdate().setVisible(true);
+                    content.addComponent(form);
 
                 }
             });
@@ -93,7 +101,6 @@ public class PersonContactsTable extends Table {
         }
 
         setNullSelectionAllowed(false);
-//
         setSelectable(true);
         // Send changes in selection immediately to server.
         setImmediate(true);

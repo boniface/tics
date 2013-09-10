@@ -64,7 +64,7 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
 
         TextField mailingAddress = getTextField("Mailing Address", "mailingAddress");
-        TextField telephoneNumber = getTextField("Physical Address", "telephoneNumber");
+        TextField telephoneNumber = getTextField("Telephone Number", "telephoneNumber");
         TextField cellnumber = getTextField("Cell Number", "cellnumber");
         TextField faxnumber = getTextField("Fax Number", "faxnumber");
         TextField email = getTextField("Email", "email");
@@ -173,12 +173,20 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         try {
             binder.commit();
             Contact contact = getEditedEntity(binder);
-            List<Contact> contacts = new ArrayList<>();
-            contacts.add(contact);
-            contacts.addAll(person.getContacts());
+            List<Contact> contacts = person.getContacts();
+            List<Contact> updatedContacts = new ArrayList<>();
+            updatedContacts.add(contact);
+
+            for (Contact contactt : contacts) {
+                if (!contactt.getAddressType().equals(contact.getAddressType())) {
+                    updatedContacts.add(contactt);
+                }
+            }
+
+
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
-                    .contacts(contacts)
+                    .contacts(updatedContacts)
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
             getHome();
@@ -187,27 +195,11 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
         }
+
     }
 
     private void deleteForm(FieldGroup binder) {
-        try {
-            binder.commit();
-            Contact contact = getEditedEntity(binder);
-            List<Contact> contacts = new ArrayList<>();
-
-            contacts.addAll(person.getContacts());
-            contacts.remove(contact);
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .contacts(contacts)
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            getHome();
-            Notification.show("Record DELETED!", Notification.Type.TRAY_NOTIFICATION);
-        } catch (FieldGroup.CommitException e) {
-            Notification.show("Record NOT DELETED!", Notification.Type.TRAY_NOTIFICATION);
-            getHome();
-        }
+        getHome();
     }
 
     private void getHome() {
@@ -220,7 +212,7 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
     private Contact getNewEntity(FieldGroup binder) {
         final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType());
+        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType()); // id stored in Bean
         final Contact contact = new Contact.Builder(entityBean.getEmail())
                 .addressType(addressType.getAddressTypeName())
                 .cellnumber(entityBean.getCellnumber())
@@ -233,7 +225,7 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
     private Contact getEditedEntity(FieldGroup binder) {
         final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType());
+        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType()); // id stored in Bean
         final Contact contact = new Contact.Builder(entityBean.getEmail())
                 .addressType(addressType.getAddressTypeName())
                 .cellnumber(entityBean.getCellnumber())
@@ -248,5 +240,40 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     public void valueChange(Property.ValueChangeEvent event) {
         final Property property = event.getProperty();
         System.out.println(" The value is " + property.getValue());
+    }
+
+    public void setBean(Contact contact) {
+        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
+        AddressType addressType = null;
+        for (AddressType addressTypee : addressTypes) {
+            if (addressTypee.getAddressTypeName().equals(contact.getAddressType())) {
+                addressType = addressTypee;
+                break;
+            }
+        }
+
+        item.getBean().setEmail(contact.getEmail());
+        try {
+            item.getBean().setAddressType(addressType.getId());
+        } catch (NullPointerException ex) {
+        }
+        item.getBean().setCellnumber(contact.getCellnumber());
+        item.getBean().setFaxnumber(contact.getFaxnumber());
+        item.getBean().setMailingAddress(contact.getMailingAddress());
+        item.getBean().setTelephoneNumber(contact.getTelephoneNumber());
+    }
+
+    /**
+     * @return the update
+     */
+    public Button getUpdate() {
+        return update;
+    }
+
+    /**
+     * @return the save
+     */
+    public Button getSave() {
+        return save;
     }
 }

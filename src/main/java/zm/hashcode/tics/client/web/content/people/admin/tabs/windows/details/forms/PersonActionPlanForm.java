@@ -250,6 +250,7 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
                     .actionPlans(employeeActionPlans)
+                    .id(person.getId())
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
             getHome();
@@ -266,11 +267,13 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
             EmployeeActionPlan employeeActionPlan = getUpdateEntity(binder);
             EmployeeActionPlanFacade.getEmployeeActionPlanService().merge(employeeActionPlan);
             List<EmployeeActionPlan> employeeActionPlans = new ArrayList<>();
-            employeeActionPlans.add(employeeActionPlan);
             employeeActionPlans.addAll(person.getActionPlans());
+            employeeActionPlans.add(employeeActionPlan);
+
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
                     .actionPlans(employeeActionPlans)
+                    .id(person.getId())
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
             getHome();
@@ -282,26 +285,7 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
     }
 
     private void deleteForm(FieldGroup binder) {
-
-        try {
-            binder.commit();
-            EmployeeActionPlan employeeActionPlan = getUpdateEntity(binder);
-            List<EmployeeActionPlan> employeeActionPlans = new ArrayList<>();
-            employeeActionPlans.addAll(person.getActionPlans());
-            employeeActionPlans.remove(employeeActionPlan);
-
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .actionPlans(employeeActionPlans)
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            EmployeeActionPlanFacade.getEmployeeActionPlanService().remove(employeeActionPlan); // NOTE
-            getHome();
-            Notification.show("Record Deleted!", Notification.Type.TRAY_NOTIFICATION);
-        } catch (FieldGroup.CommitException e) {
-            Notification.show("Record Not Deleted!", Notification.Type.TRAY_NOTIFICATION);
-            getHome();
-        }
+        getHome();
     }
 
     private void getHome() {
@@ -343,6 +327,7 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
                 .id(entityBean.getId())
                 .build();
         return employeeActionPlan;
+
     }
 
     @Override
@@ -360,5 +345,33 @@ public class PersonActionPlanForm extends FormLayout implements Button.ClickList
          nimmartSessionComboId = property.getValue().toString();
          }
          * */
+    }
+
+    public void setBean(EmployeeActionPlan employeeActionPlan) {
+        item.getBean().setId(employeeActionPlan.getId());
+        item.getBean().setActionPlan(employeeActionPlan.getActionPlan());
+        item.getBean().setActionPlanDate(employeeActionPlan.getActionPlanDate());
+        item.getBean().setActionPlanreview(employeeActionPlan.getActionPlanreview());
+        item.getBean().setCourseId(employeeActionPlan.getCourseId());
+        item.getBean().setMentoringSessionId(employeeActionPlan.getMentoringSessionId());
+        item.getBean().setNimmartSessionId(employeeActionPlan.getNimmartSessionId());
+        item.getBean().setReview(employeeActionPlan.isReview());
+        item.getBean().setReviewPlanDate(employeeActionPlan.getReviewPlanDate());
+        item.getBean().setSchduledCourseId(employeeActionPlan.getSchduledCourseId());
+        item.getBean().setStatus(employeeActionPlan.getStatus());
+    }
+
+    /**
+     * @return the update
+     */
+    public Button getUpdate() {
+        return update;
+    }
+
+    /**
+     * @return the save
+     */
+    public Button getSave() {
+        return save;
     }
 }

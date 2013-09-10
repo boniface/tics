@@ -30,7 +30,7 @@ public final class PersonIdentities implements Serializable {
     }
 
     private PersonIdentities(Builder builder) {
-
+        id = builder.id;
         idValue = builder.idValue;
         idType = builder.idType;
     }

@@ -62,7 +62,7 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout personRolesTab = new VerticalLayout();
         personRolesTab.setMargin(true);
-        personRolesTab.addComponent(new PersonRolesTab(main));
+        personRolesTab.addComponent(new PersonRolesTab(main, person));
 
         final VerticalLayout personregistrationsTab = new VerticalLayout();
         personregistrationsTab.setMargin(true);

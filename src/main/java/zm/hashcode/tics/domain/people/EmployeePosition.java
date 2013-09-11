@@ -29,7 +29,7 @@ public class EmployeePosition implements Serializable {
         position = builder.position;
         startDate = builder.startDate;
         enddate = builder.enddate;
-
+        status = builder.status;
     }
 
     public static class Builder {
@@ -78,6 +78,4 @@ public class EmployeePosition implements Serializable {
     public String getStatus() {
         return status;
     }
-    
-    
 }

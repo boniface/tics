@@ -26,7 +26,7 @@ public class PersonContactTab extends VerticalLayout implements Button.ClickList
     private PersonContactForm form;
     private HorizontalLayout header = new HorizontalLayout();
     private VerticalLayout contentLayout = new VerticalLayout();
-    private Button button = new Button("Add Contact ");
+    private Button button = new Button("Add Contact");
     private final PersonContactsTable table;
     private final Person person;
 

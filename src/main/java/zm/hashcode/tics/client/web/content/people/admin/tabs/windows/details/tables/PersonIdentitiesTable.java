@@ -15,12 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.app.facade.people.PersonIdentitiesFacade;
-import zm.hashcode.tics.app.facade.ui.demographics.IdentificationTypeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonIdentitiesForm;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.people.PersonIdentities;
-import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
 
 /**
  *

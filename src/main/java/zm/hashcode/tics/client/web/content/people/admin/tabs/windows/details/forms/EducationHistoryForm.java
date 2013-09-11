@@ -14,29 +14,31 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
-import zm.hashcode.tics.app.facade.ui.location.AddressTypeFacade;
+import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
+import zm.hashcode.tics.app.util.DateUtil;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.PersonContactsBean;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonContactsTable;
-import zm.hashcode.tics.domain.people.Contact;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.EducationHistoryBean;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.EducationHistoryTable;
+import zm.hashcode.tics.domain.people.EducationHistory;
 import zm.hashcode.tics.domain.people.Person;
-import zm.hashcode.tics.domain.ui.location.AddressType;
+import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
  *
  * @author geek
  */
-public class PersonContactForm extends FormLayout implements Button.ClickListener, Property.ValueChangeListener {
+public class EducationHistoryForm extends FormLayout implements Button.ClickListener, Property.ValueChangeListener {
 
-    private final PersonContactsBean bean;
-    public final BeanItem<PersonContactsBean> item;
+    private final EducationHistoryBean bean;
+    public final BeanItem<EducationHistoryBean> item;
     public final FieldGroup binder;
-//    public ComboBox cityCombo = new ComboBox();
+    public ComboBox locationCombo = new ComboBox();
     // Define Buttons
     public Button save = new Button("Save");
     public Button cancel = new Button("Cancel");
@@ -45,16 +47,16 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private final Person person;
     private final TicsMain main;
     private final VerticalLayout content;
-    private PersonContactsTable table;
+    private EducationHistoryTable table;
 
-    public PersonContactForm(TicsMain main, Person person, VerticalLayout contentLayout) {
+    public EducationHistoryForm(TicsMain main, Person person, VerticalLayout contentLayout) {
         setSizeFull();
         this.person = person;
         this.main = main;
         this.content = contentLayout;
 
         addListeners();
-        bean = new PersonContactsBean();
+        bean = new EducationHistoryBean();
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         HorizontalLayout buttons = getButtons();
@@ -62,53 +64,58 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         update.setVisible(false);
         delete.setVisible(false);
 
+        TextField instituteNameTextField = getTextField("Institute Name", "instituteName");
+        PopupDateField graduationDatePopupDateField = getPopupDateField("Graduation Date", "graduationDate");
+        TextField majorTextField = getTextField("Major", "major");
+        ComboBox locationComboBox = getLocationComboBox("Location", "locationId");
 
-        TextField mailingAddress = getTextField("Mailing Address", "mailingAddress");
-        TextField telephoneNumber = getTextField("Telephone Number", "telephoneNumber");
-        TextField cellnumber = getTextField("Cell Number", "cellnumber");
-        TextField faxnumber = getTextField("Fax Number", "faxnumber");
-        TextField email = getTextField("Email", "email");
-        ComboBox addressTypeComboBox = getAddressTypeComboBox("Address Type", "addressType");
-//        TextField addressType = getTextField("Address Type", "addressType");
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
-        grid.addComponent(email, 0, 0);
-        grid.addComponent(cellnumber, 1, 0);
-        grid.addComponent(telephoneNumber, 2, 0);
+        grid.addComponent(instituteNameTextField, 0, 0);
+        grid.addComponent(graduationDatePopupDateField, 1, 0);
+        grid.addComponent(majorTextField, 2, 0);
 
-        grid.addComponent(faxnumber, 0, 1);
-        grid.addComponent(mailingAddress, 1, 1);
-        grid.addComponent(addressTypeComboBox, 2, 1);
+        grid.addComponent(locationComboBox, 0, 1);
 
-        grid.addComponent(buttons, 0, 3, 2, 3);
+
+        grid.addComponent(buttons, 0, 2, 2, 2);
 
         addComponent(grid);
 
     }
 
-    private ComboBox getAddressTypeComboBox(String label, String field) {
+    private ComboBox getLocationComboBox(String label, String field) {
         ComboBox comboBox = new ComboBox(label);
-        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
+        List<Location> locations = LocationFacade.getLocationService().findAll();
 ////        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
 ////        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
 //        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
-        for (AddressType addressType : addressTypes) {
-            comboBox.addItem(addressType.getId());
-            comboBox.setItemCaption(addressType.getId(), addressType.getAddressTypeName());
+        for (Location location : locations) {
+            comboBox.addItem(location.getId());
+            comboBox.setItemCaption(location.getId(), location.getName());
         }
-        comboBox.addValidator(new BeanValidator(PersonContactsBean.class, field));
+        comboBox.addValidator(new BeanValidator(EducationHistoryBean.class, field));
         comboBox.setImmediate(true);
         comboBox.setWidth(250, Unit.PIXELS);
         binder.bind(comboBox, field);
         return comboBox;
     }
 
+    private PopupDateField getPopupDateField(String label, String field) {
+        PopupDateField popupDateField = new PopupDateField(label);
+        popupDateField.setWidth(250, Unit.PIXELS);
+        popupDateField.addValidator(new BeanValidator(EducationHistoryBean.class, field));
+        popupDateField.setImmediate(true);
+        binder.bind(popupDateField, field);
+        return popupDateField;
+    }
+
     private TextField getTextField(String label, String field) {
         TextField textField = new TextField(label);
         textField.setWidth(250, Unit.PIXELS);
         textField.setNullRepresentation("");
-        textField.addValidator(new BeanValidator(PersonContactsBean.class, field));
+        textField.addValidator(new BeanValidator(EducationHistoryBean.class, field));
         textField.setImmediate(true);
         binder.bind(textField, field);
         return textField;
@@ -149,27 +156,29 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
     private void saveForm(FieldGroup binder) {
         boolean matchFound = false;
+        DateUtil dateUtil = new DateUtil();
         try {
             binder.commit();
-            Contact contact = getNewEntity(binder);
-            List<Contact> contacts = new ArrayList<>();
-            List<Contact> contactss = person.getContacts();
+            EducationHistory educationHistory = getNewEntity(binder);
+            List<EducationHistory> educationHistorys = new ArrayList<>();
 
-            for (Contact contaq : contactss) {
-                if (!contaq.getAddressType().equalsIgnoreCase(contact.getAddressType())) {
-                    contacts.add(contaq);
+            List<EducationHistory> educationHistoryss = person.getEducationHistory();
+            for (EducationHistory educationHistry : educationHistoryss) {
+                if (!(educationHistry.getInstituteName().equalsIgnoreCase(educationHistory.getInstituteName())
+                        && dateUtil.resetTimeOfDate(educationHistry.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate())))) {
+                    educationHistorys.add(educationHistry);
                 } else {
-                    Notification.show("AddressType exist. Change Address Type before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                    Notification.show("Similar Record exist. Change Institution Name and/or Graduation Date before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
                     break;
                 }
             }
 
             if (!matchFound) {
-                contacts.add(contact);
+                educationHistorys.add(educationHistory);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
-                        .contacts(contacts)
+                        .educationHistory(educationHistorys)
                         .id(person.getId())
                         .build();
                 PersonFacade.getPersonService().merge(updatePerson);
@@ -181,27 +190,26 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             getHome();
         }
 
-
     }
 
     private void saveEditedForm(FieldGroup binder) {
+        DateUtil dateUtil = new DateUtil();
         try {
             binder.commit();
-            Contact contact = getEditedEntity(binder);
-            List<Contact> contacts = person.getContacts();
-            List<Contact> updatedContacts = new ArrayList<>();
-            updatedContacts.add(contact);
+            EducationHistory educationHistory = getEditedEntity(binder);
+            List<EducationHistory> educationHistorys = person.getEducationHistory();
+            List<EducationHistory> updatedEducationHistorys = new ArrayList<>();
+            updatedEducationHistorys.add(educationHistory);
 
-            for (Contact contactt : contacts) {
-                if (!contactt.getAddressType().equals(contact.getAddressType())) {
-                    updatedContacts.add(contactt);
+            for (EducationHistory educationHistoryy : educationHistorys) {
+                if (!dateUtil.resetTimeOfDate(educationHistoryy.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate()))) {
+                    updatedEducationHistorys.add(educationHistoryy);
                 }
             }
 
-
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
-                    .contacts(updatedContacts)
+                    .educationHistory(updatedEducationHistorys)
                     .id(person.getId())
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
@@ -221,35 +229,31 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private void getHome() {
         content.removeAllComponents();
         Person personn = PersonFacade.getPersonService().find(person.getId()); // Get Person with current changes // refresh
-        table = new PersonContactsTable(main, personn, content);
+        table = new EducationHistoryTable(main, personn, content);
         content.addComponent(table);
         table.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
-    private Contact getNewEntity(FieldGroup binder) {
-        final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType()); // id stored in Bean
-        final Contact contact = new Contact.Builder(entityBean.getEmail())
-                .addressType(addressType.getAddressTypeName())
-                .cellnumber(entityBean.getCellnumber())
-                .faxnumber(entityBean.getFaxnumber())
-                .mailingAddress(entityBean.getMailingAddress())
-                .telephoneNumber(entityBean.getTelephoneNumber())
+    private EducationHistory getNewEntity(FieldGroup binder) {
+        final EducationHistoryBean entityBean = ((BeanItem<EducationHistoryBean>) binder.getItemDataSource()).getBean();
+        Location location = LocationFacade.getLocationService().find(entityBean.getLocationId()); // id stored in Bean
+        final EducationHistory educationHistory = new EducationHistory.Builder(entityBean.getInstituteName())
+                .graduationDate(entityBean.getGraduationDate())
+                .location(location)
+                .major(entityBean.getMajor())
                 .build();
-        return contact;
+        return educationHistory;
     }
 
-    private Contact getEditedEntity(FieldGroup binder) {
-        final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType()); // id stored in Bean
-        final Contact contact = new Contact.Builder(entityBean.getEmail())
-                .addressType(addressType.getAddressTypeName())
-                .cellnumber(entityBean.getCellnumber())
-                .faxnumber(entityBean.getFaxnumber())
-                .mailingAddress(entityBean.getMailingAddress())
-                .telephoneNumber(entityBean.getTelephoneNumber())
+    private EducationHistory getEditedEntity(FieldGroup binder) {
+        final EducationHistoryBean entityBean = ((BeanItem<EducationHistoryBean>) binder.getItemDataSource()).getBean();
+        Location location = LocationFacade.getLocationService().find(entityBean.getLocationId()); // id stored in Bean
+        final EducationHistory educationHistory = new EducationHistory.Builder(entityBean.getInstituteName())
+                .graduationDate(entityBean.getGraduationDate())
+                .location(location)
+                .major(entityBean.getMajor())
                 .build();
-        return contact;
+        return educationHistory;
     }
 
     @Override
@@ -258,25 +262,11 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         System.out.println(" The value is " + property.getValue());
     }
 
-    public void setBean(Contact contact) {
-        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
-        AddressType addressType = null;
-        for (AddressType addressTypee : addressTypes) {
-            if (addressTypee.getAddressTypeName().equals(contact.getAddressType())) {
-                addressType = addressTypee;
-                break;
-            }
-        }
-
-        item.getBean().setEmail(contact.getEmail());
-        try {
-            item.getBean().setAddressType(addressType.getId());
-        } catch (NullPointerException ex) {
-        }
-        item.getBean().setCellnumber(contact.getCellnumber());
-        item.getBean().setFaxnumber(contact.getFaxnumber());
-        item.getBean().setMailingAddress(contact.getMailingAddress());
-        item.getBean().setTelephoneNumber(contact.getTelephoneNumber());
+    public void setBean(EducationHistory educationHistory) {
+        item.getBean().setGraduationDate(educationHistory.getGraduationDate());
+        item.getBean().setInstituteName(educationHistory.getInstituteName());
+        item.getBean().setLocationId(educationHistory.getLocation().getId());
+        item.getBean().setMajor(educationHistory.getMajor());
     }
 
     /**

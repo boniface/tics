@@ -14,29 +14,30 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
-import zm.hashcode.tics.app.facade.ui.location.AddressTypeFacade;
+import zm.hashcode.tics.app.facade.ui.position.PositionFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.PersonContactsBean;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonContactsTable;
-import zm.hashcode.tics.domain.people.Contact;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.model.EmployeePositionBean;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.EmployeePositionTable;
+import zm.hashcode.tics.domain.people.EmployeePosition;
 import zm.hashcode.tics.domain.people.Person;
-import zm.hashcode.tics.domain.ui.location.AddressType;
+import zm.hashcode.tics.domain.ui.position.Position;
 
 /**
  *
  * @author geek
  */
-public class PersonContactForm extends FormLayout implements Button.ClickListener, Property.ValueChangeListener {
+public class EmployeePositionForm extends FormLayout implements Button.ClickListener, Property.ValueChangeListener {
 
-    private final PersonContactsBean bean;
-    public final BeanItem<PersonContactsBean> item;
+    private final EmployeePositionBean bean;
+    public final BeanItem<EmployeePositionBean> item;
     public final FieldGroup binder;
-//    public ComboBox cityCombo = new ComboBox();
+    public ComboBox positionCombo = new ComboBox();
     // Define Buttons
     public Button save = new Button("Save");
     public Button cancel = new Button("Cancel");
@@ -45,16 +46,16 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private final Person person;
     private final TicsMain main;
     private final VerticalLayout content;
-    private PersonContactsTable table;
+    private EmployeePositionTable table;
 
-    public PersonContactForm(TicsMain main, Person person, VerticalLayout contentLayout) {
+    public EmployeePositionForm(TicsMain main, Person person, VerticalLayout contentLayout) {
         setSizeFull();
         this.person = person;
         this.main = main;
         this.content = contentLayout;
 
         addListeners();
-        bean = new PersonContactsBean();
+        bean = new EmployeePositionBean();
         item = new BeanItem<>(bean);
         binder = new FieldGroup(item);
         HorizontalLayout buttons = getButtons();
@@ -62,53 +63,61 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         update.setVisible(false);
         delete.setVisible(false);
 
+///    @DBRef
+//    private String positionId; // Position
+//    private Date startDate;
+//    private Date enddate;
+//    private String status;
 
-        TextField mailingAddress = getTextField("Mailing Address", "mailingAddress");
-        TextField telephoneNumber = getTextField("Telephone Number", "telephoneNumber");
-        TextField cellnumber = getTextField("Cell Number", "cellnumber");
-        TextField faxnumber = getTextField("Fax Number", "faxnumber");
-        TextField email = getTextField("Email", "email");
-        ComboBox addressTypeComboBox = getAddressTypeComboBox("Address Type", "addressType");
-//        TextField addressType = getTextField("Address Type", "addressType");
+        ComboBox positionComboBox = getLocationComboBox("Position", "positionId");
+        TextField statusTextField = getTextField("Status", "status");
+        PopupDateField startDatePopupDateField = getPopupDateField("Start Date", "startDate");
+        PopupDateField endDatePopupDateField = getPopupDateField("End Date", "enddate");
+
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 
-        grid.addComponent(email, 0, 0);
-        grid.addComponent(cellnumber, 1, 0);
-        grid.addComponent(telephoneNumber, 2, 0);
+        grid.addComponent(positionComboBox, 0, 0);
+        grid.addComponent(statusTextField, 1, 0);
+        grid.addComponent(startDatePopupDateField, 2, 0);
+        grid.addComponent(endDatePopupDateField, 3, 0);
 
-        grid.addComponent(faxnumber, 0, 1);
-        grid.addComponent(mailingAddress, 1, 1);
-        grid.addComponent(addressTypeComboBox, 2, 1);
-
-        grid.addComponent(buttons, 0, 3, 2, 3);
-
+        grid.addComponent(buttons, 0, 1, 2, 1);
         addComponent(grid);
 
     }
 
-    private ComboBox getAddressTypeComboBox(String label, String field) {
+    private ComboBox getLocationComboBox(String label, String field) {
         ComboBox comboBox = new ComboBox(label);
-        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
+        List<Position> positions = PositionFacade.getPositionService().findAll();
 ////        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
 ////        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
 //        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
-        for (AddressType addressType : addressTypes) {
-            comboBox.addItem(addressType.getId());
-            comboBox.setItemCaption(addressType.getId(), addressType.getAddressTypeName());
+        for (Position position : positions) {
+            comboBox.addItem(position.getId());
+            comboBox.setItemCaption(position.getId(), position.getPositionTitle());
         }
-        comboBox.addValidator(new BeanValidator(PersonContactsBean.class, field));
+        comboBox.addValidator(new BeanValidator(EmployeePositionBean.class, field));
         comboBox.setImmediate(true);
         comboBox.setWidth(250, Unit.PIXELS);
         binder.bind(comboBox, field);
         return comboBox;
     }
 
+    private PopupDateField getPopupDateField(String label, String field) {
+        PopupDateField popupDateField = new PopupDateField(label);
+        popupDateField.setWidth(250, Unit.PIXELS);
+        popupDateField.addValidator(new BeanValidator(EmployeePositionBean.class, field));
+        popupDateField.setImmediate(true);
+        binder.bind(popupDateField, field);
+        return popupDateField;
+    }
+
     private TextField getTextField(String label, String field) {
         TextField textField = new TextField(label);
         textField.setWidth(250, Unit.PIXELS);
         textField.setNullRepresentation("");
-        textField.addValidator(new BeanValidator(PersonContactsBean.class, field));
+        textField.addValidator(new BeanValidator(EmployeePositionBean.class, field));
         textField.setImmediate(true);
         binder.bind(textField, field);
         return textField;
@@ -151,25 +160,25 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         boolean matchFound = false;
         try {
             binder.commit();
-            Contact contact = getNewEntity(binder);
-            List<Contact> contacts = new ArrayList<>();
-            List<Contact> contactss = person.getContacts();
+            EmployeePosition employeePosition = getNewEntity(binder);
+            List<EmployeePosition> employeePositionss = new ArrayList<>();
 
-            for (Contact contaq : contactss) {
-                if (!contaq.getAddressType().equalsIgnoreCase(contact.getAddressType())) {
-                    contacts.add(contaq);
+            List<EmployeePosition> employeePositions = person.getPositions();
+            for (EmployeePosition employeePositionv : employeePositions) {
+                if (!employeePositionv.getPosition().getPositionTitle().equalsIgnoreCase(employeePosition.getPosition().getPositionTitle())) {
+                    employeePositionss.add(employeePositionv);
                 } else {
-                    Notification.show("AddressType exist. Change Address Type before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                    Notification.show("Change Position before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
                     break;
                 }
             }
 
             if (!matchFound) {
-                contacts.add(contact);
+                employeePositionss.add(employeePosition);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
-                        .contacts(contacts)
+                        .positions(employeePositionss)
                         .id(person.getId())
                         .build();
                 PersonFacade.getPersonService().merge(updatePerson);
@@ -187,26 +196,26 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private void saveEditedForm(FieldGroup binder) {
         try {
             binder.commit();
-            Contact contact = getEditedEntity(binder);
-            List<Contact> contacts = person.getContacts();
-            List<Contact> updatedContacts = new ArrayList<>();
-            updatedContacts.add(contact);
+            EmployeePosition employeePosition = getEditedEntity(binder);
+            List<EmployeePosition> employeePositions = person.getPositions();
+            List<EmployeePosition> updatedEmployeePositions = new ArrayList<>();
+            updatedEmployeePositions.add(employeePosition);
 
-            for (Contact contactt : contacts) {
-                if (!contactt.getAddressType().equals(contact.getAddressType())) {
-                    updatedContacts.add(contactt);
+            for (EmployeePosition employeePositionv : employeePositions) {
+                if (!employeePositionv.getPosition().getPositionTitle().equalsIgnoreCase(employeePosition.getPosition().getPositionTitle())) {
+                    updatedEmployeePositions.add(employeePositionv);
                 }
             }
 
-
             Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                     .person(person)
-                    .contacts(updatedContacts)
+                    .positions(updatedEmployeePositions)
                     .id(person.getId())
                     .build();
             PersonFacade.getPersonService().merge(updatePerson);
             getHome();
             Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+
         } catch (FieldGroup.CommitException e) {
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
@@ -221,35 +230,31 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private void getHome() {
         content.removeAllComponents();
         Person personn = PersonFacade.getPersonService().find(person.getId()); // Get Person with current changes // refresh
-        table = new PersonContactsTable(main, personn, content);
+        table = new EmployeePositionTable(main, personn, content);
         content.addComponent(table);
         table.addValueChangeListener((Property.ValueChangeListener) this);
     }
 
-    private Contact getNewEntity(FieldGroup binder) {
-        final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType()); // id stored in Bean
-        final Contact contact = new Contact.Builder(entityBean.getEmail())
-                .addressType(addressType.getAddressTypeName())
-                .cellnumber(entityBean.getCellnumber())
-                .faxnumber(entityBean.getFaxnumber())
-                .mailingAddress(entityBean.getMailingAddress())
-                .telephoneNumber(entityBean.getTelephoneNumber())
+    private EmployeePosition getNewEntity(FieldGroup binder) {
+        final EmployeePositionBean entityBean = ((BeanItem<EmployeePositionBean>) binder.getItemDataSource()).getBean();
+        Position position = PositionFacade.getPositionService().find(entityBean.getPositionId()); // id stored in Bean
+        final EmployeePosition employeePosition = new EmployeePosition.Builder(position)
+                .enddate(entityBean.getEnddate())
+                .startDate(entityBean.getStartDate())
+                .status(entityBean.getStatus())
                 .build();
-        return contact;
+        return employeePosition;
     }
 
-    private Contact getEditedEntity(FieldGroup binder) {
-        final PersonContactsBean entityBean = ((BeanItem<PersonContactsBean>) binder.getItemDataSource()).getBean();
-        AddressType addressType = AddressTypeFacade.getAddressTypeService().find(entityBean.getAddressType()); // id stored in Bean
-        final Contact contact = new Contact.Builder(entityBean.getEmail())
-                .addressType(addressType.getAddressTypeName())
-                .cellnumber(entityBean.getCellnumber())
-                .faxnumber(entityBean.getFaxnumber())
-                .mailingAddress(entityBean.getMailingAddress())
-                .telephoneNumber(entityBean.getTelephoneNumber())
+    private EmployeePosition getEditedEntity(FieldGroup binder) {
+        final EmployeePositionBean entityBean = ((BeanItem<EmployeePositionBean>) binder.getItemDataSource()).getBean();
+        Position position = PositionFacade.getPositionService().find(entityBean.getPositionId()); // id stored in Bean
+        final EmployeePosition employeePosition = new EmployeePosition.Builder(position)
+                .enddate(entityBean.getEnddate())
+                .startDate(entityBean.getStartDate())
+                .status(entityBean.getStatus())
                 .build();
-        return contact;
+        return employeePosition;
     }
 
     @Override
@@ -258,25 +263,11 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         System.out.println(" The value is " + property.getValue());
     }
 
-    public void setBean(Contact contact) {
-        List<AddressType> addressTypes = AddressTypeFacade.getAddressTypeService().findAll();
-        AddressType addressType = null;
-        for (AddressType addressTypee : addressTypes) {
-            if (addressTypee.getAddressTypeName().equals(contact.getAddressType())) {
-                addressType = addressTypee;
-                break;
-            }
-        }
-
-        item.getBean().setEmail(contact.getEmail());
-        try {
-            item.getBean().setAddressType(addressType.getId());
-        } catch (NullPointerException ex) {
-        }
-        item.getBean().setCellnumber(contact.getCellnumber());
-        item.getBean().setFaxnumber(contact.getFaxnumber());
-        item.getBean().setMailingAddress(contact.getMailingAddress());
-        item.getBean().setTelephoneNumber(contact.getTelephoneNumber());
+    public void setBean(EmployeePosition employeePosition) {
+        item.getBean().setEnddate(employeePosition.getEnddate());
+        item.getBean().setPositionId(employeePosition.getPosition().getId());
+        item.getBean().setStartDate(employeePosition.getStartDate());
+        item.getBean().setStatus(employeePosition.getStatus());
     }
 
     /**

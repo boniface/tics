@@ -15,7 +15,7 @@ import zm.hashcode.tics.domain.ui.location.Location;
  */
 public final class EducationHistory implements Serializable {
 
-    private String instituteNamwe;
+    private String instituteName;
     @DBRef
     private Location location;
     private Date graduationDate;
@@ -25,7 +25,7 @@ public final class EducationHistory implements Serializable {
     }
 
     private EducationHistory(Builder builder) {
-        instituteNamwe = builder.instituteNamwe;
+        instituteName = builder.instituteName;
         location = builder.Location;
         graduationDate = builder.graduationDate;
         major= builder.major;
@@ -34,13 +34,13 @@ public final class EducationHistory implements Serializable {
 
     public static class Builder {
 
-        private final String instituteNamwe;
+        private final String instituteName;
         private Location Location;
         private Date graduationDate;
         private String major;
 
         public Builder(String val) {
-            this.instituteNamwe = val;
+            this.instituteName = val;
         }
 
         public Builder graduationDate(Date value) {
@@ -48,7 +48,7 @@ public final class EducationHistory implements Serializable {
             return this;
         }
 
-        public Builder mahor(String value) {
+        public Builder major(String value) {
             major = value;
             return this;
         }
@@ -63,8 +63,8 @@ public final class EducationHistory implements Serializable {
         }
     }
 
-    public String getInstituteNamwe() {
-        return instituteNamwe;
+    public String getInstituteName() {
+        return instituteName;
     }
 
     public Location getLocation() {

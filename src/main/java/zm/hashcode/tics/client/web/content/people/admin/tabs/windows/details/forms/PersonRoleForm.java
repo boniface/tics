@@ -126,7 +126,7 @@ public class PersonRoleForm extends FormLayout
 
             List<PersonRoles> personRoless = person.getPersonRoles();
             for (PersonRoles personRolee : personRoless) {
-                if (!personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName())) {
+                if (!(personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
                     personRoles.add(personRolee);
                 } else {
                     Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
@@ -162,7 +162,7 @@ public class PersonRoleForm extends FormLayout
             updatedPersonRoles.add(personRole);
 
             for (PersonRoles personRolee : personRoless) {
-                if (!(personRolee.getRoleName().equalsIgnoreCase(roleName) && personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
+                if (!personRolee.getRoleName().equalsIgnoreCase(roleName)) {//&& personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
 
 
                     updatedPersonRoles.add(personRolee); // Matching records to roleName should not be added. WORKS for ONE field embeddable

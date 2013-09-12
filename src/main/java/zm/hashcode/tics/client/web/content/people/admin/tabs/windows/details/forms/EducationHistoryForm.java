@@ -18,6 +18,7 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
@@ -48,6 +49,7 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
     private final TicsMain main;
     private final VerticalLayout content;
     private EducationHistoryTable table;
+    private static Date graduationDate;
 
     public EducationHistoryForm(TicsMain main, Person person, VerticalLayout contentLayout) {
         setSizeFull();
@@ -162,10 +164,10 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
             EducationHistory educationHistory = getNewEntity(binder);
             List<EducationHistory> educationHistorys = new ArrayList<>();
 
+            // Exclude current edited record from previous persited records
             List<EducationHistory> educationHistoryss = person.getEducationHistory();
             for (EducationHistory educationHistry : educationHistoryss) {
-                if (!(educationHistry.getInstituteName().equalsIgnoreCase(educationHistory.getInstituteName())
-                        && dateUtil.resetTimeOfDate(educationHistry.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate())))) {
+                if (!(dateUtil.resetTimeOfDate(educationHistry.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate())))) {
                     educationHistorys.add(educationHistry);
                 } else {
                     Notification.show("Similar Record exist. Change Institution Name and/or Graduation Date before SAVING!", Notification.Type.TRAY_NOTIFICATION);
@@ -194,6 +196,7 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
 
     private void saveEditedForm(FieldGroup binder) {
         DateUtil dateUtil = new DateUtil();
+        boolean matchFound = false;
         try {
             binder.commit();
             EducationHistory educationHistory = getEditedEntity(binder);
@@ -201,20 +204,31 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
             List<EducationHistory> updatedEducationHistorys = new ArrayList<>();
             updatedEducationHistorys.add(educationHistory);
 
+            // Exclude current edited record from previous persited records
             for (EducationHistory educationHistoryy : educationHistorys) {
-                if (!dateUtil.resetTimeOfDate(educationHistoryy.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate()))) {
+                if (!dateUtil.resetTimeOfDate(educationHistoryy.getGraduationDate()).equals(dateUtil.resetTimeOfDate(graduationDate))) {
                     updatedEducationHistorys.add(educationHistoryy);
                 }
             }
 
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .educationHistory(updatedEducationHistorys)
-                    .id(person.getId())
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            getHome();
-            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            // Compare with previous persisted records
+            for (EducationHistory professionalRegistr : educationHistorys) {
+                if (dateUtil.resetTimeOfDate(professionalRegistr.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate()))) {
+                    Notification.show("Similar Record exist for Graduation Date", Notification.Type.TRAY_NOTIFICATION);
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+                Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                        .person(person)
+                        .educationHistory(updatedEducationHistorys)
+                        .id(person.getId())
+                        .build();
+                PersonFacade.getPersonService().merge(updatePerson);
+                getHome();
+                Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            }
         } catch (FieldGroup.CommitException e) {
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
@@ -267,6 +281,7 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
         item.getBean().setInstituteName(educationHistory.getInstituteName());
         item.getBean().setLocationId(educationHistory.getLocation().getId());
         item.getBean().setMajor(educationHistory.getMajor());
+        graduationDate = educationHistory.getGraduationDate();
     }
 
     /**

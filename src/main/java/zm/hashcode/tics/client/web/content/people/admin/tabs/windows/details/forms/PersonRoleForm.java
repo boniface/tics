@@ -126,7 +126,7 @@ public class PersonRoleForm extends FormLayout
 
             List<PersonRoles> personRoless = person.getPersonRoles();
             for (PersonRoles personRolee : personRoless) {
-                if (!(personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
+                if (!personRolee.getRoleName().equals(personRole.getRoleName())) {
                     personRoles.add(personRolee);
                 } else {
                     Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
@@ -154,6 +154,7 @@ public class PersonRoleForm extends FormLayout
     }
 
     private void saveEditedForm(FieldGroup binder) {
+        boolean matchFound = false;
         try {
             binder.commit();
             PersonRoles personRole = getEditedEntity(binder);
@@ -161,22 +162,31 @@ public class PersonRoleForm extends FormLayout
             List<PersonRoles> updatedPersonRoles = new ArrayList<>();
             updatedPersonRoles.add(personRole);
 
+            // Exclude current edited record from previous persisted records
             for (PersonRoles personRolee : personRoless) {
-                if (!personRolee.getRoleName().equalsIgnoreCase(roleName)) {//&& personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
-
-
+                if (!personRolee.getRoleName().equals(roleName)) {//&& personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
                     updatedPersonRoles.add(personRolee); // Matching records to roleName should not be added. WORKS for ONE field embeddable
                 }
             }
 
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .personRoles(updatedPersonRoles)
-                    .id(person.getId())
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            getHome();
-            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            // Compare with previous persisted records
+            for (PersonRoles personRoles : personRoless) {
+                if (personRoles.getRoleName().equals(personRole.getRoleName())) {
+                    Notification.show("Similar Record exist for Role Name!", Notification.Type.TRAY_NOTIFICATION);
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+                Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                        .person(person)
+                        .personRoles(updatedPersonRoles)
+                        .id(person.getId())
+                        .build();
+                PersonFacade.getPersonService().merge(updatePerson);
+                getHome();
+                Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            }
         } catch (FieldGroup.CommitException e) {
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();

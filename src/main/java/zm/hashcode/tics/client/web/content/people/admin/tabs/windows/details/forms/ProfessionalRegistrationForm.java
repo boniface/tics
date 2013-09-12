@@ -166,7 +166,7 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
 
             List<ProfessionalRegistration> professionalRegistrations = person.getProfessionalRegistration();
             for (ProfessionalRegistration professionalRegist : professionalRegistrations) {
-                if (!(professionalRegist.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */)) {
+                if (!professionalRegist.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */) {
                     professionalRegistrationns.add(professionalRegist);
                 } else {
                     Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
@@ -195,6 +195,7 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
 
     private void saveEditedForm(FieldGroup binder) {
         DateUtil dateUtil = new DateUtil();
+        boolean matchFound = false;
         try {
             binder.commit();
             ProfessionalRegistration professionalRegistration = getEditedEntity(binder);
@@ -202,20 +203,31 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
             List<ProfessionalRegistration> professionalRegist = new ArrayList<>();
             professionalRegist.add(professionalRegistration);
 
+            // Exclude current edited record from previous persited records
             for (ProfessionalRegistration professionalRegistrationn : professionalRegistrations) {
-                if (!(professionalRegistrationn.getRegistrationNumber().equalsIgnoreCase(registrationNumber) || professionalRegistrationn.getRegistrationNumber().equalsIgnoreCase(professionalRegistration.getRegistrationNumber()))) {
+                if (!professionalRegistrationn.getRegistrationNumber().equals(registrationNumber)) {
                     professionalRegist.add(professionalRegistrationn);
                 }
             }
 
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .professionalRegistration(professionalRegist)
-                    .id(person.getId())
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            getHome();
-            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            // Compare with previous persisted records
+            for (ProfessionalRegistration professionalRegistr : professionalRegistrations) {
+                if (professionalRegistr.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */) {
+                    Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+                Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                        .person(person)
+                        .professionalRegistration(professionalRegist)
+                        .id(person.getId())
+                        .build();
+                PersonFacade.getPersonService().merge(updatePerson);
+                getHome();
+                Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            }
         } catch (FieldGroup.CommitException e) {
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();

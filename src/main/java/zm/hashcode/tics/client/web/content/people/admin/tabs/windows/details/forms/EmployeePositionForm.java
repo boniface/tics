@@ -63,12 +63,6 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
         update.setVisible(false);
         delete.setVisible(false);
 
-///    @DBRef
-//    private String positionId; // Position
-//    private Date startDate;
-//    private Date enddate;
-//    private String status;
-
         ComboBox positionComboBox = getLocationComboBox("Position", "positionId");
         TextField statusTextField = getTextField("Status", "status");
         PopupDateField startDatePopupDateField = getPopupDateField("Start Date", "startDate");
@@ -163,9 +157,10 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
             EmployeePosition employeePosition = getNewEntity(binder);
             List<EmployeePosition> employeePositionss = new ArrayList<>();
 
+            // Exclude current edited record from previous persisted records
             List<EmployeePosition> employeePositions = person.getPositions();
             for (EmployeePosition employeePositionv : employeePositions) {
-                if (!employeePositionv.getPosition().getPositionTitle().equalsIgnoreCase(employeePosition.getPosition().getPositionTitle())) {
+                if (!employeePositionv.getPosition().getPositionTitle().equals(employeePosition.getPosition().getPositionTitle())) {
                     employeePositionss.add(employeePositionv);
                 } else {
                     Notification.show("Change Position before SAVING!", Notification.Type.TRAY_NOTIFICATION);
@@ -194,6 +189,7 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
     }
 
     private void saveEditedForm(FieldGroup binder) {
+        boolean matchFound = false;
         try {
             binder.commit();
             EmployeePosition employeePosition = getEditedEntity(binder);
@@ -201,21 +197,31 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
             List<EmployeePosition> updatedEmployeePositions = new ArrayList<>();
             updatedEmployeePositions.add(employeePosition);
 
+            // Exclude current edited record from previous persisted records
             for (EmployeePosition employeePositionv : employeePositions) {
-                if (!employeePositionv.getPosition().getPositionTitle().equalsIgnoreCase(employeePosition.getPosition().getPositionTitle())) {
+                if (!employeePositionv.getPosition().getPositionTitle().equals(employeePosition.getPosition().getPositionTitle())) {
                     updatedEmployeePositions.add(employeePositionv);
                 }
             }
 
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .positions(updatedEmployeePositions)
-                    .id(person.getId())
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            getHome();
-            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
-
+            // Compare with previous persisted records
+            for (EmployeePosition personRoles : employeePositions) {
+                if (personRoles.getPosition().getPositionTitle().equals(employeePosition.getPosition().getPositionTitle())) {
+                    Notification.show("Similar Record exist for Position Title!", Notification.Type.TRAY_NOTIFICATION);
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+                Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                        .person(person)
+                        .positions(updatedEmployeePositions)
+                        .id(person.getId())
+                        .build();
+                PersonFacade.getPersonService().merge(updatePerson);
+                getHome();
+                Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            }
         } catch (FieldGroup.CommitException e) {
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();

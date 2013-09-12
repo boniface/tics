@@ -46,6 +46,7 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
     private final TicsMain main;
     private final VerticalLayout content;
     private PersonContactsTable table;
+    private static String addressTypeName;
 
     public PersonContactForm(TicsMain main, Person person, VerticalLayout contentLayout) {
         setSizeFull();
@@ -155,8 +156,9 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             List<Contact> contacts = new ArrayList<>();
             List<Contact> contactss = person.getContacts();
 
+            // Exclude current edited record from previous persisted records
             for (Contact contaq : contactss) {
-                if (!contaq.getAddressType().equalsIgnoreCase(contact.getAddressType())) {
+                if (!contaq.getAddressType().equals(contact.getAddressType())) {
                     contacts.add(contaq);
                 } else {
                     Notification.show("AddressType exist. Change Address Type before SAVING!", Notification.Type.TRAY_NOTIFICATION);
@@ -180,11 +182,10 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
         }
-
-
     }
 
     private void saveEditedForm(FieldGroup binder) {
+        boolean matchFound = false;
         try {
             binder.commit();
             Contact contact = getEditedEntity(binder);
@@ -192,21 +193,31 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             List<Contact> updatedContacts = new ArrayList<>();
             updatedContacts.add(contact);
 
+            // Exclude current edited record from previous persisted records
             for (Contact contactt : contacts) {
-                if (!contactt.getAddressType().equals(contact.getAddressType())) {
+                if (!contactt.getAddressType().equals(addressTypeName)) {
                     updatedContacts.add(contactt);
                 }
             }
 
-
-            Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
-                    .person(person)
-                    .contacts(updatedContacts)
-                    .id(person.getId())
-                    .build();
-            PersonFacade.getPersonService().merge(updatePerson);
-            getHome();
-            Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            // Compare with previous persisted records
+            for (Contact contacte : contacts) {
+                if (contacte.getAddressType().equals(contact.getAddressType())) {
+                    Notification.show("Similar Record exist with AddressType!", Notification.Type.TRAY_NOTIFICATION);
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+                Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
+                        .person(person)
+                        .contacts(updatedContacts)
+                        .id(person.getId())
+                        .build();
+                PersonFacade.getPersonService().merge(updatePerson);
+                getHome();
+                Notification.show("Record UPDATED!", Notification.Type.TRAY_NOTIFICATION);
+            }
         } catch (FieldGroup.CommitException e) {
             Notification.show("Values MISSING!", Notification.Type.TRAY_NOTIFICATION);
             getHome();
@@ -268,15 +279,19 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             }
         }
 
-        item.getBean().setEmail(contact.getEmail());
         try {
             item.getBean().setAddressType(addressType.getId());
         } catch (NullPointerException ex) {
         }
+        item.getBean().setEmail(contact.getEmail());
         item.getBean().setCellnumber(contact.getCellnumber());
         item.getBean().setFaxnumber(contact.getFaxnumber());
         item.getBean().setMailingAddress(contact.getMailingAddress());
         item.getBean().setTelephoneNumber(contact.getTelephoneNumber());
+        try {
+            addressTypeName = addressType.getAddressTypeName();
+        } catch (NullPointerException ex) {
+        }
     }
 
     /**

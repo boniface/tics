@@ -13,7 +13,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonContactForm;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.ContactsTable;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonContactsTable;
 import zm.hashcode.tics.domain.people.Person;
 
 /**
@@ -26,8 +26,8 @@ public class PersonContactTab extends VerticalLayout implements Button.ClickList
     private PersonContactForm form;
     private HorizontalLayout header = new HorizontalLayout();
     private VerticalLayout contentLayout = new VerticalLayout();
-    private Button button = new Button("Add Contact ");
-    private final ContactsTable table;
+    private Button button = new Button("Add Contact");
+    private final PersonContactsTable table;
     private final Person person;
 
     public PersonContactTab(TicsMain main, Person person) {
@@ -38,7 +38,7 @@ public class PersonContactTab extends VerticalLayout implements Button.ClickList
         button.addClickListener(this);
         header.addComponent(button);
         header.setComponentAlignment(button, Alignment.TOP_RIGHT);
-        table = new ContactsTable(main, person, contentLayout);
+        table = new PersonContactsTable(main, person, contentLayout);
         table.setSizeFull();
         addComponent(header);
         addComponent(new Label("<hr/>", ContentMode.HTML));

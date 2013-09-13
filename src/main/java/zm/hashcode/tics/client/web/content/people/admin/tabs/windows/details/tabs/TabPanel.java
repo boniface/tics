@@ -30,7 +30,7 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout actionPlansTab = new VerticalLayout();
         actionPlansTab.setMargin(true);
-        actionPlansTab.addComponent(new ActionPlansTab(main));
+        actionPlansTab.addComponent(new PersonActionPlansTab(main, person));
 
         final VerticalLayout personCoursesTab = new VerticalLayout();
         personCoursesTab.setMargin(true);
@@ -38,15 +38,15 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout personEducationTab = new VerticalLayout();
         personEducationTab.setMargin(true);
-        personEducationTab.addComponent(new PersonEducationTab(main));
+        personEducationTab.addComponent(new PersonEducationHistoryTab(main, person));
 
         final VerticalLayout personExpertiseTab = new VerticalLayout();
         personExpertiseTab.setMargin(true);
-        personExpertiseTab.addComponent(new PersonExpersiteseTab(main));
+        personExpertiseTab.addComponent(new PersonMentorExpertiseAreaTab(main, person));
 
         final VerticalLayout personIdetitiesTab = new VerticalLayout();
         personIdetitiesTab.setMargin(true);
-        personIdetitiesTab.addComponent(new PersonIdentitiesTab(main));
+        personIdetitiesTab.addComponent(new PersonIdentitiesTab(main, person));
 
         final VerticalLayout personMenteesTab = new VerticalLayout();
         personMenteesTab.setMargin(true);
@@ -58,15 +58,15 @@ public class TabPanel extends VerticalLayout {
 
         final VerticalLayout persoPositionTab = new VerticalLayout();
         persoPositionTab.setMargin(true);
-        persoPositionTab.addComponent(new PersonPositionsTab(main));
+        persoPositionTab.addComponent(new PersonPositionsTab(main, person));
 
         final VerticalLayout personRolesTab = new VerticalLayout();
         personRolesTab.setMargin(true);
-        personRolesTab.addComponent(new PersonRolesTab(main));
+        personRolesTab.addComponent(new PersonRolesTab(main, person));
 
         final VerticalLayout personregistrationsTab = new VerticalLayout();
         personregistrationsTab.setMargin(true);
-        personregistrationsTab.addComponent(new PersonProfessionalRegistrationTab(main));
+        personregistrationsTab.addComponent(new PersonProfessionalRegistrationTab(main, person));
 
 
 

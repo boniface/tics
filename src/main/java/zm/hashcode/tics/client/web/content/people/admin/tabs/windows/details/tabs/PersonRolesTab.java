@@ -4,25 +4,53 @@
  */
 package zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tabs;
 
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonRoleForm;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.PersonRoleTable;
+import zm.hashcode.tics.domain.people.Person;
 
 /**
  *
  * @author boniface
  */
-public class PersonRolesTab extends VerticalLayout {
+public class PersonRolesTab extends VerticalLayout implements Button.ClickListener {
 
     private final TicsMain main;
+    private PersonRoleForm form;
     private HorizontalLayout header = new HorizontalLayout();
-    private Button button = new Button();
+    private VerticalLayout contentLayout = new VerticalLayout();
+    private Button button = new Button("Add Person Role");
+    private final PersonRoleTable table;
+    private final Person person;
 
-    public PersonRolesTab(TicsMain main) {
+    public PersonRolesTab(TicsMain main, Person person) {
         this.main = main;
+        this.person = person;
         header.setSizeFull();
+        button.setStyleName("default");
+        button.addClickListener(this);
         header.addComponent(button);
+        header.setComponentAlignment(button, Alignment.TOP_RIGHT);
+        table = new PersonRoleTable(main, person, contentLayout);
+        table.setSizeFull();
+        addComponent(header);
+        addComponent(new Label("<hr/>", ContentMode.HTML));
+        contentLayout.addComponent(table);
+        addComponent(contentLayout);
+
+    }
+
+    @Override
+    public void buttonClick(Button.ClickEvent event) {
+        form = new PersonRoleForm(main, person, contentLayout);
+        contentLayout.removeAllComponents();
+        contentLayout.addComponent(form);
 
     }
 }

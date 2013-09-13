@@ -70,7 +70,7 @@ public class DemographicsWIndow extends GridLayout {
     }
 
     private String getIdentity(List<PersonIdentities> identities) {
-        if (identities.size() > 0) {
+        if (!identities.isEmpty()) {
             PersonIdentities pid = identities.get(0);
             return pid.getIdValue();
         }

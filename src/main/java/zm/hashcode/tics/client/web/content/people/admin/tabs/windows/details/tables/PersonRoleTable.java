@@ -14,65 +14,74 @@ import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.domain.people.Contact;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.PersonRoleForm;
 import zm.hashcode.tics.domain.people.Person;
+import zm.hashcode.tics.domain.people.PersonRoles;
 
 /**
  *
- * @author boniface
+ * @author geek
  */
-public class ContactsTable extends Table {
+public class PersonRoleTable extends Table {
 
     private final TicsMain main;
     private final Person person;
     private final VerticalLayout content;
+    private PersonRoleForm form;
+    private static int selectedRowId;
 
-    public ContactsTable(TicsMain main, final Person person, VerticalLayout content) {
+    public PersonRoleTable(final TicsMain main, final Person person, final VerticalLayout content) {
         this.main = main;
         this.person = person;
         this.content = content;
 
-        addContainerProperty("Email", String.class, null);
-        addContainerProperty("Cell", String.class, null);
-        addContainerProperty("Telephone", String.class, null);
-        addContainerProperty("Fax", String.class, null);
-        addContainerProperty("Mailing Address", String.class, null);
-        addContainerProperty("Address Type", String.class, null);
+        addContainerProperty("Role Name", String.class, null);
         addContainerProperty("Edit", Button.class, null);
-        addContainerProperty("Detele", Button.class, null);
+        addContainerProperty("Delete", Button.class, null);
 
-
-        List<Contact> contacts = person.getContacts();
+        List<PersonRoles> personRoles = person.getPersonRoles();
         int i = 1;
-        for (Contact contact : contacts) {
+        for (PersonRoles personRole : personRoles) {
 
             Button deleteButton = new Button("Delete");
-            deleteButton.setData(contact);
+            deleteButton.setData(personRole);
             deleteButton.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     // Get the item identifier from the user-defined data.
-                    Contact itemId = (Contact) event.getButton().getData();
-                    System.out.println(" The is ia " + itemId.getEmail());
-                    List<Contact> updatedContacts = removeEntity(itemId, person.getContacts());
+                    PersonRoles itemId = (PersonRoles) event.getButton().getData();
+                    System.out.println(" The is ia " + itemId.getRoleName());
+                    List<PersonRoles> updatedPersonRoles = removeEntity(itemId, person.getPersonRoles());
                     Person updatedPerson = new Person.Builder(person.getFirstname(), person.getSurname())
                             .person(person)
-                            .contacts(updatedContacts)
+                            .personRoles(updatedPersonRoles)
                             .build();
                     PersonFacade.getPersonService().merge(updatedPerson);
                     getHome();
+
                 }
             });
 
             deleteButton.setStyleName(Reindeer.BUTTON_LINK);
 
             Button editbutton = new Button("Edit");
-            editbutton.setData(contact);
+            editbutton.setData(personRole);
             editbutton.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
+
+                    //
+//                    selectedRowId = Integer.parseInt(getValue().toString()); // get the row id
+//                    System.out.println(" \n Selected Row id or key is " + selectedRowId + " ===============\n");
+                    //
                     // Get the item identifier from the user-defined data.
-                    Contact itemId = (Contact) event.getButton().getData();
+                    PersonRoles itemId = (PersonRoles) event.getButton().getData();
+                    form = new PersonRoleForm(main, person, content);
+                    content.removeAllComponents();
+                    form.setBean(itemId);//////////////////////////////////////////////////////////////
+                    form.getSave().setVisible(false);
+                    form.getUpdate().setVisible(true);
+                    content.addComponent(form);
 
                 }
             });
@@ -81,32 +90,27 @@ public class ContactsTable extends Table {
 
             i++;
             addItem(new Object[]{
-                contact.getEmail(),
-                contact.getCellnumber(),
-                contact.getTelephoneNumber(),
-                contact.getFaxnumber(),
-                contact.getMailingAddress(),
-                contact.getAddressType(),
+                personRole.getRoleName(),
                 editbutton,
                 deleteButton
             }, i);
         }
 
         setNullSelectionAllowed(false);
-//
         setSelectable(true);
         // Send changes in selection immediately to server.
         setImmediate(true);
 
     }
 
-    public List<Contact> removeEntity(final Contact contact, List<Contact> contacts) {
-        return ImmutableList.copyOf(Collections2.filter(contacts, Predicates.not(Predicates.equalTo(contact))));
+    public List<PersonRoles> removeEntity(final PersonRoles personRole, List<PersonRoles> personRoless) {
+        return ImmutableList.copyOf(Collections2.filter(personRoless, Predicates.not(Predicates.equalTo(personRole))));
     }
 
     private void getHome() {
         content.removeAllComponents();
-        ContactsTable updatetable = new ContactsTable(main, person, content);
+        Person personn = PersonFacade.getPersonService().find(person.getId());
+        PersonRoleTable updatetable = new PersonRoleTable(main, personn, content);
         content.addComponent(updatetable);
     }
 }

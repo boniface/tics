@@ -118,10 +118,6 @@ public class CourseTab extends VerticalLayout implements
             binder.commit();
             Course course = getNewEntity(binder);
             CourseFacade.getCourseService().persist(course);
-
-            List<Course> courses = new ArrayList<>();
-
-
             getHome();
             Notification.show("Record ADDED!", Notification.Type.TRAY_NOTIFICATION);
         } catch (FieldGroup.CommitException e) {

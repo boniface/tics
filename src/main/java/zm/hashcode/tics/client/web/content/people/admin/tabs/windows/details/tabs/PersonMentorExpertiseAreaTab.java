@@ -11,25 +11,25 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.EmployeePositionForm;
-import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.EmployeePositionTable;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.forms.MentorExpertiseAreaForm;
+import zm.hashcode.tics.client.web.content.people.admin.tabs.windows.details.tables.MentorExpertiseAreaTable;
 import zm.hashcode.tics.domain.people.Person;
 
 /**
  *
  * @author boniface
  */
-public class PersonPositionsTab extends VerticalLayout implements Button.ClickListener {
+public class PersonMentorExpertiseAreaTab extends VerticalLayout implements Button.ClickListener {
 
     private final TicsMain main;
-    private EmployeePositionForm form;
+    private MentorExpertiseAreaForm form;
     private HorizontalLayout header = new HorizontalLayout();
     private VerticalLayout contentLayout = new VerticalLayout();
-    private Button button = new Button("Add Employee Position");
-    private final EmployeePositionTable table;
+    private Button button = new Button("Add Mentor Expertise Area");
+    private final MentorExpertiseAreaTable table;
     private final Person person;
 
-    public PersonPositionsTab(TicsMain main, Person person) {
+    public PersonMentorExpertiseAreaTab(TicsMain main, Person person) {
         this.main = main;
         this.person = person;
         header.setSizeFull();
@@ -37,7 +37,7 @@ public class PersonPositionsTab extends VerticalLayout implements Button.ClickLi
         button.addClickListener(this);
         header.addComponent(button);
         header.setComponentAlignment(button, Alignment.TOP_RIGHT);
-        table = new EmployeePositionTable(main, person, contentLayout);
+        table = new MentorExpertiseAreaTable(main, person, contentLayout);
         table.setSizeFull();
         addComponent(header);
         addComponent(new Label("<hr/>", ContentMode.HTML));
@@ -48,7 +48,7 @@ public class PersonPositionsTab extends VerticalLayout implements Button.ClickLi
 
     @Override
     public void buttonClick(Button.ClickEvent event) {
-        form = new EmployeePositionForm(main, person, contentLayout);
+        form = new MentorExpertiseAreaForm(main, person, contentLayout);
         contentLayout.removeAllComponents();
         contentLayout.addComponent(form);
 

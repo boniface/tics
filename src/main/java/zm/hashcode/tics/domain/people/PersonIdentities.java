@@ -18,6 +18,7 @@ import zm.hashcode.tics.domain.ui.demographics.IdentificationType;
 @Document
 public final class PersonIdentities implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     private String id;
     @DBRef
@@ -29,7 +30,7 @@ public final class PersonIdentities implements Serializable {
     }
 
     private PersonIdentities(Builder builder) {
-
+        id = builder.id;
         idValue = builder.idValue;
         idType = builder.idType;
     }

@@ -122,16 +122,16 @@ public class MentorExpertiseAreaForm extends FormLayout implements Button.ClickL
             binder.commit();
             MentorExpertiseArea mentorExpertiseArea = getNewEntity(binder);
             List<MentorExpertiseArea> mentorExpertiseAreas = new ArrayList<>();
+            List<MentorExpertiseArea> mentorExpertiseAreass = person.getMentorExpertiseAreas();
 
             // Exclude current edited record from previous persisted records
-            List<MentorExpertiseArea> mentorExpertiseAreass = person.getMentorExpertiseAreas();
             for (MentorExpertiseArea mentorExpertiseAreaa : mentorExpertiseAreass) {
-                if (!(mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName()) || mentorExpertiseAreaa.getExpertiseAreaName().equalsIgnoreCase(mentorExpertiseArea.getExpertiseAreaName()))) {
-                    mentorExpertiseAreas.add(mentorExpertiseAreaa);
-                } else {
-                    Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                if (mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName()) || mentorExpertiseAreaa.getExpertiseAreaName().equalsIgnoreCase(mentorExpertiseArea.getExpertiseAreaName())) {
                     matchFound = true;
+                    Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     break;
+                } else {
+                    mentorExpertiseAreas.add(mentorExpertiseAreaa);
                 }
             }
 
@@ -160,7 +160,6 @@ public class MentorExpertiseAreaForm extends FormLayout implements Button.ClickL
             MentorExpertiseArea mentorExpertiseArea = getEditedEntity(binder);
             List<MentorExpertiseArea> mentorExpertiseAreas = person.getMentorExpertiseAreas();
             List<MentorExpertiseArea> updatedMentorExpertiseAreas = new ArrayList<>();
-            updatedMentorExpertiseAreas.add(mentorExpertiseArea);
 
             // Exclude current edited record from previous persisted records
             for (MentorExpertiseArea mentorExpertiseAreaa : mentorExpertiseAreas) {
@@ -170,14 +169,15 @@ public class MentorExpertiseAreaForm extends FormLayout implements Button.ClickL
             }
 
             // Compare with previous persisted records
-            for (MentorExpertiseArea mentorExpertiseAreaa : mentorExpertiseAreas) {
+            for (MentorExpertiseArea mentorExpertiseAreaa : updatedMentorExpertiseAreas) {
                 if (mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName()) || mentorExpertiseAreaa.getExpertiseAreaName().equalsIgnoreCase(mentorExpertiseArea.getExpertiseAreaName())) {
-                    Notification.show("Similar Record exist for Expertise Area!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
+                    Notification.show("Similar Record exist for Expertise Area!", Notification.Type.TRAY_NOTIFICATION);
                     break;
                 }
             }
             if (!matchFound) {
+                updatedMentorExpertiseAreas.add(mentorExpertiseArea);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
                         .mentorExpertiseAreas(updatedMentorExpertiseAreas)

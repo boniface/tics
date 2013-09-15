@@ -126,7 +126,7 @@ public class MentorExpertiseAreaForm extends FormLayout implements Button.ClickL
             // Exclude current edited record from previous persisted records
             List<MentorExpertiseArea> mentorExpertiseAreass = person.getMentorExpertiseAreas();
             for (MentorExpertiseArea mentorExpertiseAreaa : mentorExpertiseAreass) {
-                if (!mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName())) {
+                if (!(mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName()) || mentorExpertiseAreaa.getExpertiseAreaName().equalsIgnoreCase(mentorExpertiseArea.getExpertiseAreaName()))) {
                     mentorExpertiseAreas.add(mentorExpertiseAreaa);
                 } else {
                     Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
@@ -164,14 +164,14 @@ public class MentorExpertiseAreaForm extends FormLayout implements Button.ClickL
 
             // Exclude current edited record from previous persisted records
             for (MentorExpertiseArea mentorExpertiseAreaa : mentorExpertiseAreas) {
-                if (!mentorExpertiseAreaa.getExpertiseAreaName().equals(expertiseArea)) {
+                if (!(mentorExpertiseAreaa.getExpertiseAreaName().equals(expertiseArea) || mentorExpertiseAreaa.getExpertiseAreaName().equalsIgnoreCase(expertiseArea))) {
                     updatedMentorExpertiseAreas.add(mentorExpertiseAreaa); // Matching records to roleName should not be added. WORKS for ONE field embeddable
                 }
             }
 
             // Compare with previous persisted records
             for (MentorExpertiseArea mentorExpertiseAreaa : mentorExpertiseAreas) {
-                if (mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName())) {
+                if (mentorExpertiseAreaa.getExpertiseAreaName().equals(mentorExpertiseArea.getExpertiseAreaName()) || mentorExpertiseAreaa.getExpertiseAreaName().equalsIgnoreCase(mentorExpertiseArea.getExpertiseAreaName())) {
                     Notification.show("Similar Record exist for Expertise Area!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
                     break;

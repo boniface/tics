@@ -166,7 +166,7 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
 
             List<ProfessionalRegistration> professionalRegistrations = person.getProfessionalRegistration();
             for (ProfessionalRegistration professionalRegist : professionalRegistrations) {
-                if (!professionalRegist.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */) {
+                if (!(professionalRegist.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) || professionalRegist.getRegistrationNumber().equalsIgnoreCase(professionalRegistration.getRegistrationNumber()))) {
                     professionalRegistrationns.add(professionalRegist);
                 } else {
                     Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
@@ -203,16 +203,16 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
             List<ProfessionalRegistration> professionalRegist = new ArrayList<>();
             professionalRegist.add(professionalRegistration);
 
-            // Exclude current edited record from previous persited records
+            // Exclude current edited record from previous persisted records
             for (ProfessionalRegistration professionalRegistrationn : professionalRegistrations) {
-                if (!professionalRegistrationn.getRegistrationNumber().equals(registrationNumber)) {
+                if (!(professionalRegistrationn.getRegistrationNumber().equals(registrationNumber) || professionalRegistrationn.getRegistrationNumber().equalsIgnoreCase(registrationNumber))) {
                     professionalRegist.add(professionalRegistrationn);
                 }
             }
 
             // Compare with previous persisted records
             for (ProfessionalRegistration professionalRegistr : professionalRegistrations) {
-                if (professionalRegistr.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */) {
+                if (professionalRegistr.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) || professionalRegistr.getRegistrationNumber().equalsIgnoreCase(professionalRegistration.getRegistrationNumber())) {
                     Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
                     break;

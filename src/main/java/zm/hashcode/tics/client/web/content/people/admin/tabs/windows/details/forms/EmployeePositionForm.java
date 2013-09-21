@@ -160,12 +160,12 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
             // Exclude current edited record from previous persisted records
             List<EmployeePosition> employeePositions = person.getPositions();
             for (EmployeePosition employeePositionv : employeePositions) {
-                if (!employeePositionv.getPosition().getPositionTitle().equals(employeePosition.getPosition().getPositionTitle())) {
-                    employeePositionss.add(employeePositionv);
-                } else {
-                    Notification.show("Change Position before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                if (employeePositionv.getPosition().getPositionTitle().equals(employeePosition.getPosition().getPositionTitle())) {
                     matchFound = true;
+                    Notification.show("Change Position before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     break;
+                } else {
+                    employeePositionss.add(employeePositionv);
                 }
             }
 
@@ -185,7 +185,6 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
             getHome();
         }
 
-
     }
 
     private void saveEditedForm(FieldGroup binder) {
@@ -195,7 +194,6 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
             EmployeePosition employeePosition = getEditedEntity(binder);
             List<EmployeePosition> employeePositions = person.getPositions();
             List<EmployeePosition> updatedEmployeePositions = new ArrayList<>();
-            updatedEmployeePositions.add(employeePosition);
 
             // Exclude current edited record from previous persisted records
             for (EmployeePosition employeePositionv : employeePositions) {
@@ -205,14 +203,15 @@ public class EmployeePositionForm extends FormLayout implements Button.ClickList
             }
 
             // Compare with previous persisted records
-            for (EmployeePosition personRoles : employeePositions) {
+            for (EmployeePosition personRoles : updatedEmployeePositions) {
                 if (personRoles.getPosition().getPositionTitle().equals(employeePosition.getPosition().getPositionTitle())) {
-                    Notification.show("Similar Record exist for Position Title!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
+                    Notification.show("Similar Record exist for Position Title!", Notification.Type.TRAY_NOTIFICATION);
                     break;
                 }
             }
             if (!matchFound) {
+                updatedEmployeePositions.add(employeePosition);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
                         .positions(updatedEmployeePositions)

@@ -126,12 +126,12 @@ public class PersonRoleForm extends FormLayout
 
             List<PersonRoles> personRoless = person.getPersonRoles();
             for (PersonRoles personRolee : personRoless) {
-                if (!personRolee.getRoleName().equals(personRole.getRoleName())) {
-                    personRoles.add(personRolee);
-                } else {
-                    Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                if (personRolee.getRoleName().equals(personRole.getRoleName()) || personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName())) {
                     matchFound = true;
+                    Notification.show("Similar Record exist. Change before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     break;
+                } else {
+                    personRoles.add(personRolee);
                 }
             }
 
@@ -160,24 +160,24 @@ public class PersonRoleForm extends FormLayout
             PersonRoles personRole = getEditedEntity(binder);
             List<PersonRoles> personRoless = person.getPersonRoles();
             List<PersonRoles> updatedPersonRoles = new ArrayList<>();
-            updatedPersonRoles.add(personRole);
 
             // Exclude current edited record from previous persisted records
             for (PersonRoles personRolee : personRoless) {
-                if (!personRolee.getRoleName().equals(roleName)) {//&& personRolee.getRoleName().equalsIgnoreCase(personRole.getRoleName()))) {
+                if (!(personRolee.getRoleName().equals(roleName) || personRolee.getRoleName().equalsIgnoreCase(roleName))) {
                     updatedPersonRoles.add(personRolee); // Matching records to roleName should not be added. WORKS for ONE field embeddable
                 }
             }
 
             // Compare with previous persisted records
-            for (PersonRoles personRoles : personRoless) {
-                if (personRoles.getRoleName().equals(personRole.getRoleName())) {
-                    Notification.show("Similar Record exist for Role Name!", Notification.Type.TRAY_NOTIFICATION);
+            for (PersonRoles personRoles : updatedPersonRoles) {
+                if (personRoles.getRoleName().equals(personRole.getRoleName()) || personRoles.getRoleName().equalsIgnoreCase(personRole.getRoleName())) {
                     matchFound = true;
+                    Notification.show("Similar Record exist for Role Name!", Notification.Type.TRAY_NOTIFICATION);
                     break;
                 }
             }
             if (!matchFound) {
+                updatedPersonRoles.add(personRole);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
                         .personRoles(updatedPersonRoles)

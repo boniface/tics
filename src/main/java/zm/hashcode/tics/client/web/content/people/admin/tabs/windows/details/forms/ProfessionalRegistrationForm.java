@@ -166,12 +166,12 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
 
             List<ProfessionalRegistration> professionalRegistrations = person.getProfessionalRegistration();
             for (ProfessionalRegistration professionalRegist : professionalRegistrations) {
-                if (!professionalRegist.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */) {
-                    professionalRegistrationns.add(professionalRegist);
-                } else {
-                    Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
+                if (professionalRegist.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) || professionalRegist.getRegistrationNumber().equalsIgnoreCase(professionalRegistration.getRegistrationNumber())) {
                     matchFound = true;
+                    Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
                     break;
+                } else {
+                    professionalRegistrationns.add(professionalRegist);
                 }
             }
 
@@ -201,24 +201,25 @@ public class ProfessionalRegistrationForm extends FormLayout implements Button.C
             ProfessionalRegistration professionalRegistration = getEditedEntity(binder);
             List<ProfessionalRegistration> professionalRegistrations = person.getProfessionalRegistration();
             List<ProfessionalRegistration> professionalRegist = new ArrayList<>();
-            professionalRegist.add(professionalRegistration);
 
-            // Exclude current edited record from previous persited records
+
+            // Exclude current edited record from previous persisted records
             for (ProfessionalRegistration professionalRegistrationn : professionalRegistrations) {
-                if (!professionalRegistrationn.getRegistrationNumber().equals(registrationNumber)) {
+                if (!(professionalRegistrationn.getRegistrationNumber().equals(registrationNumber) || professionalRegistrationn.getRegistrationNumber().equalsIgnoreCase(registrationNumber))) {
                     professionalRegist.add(professionalRegistrationn);
                 }
             }
 
             // Compare with previous persisted records
-            for (ProfessionalRegistration professionalRegistr : professionalRegistrations) {
-                if (professionalRegistr.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) /*   || professionalRegist.getLicenceNumber().equals(professionalRegistration.getLicenceNumber()) */) {
-                    Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
+            for (ProfessionalRegistration professionalRegistr : professionalRegist) {
+                if (professionalRegistr.getRegistrationNumber().equals(professionalRegistration.getRegistrationNumber()) || professionalRegistr.getRegistrationNumber().equalsIgnoreCase(professionalRegistration.getRegistrationNumber())) {
                     matchFound = true;
+                    Notification.show("Similar Record exist for Registration Number!", Notification.Type.TRAY_NOTIFICATION);
                     break;
                 }
             }
             if (!matchFound) {
+                professionalRegist.add(professionalRegistration);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
                         .professionalRegistration(professionalRegist)

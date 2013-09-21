@@ -158,12 +158,12 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
 
             // Exclude current edited record from previous persisted records
             for (Contact contaq : contactss) {
-                if (!contaq.getAddressType().equals(contact.getAddressType())) {
-                    contacts.add(contaq);
-                } else {
-                    Notification.show("AddressType exist. Change Address Type before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                if (contaq.getAddressType().equals(contact.getAddressType())) {
                     matchFound = true;
+                    Notification.show("AddressType exist. Change Address Type before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     break;
+                } else {
+                    contacts.add(contaq);
                 }
             }
 
@@ -191,7 +191,6 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             Contact contact = getEditedEntity(binder);
             List<Contact> contacts = person.getContacts();
             List<Contact> updatedContacts = new ArrayList<>();
-            updatedContacts.add(contact);
 
             // Exclude current edited record from previous persisted records
             for (Contact contactt : contacts) {
@@ -201,14 +200,15 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
             }
 
             // Compare with previous persisted records
-            for (Contact contacte : contacts) {
+            for (Contact contacte : updatedContacts) {
                 if (contacte.getAddressType().equals(contact.getAddressType())) {
-                    Notification.show("Similar Record exist with AddressType!", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
+                    Notification.show("Similar Record exist with AddressType!", Notification.Type.TRAY_NOTIFICATION);
                     break;
                 }
             }
             if (!matchFound) {
+                updatedContacts.add(contact);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
                         .contacts(updatedContacts)
@@ -288,10 +288,10 @@ public class PersonContactForm extends FormLayout implements Button.ClickListene
         item.getBean().setFaxnumber(contact.getFaxnumber());
         item.getBean().setMailingAddress(contact.getMailingAddress());
         item.getBean().setTelephoneNumber(contact.getTelephoneNumber());
-        try {
-            addressTypeName = addressType.getAddressTypeName();
-        } catch (NullPointerException ex) {
-        }
+//        try {
+        addressTypeName = addressType.getAddressTypeName();
+//        } catch (NullPointerException ex) {
+//        }
     }
 
     /**

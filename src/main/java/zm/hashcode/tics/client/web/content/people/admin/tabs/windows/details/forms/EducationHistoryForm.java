@@ -167,12 +167,12 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
             // Exclude current edited record from previous persited records
             List<EducationHistory> educationHistoryss = person.getEducationHistory();
             for (EducationHistory educationHistry : educationHistoryss) {
-                if (!(dateUtil.resetTimeOfDate(educationHistry.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate())))) {
-                    educationHistorys.add(educationHistry);
-                } else {
-                    Notification.show("Similar Record exist. Change Institution Name and/or Graduation Date before SAVING!", Notification.Type.TRAY_NOTIFICATION);
+                if (dateUtil.resetTimeOfDate(educationHistry.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate()))) {
                     matchFound = true;
+                    Notification.show("Similar Record exist. Change Graduation Date before SAVING!", Notification.Type.TRAY_NOTIFICATION);
                     break;
+                } else {
+                    educationHistorys.add(educationHistry);
                 }
             }
 
@@ -202,7 +202,6 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
             EducationHistory educationHistory = getEditedEntity(binder);
             List<EducationHistory> educationHistorys = person.getEducationHistory();
             List<EducationHistory> updatedEducationHistorys = new ArrayList<>();
-            updatedEducationHistorys.add(educationHistory);
 
             // Exclude current edited record from previous persited records
             for (EducationHistory educationHistoryy : educationHistorys) {
@@ -212,14 +211,15 @@ public class EducationHistoryForm extends FormLayout implements Button.ClickList
             }
 
             // Compare with previous persisted records
-            for (EducationHistory professionalRegistr : educationHistorys) {
+            for (EducationHistory professionalRegistr : updatedEducationHistorys) {
                 if (dateUtil.resetTimeOfDate(professionalRegistr.getGraduationDate()).equals(dateUtil.resetTimeOfDate(educationHistory.getGraduationDate()))) {
-                    Notification.show("Similar Record exist for Graduation Date", Notification.Type.TRAY_NOTIFICATION);
                     matchFound = true;
+                    Notification.show("Similar Record exist for Graduation Date", Notification.Type.TRAY_NOTIFICATION);
                     break;
                 }
             }
             if (!matchFound) {
+                updatedEducationHistorys.add(educationHistory);
                 Person updatePerson = new Person.Builder(person.getFirstname(), person.getSurname())
                         .person(person)
                         .educationHistory(updatedEducationHistorys)

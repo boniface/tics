@@ -110,17 +110,7 @@ public final class FacilityTab extends VerticalLayout implements
     private Facility getNewEntity(FieldGroup binder) {
         final FacilityBean bean = ((BeanItem<FacilityBean>) binder.getItemDataSource()).getBean();
 
-//            private String id;
-//    private String facilityName;
-//    private String facilityTypeId;
-//    //Address
-//    private String postalAddress;
-//    private String physicalAddress;
-//    private String contactNumber;
-//    private String postalCode;
-//    private String emailAddress;
-//    private String cityId;
-//    private String facilityGroupingId;
+
 
         FacilityType facilityType = FacilityTypeFacade.getFacilityTypeService().find(bean.getFacilityTypeId());
         Location city = LocationFacade.getLocationService().find(bean.getCityId());
@@ -138,6 +128,8 @@ public final class FacilityTab extends VerticalLayout implements
                 .build();
         Facility facility = new Facility.Builder(bean.getFacilityName())
                 .address(address)
+                .latitude(bean.getLatitude())
+                .longititude(bean.getLongititude())
                 .city(city)
                 .facilityGrouping(facilityGrouping)
                 .facilityType(facilityType)
@@ -168,6 +160,8 @@ public final class FacilityTab extends VerticalLayout implements
                 .build();
         Facility updateFacility = new Facility.Builder(bean.getFacilityName())
                 .facility(facility)
+                .latitude(bean.getLatitude())
+                .longititude(bean.getLongititude())
                 .address(address)
                 .city(city)
                 .facilityGrouping(facilityGrouping)

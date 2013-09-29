@@ -19,6 +19,8 @@ public class FacilityBean implements Serializable {
     @NotNull
     private String facilityTypeId;
     //Address
+    private String latitude;
+    private String longititude;
     private String postalAddress;
     private String physicalAddress;
     private String contactNumber;
@@ -106,5 +108,21 @@ public class FacilityBean implements Serializable {
 
     public void setFacilityGroupingId(String facilityGroupingId) {
         this.facilityGroupingId = facilityGroupingId;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongititude() {
+        return longititude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongititude(String longititude) {
+        this.longititude = longititude;
     }
 }

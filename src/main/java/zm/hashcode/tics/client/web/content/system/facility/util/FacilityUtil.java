@@ -23,7 +23,8 @@ public class FacilityUtil {
         bean.setContactNumber(getContactNumber(facility.getAddress()));
         bean.setEmailAddress(getEmailAddress(facility.getAddress()));
         bean.setFacilityGroupingId(getGroupingId(facility.getFacilityGrouping()));
-
+        bean.setLatitude(facility.getLatitude());
+        bean.setLongititude(facility.getLongititude());
         bean.setFacilityTypeId(getFacilityId(facility.getFacilityType()));
 
         bean.setPhysicalAddress(getPysucalAdd(facility.getAddress()));

@@ -26,6 +26,8 @@ public class Facility implements Serializable, Comparable<Facility> {
     @Id
     private String id;
     private String facilityName;
+    private String latitude;
+    private String longititude;
     @DBRef
     private FacilityType facilityType;
     @DBRef
@@ -43,6 +45,8 @@ public class Facility implements Serializable, Comparable<Facility> {
     private Facility(Builder builder) {
         id = builder.id;
         facilityName = builder.facilityName;
+        latitude = builder.latitude;
+        longititude = builder.longititude;
         facilityType = builder.facilityType;
         city = builder.city;
         address = builder.address;
@@ -56,6 +60,8 @@ public class Facility implements Serializable, Comparable<Facility> {
 
         private final String facilityName;
         private String id;
+        private String latitude;
+        private String longititude;
         private FacilityType facilityType;
         private Location city;
         private LocationAddress address;
@@ -69,6 +75,16 @@ public class Facility implements Serializable, Comparable<Facility> {
 
         public Builder id(String value) {
             id = value;
+            return this;
+        }
+
+        public Builder latitude(String value) {
+            latitude = value;
+            return this;
+        }
+
+        public Builder longititude(String value) {
+            longititude = value;
             return this;
         }
 
@@ -105,6 +121,8 @@ public class Facility implements Serializable, Comparable<Facility> {
         public Builder facility(Facility facility) {
             id = facility.getId();
             facilityType = facility.getFacilityType();
+            longititude = facility.getLongititude();
+            latitude = facility.getLatitude();
             city = facility.getCity();
             address = facility.getAddress();
             positions = facility.getPositions();
@@ -121,6 +139,14 @@ public class Facility implements Serializable, Comparable<Facility> {
 
     public String getId() {
         return id;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongititude() {
+        return longititude;
     }
 
     public String getFacilityName() {

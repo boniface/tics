@@ -91,6 +91,7 @@ public class LoginWindow extends VerticalLayout {
                     main.authenticate((String) login.getValue(), (String) password.getValue());
 //                    open(new ExternalResource(HashWorkMain.getInstance().getURL()));
                 } catch (Exception e) {
+                    System.out.println(" The Exception is about " + e);
                     Notification.show("Login failed", "Bad Username or Password", Notification.Type.ERROR_MESSAGE);
                 }
             }

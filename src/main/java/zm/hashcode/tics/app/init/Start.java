@@ -54,6 +54,7 @@ public class Start implements WebApplicationInitializer {
         vaadin.addMapping("/app/*");
         vaadin.addMapping("/VAADIN/*");
         vaadin.setInitParameter("UI", "zm.hashcode.tics.client.web.TicsMain");
+        vaadin.setInitParameter("widgetset", "zm.hashcode.tics.app.init.widgetset.widgets");
 
 
 

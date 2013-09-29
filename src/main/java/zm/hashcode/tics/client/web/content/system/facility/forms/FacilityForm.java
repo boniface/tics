@@ -62,12 +62,16 @@ public class FacilityForm extends FormLayout {
 //    private String emailAddress;
 //    private String cityId;
 //    private String facilityGroupingId;
+//            private String latitude;
+//    private String longititude;
 
         final TextField facilityName = getTextField("Facility Name", "facilityName");
         final TextField contactNumber = getTextField("Contact Number", "contactNumber");
         final TextField postalCode = getTextField("Postal Code ", "postalCode");
         final TextField emailAddress = getTextField("Email  Address", "emailAddress");
-        final ComboBox cityId = getCityComboBox("City", "cityId");
+        final TextField latitude = getTextField("Latititude", "latitude");
+        final TextField longititude = getTextField("Longitude", "longititude");
+        final ComboBox cityId = getCityComboBox("City/Town/Village", "cityId");
         final ComboBox facilityTypeId = getFacilityTypeComboBox("Facility Type", "facilityTypeId");
         final ComboBox facilityGroupingId = getFacilityGroupingComboBox("Facility Grouping", "facilityGroupingId");
         final TextArea physicalAddress = getTextAreaField("Physical  Address", "physicalAddress");
@@ -90,10 +94,14 @@ public class FacilityForm extends FormLayout {
         grid.addComponent(emailAddress, 1, 3);
         grid.addComponent(contactNumber, 2, 3);
 
-        grid.addComponent(cityId, 0, 4);
-        grid.addComponent(facilityGroupingId, 1, 4);
+        grid.addComponent(latitude, 0, 4);
+        grid.addComponent(longititude, 1, 4);
+        grid.addComponent(cityId, 2, 4);
 
-        grid.addComponent(buttons, 0, 5, 2, 5);
+        grid.addComponent(facilityGroupingId, 0, 5);
+
+
+        grid.addComponent(buttons, 0, 6, 2, 6);
         addComponent(grid);
     }
 
@@ -121,7 +129,7 @@ public class FacilityForm extends FormLayout {
         ComboBox comboBox = new ComboBox(label);
         List<Location> locations = LocationFacade.getLocationService().findAll();
         Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
-        for (Location city : locations) {
+        for (Location city : cities) {
             comboBox.addItem(city.getId());
             comboBox.setItemCaption(city.getId(), city.getName());
         }

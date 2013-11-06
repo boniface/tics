@@ -15,6 +15,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
 import java.util.List;
 import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
@@ -39,6 +40,7 @@ public class ManagePeopleTab extends VerticalLayout implements
 
     public ManagePeopleTab(TicsMain main) {
         this.main = main;
+
         contentPanel.setSizeFull();
         peopleSearchBox.setInputPrompt("Search for Person");
         addListeners();
@@ -76,6 +78,15 @@ public class ManagePeopleTab extends VerticalLayout implements
                 table.removeAllItems();
                 System.out.println(" THE Text Entered " + event.getText());
 
+                List<Person> list = new ArrayList<>();
+                for (Person person : personList) {
+                    if (person.getSurname().toLowerCase().contains(event.getText().toLowerCase())) {
+                        list.add(person);
+                    }
+                }
+                table = new AdministerPeopleTable(main, ManagePeopleTab.this, list);
+                contentPanel.removeAllComponents();
+                contentPanel.addComponent(table);
             }
         });
 

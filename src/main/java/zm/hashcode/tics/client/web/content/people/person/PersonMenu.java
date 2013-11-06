@@ -4,7 +4,6 @@
  */
 package zm.hashcode.tics.client.web.content.people.person;
 
-import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;

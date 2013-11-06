@@ -23,7 +23,7 @@ public class FunderTable extends Table {
         setSizeFull();
         addContainerProperty("Funder Name", String.class, null);
         addContainerProperty("City", String.class, null);
-        addContainerProperty("Course Center", String.class, null);
+        addContainerProperty("Cost Center", String.class, null);
         List<Funder> funders = FunderFacade.getFunderService().findAll();
         for (Funder iFunder : funders) {
             addItem(new Object[]{iFunder.getTrainingFunderName(),

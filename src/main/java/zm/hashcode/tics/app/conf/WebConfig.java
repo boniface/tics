@@ -30,8 +30,7 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {"zm.hashcode"})
 @EnableWebMvc
 @Profile("container")
-@Import({RepositoryConfig.class, SecurityConfig.class})
-
+@Import({RepositoryConfig.class, SecurityConfig.class, CacheConfig.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override

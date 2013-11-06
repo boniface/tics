@@ -62,7 +62,7 @@ public class FunderForm extends FormLayout {
 //          private String emailAddress;
 
         TextField trainingFunderName = getTextField("Training Funder Name", "trainingFunderName");
-        TextField courseCenter = getTextField("Course Center", "courseCenter");
+        TextField courseCenter = getTextField("Cost Center", "courseCenter");
         ComboBox locationCombo = getLocationComboBox("City", "locationId");
         TextField postalAddress = getTextField("Postal Address", "postalAddress");
         TextField physicalAddress = getTextField("Physical Address", "physicalAddress");

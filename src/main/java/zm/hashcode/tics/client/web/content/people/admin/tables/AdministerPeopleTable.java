@@ -30,7 +30,7 @@ public class AdministerPeopleTable extends Table {
 
     private final TicsMain main;
 
-    public AdministerPeopleTable(final TicsMain main, final ManagePeopleTab peopleTab) {
+    public AdministerPeopleTable(final TicsMain main, final ManagePeopleTab peopleTab, List<Person> personlist) {
         this.main = main;
 
         setSizeFull();
@@ -43,9 +43,6 @@ public class AdministerPeopleTable extends Table {
         addContainerProperty("Details", Button.class, null);
         addContainerProperty("Edit", Button.class, null);
         addContainerProperty("Delete", Button.class, null);
-
-
-        List<Person> personlist = PersonFacade.getPeople();
 
         for (Person person : personlist) {
 

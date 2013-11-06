@@ -4,13 +4,10 @@
  */
 package zm.hashcode.tics.client.web.content.password;
 
-import zm.hashcode.tics.client.web.content.users.*;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
-import zm.hashcode.tics.client.web.content.users.tabs.RoleTab;
-import zm.hashcode.tics.client.web.content.users.tabs.UserTab;
+import zm.hashcode.tics.client.web.content.password.tabs.PasswordTab;
 
 /**
  *
@@ -21,32 +18,15 @@ public class PasswordMenu extends Menu {
     public PasswordMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
 
-        final VerticalLayout userTab = new VerticalLayout();
-        userTab.setMargin(true);
-        userTab.addComponent(new UserTab(getMain()));
+        final VerticalLayout changePasswordTab = new VerticalLayout();
+        changePasswordTab.setMargin(true);
+        changePasswordTab.addComponent(new PasswordTab(getMain()));
 
-
-        final VerticalLayout roleTab = new VerticalLayout();
-        roleTab.setMargin(true);
-        roleTab.addComponent(new RoleTab(getMain()));
-
-        final VerticalLayout resetTab = new VerticalLayout();
-        resetTab.setMargin(true);
-        resetTab.addComponent(new ResetTab(getMain()));
-
-        getTab().addTab(userTab, "Add System USERS", null);
-        getTab().addTab(roleTab, "Add System ROLES", null);
-        getTab().addTab(resetTab, "Reset CREDENTIALS", null);
+        getTab().addTab(changePasswordTab, "Change Password", null);
 
         switch (selectedTab) {
             case "LANDING":
-                getTab().setSelectedTab(userTab);
-                break;
-            case "ROLES":
-                getTab().setSelectedTab(roleTab);
-                break;
-            case "RESETS":
-                getTab().setSelectedTab(roleTab);
+                getTab().setSelectedTab(changePasswordTab);
                 break;
         }
         addComponent(getTab());

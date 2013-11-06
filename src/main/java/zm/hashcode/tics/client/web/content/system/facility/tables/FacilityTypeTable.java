@@ -21,7 +21,7 @@ public class FacilityTypeTable extends Table {
     public FacilityTypeTable(TicsMain main) {
         this.main = main;
         setSizeFull();
-        addContainerProperty("Facility Name", String.class, null);
+        addContainerProperty("Facility Type", String.class, null);
         List<FacilityType> facilityTypes = FacilityTypeFacade.getFacilityTypeService().findAll();
         for (FacilityType iFacilityType : facilityTypes) {
             addItem(new Object[]{iFacilityType.getFacilityName()

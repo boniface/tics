@@ -39,7 +39,7 @@ public class FacilityTypeForm extends FormLayout {
         update.setVisible(false);
         delete.setVisible(false);
 
-        TextField facilityName = getTextField("Facility Name", "facilityName");
+        TextField facilityName = getTextField("Facility Type", "facilityName");
         GridLayout grid = new GridLayout(4, 10);
         grid.setSizeFull();
 

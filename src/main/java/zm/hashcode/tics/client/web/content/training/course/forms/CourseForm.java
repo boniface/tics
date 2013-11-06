@@ -26,6 +26,7 @@ import zm.hashcode.tics.app.facade.training.course.TargetGroupFacade;
 import zm.hashcode.tics.app.facade.training.institutions.TrainingInstitutionFacade;
 import zm.hashcode.tics.app.facade.ui.util.StatusFacade;
 import zm.hashcode.tics.client.web.content.training.course.model.CourseBean;
+import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.training.competencies.Competency;
 import zm.hashcode.tics.domain.training.course.Category;
 import zm.hashcode.tics.domain.training.course.CourseType;
@@ -33,6 +34,8 @@ import zm.hashcode.tics.domain.training.course.Criteria;
 import zm.hashcode.tics.domain.training.course.TargetGroup;
 import zm.hashcode.tics.domain.training.institutions.TrainingInstitution;
 import zm.hashcode.tics.domain.ui.util.Status;
+import zm.hashcode.tics.services.people.predicates.FemalePredicate;
+import zm.hashcode.tics.services.training.course.predicates.CourseStatusPredicate;
 import zm.hashcode.tics.services.training.institutions.predicates.TrainerInstitutionPredicate;
 
 /**
@@ -157,7 +160,8 @@ public class CourseForm extends FormLayout {
     private ComboBox getCourseStatusComboBox(String label, String field) {
         courseStatusCombo.setCaption(label);
         List<Status> statuses = StatusFacade.getStatusService().findAll();
-        for (Status iStatus : statuses) {
+        Collection<Status> status = Collections2.filter(statuses, new CourseStatusPredicate());
+        for (Status iStatus : status) {
             courseStatusCombo.addItem(iStatus.getId());
             courseStatusCombo.setItemCaption(iStatus.getId(), iStatus.getStatusType() + " - " + iStatus.getStatusValue());
         }

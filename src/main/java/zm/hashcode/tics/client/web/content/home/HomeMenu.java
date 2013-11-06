@@ -7,10 +7,10 @@ package zm.hashcode.tics.client.web.content.home;
 import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.client.web.content.home.tabs.CoursesStatsTab;
 import zm.hashcode.tics.client.web.content.home.tabs.FacilitiesMapStatsTab;
 import zm.hashcode.tics.client.web.content.home.tabs.FacilitiesStatsTab;
 import zm.hashcode.tics.client.web.content.home.tabs.PeopleStatsTab;
-import zm.hashcode.tics.client.web.content.users.tabs.ResetTab;
 
 /**
  *
@@ -32,7 +32,7 @@ public class HomeMenu extends Menu {
 
         final VerticalLayout coursesStatsTab = new VerticalLayout();
         coursesStatsTab.setMargin(true);
-        coursesStatsTab.addComponent(new ResetTab(getMain()));
+        coursesStatsTab.addComponent(new CoursesStatsTab(getMain()));
 
         final VerticalLayout facilitiesMapTab = new VerticalLayout();
         facilitiesMapTab.setMargin(true);

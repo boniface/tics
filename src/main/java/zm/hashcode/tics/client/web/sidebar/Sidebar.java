@@ -62,10 +62,13 @@ public class Sidebar extends Accordion {
 
 
         // Add the components as tabs in the Accordion.
+
+        addTab(homeMenu, HOME_PAGE, null);
+
         if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
-            addTab(homeMenu, HOME_PAGE, null);
+            addTab(peopleMenu, MANAGE_PEOPLE, null);
         }
-        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
+        if (creds.isUserWithRole(RolesEnum.ROLE_DATACAPTURER.name())) {
             addTab(peopleMenu, MANAGE_PEOPLE, null);
         }
         if (creds.isUserWithRole(RolesEnum.ROLE_TRAINER.name())) {
@@ -74,15 +77,16 @@ public class Sidebar extends Accordion {
         if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
             addTab(reportsMenu, GENERATE_REPORT, null);
         }
+
         if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
             addTab(usersMenu, MANAGE_USERS, null);
         }
         if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
             addTab(setupMenu, SYSTEM_SETUP, null);
         }
-        if (creds.isUserWithRole(RolesEnum.ROLE_ADMIN.name())) {
-            addTab(passwordMenu, CHANGE_PASSWORD, null);
-        }
+
+        addTab(passwordMenu, CHANGE_PASSWORD, null);
+
 
 
     }

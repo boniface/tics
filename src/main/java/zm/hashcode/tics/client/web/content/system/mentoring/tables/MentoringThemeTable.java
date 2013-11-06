@@ -8,6 +8,7 @@ import com.vaadin.ui.Table;
 import java.util.List;
 import zm.hashcode.tics.app.facade.training.mentoring.MentoringThemeFacade;
 import zm.hashcode.tics.client.web.TicsMain;
+import zm.hashcode.tics.domain.training.mentoring.MentoringField;
 import zm.hashcode.tics.domain.training.mentoring.MentoringTheme;
 
 /**
@@ -23,10 +24,13 @@ public class MentoringThemeTable extends Table {
         setSizeFull();
 
         addContainerProperty("Mentoring Theme", String.class, null);
+        addContainerProperty("Mentoring Field", String.class, null);
 
         List<MentoringTheme> mentoringThemes = MentoringThemeFacade.getMentoringThemeService().findAll();
         for (MentoringTheme mentoringTheme : mentoringThemes) {
-            addItem(new Object[]{mentoringTheme.getMentoringTheme()
+            addItem(new Object[]{
+                mentoringTheme.getMentoringTheme(),
+                getMentoringField(mentoringTheme.getMentoringField())
             }, mentoringTheme.getId());
         }
         //     Allow selecting items from the table.
@@ -36,5 +40,12 @@ public class MentoringThemeTable extends Table {
         setSelectable(true);
         // Send changes in selection immediately to server.
         setImmediate(true);
+    }
+
+    private Object getMentoringField(MentoringField mentoringField) {
+        if (mentoringField != null) {
+            return mentoringField.getFieldName();
+        }
+        return null;
     }
 }

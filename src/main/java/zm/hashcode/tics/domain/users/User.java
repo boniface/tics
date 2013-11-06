@@ -34,7 +34,7 @@ public final class User implements Serializable {
     @DBRef
     private Set<Role> roles = new HashSet<>();
     @DBRef
-    private Set<Facility> jusridication=new HashSet<>();
+    private Set<Facility> jusridication = new HashSet<>();
 
     private User() {
     }
@@ -53,9 +53,10 @@ public final class User implements Serializable {
     }
 
     public static class Builder {
+
         private final String email;
         private Set<Facility> jusridication = new HashSet<>();
-        //optional 
+        //optional
         private String id;
         private String passwd;
         private String firstname;
@@ -66,6 +67,19 @@ public final class User implements Serializable {
 
         public Builder(String email) {
             this.email = email;
+
+        }
+
+        public Builder user(User user) {
+            id = user.getId();
+            passwd = user.getPasswd();
+            firstname = user.getFirstname();
+            lastname = user.getLastname();
+            middlename = user.getMiddlename();
+            enabled = user.isEnabled();
+            roles = user.getRoles();
+            jusridication = user.getJusridication();
+            return this;
 
         }
 
@@ -167,7 +181,7 @@ public final class User implements Serializable {
         return enabled;
     }
 
-    public Set<Role>getRoles() {
+    public Set<Role> getRoles() {
         return ImmutableSet.copyOf(roles);
     }
 

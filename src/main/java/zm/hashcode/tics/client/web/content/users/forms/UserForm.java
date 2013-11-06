@@ -23,6 +23,7 @@ import zm.hashcode.tics.app.facade.user.UserFacade;
 import zm.hashcode.tics.client.web.content.users.models.UserBean;
 import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.domain.ui.demographics.Role;
+import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
  *
@@ -129,10 +130,10 @@ public final class UserForm extends FormLayout {
     private ComboBox getComboBox(String label, String field) {
         ComboBox comboBox = new ComboBox(label);
 //        List<Location> locations = LocationFacade.getLocationModelService().findAll();
-//        
+//
 ////        List<Location> sortedCopy = Ordering.from(byLastName).compound(byFirstName).reverse().sortedCopy(locations);
 ////        List<Location> sortedList = Ordering.natural().reverse().sortedCopy(this);
-//        
+//
 //        Collection<Location> cities = Collections2.filter(locations, new CityPredicate());
 //        for (Location location : cities) {
 //            comboBox.addItem(location.getId());
@@ -156,7 +157,7 @@ public final class UserForm extends FormLayout {
         }
         rolesList.setWidth("250px");
         binder.bind(rolesList, field);
-        
+
         return rolesList;
     }
 
@@ -164,7 +165,7 @@ public final class UserForm extends FormLayout {
         jurisdictionList.setCaption(label);
         List<Facility> facilities = FacilityFacade.getFacilityService().findAll();
         for (Facility facility : facilities) {
-            jurisdictionList.setItemCaption(facility.getId(), facility.getFacilityName() + " IN  " + facility.getCity().getName());
+            jurisdictionList.setItemCaption(facility.getId(), facility.getFacilityName() + " IN  " + getCity(facility.getCity()));
             jurisdictionList.setNullSelectionAllowed(false);
             jurisdictionList.setMultiSelect(true);
             jurisdictionList.addItem(facility.getId());
@@ -182,5 +183,12 @@ public final class UserForm extends FormLayout {
         buttons.addComponent(update);
         buttons.addComponent(delete);
         return buttons;
+    }
+
+    private String getCity(Location city) {
+        if (city != null) {
+            return city.getName();
+        }
+        return null;
     }
 }

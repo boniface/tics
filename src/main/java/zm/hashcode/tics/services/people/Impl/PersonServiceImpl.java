@@ -7,6 +7,7 @@ package zm.hashcode.tics.services.people.Impl;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.repository.people.PersonRepository;
@@ -44,6 +45,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findAll() {
-        return ImmutableList.copyOf(personRepository.findAll());
+        return ImmutableList.copyOf(personRepository.findAll(sortByName()));
+    }
+
+    private Sort sortByName() {
+        return new Sort(
+                new Sort.Order(Sort.Direction.ASC, "surname"));
     }
 }

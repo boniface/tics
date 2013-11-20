@@ -8,6 +8,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import zm.hashcode.tics.app.conf.SpringContext;
 import zm.hashcode.tics.app.security.GetUserCredentials;
 import zm.hashcode.tics.domain.people.Person;
@@ -46,6 +47,7 @@ public class PersonFacade {
     public static List<Person> getPeople() {
         User user = creds.getLoggedInUser();
         List<Person> allpeople = getPersonService().findAll();
+
         if (user.getJusridication().isEmpty()) {
             return allpeople;
         } else {
@@ -53,5 +55,10 @@ public class PersonFacade {
             return ImmutableList.copyOf(people);
         }
 
+    }
+
+    private Sort sortByName() {
+        return new Sort(
+                new Sort.Order(Sort.Direction.ASC, "surname"));
     }
 }

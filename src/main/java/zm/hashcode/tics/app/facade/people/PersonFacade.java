@@ -17,7 +17,7 @@ import zm.hashcode.tics.services.people.EmployeeActionPlanService;
 import zm.hashcode.tics.services.people.EmployeeCoursesService;
 import zm.hashcode.tics.services.people.EmployeeMentoringService;
 import zm.hashcode.tics.services.people.PersonService;
-import zm.hashcode.tics.services.people.predicates.PeoplePredicate;
+import zm.hashcode.tics.services.people.predicates.LoggedInPersonFacilityPredicate;
 
 /**
  *
@@ -51,7 +51,7 @@ public class PersonFacade {
         if (user.getJusridication().isEmpty()) {
             return allpeople;
         } else {
-            Collection<Person> people = Collections2.filter(allpeople, new PeoplePredicate());
+            Collection<Person> people = Collections2.filter(allpeople, new LoggedInPersonFacilityPredicate());
             return ImmutableList.copyOf(people);
         }
 

@@ -15,7 +15,6 @@ import zm.hashcode.tics.domain.ui.position.Position;
  */
 public class EmployeePosition implements Serializable {
 
-    private static long serialVersionUID = 1L;
     @DBRef
     private Position position;
     private Date startDate;

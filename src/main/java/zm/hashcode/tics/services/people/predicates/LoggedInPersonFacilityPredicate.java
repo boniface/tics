@@ -12,7 +12,7 @@ import zm.hashcode.tics.domain.people.Person;
  *
  * @author boniface
  */
-public class PeoplePredicate implements Predicate<Person> {
+public class LoggedInPersonFacilityPredicate implements Predicate<Person> {
 
     GetUserCredentials creds = new GetUserCredentials();
 

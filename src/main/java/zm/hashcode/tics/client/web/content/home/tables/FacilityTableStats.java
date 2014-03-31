@@ -8,10 +8,13 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.Reindeer;
 import java.util.List;
+import java.util.stream.Collectors;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
+import zm.hashcode.tics.app.facade.people.PersonFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.home.tabs.FacilitiesStatsTab;
 import zm.hashcode.tics.domain.offices.Facility;
+import zm.hashcode.tics.domain.people.Person;
 import zm.hashcode.tics.domain.ui.location.Location;
 
 /**
@@ -21,6 +24,7 @@ import zm.hashcode.tics.domain.ui.location.Location;
 public class FacilityTableStats extends Table {
 
     private final TicsMain main;
+    private final List<Person> people = PersonFacade.getPersonService().findAll();
 
     public FacilityTableStats(TicsMain main, List<Facility> facilities, final FacilitiesStatsTab tab) {
         this.main = main;
@@ -37,17 +41,15 @@ public class FacilityTableStats extends Table {
 
             Button detailsField = new Button("Show Details");
             detailsField.setData(facility.getId());
-            detailsField.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    // Get the item identifier from the user-defined data.
-                    String itemId = (String) event.getButton().getData();
-                    Facility facility = FacilityFacade.getFacilityService().find(itemId);
-                    tab.contentPanel.removeAllComponents();
-//                    tab.contentPanel.addComponent(new PersonDetails(main, person));
-
-                }
+            detailsField.addClickListener((Button.ClickEvent event) -> {
+                String itemId = (String) event.getButton().getData();
+                Facility facility1 = FacilityFacade.getFacilityService().find(itemId);
+                tab.contentPanel.removeAllComponents();
             });
+            
+            int workers = people.parallelStream().filter(f->facility.getFacilityName().equals(f.getFacility().getFacilityName())).collect(Collectors.toList()).size();
+           
+            
             detailsField.setStyleName(Reindeer.BUTTON_LINK);
 
 
@@ -56,7 +58,7 @@ public class FacilityTableStats extends Table {
                 getDistrict(facility.getCity()),
                 getSubDistrict(facility.getCity()),
                 getCity(facility.getCity()),
-                facility.getPositions().size(),
+                workers,
                 detailsField}, facility.getId());
 
 

@@ -16,6 +16,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.home.tables.FacilityTableStats;
@@ -32,7 +33,7 @@ public class FacilitiesStatsTab extends VerticalLayout implements
     private final HorizontalLayout headerBar = new HorizontalLayout();
     public final VerticalLayout contentPanel = new VerticalLayout();
     private final TextField facilitiesSearchBox = new TextField("Search For Facility");
-    private List<Facility> facilities = FacilityFacade.getFacilityService().findAll();
+    private final List<Facility> facilities = FacilityFacade.getFacilityService().findAll();
     private FacilityTableStats table;
 
     public FacilitiesStatsTab(TicsMain main) {
@@ -60,20 +61,16 @@ public class FacilitiesStatsTab extends VerticalLayout implements
 
     private void addListeners() {
 
-        facilitiesSearchBox.addTextChangeListener(new FieldEvents.TextChangeListener() {
-            @Override
-            public void textChange(FieldEvents.TextChangeEvent event) {
-                table.removeAllItems();
-                List<Facility> list = new ArrayList<>();
-                for (Facility facility : facilities) {
-                    if (facility.getFacilityName().toLowerCase().contains(event.getText().toLowerCase())) {
-                        list.add(facility);
-                    }
-                }
-                table = new FacilityTableStats(main, list, FacilitiesStatsTab.this);
-                contentPanel.removeAllComponents();
-                contentPanel.addComponent(table);
-            }
+        facilitiesSearchBox.addTextChangeListener((FieldEvents.TextChangeEvent event) -> {
+            table.removeAllItems();
+            
+            List<Facility> list = facilities.stream()
+                    .parallel()
+                    .filter(f->f.getFacilityName().toLowerCase().contains(event.getText().toLowerCase()))
+                    .collect(Collectors.toList());
+            table = new FacilityTableStats(main, list, FacilitiesStatsTab.this);
+            contentPanel.removeAllComponents();
+            contentPanel.addComponent(table);
         });
 
         facilitiesSearchBox.addShortcutListener(new ShortcutListener("Clear", ShortcutAction.KeyCode.ESCAPE, null) {

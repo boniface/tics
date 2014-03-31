@@ -4,9 +4,11 @@
  */
 package zm.hashcode.tics.domain.people;
 
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
@@ -15,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import zm.hashcode.tics.domain.offices.Facility;
 import zm.hashcode.tics.domain.ui.demographics.Title;
 import zm.hashcode.tics.domain.ui.location.Location;
+import zm.hashcode.tics.services.people.predicates.PersonPositionPredicate;
 
 /**
  *
@@ -38,20 +41,41 @@ public class Person implements Serializable, Comparable<Person> {
     private List<EmployeeLanguages> languages = new ArrayList<>();
     private List<MentorExpertiseArea> mentorExpertiseAreas = new ArrayList<>();
     private List<PersonRoles> personRoles = new ArrayList<>();
-    @DBRef //Delete
+    @DBRef(lazy = true)
     private List<EmployeeCourses> courses = new ArrayList<>();
-    @DBRef //Deletable
+    @DBRef(lazy = true)
     private List<EmployeeActionPlan> actionPlans = new ArrayList<>();
-    @DBRef //Deletable
+    @DBRef(lazy = true)
     private List<EmployeeMentoring> mentoring = new ArrayList<>();
-    @DBRef
+    @DBRef(lazy = true)
     private List<Person> mentees = new ArrayList<>();
-    @DBRef //Deletable
+    @DBRef(lazy = true)
     private List<PersonIdentities> identities = new ArrayList<>();
-    @DBRef
+    @DBRef(lazy = true)
     private Facility facility;
-    @DBRef
+    @DBRef(lazy = true)
     private Title title;
+    private List<String> files;
+    private String employeeImage;
+
+    public List<String> getFiles() {
+        return files;
+    }
+    
+
+    public void setFiles(List<String> files) {
+        this.files = files;
+    }
+
+    public String getEmployeeImage() {
+        return employeeImage;
+    }
+
+    public void setEmployeeImage(String employeeImage) {
+        this.employeeImage = employeeImage;
+    }
+    
+    
 
     private Person() {
     }
@@ -335,5 +359,19 @@ public class Person implements Serializable, Comparable<Person> {
 
     public List<EmployeeActionPlan> getActionPlans() {
         return ImmutableList.copyOf(actionPlans);
+    }
+
+    public String getCurrentPosition() {
+        Collection<EmployeePosition> pos = Collections2.filter(getPositions(), new PersonPositionPredicate());
+
+        if (pos.size() > 0) {
+            EmployeePosition employeePosition = pos.iterator().next();
+            if (employeePosition != null) {
+                return employeePosition.getStatus();
+            }
+
+        }
+
+        return null;
     }
 }

@@ -68,24 +68,28 @@ public class TabPanel extends VerticalLayout {
         personregistrationsTab.setMargin(true);
         personregistrationsTab.addComponent(new PersonProfessionalRegistrationTab(main, person));
 
-
+        final VerticalLayout personFileUploadsTabs = new VerticalLayout();
+        personFileUploadsTabs.setMargin(true);
+        personFileUploadsTabs.addComponent(new PersonFileUploadsTabs(main, person));
 
         tab.addTab(contactTab, "Contacts", null);
         tab.addTab(personCoursesTab, "Courses", null);
         tab.addTab(actionPlansTab, "Action Plans", null);
         tab.addTab(personMentoringTab, "Mentoring", null);
 
-
         tab.addTab(personIdetitiesTab, "IDs", null);
         tab.addTab(personEducationTab, "Education", null);
         tab.addTab(persoPositionTab, "Positions", null);
 
         tab.addTab(personRolesTab, "Roles", null);
+        
         tab.addTab(personregistrationsTab, "Registrations", null);
+        
         tab.addTab(personExpertiseTab, "Expertise", null);
 
         tab.addTab(personMenteesTab, "Mentees", null);
 
+        tab.addTab(personFileUploadsTabs, "Person Files Upload", null);
 
         switch (selectedTab) {
             case "LANDING":
@@ -122,10 +126,13 @@ public class TabPanel extends VerticalLayout {
                 tab.setSelectedTab(actionPlansTab);
                 break;
 
+            case "UPLOADS":
+                tab.setSelectedTab(personFileUploadsTabs);
+                break;
+
         }
 
         addComponent(tab);
-
 
     }
 }

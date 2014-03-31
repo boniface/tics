@@ -34,10 +34,10 @@ public class CacheConfig {
         caches.add(competencies().getObject());
         caches.add(courses().getObject());
         caches.add(locations().getObject());
+         caches.add(titles().getObject());
 
 
         cacheManager.setCaches(caches);
-
         return cacheManager;
     }
 
@@ -53,6 +53,13 @@ public class CacheConfig {
     public ConcurrentMapCacheFactoryBean persons() {
         ConcurrentMapCacheFactoryBean cacheFactoryBean = new ConcurrentMapCacheFactoryBean();
         cacheFactoryBean.setName("persons");
+        return cacheFactoryBean;
+    }
+    
+        @Bean
+    public ConcurrentMapCacheFactoryBean titles() {
+        ConcurrentMapCacheFactoryBean cacheFactoryBean = new ConcurrentMapCacheFactoryBean();
+        cacheFactoryBean.setName("titles");
         return cacheFactoryBean;
     }
 
@@ -76,7 +83,6 @@ public class CacheConfig {
         cacheFactoryBean.setName("courses");
         return cacheFactoryBean;
     }
-
     @Bean
     public ConcurrentMapCacheFactoryBean locations() {
         ConcurrentMapCacheFactoryBean cacheFactoryBean = new ConcurrentMapCacheFactoryBean();

@@ -76,8 +76,6 @@ public class ManagePeopleTab extends VerticalLayout implements
             @Override
             public void textChange(FieldEvents.TextChangeEvent event) {
                 table.removeAllItems();
-                System.out.println(" THE Text Entered " + event.getText());
-
                 List<Person> list = new ArrayList<>();
                 for (Person person : personList) {
                     if (person.getSurname().toLowerCase().contains(event.getText().toLowerCase())) {
@@ -98,7 +96,6 @@ public class ManagePeopleTab extends VerticalLayout implements
                 table = new AdministerPeopleTable(main, ManagePeopleTab.this, personList);
                 contentPanel.removeAllComponents();
                 contentPanel.addComponent(table);
-                System.out.println("THE VALUE HAS ");
 //
             }
         });

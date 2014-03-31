@@ -14,7 +14,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
  * @author boniface
  */
 @Configuration
-@ImportResource("classpath*:*applicationContext-security.xml")
+@ImportResource("classpath*:applicationContext-security.xml")
 public class SecurityConfig {
     @Bean
     public DelegatingFilterProxy springSecurityFilterChain() {

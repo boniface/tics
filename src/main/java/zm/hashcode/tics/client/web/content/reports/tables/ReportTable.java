@@ -40,8 +40,8 @@ public class ReportTable extends Table {
                 p.getCourseName(),
                 p.getFacilityname(),
                 p.getCityname(),
-                p.getSubdistrict(),
                 p.getDistrict(),
+                p.getSubdistrict(),
                 p.getCourseStateDate(),
                 p.getCourseEndDate()}, p.getId());
         }

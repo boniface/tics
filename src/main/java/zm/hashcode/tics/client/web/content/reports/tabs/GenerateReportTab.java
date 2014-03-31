@@ -128,8 +128,8 @@ public class GenerateReportTab extends VerticalLayout implements
         addComponent(generateReportButton);
         List<PeopleReport> report = new ArrayList<>();
         ReportTable table = new ReportTable(report);
-        tablelayout.removeAllComponents();
-        tablelayout.addComponent(table);
+//        tablelayout.removeAllComponents();
+//        tablelayout.addComponent(table);
         addComponent(tablelayout);
 
 
@@ -147,16 +147,11 @@ public class GenerateReportTab extends VerticalLayout implements
                         .locationTypeId(getStringValue(comboLocationTypes.getValue()))
                         .professionId(getStringValue(comboProfession.getValue()))
                         .build();
-
                 List<PeopleReport> report = new PeopleData().getReportData(query);
                 ReportTable table = new ReportTable(report);
-                tablelayout.removeAllComponents();
-                tablelayout.addComponent(table);
-                addComponent(tablelayout);
-                getHome();
+                main.content.setSecondComponent(new ReportsTab(main, table));
             } else {
                 Notification.show("Please, Select Date Range!", Notification.Type.ERROR_MESSAGE);
-
             }
         }
     }
@@ -191,10 +186,6 @@ public class GenerateReportTab extends VerticalLayout implements
         comboProfession.addValueChangeListener((Property.ValueChangeListener) this);
         comboFacilities.addValueChangeListener((Property.ValueChangeListener) this);
 
-    }
-
-    private void getHome() {
-        main.content.setSecondComponent(new ReportsMenu(main, "LANDING"));
     }
 
     private String getStringValue(Object value) {

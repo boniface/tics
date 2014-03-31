@@ -38,7 +38,7 @@ public class FacilitiesStatsTab extends VerticalLayout implements
     public FacilitiesStatsTab(TicsMain main) {
         this.main = main;
         contentPanel.setSizeFull();
-        facilitiesSearchBox.setInputPrompt("Search for Person");
+        facilitiesSearchBox.setInputPrompt("Search for Facility");
         addListeners();
         table = new FacilityTableStats(main, facilities, this);
         headerBar.setSizeFull();

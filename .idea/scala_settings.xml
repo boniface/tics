@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaProjectSettings">
+    <option name="classCountToUseImportOnDemand" value="9999" />
+    <option name="importShortestPathForAmbiguousReferences" value="false" />
     <option name="importsWithPrefix">
       <array>
         <option value="exclude:scala.collection.mutable.ArrayBuffer" />
@@ -48,6 +50,8 @@
         <option value="scala.collection.mutable._" />
       </array>
     </option>
+    <option name="outputLimit" value="100" />
+    <option name="shift" value="120" />
   </component>
 </project>
 

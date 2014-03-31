@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Boniface
  */
 @Document
-public final class Title implements Serializable {
+public class Title implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

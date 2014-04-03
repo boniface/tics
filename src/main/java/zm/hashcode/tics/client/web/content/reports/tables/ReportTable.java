@@ -35,7 +35,7 @@ public class ReportTable extends Table {
 
         for (Report p : report) {
             addItem(new Object[]{
-                p.getFacility(),
+                p.getFirstName(),
                 p.getLastName(),
                 p.getCourseName(),
                 p.getCourseTopic(),

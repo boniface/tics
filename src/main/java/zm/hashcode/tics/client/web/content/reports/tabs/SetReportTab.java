@@ -9,6 +9,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +36,12 @@ public class SetReportTab extends VerticalLayout implements
     private final List<Location> locations = LocationFacade.getLocationService().findAll();
     private final List<Report> reports = ReportFacade.getReportService().findAll();
 
-    private final Button setReportButton = new Button("Set Up Report");
-    private final Button deleteReportReportButton = new Button("Delete Generated Report");
+    private final Button setReportButton = new Button("Set Up RAW Report");
+    private final Button deleteReportReportButton = new Button("Delete RAW Generated Report");
 
     private final HorizontalLayout tablelayout = new HorizontalLayout();
 
     public SetReportTab(TicsMain main) {
-
-        if (reports.size() > 0) {
-            setReportButton.isDisableOnClick();
-
-        }
 
         tablelayout.setSizeFull();
         this.main = main;
@@ -83,11 +79,21 @@ public class SetReportTab extends VerticalLayout implements
             tablelayout.addComponent(table);
 
         } else {
-            generateRawReport();
-            tablelayout.removeAllComponents();
-            List<Report> r = ReportFacade.getReportService().findAll();
-            ReportTable table = new ReportTable(r);
-            tablelayout.addComponent(table);
+            
+            
+            if (ReportFacade.getReportService().findAll().size() < 1) {
+                generateRawReport();
+                tablelayout.removeAllComponents();
+                List<Report> r = ReportFacade.getReportService().findAll();
+                ReportTable table = new ReportTable(r);
+                tablelayout.addComponent(table);
+            } else {
+                Notification.show("There is already a RAW Report Setup. Delete The Current RAW Report First!", Notification.Type.ERROR_MESSAGE);
+                tablelayout.removeAllComponents();
+                List<Report> r = ReportFacade.getReportService().findAll();
+                ReportTable table = new ReportTable(r);
+                tablelayout.addComponent(table);
+            }
         }
     }
 

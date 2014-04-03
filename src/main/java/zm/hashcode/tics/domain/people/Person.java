@@ -51,7 +51,7 @@ public class Person implements Serializable, Comparable<Person> {
     private List<Person> mentees = new ArrayList<>();
     @DBRef(lazy = true)
     private List<PersonIdentities> identities = new ArrayList<>();
-    @DBRef(lazy = true)
+    @DBRef(lazy = false)
     private Facility facility;
     @DBRef(lazy = true)
     private Title title;

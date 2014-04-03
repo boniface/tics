@@ -87,11 +87,14 @@ public class LoginWindow extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 try {
-
+                        System.out.println("MAIN VALUE IS "+main);
+                          System.out.println("LOGIN VALUE IS "+login);
+                            System.out.println("PASSD  VALUE IS "+password);
                     main.authenticate((String) login.getValue(), (String) password.getValue());
 //                    open(new ExternalResource(HashWorkMain.getInstance().getURL()));
                 } catch (Exception e) {
-                    System.out.println(" The Exception is about " + e);
+                   
+                    System.out.println( "LOGIN BUTTON THROWS EXCEPTION "+e);
                     Notification.show("Login failed", "Bad Username or Password", Notification.Type.ERROR_MESSAGE);
                 }
             }

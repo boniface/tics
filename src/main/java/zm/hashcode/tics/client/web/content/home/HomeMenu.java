@@ -20,12 +20,12 @@ public class HomeMenu extends Menu {
 
     public HomeMenu(TicsMain app, String selectedTab) {
         super(app, selectedTab);
-
+        
         final VerticalLayout peeopleStatsTab = new VerticalLayout();
         peeopleStatsTab.setMargin(true);
         peeopleStatsTab.addComponent(new PeopleStatsTab(getMain()));
 
-
+  
         final VerticalLayout facilitiesStatsTab = new VerticalLayout();
         facilitiesStatsTab.setMargin(true);
         facilitiesStatsTab.addComponent(new FacilitiesStatsTab(getMain()));
@@ -37,7 +37,7 @@ public class HomeMenu extends Menu {
         final VerticalLayout facilitiesMapTab = new VerticalLayout();
         facilitiesMapTab.setMargin(true);
         facilitiesMapTab.addComponent(new FacilitiesMapStatsTab(getMain()));
-
+     
         getTab().addTab(peeopleStatsTab, "People Stats", null);
         getTab().addTab(facilitiesStatsTab, "Facilities Stats", null);
         getTab().addTab(coursesStatsTab, "Courses Stats", null);

@@ -7,7 +7,7 @@ package zm.hashcode.tics.client.web.content.reports.tables;
 import com.vaadin.ui.Table;
 import java.util.Date;
 import java.util.List;
-import zm.hashcode.tics.client.web.content.reports.util.PeopleReport;
+import zm.hashcode.tics.domain.reports.Report;
 
 /**
  *
@@ -15,35 +15,37 @@ import zm.hashcode.tics.client.web.content.reports.util.PeopleReport;
  */
 public class ReportTable extends Table {
 
-    public ReportTable(List<PeopleReport> people) {
+    public ReportTable(List<Report> report) {
         setSizeFull();
 
         addContainerProperty("First Name", String.class, null);
         addContainerProperty("Last Name", String.class, null);
-        addContainerProperty("Profession ", String.class, null);
         addContainerProperty("Course ", String.class, null);
+        addContainerProperty("Topic ", String.class, null);
         addContainerProperty("Facility ", String.class, null);
+        addContainerProperty("Training Venue ", String.class, null);
 
         addContainerProperty("City", String.class, null);
-        addContainerProperty("District", String.class, null);
-        addContainerProperty("Sub District ", String.class, null);
+        addContainerProperty("Sub District", String.class, null);
+        addContainerProperty("District ", String.class, null);
 
 
         addContainerProperty("Course Start Date ", Date.class, null);
         addContainerProperty("Course End Date ", Date.class, null);
 
-        for (PeopleReport p : people) {
+        for (Report p : report) {
             addItem(new Object[]{
-                p.getFirstname(),
-                p.getLastname(),
-                p.getProfession(),
+                p.getFacility(),
+                p.getLastName(),
                 p.getCourseName(),
-                p.getFacilityname(),
-                p.getCityname(),
+                p.getCourseTopic(),
+                p.getFacility(),
+                p.getVenue(),
+                p.getCity(),
+                p.getSubstrict(),
                 p.getDistrict(),
-                p.getSubdistrict(),
-                p.getCourseStateDate(),
-                p.getCourseEndDate()}, p.getId());
+                p.getStartDate(),
+               p.getEndDate()}, p.getId());
         }
 
         // Allow selecting items from the table.

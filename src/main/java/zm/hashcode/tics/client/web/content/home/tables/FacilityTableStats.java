@@ -38,6 +38,9 @@ public class FacilityTableStats extends Table {
         addContainerProperty("Details", Button.class, null);
 
         for (Facility facility : facilities) {
+           
+              
+                
 
             Button detailsField = new Button("Show Details");
             detailsField.setData(facility.getId());
@@ -46,10 +49,14 @@ public class FacilityTableStats extends Table {
                 Facility facility1 = FacilityFacade.getFacilityService().find(itemId);
                 tab.contentPanel.removeAllComponents();
             });
-            
-            int workers = people.parallelStream().filter(f->facility.getFacilityName().equals(f.getFacility().getFacilityName())).collect(Collectors.toList()).size();
+       
+                
+            int workers = people.parallelStream()
+                    .filter(person->facility.getFacilityName().equals(person.getFacility().getFacilityName()))
+                    .collect(Collectors.toList())
+                    .size();
            
-            
+           
             detailsField.setStyleName(Reindeer.BUTTON_LINK);
 
 

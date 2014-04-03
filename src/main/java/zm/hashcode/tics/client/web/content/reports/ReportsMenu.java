@@ -8,6 +8,7 @@ import zm.hashcode.tics.client.web.Menu;
 import com.vaadin.ui.VerticalLayout;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.reports.tabs.GenerateReportTab;
+import zm.hashcode.tics.client.web.content.reports.tabs.SetReportTab;
 
 /**
  *
@@ -22,11 +23,19 @@ public class ReportsMenu extends Menu {
         generateReportTab.setMargin(true);
         generateReportTab.addComponent(new GenerateReportTab(getMain()));
 
-        getTab().addTab(generateReportTab, "Generate Reports", null);
+        final VerticalLayout setReportTab = new VerticalLayout();
+        setReportTab.setMargin(true);
+        setReportTab.addComponent(new SetReportTab(getMain()));
 
+        getTab().addTab(generateReportTab, "Generate Reports", null);
+        getTab().addTab(setReportTab, "Set Up Reports", null);
         switch (selectedTab) {
             case "LANDING":
                 getTab().setSelectedTab(generateReportTab);
+                break;
+
+            case "SETUP":
+                getTab().setSelectedTab(setReportTab);
                 break;
         }
         addComponent(getTab());

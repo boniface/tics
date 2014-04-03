@@ -60,7 +60,7 @@ public class TicsMain extends UI {
         setAuth(authenticationManager.authenticate(token));
         if (getAuth() != null) {
             SecurityContextHolder.getContext().setAuthentication(getAuth());
-            TicsMain.setInstance(this);
+            TicsMain.setInstance(this);        
             loadProtectedResources();
             return getAuth();
         }
@@ -83,12 +83,13 @@ public class TicsMain extends UI {
         content.setMaxSplitPosition(20, Unit.PERCENTAGE);
         content.setLocked(true);
         content.setFirstComponent(new Sidebar(this));
-        content.setSecondComponent(new HomeMenu(this, "LANDING"));
+     System.out.println(" EXECUTE 1");
+        content.setSecondComponent(new HomeMenu(this, "LANDING"));          
         content.setHeight("1000px");
-        final VerticalLayout root = new VerticalLayout();
+        final VerticalLayout root = new VerticalLayout();         
         root.addStyleName("main-view");
         root.setMargin(new MarginInfo(false, true, false, true));
-
+          
         root.addComponent(header);
         root.addComponent(content);
         root.addComponent(footer);

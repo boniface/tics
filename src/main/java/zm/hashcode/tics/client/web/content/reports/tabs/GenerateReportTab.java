@@ -18,17 +18,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import zm.hashcode.tics.app.facade.offices.FacilityFacade;
+import zm.hashcode.tics.app.facade.report.ReportFacade;
 import zm.hashcode.tics.app.facade.training.course.CourseFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationFacade;
 import zm.hashcode.tics.app.facade.ui.location.LocationTypeFacade;
 import zm.hashcode.tics.app.facade.ui.position.PositionFacade;
 import zm.hashcode.tics.client.web.TicsMain;
-import zm.hashcode.tics.client.web.content.reports.ReportsMenu;
 import zm.hashcode.tics.client.web.content.reports.tables.ReportTable;
 import zm.hashcode.tics.client.web.content.reports.util.PeopleData;
 import zm.hashcode.tics.client.web.content.reports.util.PeopleReport;
 import zm.hashcode.tics.client.web.content.reports.util.ReportQuery;
 import zm.hashcode.tics.domain.offices.Facility;
+import zm.hashcode.tics.domain.reports.Report;
 import zm.hashcode.tics.domain.training.course.Course;
 import zm.hashcode.tics.domain.ui.location.Location;
 import zm.hashcode.tics.domain.ui.location.LocationType;
@@ -126,10 +127,10 @@ public class GenerateReportTab extends VerticalLayout implements
         addComponent(new Label("<HR/>", ContentMode.HTML));
         generateReportButton.setStyleName("default");
         addComponent(generateReportButton);
-        List<PeopleReport> report = new ArrayList<>();
+        List<Report> report = new ArrayList<>();
         ReportTable table = new ReportTable(report);
-//        tablelayout.removeAllComponents();
-//        tablelayout.addComponent(table);
+        tablelayout.removeAllComponents();
+        tablelayout.addComponent(table);
         addComponent(tablelayout);
 
 
@@ -140,15 +141,7 @@ public class GenerateReportTab extends VerticalLayout implements
         final Button source = event.getButton();
         if (source == generateReportButton) {
             if (startDate.getValue() != null && endDate.getValue() != null) {
-                ReportQuery query = new ReportQuery.Builder(startDate.getValue(), endDate.getValue())
-                        .courseId(getStringValue(comboCourse.getValue()))
-                        .facilityId(getStringValue(comboFacilities.getValue()))
-                        .locationId(getStringValue(comboLocation.getValue()))
-                        .locationTypeId(getStringValue(comboLocationTypes.getValue()))
-                        .professionId(getStringValue(comboProfession.getValue()))
-                        .build();
-                List<PeopleReport> report = new PeopleData().getReportData(query);
-                ReportTable table = new ReportTable(report);
+                ReportTable table = new ReportTable(ReportFacade.getReportService().findAll());
                 main.content.setSecondComponent(new ReportsTab(main, table));
             } else {
                 Notification.show("Please, Select Date Range!", Notification.Type.ERROR_MESSAGE);

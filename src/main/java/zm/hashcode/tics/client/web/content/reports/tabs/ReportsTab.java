@@ -11,7 +11,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.Reindeer;
 import org.vaadin.haijian.ExcelExporter;
 import zm.hashcode.tics.client.web.TicsMain;
 import zm.hashcode.tics.client.web.content.reports.ReportsMenu;
